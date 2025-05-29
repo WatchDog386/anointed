@@ -30,6 +30,41 @@ module.exports = {
       backgroundImage: {
         "main-gradient":
           "linear-gradient(145deg, #000000 0%, #2d2d2d 50%, #ffffff 100%)",
+        "radial-white-black":
+          "radial-gradient(circle at center, #ffffff 0%, #000000 100%)",
+      },
+      keyframes: {
+        pulseRadial: {
+          "0%, 100%": { backgroundSize: "100% 100%" },
+          "50%": { backgroundSize: "105% 105%" },
+        },
+        borderGlow: {
+          "0%, 100%": {
+            borderColor: "#0ff",
+            boxShadow: "0 0 10px #0ff",
+          },
+          "50%": {
+            borderColor: "#f0f",
+            boxShadow: "0 0 15px #f0f",
+          },
+        },
+        glowBg: {
+          "0%": {
+            backgroundPosition: "0% 50%",
+          },
+          "50%": {
+            backgroundPosition: "100% 50%",
+          },
+          "100%": {
+            backgroundPosition: "0% 50%",
+          },
+        },
+      },
+      animation: {
+        "pulse-radial": "pulseRadial 10s ease-in-out infinite",
+        "border-glow": "borderGlow 3s ease-in-out infinite",
+        "glow-bg": "glowBg 12s ease infinite",
+        "ping-slow": "ping 3s cubic-bezier(0, 0, 0.2, 1) infinite",
       },
     },
   },

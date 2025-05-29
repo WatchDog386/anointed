@@ -1,5 +1,5 @@
-// Import images
-import article5 from "../assets/article5.jpg";
+// === Import Images ===
+import article5 from "../assets/custom.jpg";
 import deep from "../assets/deep.jpg";
 import download from "../assets/download.jpg";
 
@@ -77,14 +77,16 @@ export const getFeaturedArticles = () =>
   articles.filter((article) => article.isFeatured);
 
 /**
- * Filters articles by category.
+ * Filters articles by category (case-insensitive).
  * @param {string} category
  * @returns {Article[]}
  */
 export const getArticlesByCategory = (category) =>
-  category === "all"
+  category.toLowerCase() === "all"
     ? articles
-    : articles.filter((article) => article.category === category);
+    : articles.filter(
+        (article) => article.category.toLowerCase() === category.toLowerCase()
+      );
 
 /**
  * Searches articles by text query.
@@ -100,3 +102,19 @@ export const searchArticles = (query) => {
       article.content.toLowerCase().includes(lowerQuery)
   );
 };
+
+/**
+ * Finds an article by its slug.
+ * @param {string} slug
+ * @returns {Article | undefined}
+ */
+export const getArticleBySlug = (slug) =>
+  articles.find((article) => article.slug === slug);
+
+/**
+ * Filters articles by tag.
+ * @param {string} tag
+ * @returns {Article[]}
+ */
+export const getArticlesByTag = (tag) =>
+  articles.filter((article) => article.tags.includes(tag));

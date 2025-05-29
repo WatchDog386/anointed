@@ -1,182 +1,308 @@
-import React, { useMemo } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  GeoJSON,
-  useMap,
-  LayersControl,
-} from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import MapControls from '../components/MapControls';
+import { CoverageEligibilityPanel } from '../components/CoverageEligibilityPanel';
+import { MapLegend } from '../components/MapLegend';
 
-// Sample coverage data (replace with your actual GeoJSON data)
-const coverageData = {
-  type: "FeatureCollection",
-  features: [
-    {
-      type: "Feature",
-      properties: {
-        name: "Central Business District",
-        status: "covered",
-        speed: "1.2 Gbps",
-        population: "45,000",
-      },
-      geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            /* Array of coordinate arrays */
-          ],
-        ],
-      },
-    },
-    {
-      type: "Feature",
-      properties: {
-        name: "Northern Expansion Zone",
-        status: "planned",
-        eta: "Q4 2024",
-        potentialCustomers: "12,000",
-      },
-      geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            /* Array of coordinate arrays */
-          ],
-        ],
-      },
-    },
-  ],
-};
+const CoverageMap = () => {
+  const navigate = useNavigate();
+  const mapRef = useRef(null);
+  const mapInstance = useRef(null);
+  const kmlLayer = useRef(null);
+  const markerRef = useRef(null);
+  const locationPulseRef = useRef(null);
+  const locationTimeoutRef = useRef(null);
+  const pulseIntervalRef = useRef(null);
 
-const getStyle = (feature) => {
-  switch (feature.properties.status) {
-    case "covered":
-      return { color: "#2563eb", weight: 2, fillOpacity: 0.4 };
-    case "planned":
-      return {
-        color: "#16a34a",
-        weight: 2,
-        fillOpacity: 0.3,
-        dashArray: "5, 5",
-      };
-    default:
-      return { color: "#666", weight: 1 };
-  }
-};
+  const [mapReady, setMapReady] = useState(false);
+  const [kmlVisible, setKmlVisible] = useState(true);
+  const [address, setAddress] = useState('');
+  const [isEligible, setIsEligible] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showEligibilityPanel, setShowEligibilityPanel] = useState(false);
+  const [showLegend, setShowLegend] = useState(true);
+  const [userLocation, setUserLocation] = useState(null);
+  const [locationError, setLocationError] = useState(null);
+  const [isLocating, setIsLocating] = useState(false);
 
-const onEachFeature = (feature, layer) => {
-  if (feature.properties) {
-    const popupContent = `
-      <div class="p-2">
-        <h3 class="font-bold">${feature.properties.name}</h3>
-        ${
-          feature.properties.status === "covered"
-            ? `
-          <p>📶 Speed: ${feature.properties.speed}</p>
-          <p>👥 Served Population: ${feature.properties.population}</p>
-        `
-            : `
-          <p>🛠 Planned Expansion</p>
-          <p>⏳ ETA: ${feature.properties.eta}</p>
-          <p>🎯 Potential Customers: ${feature.properties.potentialCustomers}</p>
-        `
-        }
-      </div>
-    `;
-    layer.bindPopup(popupContent);
+  const NAIROBI_BOUNDS = [
+    [-1.45, 36.65],
+    [-1.15, 37.05],
+  ];
 
-    layer.on({
-      mouseover: (e) => {
-        e.target.setStyle({ weight: 4 });
-        e.target.openPopup();
-      },
-      mouseout: (e) => {
-        e.target.setStyle(getStyle(feature));
-        e.target.closePopup();
-      },
+  useEffect(() => {
+    const loadLeaflet = async () => {
+      try {
+        const leafletCss = document.createElement('link');
+        leafletCss.rel = 'stylesheet';
+        leafletCss.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        document.head.appendChild(leafletCss);
+
+        await import('leaflet');
+
+        const omnivoreScript = document.createElement('script');
+        omnivoreScript.src = 'https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js';
+        omnivoreScript.onload = () => setMapReady(true);
+        document.body.appendChild(omnivoreScript);
+
+        const fullscreenCss = document.createElement('link');
+        fullscreenCss.rel = 'stylesheet';
+        fullscreenCss.href = 'https://unpkg.com/leaflet.fullscreen/Control.FullScreen.css';
+        document.head.appendChild(fullscreenCss);
+
+        const fullscreenScript = document.createElement('script');
+        fullscreenScript.src = 'https://unpkg.com/leaflet.fullscreen/Control.FullScreen.js';
+        document.body.appendChild(fullscreenScript);
+      } catch (err) {
+        console.error('Error loading map libraries:', err);
+      }
+    };
+
+    loadLeaflet();
+
+    return () => {
+      mapInstance.current?.remove();
+      kmlLayer.current?.remove();
+      clearTimeout(locationTimeoutRef.current);
+      clearInterval(pulseIntervalRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!mapReady || !window.L || !window.omnivore || !mapRef.current) return;
+
+    const L = window.L;
+    const map = L.map(mapRef.current, {
+      minZoom: 11,
+      maxBounds: NAIROBI_BOUNDS,
+      maxBoundsViscosity: 1.0,
+      zoomControl: false,
+      attributionControl: false,
+    }).setView([-1.286389, 36.817223], 12);
+
+    mapInstance.current = map;
+
+    const baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
     });
-  }
-};
 
-const MapLegend = () => {
-  const map = useMap();
+    baseLayer.addTo(map);
 
-  const legend = L.control({ position: "bottomright" });
+    L.control.scale({ position: 'bottomleft' }).addTo(map);
 
-  legend.onAdd = () => {
-    const div = L.DomUtil.create("div", "bg-white p-4 rounded-lg shadow-lg");
-    div.innerHTML = `
-      <h4 class="font-bold mb-2">Network Coverage</h4>
-      <div class="flex items-center mb-2">
-        <div class="w-4 h-4 bg-blue-600/40 mr-2"></div>
-        <span>Active Coverage</span>
-      </div>
-      <div class="flex items-center mb-2">
-        <div class="w-4 h-4 bg-green-600/30 mr-2 border-dashed border-2 border-green-600"></div>
-        <span>Planned Expansion</span>
-      </div>
-    `;
-    return div;
+    if (L.control.fullscreen) {
+      L.control.fullscreen({ position: 'topright' }).addTo(map);
+    }
+
+    L.rectangle(NAIROBI_BOUNDS, {
+      color: '#0ff',
+      weight: 3,
+      fill: false,
+      dashArray: '10 5',
+      className: 'leaflet-animated-border',
+    }).addTo(map);
+
+    kmlLayer.current = window.omnivore.kml('/coverage.kml')
+      .on('ready', () => {
+        try {
+          map.fitBounds(kmlLayer.current.getBounds(), { padding: [30, 30] });
+        } catch (e) {
+          console.warn('Could not fit KML bounds:', e);
+        }
+      })
+      .addTo(map);
+
+    L.control.zoom({ position: 'topright' }).addTo(map);
+    L.control.attribution({
+      position: 'bottomright',
+      prefix: '<a href="https://leafletjs.com/">Leaflet</a>',
+    }).addTo(map);
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          setLocationError(error.message);
+          console.error('Geolocation error:', error);
+        }
+      );
+    } else {
+      setLocationError('Geolocation is not supported by your browser');
+    }
+  }, [mapReady]);
+
+  const toggleKmlVisibility = () => {
+    if (!kmlLayer.current) return;
+    if (kmlLayer.current.getMap()) {
+      kmlLayer.current.remove();
+    } else {
+      kmlLayer.current.addTo(mapInstance.current);
+    }
+    setKmlVisible(!kmlVisible);
   };
 
-  legend.addTo(map);
+  const startPulseAnimation = (coords) => {
+    if (!window.L || !mapInstance.current) return;
 
-  return null;
-};
+    clearInterval(pulseIntervalRef.current);
 
-const CoverageLayers = () => (
-  <LayersControl position="topright">
-    <LayersControl.BaseLayer checked name="Standard Map">
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-    </LayersControl.BaseLayer>
+    locationPulseRef.current = window.L.circle([coords.lat, coords.lng], {
+      radius: 30,
+      stroke: false,
+      fillColor: '#4285F4',
+      fillOpacity: 0.7,
+      className: 'location-pulse',
+    }).addTo(mapInstance.current);
 
-    <LayersControl.Overlay checked name="Network Coverage">
-      <GeoJSON
-        data={coverageData}
-        style={getStyle}
-        onEachFeature={onEachFeature}
-      />
-    </LayersControl.Overlay>
-  </LayersControl>
-);
+    markerRef.current = window.L.marker([coords.lat, coords.lng], {
+      icon: window.L.divIcon({
+        className: 'custom-marker',
+        html: `<div class="marker-pin"></div>`,
+      }),
+      zIndexOffset: 1000,
+    }).addTo(mapInstance.current);
 
-export default function CoverageMap() {
-  const center = useMemo(() => [-3.8615321, 39.6332887], []);
+    let radius = 30;
+    let opacity = 0.7;
+    let growing = true;
+
+    pulseIntervalRef.current = setInterval(() => {
+      if (growing) {
+        radius += 2;
+        opacity -= 0.02;
+        if (radius >= 60) growing = false;
+      } else {
+        radius -= 2;
+        opacity += 0.02;
+        if (radius <= 30) growing = true;
+      }
+
+      locationPulseRef.current.setRadius(radius);
+      locationPulseRef.current.setStyle({ fillOpacity: opacity });
+    }, 50);
+  };
+
+  const centerOnUserLocation = () => {
+    if (!mapInstance.current) return;
+    setIsLocating(true);
+    clearTimeout(locationTimeoutRef.current);
+    clearInterval(pulseIntervalRef.current);
+
+    if (markerRef.current) {
+      mapInstance.current.removeLayer(markerRef.current);
+      markerRef.current = null;
+    }
+
+    if (locationPulseRef.current) {
+      mapInstance.current.removeLayer(locationPulseRef.current);
+      locationPulseRef.current = null;
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userCoords = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+
+          setUserLocation(userCoords);
+          setLocationError(null);
+          mapInstance.current.setView([userCoords.lat, userCoords.lng], 16);
+
+          setAddress('Your current location');
+          setIsLoading(true);
+          setShowEligibilityPanel(true);
+
+          startPulseAnimation(userCoords);
+
+          locationTimeoutRef.current = setTimeout(() => {
+            checkEligibility(userCoords);
+            setIsLocating(false);
+          }, 2000);
+        },
+        (error) => {
+          setLocationError(error.message);
+          setIsLocating(false);
+          console.error('Geolocation error:', error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
+        }
+      );
+    } else {
+      setLocationError('Geolocation is not supported by your browser');
+    }
+  };
+
+  const checkEligibility = (coords) => {
+    if (!window.L || !kmlLayer.current) return;
+    const point = window.L.latLng(coords.lat, coords.lng);
+    let eligible = false;
+
+    kmlLayer.current.eachLayer((layer) => {
+      if (layer.getBounds && layer.getBounds().contains(point)) {
+        eligible = true;
+      }
+    });
+
+    setIsEligible(eligible);
+    setIsLoading(false);
+  };
 
   return (
-    <div className="relative h-[600px] w-full rounded-xl overflow-hidden shadow-lg border border-gray-200">
-      <MapContainer
-        center={center}
-        zoom={12}
-        style={{ height: "100%", width: "100%" }}
-        scrollWheelZoom={true}
-      >
-        <CoverageLayers />
-        <MapLegend />
-      </MapContainer>
+    <motion.div
+      className="relative min-h-screen w-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:via-black dark:to-gray-900 text-gray-900 dark:text-gray-100 overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, ease: 'easeInOut' }}
+    >
+      <main ref={mapRef} className="absolute top-16 md:top-20 bottom-0 left-0 right-0 z-10" />
 
-      <div className="absolute top-4 left-4 z-[1000] bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-bold mb-2">Network Coverage Analytics</h2>
-        <div className="flex gap-4">
-          <div className="pr-4 border-r border-gray-200">
-            <p className="text-sm text-gray-600">Total Coverage Area</p>
-            <p className="text-2xl font-bold">142 km²</p>
-          </div>
-          <div className="pr-4 border-r border-gray-200">
-            <p className="text-sm text-gray-600">Planned Expansion</p>
-            <p className="text-2xl font-bold">58 km²</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-600">Households Covered</p>
-            <p className="text-2xl font-bold">45,230</p>
-          </div>
-        </div>
-      </div>
-    </div>
+      {/* Back to Home Button */}
+      <button
+        onClick={() => navigate('/')}
+        className="absolute top-4 left-4 z-20 px-4 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition-all"
+      >
+        Back to Home
+      </button>
+
+      {mapReady && (
+        <MapControls
+          map={mapInstance.current}
+          showLegend={showLegend}
+          setShowLegend={setShowLegend}
+          kmlVisible={kmlVisible}
+          toggleKmlVisibility={toggleKmlVisibility}
+          centerOnUserLocation={centerOnUserLocation}
+          userLocation={userLocation}
+          locationError={locationError}
+          isLocating={isLocating}
+        />
+      )}
+
+      {showLegend && <MapLegend onClose={() => setShowLegend(false)} />}
+
+      <AnimatePresence>
+        {showEligibilityPanel && (
+          <CoverageEligibilityPanel
+            address={address}
+            isEligible={isEligible}
+            isLoading={isLoading}
+            onClose={() => setShowEligibilityPanel(false)}
+          />
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
-}
+};
+
+export default CoverageMap;

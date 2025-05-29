@@ -90,9 +90,9 @@ const ServiceCard = ({ service, index }) => {
             onClick={() =>
               navigate("/technicians", { state: { service: service.id } })
             }
-            className="self-start bg-black/20 px-6 py-2 rounded-full border-2 border-cyan-400/50 hover:border-cyan-300 transition-all group/btn"
+            className="self-start bg-black/20 px-4 py-1 text-xs rounded-full border-2 border-cyan-400/50 hover:border-cyan-300 transition-all group/btn"
           >
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent text-sm font-semibold tracking-wide group-hover/btn:tracking-widest transition-all">
+            <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent font-semibold tracking-wide group-hover/btn:tracking-widest transition-all">
               {service.cta} ↗
             </span>
           </motion.button>
@@ -101,29 +101,6 @@ const ServiceCard = ({ service, index }) => {
     </motion.article>
   );
 };
-
-// 🚀 CTA Button
-const CyberButton = ({ children, to }) => (
-  <motion.div
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-    className="relative overflow-hidden rounded-full"
-  >
-    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-500 animate-pulse opacity-40" />
-    <Link
-      to={to}
-      className="relative flex items-center gap-3 bg-gray-900/50 px-8 py-4 rounded-full backdrop-blur-xl border-2 border-cyan-400/30 hover:border-cyan-300 transition-all group"
-    >
-      <span className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent tracking-wide group-hover:tracking-widest transition-all">
-        {children}
-      </span>
-      <div className="relative w-5 h-5">
-        <div className="absolute inset-0 bg-cyan-400/50 blur-sm" />
-        <div className="w-5 h-5 bg-gradient-to-r from-cyan-400 to-purple-400 mask-triangle-2 rotate-45" />
-      </div>
-    </Link>
-  </motion.div>
-);
 
 export default function Services() {
   const [lightboxImage, setLightboxImage] = useState(null);
@@ -134,37 +111,33 @@ export default function Services() {
       id="services"
       className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-white py-28 px-6 scroll-mt-24 relative overflow-hidden"
     >
-      {/* Optional Grid Overlay */}
       <div className="absolute inset-0 bg-[url('./assets/grid.svg')] bg-cover bg-center opacity-10 mix-blend-soft-light pointer-events-none z-0" />
       <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-black/70 to-transparent z-10" />
 
-      {/* 🌐 Header */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         className="max-w-6xl mx-auto text-center mb-20 relative z-10"
       >
-        <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent font-mono">
-          // DIGITAL FRONTIERS
+        <h2 className="text-5xl md:text-6xl font-bold mb-6 text-white font-mono tracking-tight">
+          Our Services
         </h2>
         <p className="text-lg md:text-xl text-cyan-100/80 max-w-3xl mx-auto leading-relaxed font-light">
           Engineering the neural pathways of tomorrow's connected ecosystems
         </p>
       </motion.div>
 
-      {/* 🧩 Services Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto relative z-10">
         {defaultServices.map((service, index) => (
           <ServiceCard key={service.id} service={service} index={index} />
         ))}
       </div>
 
-      {/* 📸 Swiper */}
       <section className="mt-28 max-w-7xl mx-auto px-4 relative z-10">
         <h3 className="text-4xl font-bold mb-12 text-center font-mono text-cyan-300">
           <span className="text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text">
-            [ OPERATION VISUALS ]
+            [ OUR TECHNICIANS ]
           </span>
         </h3>
 
@@ -197,8 +170,8 @@ export default function Services() {
                     className="w-full h-full object-cover transform-gpu transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 text-cyan-300 font-mono text-sm">
-                    OPERATIVE #{String(i + 1).padStart(2, "0")}
+                  <div className="absolute top-4 left-4 bg-gradient-to-r from-cyan-600 to-purple-600 text-xs text-white font-semibold px-2 py-1 rounded shadow-lg uppercase tracking-wide">
+                    Technician
                   </div>
                 </div>
               </motion.figure>
@@ -207,18 +180,19 @@ export default function Services() {
         </Swiper>
       </section>
 
-      {/* 📡 CTA Button */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        className="mt-20 text-center relative z-10"
+        className="mt-20 flex justify-center relative z-10"
       >
-        <CyberButton to="/technicians">
-          INITIATE CONNECTION PROTOCOL
-        </CyberButton>
+        <Link
+          to="/technicians"
+          className="text-sm font-semibold px-6 py-2 rounded-full bg-cyan-600 text-white shadow-md hover:bg-cyan-500 transition"
+        >
+          Initiate Connection
+        </Link>
       </motion.div>
 
-      {/* 🔍 Lightbox (if needed later) */}
       <AnimatePresence>
         {lightboxImage && (
           <motion.div
