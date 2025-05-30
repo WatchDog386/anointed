@@ -17,7 +17,7 @@ const technicians = [
     email: "ooroabraham@gmail.com",
     location: "Nairobi, Kenya",
     specialty: "hardware",
-    image: "/src/assets/abraham.jpg",
+    image: "/abraham.jpg",
     bookUrl: "#",
     rating: 4.8,
     reviews: 42,
@@ -38,7 +38,7 @@ const technicians = [
     email: "collinsominde98@gmail.com",
     location: "Nairobi, Kenya",
     specialty: "networking",
-    image: "/src/assets/colins.jpg",
+    image: "/colins.jpg",
     bookUrl: "#",
     rating: 4.6,
     reviews: 36,
@@ -59,7 +59,7 @@ const technicians = [
     email: "ggiftotieno@gmail.com",
     location: "Nairobi, Kenya",
     specialty: "software",
-    image: "/src/assets/bret.jpg",
+    image: "/bret.jpg",
     bookUrl: "#",
     rating: 4.9,
     reviews: 51,
@@ -80,7 +80,7 @@ const technicians = [
     email: "lameckooro@gmail.com",
     location: "Nairobi, Kenya",
     specialty: "security",
-    image: "/src/assets/lameck.jpg",
+    image: "/lameck.jpg",
     bookUrl: "#",
     rating: 4.7,
     reviews: 39,
@@ -96,12 +96,12 @@ const technicians = [
 ];
 
 const galleryImages = [
-  { id: 1, src: "/src/assets/NOX1.JPG", alt: "Team working on server setup", category: "infrastructure" },
-  { id: 2, src: "/src/assets/NOX2.JPG", alt: "Technician repairing laptop components", category: "repair" },
-  { id: 3, src: "/src/assets/NOX3.JPG", alt: "Technical team discussion", category: "team" },
-  { id: 4, src: "/src/assets/NOX4.JPG", alt: "Network equipment installation", category: "networking" },
-  { id: 5, src: "/src/assets/NOX5.JPG", alt: "Advanced diagnostic tools", category: "tools" },
-  { id: 6, src: "/src/assets/NOX6.JPG", alt: "Client consultation session", category: "consultation" }
+  { id: 1, src: "/NOX1.JPG", alt: "Team working on server setup", category: "infrastructure" },
+  { id: 2, src: "/NOX2.JPG", alt: "Technician repairing laptop components", category: "repair" },
+  { id: 3, src: "/NOX3.JPG", alt: "Technical team discussion", category: "team" },
+  { id: 4, src: "/NOX4.JPG", alt: "Network equipment installation", category: "networking" },
+  { id: 5, src: "/NOX5.JPG", alt: "Advanced diagnostic tools", category: "tools" },
+  { id: 6, src: "/NOX6.JPG", alt: "Client consultation session", category: "consultation" }
 ];
 
 const specialties = [
