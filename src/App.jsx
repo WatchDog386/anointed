@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ParallaxProvider } from "react-scroll-parallax";
 
-import { LanguageProvider } from "./contexts/LanguageContext"; // ✅ Add this
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 import MainLayout from "./layouts/MainLayout";
 
@@ -18,15 +18,24 @@ import Articles from "./routes/Articles";
 import ArticleDetail from "./routes/ArticleDetail";
 import CoverageMap from "./routes/CoverageMap";
 
+// Component
+import TypewriterHeader from "./components/TypewriterHeader"; // ✅ Import typewriter
+
 export default function App() {
   return (
     <ParallaxProvider>
       <LanguageProvider>
-        {" "}
-        {/* ✅ Wrap everything in LanguageProvider */}
         <Routes>
           <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
+            <Route
+              index
+              element={
+                <>
+                  <TypewriterHeader /> {/* ✅ Typewriter appears on homepage */}
+                  <Home />
+                </>
+              }
+            />
             <Route path="about" element={<About />} />
             <Route path="services" element={<Services />} />
             <Route path="faq" element={<Faqs />} />
