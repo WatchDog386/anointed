@@ -96,12 +96,12 @@ const technicians = [
 ];
 
 const galleryImages = [
-  { id: 1, src: "/NOX1.JPG", alt: "Team working on server setup", category: "infrastructure" },
-  { id: 2, src: "/NOX2.JPG", alt: "Technician repairing laptop components", category: "repair" },
-  { id: 3, src: "/NOX3.JPG", alt: "Technical team discussion", category: "team" },
-  { id: 4, src: "/NOX4.JPG", alt: "Network equipment installation", category: "networking" },
-  { id: 5, src: "/NOX5.JPG", alt: "Advanced diagnostic tools", category: "tools" },
-  { id: 6, src: "/NOX6.JPG", alt: "Client consultation session", category: "consultation" }
+  { id: 1, src: "/NOX1.jpg", alt: "Team working on server setup", category: "infrastructure" },
+  { id: 2, src: "/NOX2.jpg", alt: "Technician repairing laptop components", category: "repair" },
+  { id: 3, src: "/NOX3.jpg", alt: "Technical team discussion", category: "team" },
+  { id: 4, src: "/NOX4.jpg", alt: "Network equipment installation", category: "networking" },
+  { id: 5, src: "/NOX5.jpg", alt: "Advanced diagnostic tools", category: "tools" },
+  { id: 6, src: "/NOX6.jpg", alt: "Client consultation session", category: "consultation" }
 ];
 
 const specialties = [
