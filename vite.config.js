@@ -1,12 +1,11 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/knoxville/', // Make sure this matches your GitHub repo name exactly
+  base: '/', // for root hosting
   build: {
-    outDir: 'dist', // default, but make it explicit
+    outDir: 'dist',
     emptyOutDir: true,
   },
 });

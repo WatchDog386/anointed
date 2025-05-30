@@ -103,7 +103,7 @@ const CoverageMap = () => {
       className: 'leaflet-animated-border',
     }).addTo(map);
 
-    kmlLayer.current = window.omnivore.kml('knoxville/coverage.kml')
+    kmlLayer.current = window.omnivore.kml('/coverage.kml')
       .on('ready', () => {
         try {
           map.fitBounds(kmlLayer.current.getBounds(), { padding: [30, 30] });

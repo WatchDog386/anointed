@@ -21,7 +21,10 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 
-# optional lockfiles (uncomment if not using)
-# package-lock.json
+# IDEs
+.idea/
+
+# lockfiles - track the one you use
+package-lock.json
 # yarn.lock
 # pnpm-lock.yaml
