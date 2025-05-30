@@ -7,25 +7,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-// Image Assets
-import tech1 from "../assets/tech1.jpg";
-import tech2 from "../assets/tech2.jpg";
-import tech3 from "../assets/tech3.jpg";
-import tech4 from "../assets/tech4.jpg";
-import tech5 from "../assets/tech5.jpg";
-import tech6 from "../assets/tech6.jpg";
-import enterprise2 from "../assets/enterprise2.jpg";
-import managed from "../assets/managed.jpg";
-import homeIn from "../assets/home in.jpg";
-import custom from "../assets/custom.jpg";
-
 // 🔧 Service Data
 const defaultServices = [
   {
     id: "enterprise",
     title: "Enterprise Solutions",
     description: "Quantum-grade infrastructure for hyper-scale operations",
-    image: enterprise2,
+    image: "/enterprise2.jpg",
     cta: "Initiate Protocol",
     gradient: "from-cyan-500 to-purple-600",
   },
@@ -33,7 +21,7 @@ const defaultServices = [
     id: "managed",
     title: "Managed Services",
     description: "24/7 neural network monitoring & optimization",
-    image: managed,
+    image: "/managed.jpg",
     cta: "Access Matrix",
     gradient: "from-pink-500 to-orange-600",
   },
@@ -41,7 +29,7 @@ const defaultServices = [
     id: "home",
     title: "Home Installations",
     description: "Terahertz connectivity for smart ecosystems",
-    image: homeIn,
+    image: "/home in.jpg",
     cta: "Deploy Node",
     gradient: "from-green-500 to-blue-600",
   },
@@ -49,15 +37,21 @@ const defaultServices = [
     id: "custom",
     title: "Custom Services",
     description: "Bespoke solutions for digital ecosystems",
-    image: custom,
+    image: "/custom.jpg",
     cta: "Request Blueprint",
     gradient: "from-purple-500 to-red-600",
   },
 ];
 
-const techImages = [tech1, tech2, tech3, tech4, tech5, tech6];
+const techImages = [
+  "/tech1.jpg",
+  "/tech2.jpg",
+  "/tech3.jpg",
+  "/tech4.jpg",
+  "/tech5.jpg",
+  "/tech6.jpg",
+];
 
-// 🎴 Individual Service Card
 const ServiceCard = ({ service, index }) => {
   const navigate = useNavigate();
   return (
@@ -111,7 +105,7 @@ export default function Services() {
       id="services"
       className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-white py-28 px-6 scroll-mt-24 relative overflow-hidden"
     >
-      <div className="absolute inset-0 bg-[url('./assets/grid.svg')] bg-cover bg-center opacity-10 mix-blend-soft-light pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-cover bg-center opacity-10 mix-blend-soft-light pointer-events-none z-0" />
       <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-black/70 to-transparent z-10" />
 
       <motion.div

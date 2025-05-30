@@ -1,8 +1,5 @@
 import React, { useRef, useEffect } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
-import CEO from "../assets/chair.jpg";
-import CTO from "../assets/madam.jpg";
-import Group from "../assets/group.jpg";
 
 // Animations
 const fadeInUp = {
@@ -47,14 +44,14 @@ export default function About() {
       name: "Abraham Ooro",
       role: "Founder & CEO",
       title: "Visionary Architect",
-      image: CEO,
+      image: "/chair.jpg", // ← public folder
       bio: "10+ years in network infrastructure innovation. Passionate about creating seamless digital experiences.",
     },
     {
       name: "Zulfa George",
       role: "ACEO",
       title: "Network Innovator",
-      image: CTO,
+      image: "/madam.jpg", // ← public folder
       bio: "Cybersecurity expert with a focus on next-gen network solutions.",
     },
   ];
@@ -137,7 +134,9 @@ export default function About() {
               transition={{ delay: 0.3, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              Pioneering network solutions that empower businesses and connect communities through cutting-edge innovation and resilient infrastructure.
+              Pioneering network solutions that empower businesses and connect
+              communities through cutting-edge innovation and resilient
+              infrastructure.
             </motion.p>
           </div>
         </RevealSection>
@@ -160,9 +159,13 @@ export default function About() {
                   className="w-full h-96 object-cover"
                 />
                 <div className="p-6 text-center">
-                  <h3 className="text-2xl font-bold text-cyan-400">{member.name}</h3>
+                  <h3 className="text-2xl font-bold text-cyan-400">
+                    {member.name}
+                  </h3>
                   <p className="text-gray-300">{member.role}</p>
-                  <p className="text-sm text-gray-400 italic mt-1">{member.title}</p>
+                  <p className="text-sm text-gray-400 italic mt-1">
+                    {member.title}
+                  </p>
                   <p className="text-gray-300 text-sm mt-4">{member.bio}</p>
                 </div>
               </motion.div>
@@ -181,7 +184,9 @@ export default function About() {
                 transition={{ delay: 0.2 * index, duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <h4 className="text-4xl font-bold text-cyan-400">{stat.value}</h4>
+                <h4 className="text-4xl font-bold text-cyan-400">
+                  {stat.value}
+                </h4>
                 <p className="text-gray-300 mt-2 text-lg">{stat.label}</p>
               </motion.div>
             ))}
@@ -191,7 +196,9 @@ export default function About() {
         {/* Core Values */}
         <RevealSection delay={0.6}>
           <div className="text-center mb-28">
-            <h3 className="text-3xl font-semibold mb-6 text-cyan-400">Our Core Values</h3>
+            <h3 className="text-3xl font-semibold mb-6 text-cyan-400">
+              Our Core Values
+            </h3>
             <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
               {coreValues.map((value, index) => (
                 <motion.span
@@ -213,7 +220,7 @@ export default function About() {
         <RevealSection delay={0.7}>
           <div className="rounded-xl overflow-hidden shadow-lg">
             <img
-              src={Group}
+              src="/group.jpg" // ← public folder
               alt="Team group"
               className="w-full h-[500px] object-cover"
             />

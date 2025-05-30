@@ -3,12 +3,6 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 
-import worker from "../assets/worker.jpg";
-import install from "../assets/install.jpg";
-import homein from "../assets/home in.jpg";
-import deep from "../assets/deep.jpg";
-import logo from "../assets/logo.jpg";
-
 // Modal Component
 const ImageModal = ({ image, onClose }) => {
   if (!image) return null;
@@ -97,9 +91,9 @@ const Hero = () => {
             duration: 0.8,
             ease: [0.16, 1, 0.3, 1],
           }}
-          src={logo}
+          src="/logo4.jpg"
           alt="Company Logo"
-          className="w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-sm border-2 border-white/20 shadow-lg hover:rotate-6 transition-all duration-300 hover:border-teal-400"
+          className="w-20 h-auto object-contain rounded-sm border-2 border-white/20 shadow-lg hover:rotate-6 transition-all duration-300 hover:border-teal-400"
         />
       </div>
 
@@ -219,7 +213,7 @@ const Hero = () => {
             className="relative flex items-center justify-center h-full"
           >
             <motion.img
-              src={worker}
+              src="/worker.jpg"
               alt="Worker"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{
@@ -237,20 +231,28 @@ const Hero = () => {
               }}
             />
 
-            {[install, homein, deep].map((img, i) => {
-              const isModal = i >= 1; // only last two
+            {["/install.jpg", "/home in.jpg", "/deep.jpg"].map((img, i) => {
+              const isModal = i >= 1;
               return (
                 <motion.img
                   key={i}
                   src={img}
                   alt={`Floating ${i}`}
-                  onClick={isModal ? () => setModalImage({ src: img, alt: `Image ${i}` }) : undefined}
-                  className={`absolute rounded-sm shadow-lg border-2 border-white/20 ${isModal ? "cursor-pointer" : "pointer-events-none"}`}
+                  onClick={
+                    isModal
+                      ? () => setModalImage({ src: img, alt: `Image ${i}` })
+                      : undefined
+                  }
+                  className={`absolute rounded-sm shadow-lg border-2 border-white/20 ${
+                    isModal ? "cursor-pointer" : "pointer-events-none"
+                  }`}
                   style={{
                     width: `${28 - i * 3}vw`,
                     top: `${60 + i * 15}%`,
                     left: `${60 + i * 5}%`,
-                    transform: `translate(-50%, -50%) rotate(${i % 2 === 0 ? -8 + i * 3 : 5}deg)`,
+                    transform: `translate(-50%, -50%) rotate(${
+                      i % 2 === 0 ? -8 + i * 3 : 5
+                    }deg)`,
                     zIndex: 2 + i,
                   }}
                   animate={{ ...floatAnimation }}

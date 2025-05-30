@@ -3,54 +3,47 @@ import { Link } from "react-router-dom";
 import { Wifi, Clock, HardHat, CheckCircle, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 
-import basicp from "../assets/basicp.jpg";
-import essentialp from "../assets/essentialp.jpg";
-import familyp from "../assets/familyp.jpg";
-import pros from "../assets/pros.jpg";
-import back from "../assets/back.jpg";
-import browsing from "../assets/streaming.jpg";
-
 const plans = [
   {
     name: "Basic Plan",
     price: "Ksh 1,500",
     speed: "6Mbps",
-    image: basicp,
+    image: "/basicp.jpg",
     features: ["Great for browsing", "24/7 Support", "Free Installation"],
   },
   {
     name: "Essential Plan",
     price: "Ksh 1,999",
     speed: "10Mbps",
-    image: essentialp,
+    image: "/essentialp.jpg",
     features: ["Streaming & Social Media", "24/7 Support", "Free Installation"],
   },
   {
     name: "Family Plan",
     price: "Ksh 2,499",
     speed: "15Mbps",
-    image: familyp,
+    image: "/familyp.jpg",
     features: ["Work from Home", "Streaming", "24/7 Support", "Free Installation"],
   },
   {
     name: "Smart Home Plan",
     price: "Ksh 2,999",
     speed: "20Mbps",
-    image: browsing,
+    image: "/streaming.jpg",
     features: ["Multiple Devices", "Low Latency", "24/7 Support", "Free Installation"],
   },
   {
     name: "Pro Streamer Plan",
     price: "Ksh 3,999",
     speed: "25Mbps",
-    image: pros,
+    image: "/pros.jpg",
     features: ["Heavy Streaming", "Gaming Ready", "24/7 Support", "Free Installation"],
   },
   {
     name: "Ultra Plan",
     price: "Ksh 4,999",
     speed: "30Mbps",
-    image: back,
+    image: "/back.jpg",
     features: ["High-Speed Everything", "Gaming & 4K", "24/7 Support", "Free Installation"],
   },
 ];
