@@ -17,12 +17,10 @@ const technicians = [
     email: "ooroabraham@gmail.com",
     location: "Nairobi, Kenya",
     specialty: "hardware",
-    image: "/abraham.jpg",
     bookUrl: "#",
     rating: 4.8,
     reviews: 42,
     skills: ["Circuit Repair", "Data Recovery", "Component Replacement", "Diagnostics"],
-    experience: "8 years",
     bio: "Certified hardware specialist with extensive experience in component-level repairs. Passionate about restoring devices to their optimal performance.",
     stats: [
       { value: "98%", label: "Success Rate" },
@@ -38,12 +36,10 @@ const technicians = [
     email: "collinsominde98@gmail.com",
     location: "Nairobi, Kenya",
     specialty: "networking",
-    image: "/colins.jpg",
     bookUrl: "#",
     rating: 4.6,
     reviews: 36,
     skills: ["Network Setup", "Router Configuration", "Security", "Wireless Optimization"],
-    experience: "5 years",
     bio: "Network infrastructure expert focused on creating secure, high-performance solutions for businesses of all sizes.",
     stats: [
       { value: "95%", label: "Success Rate" },
@@ -59,12 +55,10 @@ const technicians = [
     email: "ggiftotieno@gmail.com",
     location: "Nairobi, Kenya",
     specialty: "software",
-    image: "/bret.jpg",
     bookUrl: "#",
     rating: 4.9,
     reviews: 51,
     skills: ["Software Installation", "Virus Removal", "System Optimization", "Data Migration"],
-    experience: "6 years",
     bio: "Software troubleshooter dedicated to solving complex system issues and optimizing performance.",
     stats: [
       { value: "99%", label: "Success Rate" },
@@ -80,17 +74,34 @@ const technicians = [
     email: "lameckooro@gmail.com",
     location: "Nairobi, Kenya",
     specialty: "security",
-    image: "/lameck.jpg",
     bookUrl: "#",
     rating: 4.7,
     reviews: 39,
     skills: ["Security Audits", "Firewall Setup", "Encryption", "Threat Analysis"],
-    experience: "7 years",
     bio: "Cybersecurity professional committed to protecting your digital assets with cutting-edge solutions.",
     stats: [
       { value: "97%", label: "Success Rate" },
       { value: "4h", label: "Avg. Response" },
       { value: "200+", label: "Systems Secured" }
+    ]
+  },
+  {
+    id: "tech-5",
+    name: "Felix Omondi",
+    role: "IT Support Specialist",
+    phone: "+254740869951",
+    email: "felixomondi@gmail.com",
+    location: "Nairobi, Kenya",
+    specialty: "software",
+    bookUrl: "#",
+    rating: 4.5,
+    reviews: 28,
+    skills: ["System Troubleshooting", "Software Installation", "Hardware Maintenance", "User Support"],
+    bio: "IT support professional with a passion for solving technical issues and providing excellent customer service.",
+    stats: [
+      { value: "96%", label: "Success Rate" },
+      { value: "2h", label: "Avg. Response" },
+      { value: "400+", label: "Issues Resolved" }
     ]
   }
 ];
@@ -128,74 +139,23 @@ const TechnicianCard = ({ tech, onClick }) => {
       initial={{ opacity: 0, y: 80 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, ease: [0.16, 0.77, 0.47, 0.97] }}
-      className="relative bg-gradient-to-b from-gray-900 to-gray-800 rounded-3xl p-1 shadow-2xl overflow-hidden group cursor-pointer"
+      className="relative bg-white rounded-3xl p-1 shadow-lg overflow-hidden group cursor-pointer border border-gray-200"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onClick}
     >
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        animate={{
-          backgroundPosition: isHovered ? ['0% 50%', '100% 50%'] : '0% 50%',
-        }}
-        transition={{
-          duration: 3,
-          ease: "linear",
-          repeat: Infinity,
-          repeatType: "reverse",
-        }}
-      />
-      
-      <div className="relative bg-gray-900 rounded-[calc(1.5rem-4px)] h-full overflow-hidden">
-        <div className="h-80 w-full relative overflow-hidden">
-          {tech.image ? (
-            <motion.img
-              src={tech.image}
-              alt={tech.name}
-              className="w-full h-full object-cover object-top"
-              loading="lazy"
-              initial={{ scale: 1 }}
-              animate={{ scale: isHovered ? 1.1 : 1 }}
-              transition={{ duration: 0.8, ease: [0.16, 0.77, 0.47, 0.97] }}
-            />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center text-gray-400 text-xl font-bold">
-              {tech.name.split(" ").map((n) => n[0]).join("")}
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-          
-          <motion.div 
-            className="absolute top-4 right-4 bg-yellow-400/90 text-gray-900 px-3 py-1 rounded-full flex items-center text-sm font-semibold backdrop-blur-sm"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <Star className="w-4 h-4 fill-current mr-1" />
-            {tech.rating} ({tech.reviews})
-          </motion.div>
-          
-          <motion.div 
-            className="absolute bottom-4 left-4 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-white"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            {tech.experience} experience
-          </motion.div>
-        </div>
-
+      <div className="relative bg-white rounded-[calc(1.5rem-4px)] h-full overflow-hidden">
         <div className="p-6 space-y-4">
           <div>
-            <h3 className="text-2xl font-bold text-white">{tech.name}</h3>
-            <p className="text-blue-300 font-medium">{tech.role}</p>
+            <h3 className="text-2xl font-bold text-gray-900">{tech.name}</h3>
+            <p className="text-blue-600 font-medium">{tech.role}</p>
           </div>
 
           <div className="flex flex-wrap gap-2">
             {tech.skills.slice(0, 3).map((skill, index) => (
               <motion.span 
                 key={index}
-                className="text-xs bg-white/10 px-3 py-1.5 rounded-full border border-white/5"
+                className="text-xs bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100 text-blue-800"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 + index * 0.05 }}
@@ -206,7 +166,7 @@ const TechnicianCard = ({ tech, onClick }) => {
           </div>
 
           <div className="flex justify-between items-center pt-2">
-            <div className="flex items-center gap-2 text-sm text-gray-300">
+            <div className="flex items-center gap-2 text-sm text-gray-600">
               <MapPin className="w-4 h-4" />
               <span>{tech.location}</span>
             </div>
@@ -256,7 +216,7 @@ const TechnicianModal = ({ tech, onClose }) => {
         exit={{ opacity: 0 }}
       >
         <motion.div 
-          className="bg-gray-900 rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-hidden relative border border-gray-700 shadow-2xl"
+          className="bg-white rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-hidden relative border border-gray-200 shadow-2xl"
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
@@ -264,62 +224,52 @@ const TechnicianModal = ({ tech, onClose }) => {
         >
           <button 
             onClick={onClose}
-            className="absolute top-4 right-4 bg-gray-800 rounded-full p-2 hover:bg-gray-700 transition-all z-10"
+            className="absolute top-4 right-4 bg-gray-100 rounded-full p-2 hover:bg-gray-200 transition-all z-10"
             whileHover={{ rotate: 90 }}
           >
-            <X className="w-6 h-6 text-white" />
+            <X className="w-6 h-6 text-gray-800" />
           </button>
           
           <div className="grid lg:grid-cols-3 h-full">
-            <div className="lg:col-span-1 bg-gray-800 relative">
-              <div className="h-64 lg:h-full w-full bg-gray-700 overflow-hidden">
-                {tech.image ? (
-                  <img
-                    src={tech.image}
-                    alt={tech.name}
-                    className="w-full h-full object-cover object-top"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gray-800 flex items-center justify-center text-gray-400 text-2xl font-bold">
-                    {tech.name.split(" ").map((n) => n[0]).join("")}
-                  </div>
-                )}
-              </div>
-              
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6">
-                <h2 className="text-3xl font-bold text-white">{tech.name}</h2>
-                <p className="text-blue-300 text-xl">{tech.role}</p>
+            <div className="lg:col-span-1 bg-gray-50 relative p-6">
+              <div className="flex flex-col items-center">
+                <div className="w-32 h-32 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-4xl font-bold mb-4">
+                  {tech.name.split(" ").map((n) => n[0]).join("")}
+                </div>
                 
-                <div className="flex items-center mt-4">
+                <h2 className="text-3xl font-bold text-gray-900 text-center">{tech.name}</h2>
+                <p className="text-blue-600 text-xl text-center">{tech.role}</p>
+                
+                <div className="flex items-center justify-center mt-4">
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
                       <Star 
                         key={i} 
-                        className={`w-5 h-5 ${i < Math.floor(tech.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'}`}
+                        className={`w-5 h-5 ${i < Math.floor(tech.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
                       />
                     ))}
                   </div>
-                  <span className="ml-2 text-gray-300">{tech.rating} ({tech.reviews} reviews)</span>
+                  <span className="ml-2 text-gray-600">{tech.rating} ({tech.reviews} reviews)</span>
                 </div>
               </div>
             </div>
             
             <div className="lg:col-span-2 p-8 overflow-y-auto">
-              <div className="flex border-b border-gray-700 mb-6">
+              <div className="flex border-b border-gray-200 mb-6">
                 <button
-                  className={`px-4 py-2 font-medium ${activeTab === 'overview' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-gray-400 hover:text-white'}`}
+                  className={`px-4 py-2 font-medium ${activeTab === 'overview' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-800'}`}
                   onClick={() => setActiveTab('overview')}
                 >
                   Overview
                 </button>
                 <button
-                  className={`px-4 py-2 font-medium ${activeTab === 'schedule' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-gray-400 hover:text-white'}`}
+                  className={`px-4 py-2 font-medium ${activeTab === 'schedule' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-800'}`}
                   onClick={() => setActiveTab('schedule')}
                 >
                   Schedule
                 </button>
                 <button
-                  className={`px-4 py-2 font-medium ${activeTab === 'reviews' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-gray-400 hover:text-white'}`}
+                  className={`px-4 py-2 font-medium ${activeTab === 'reviews' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-800'}`}
                   onClick={() => setActiveTab('reviews')}
                 >
                   Reviews
@@ -329,48 +279,48 @@ const TechnicianModal = ({ tech, onClose }) => {
               {activeTab === 'overview' && (
                 <div className="space-y-8">
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-4">About {tech.name.split(' ')[0]}</h3>
-                    <p className="text-gray-300 leading-relaxed">{tech.bio}</p>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">About {tech.name.split(' ')[0]}</h3>
+                    <p className="text-gray-700 leading-relaxed">{tech.bio}</p>
                   </div>
                   
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-4">Expertise</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Expertise</h3>
                     <div className="grid grid-cols-2 gap-4">
                       {tech.skills.map((skill, index) => (
                         <div key={index} className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-300">{skill}</span>
+                          <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-gray-700">{skill}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                   
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-4">Performance Stats</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Performance Stats</h3>
                     <div className="grid grid-cols-3 gap-4">
                       {tech.stats.map((stat, index) => (
-                        <div key={index} className="bg-gray-800/50 rounded-xl p-4 text-center border border-gray-700">
-                          <p className="text-2xl font-bold text-white">{stat.value}</p>
-                          <p className="text-gray-400 text-sm">{stat.label}</p>
+                        <div key={index} className="bg-gray-50 rounded-xl p-4 text-center border border-gray-200">
+                          <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                          <p className="text-gray-500 text-sm">{stat.label}</p>
                         </div>
                       ))}
                     </div>
                   </div>
                   
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-4">Contact Information</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h3>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg border border-gray-700">
-                        <Phone className="w-5 h-5 text-blue-400" />
-                        <span className="text-gray-300">{tech.phone}</span>
+                      <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                        <Phone className="w-5 h-5 text-blue-500" />
+                        <span className="text-gray-700">{tech.phone}</span>
                       </div>
-                      <div className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg border border-gray-700">
-                        <Mail className="w-5 h-5 text-blue-400" />
-                        <span className="text-gray-300">{tech.email}</span>
+                      <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                        <Mail className="w-5 h-5 text-blue-500" />
+                        <span className="text-gray-700">{tech.email}</span>
                       </div>
-                      <div className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg border border-gray-700">
-                        <MapPin className="w-5 h-5 text-blue-400" />
-                        <span className="text-gray-300">{tech.location}</span>
+                      <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                        <MapPin className="w-5 h-5 text-blue-500" />
+                        <span className="text-gray-700">{tech.location}</span>
                       </div>
                     </div>
                   </div>
@@ -380,16 +330,16 @@ const TechnicianModal = ({ tech, onClose }) => {
               {activeTab === 'schedule' && (
                 <div className="space-y-8">
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-4">Select Appointment Date</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Select Appointment Date</h3>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                       {availableDates.map((date) => (
                         <button
                           key={date.date}
-                          className={`p-3 rounded-lg border ${selectedDate === date.date ? 'border-blue-400 bg-blue-400/10' : 'border-gray-700 hover:border-gray-600'} transition-colors`}
+                          className={`p-3 rounded-lg border ${selectedDate === date.date ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'} transition-colors`}
                           onClick={() => setSelectedDate(date.date)}
                         >
-                          <p className="text-white font-medium">{date.day}</p>
-                          <p className="text-gray-400 text-sm">{date.date.split('-')[2]}/{date.date.split('-')[1]}</p>
+                          <p className="text-gray-900 font-medium">{date.day}</p>
+                          <p className="text-gray-500 text-sm">{date.date.split('-')[2]}/{date.date.split('-')[1]}</p>
                         </button>
                       ))}
                     </div>
@@ -397,15 +347,15 @@ const TechnicianModal = ({ tech, onClose }) => {
                   
                   {selectedDate && (
                     <div>
-                      <h3 className="text-xl font-bold text-white mb-4">Available Time Slots</h3>
+                      <h3 className="text-xl font-bold text-gray-900 mb-4">Available Time Slots</h3>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                         {availableTimes.map((time) => (
                           <button
                             key={time}
-                            className={`p-3 rounded-lg border ${selectedTime === time ? 'border-blue-400 bg-blue-400/10' : 'border-gray-700 hover:border-gray-600'} transition-colors`}
+                            className={`p-3 rounded-lg border ${selectedTime === time ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'} transition-colors`}
                             onClick={() => setSelectedTime(time)}
                           >
-                            <p className="text-white">{time}</p>
+                            <p className="text-gray-900">{time}</p>
                           </button>
                         ))}
                       </div>
@@ -426,20 +376,20 @@ const TechnicianModal = ({ tech, onClose }) => {
               
               {activeTab === 'reviews' && (
                 <div className="space-y-6">
-                  <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+                  <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
                     <div className="flex items-center justify-between mb-4">
                       <div>
-                        <p className="text-4xl font-bold text-white">{tech.rating}</p>
+                        <p className="text-4xl font-bold text-gray-900">{tech.rating}</p>
                         <div className="flex">
                           {[...Array(5)].map((_, i) => (
                             <Star 
                               key={i} 
-                              className={`w-5 h-5 ${i < Math.floor(tech.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'}`}
+                              className={`w-5 h-5 ${i < Math.floor(tech.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
                             />
                           ))}
                         </div>
                       </div>
-                      <div className="text-gray-300">
+                      <div className="text-gray-600">
                         <p>{tech.reviews} reviews</p>
                         <p className="text-sm">98% positive</p>
                       </div>
@@ -448,8 +398,8 @@ const TechnicianModal = ({ tech, onClose }) => {
                     <div className="space-y-3">
                       {[5, 4, 3, 2, 1].map((star) => (
                         <div key={star} className="flex items-center gap-3">
-                          <span className="text-gray-400 w-8">{star} star</span>
-                          <div className="flex-1 bg-gray-700 rounded-full h-2">
+                          <span className="text-gray-500 w-8">{star} star</span>
+                          <div className="flex-1 bg-gray-200 rounded-full h-2">
                             <div 
                               className="bg-yellow-400 h-2 rounded-full" 
                               style={{ width: `${(star === 5 ? 80 : star === 4 ? 15 : star === 3 ? 3 : star === 2 ? 1 : 1)}%` }}
@@ -462,29 +412,29 @@ const TechnicianModal = ({ tech, onClose }) => {
                   
                   <div className="space-y-6">
                     {[1, 2, 3].map((review) => (
-                      <div key={review} className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
+                      <div key={review} className="bg-gray-50 rounded-xl p-6 border border-gray-200">
                         <div className="flex justify-between mb-3">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-400">
+                            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600">
                               {review === 1 ? 'JD' : review === 2 ? 'SM' : 'TK'}
                             </div>
                             <div>
-                              <p className="font-medium text-white">
+                              <p className="font-medium text-gray-900">
                                 {review === 1 ? 'John D.' : review === 2 ? 'Sarah M.' : 'Thomas K.'}
                               </p>
                               <div className="flex">
                                 {[...Array(5)].map((_, i) => (
                                   <Star 
                                     key={i} 
-                                    className={`w-4 h-4 ${i < (review === 1 ? 5 : review === 2 ? 4 : 5) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'}`}
+                                    className={`w-4 h-4 ${i < (review === 1 ? 5 : review === 2 ? 4 : 5) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
                                   />
                                 ))}
                               </div>
                             </div>
                           </div>
-                          <span className="text-gray-400 text-sm">2 weeks ago</span>
+                          <span className="text-gray-500 text-sm">2 weeks ago</span>
                         </div>
-                        <p className="text-gray-300">
+                        <p className="text-gray-700">
                           {review === 1 
                             ? `${tech.name} provided exceptional service. My device was repaired faster than expected and works perfectly now. Highly recommend!`
                             : review === 2
@@ -614,13 +564,13 @@ const StatCard = ({ value, label, index }) => {
   return (
     <motion.div
       ref={ref}
-      className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700 shadow-lg"
+      className="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg"
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.1, duration: 0.6 }}
     >
-      <p className="text-4xl font-bold text-white mb-2">{value}</p>
-      <p className="text-gray-400">{label}</p>
+      <p className="text-4xl font-bold text-gray-900 mb-2">{value}</p>
+      <p className="text-gray-600">{label}</p>
     </motion.div>
   );
 };
@@ -631,7 +581,7 @@ const SpecialtyCard = ({ icon, name, color, index }) => {
   return (
     <motion.div
       ref={ref}
-      className="bg-gray-900 rounded-2xl p-6 border border-gray-700 hover:border-gray-600 transition-colors group"
+      className="bg-white rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition-colors group"
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.1, duration: 0.6 }}
@@ -639,8 +589,8 @@ const SpecialtyCard = ({ icon, name, color, index }) => {
       <div className={`w-12 h-12 rounded-lg ${color} bg-opacity-20 flex items-center justify-center mb-4 group-hover:bg-opacity-30 transition-all`}>
         {icon}
       </div>
-      <h3 className="text-xl font-bold text-white mb-2">{name}</h3>
-      <p className="text-gray-400">
+      <h3 className="text-xl font-bold text-gray-900 mb-2">{name}</h3>
+      <p className="text-gray-600">
         {name === "Hardware" 
           ? "Component-level repairs and diagnostics"
           : name === "Networking"
@@ -695,19 +645,8 @@ const Technicians = () => {
   return (
     <div
       ref={techSectionRef}
-      className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-950 text-white overflow-hidden"
+      className="min-h-screen bg-white text-gray-900 overflow-hidden"
     >
-      {/* Animated background elements */}
-      <motion.div 
-        className="fixed inset-0 overflow-hidden pointer-events-none"
-        style={{ y }}
-      >
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10" />
-        <div className="absolute top-1/4 -left-20 w-96 h-96 rounded-full bg-blue-900/20 blur-3xl" />
-        <div className="absolute bottom-1/3 -right-20 w-96 h-96 rounded-full bg-purple-900/20 blur-3xl" />
-        <div className="absolute top-1/3 right-1/4 w-64 h-64 rounded-full bg-indigo-900/20 blur-3xl" />
-      </motion.div>
-
       <div className="relative z-10">
         {/* Hero Section */}
         <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
@@ -723,12 +662,12 @@ const Technicians = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                 Elite Technical Experts
               </span>
             </motion.h1>
             <motion.p
-              className="text-xl text-gray-300 max-w-3xl mx-auto"
+              className="text-xl text-gray-600 max-w-3xl mx-auto"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -763,7 +702,7 @@ const Technicians = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                 Our Specialties
               </span>
             </motion.h2>
@@ -794,13 +733,13 @@ const Technicians = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                 Meet the Team
               </span>
             </motion.h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {technicians.map((tech, index) => (
+              {technicians.map((tech) => (
                 <TechnicianCard 
                   key={tech.id} 
                   tech={tech} 
@@ -824,32 +763,32 @@ const Technicians = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                   Our Work Gallery
                 </span>
               </motion.h2>
               
-              <div className="flex items-center gap-2 bg-gray-900 rounded-full p-1 border border-gray-700">
+              <div className="flex items-center gap-2 bg-gray-100 rounded-full p-1 border border-gray-200">
                 <button
-                  className={`px-4 py-1.5 rounded-full text-sm ${activeFilter === 'all' ? 'bg-gray-700 text-white' : 'text-gray-400 hover:text-white'}`}
+                  className={`px-4 py-1.5 rounded-full text-sm ${activeFilter === 'all' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
                   onClick={() => setActiveFilter('all')}
                 >
                   All
                 </button>
                 <button
-                  className={`px-4 py-1.5 rounded-full text-sm ${activeFilter === 'repair' ? 'bg-gray-700 text-white' : 'text-gray-400 hover:text-white'}`}
+                  className={`px-4 py-1.5 rounded-full text-sm ${activeFilter === 'repair' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
                   onClick={() => setActiveFilter('repair')}
                 >
                   Repairs
                 </button>
                 <button
-                  className={`px-4 py-1.5 rounded-full text-sm ${activeFilter === 'networking' ? 'bg-gray-700 text-white' : 'text-gray-400 hover:text-white'}`}
+                  className={`px-4 py-1.5 rounded-full text-sm ${activeFilter === 'networking' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
                   onClick={() => setActiveFilter('networking')}
                 >
                   Networking
                 </button>
                 <button
-                  className={`px-4 py-1.5 rounded-full text-sm ${activeFilter === 'team' ? 'bg-gray-700 text-white' : 'text-gray-400 hover:text-white'}`}
+                  className={`px-4 py-1.5 rounded-full text-sm ${activeFilter === 'team' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
                   onClick={() => setActiveFilter('team')}
                 >
                   Team

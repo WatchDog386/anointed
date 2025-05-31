@@ -7,12 +7,12 @@ import {
 import { FaWhatsapp } from "react-icons/fa";
 
 const issues = [
-  { value: "hardware", label: "Hardware", icon: <Wrench className="w-8 h-8 text-yellow-400" /> },
-  { value: "networking", label: "Networking", icon: <Wifi className="w-8 h-8 text-green-400" /> },
-  { value: "software", label: "Software", icon: <Code2 className="w-8 h-8 text-purple-400" /> },
+  { value: "hardware", label: "Hardware", icon: <Wrench className="w-8 h-8 text-yellow-500" /> },
+  { value: "networking", label: "Networking", icon: <Wifi className="w-8 h-8 text-green-500" /> },
+  { value: "software", label: "Software", icon: <Code2 className="w-8 h-8 text-purple-500" /> },
   { value: "security", label: "Security", icon: <Shield className="w-8 h-8 text-red-500" /> },
-  { value: "webdev", label: "Web Dev", icon: <Code2 className="w-8 h-8 text-pink-400" /> },
-  { value: "cloud", label: "Cloud", icon: <Cloud className="w-8 h-8 text-blue-400" /> },
+  { value: "webdev", label: "Web Dev", icon: <Code2 className="w-8 h-8 text-pink-500" /> },
+  { value: "cloud", label: "Cloud", icon: <Cloud className="w-8 h-8 text-blue-500" /> },
 ];
 
 const Contact = () => {
@@ -39,158 +39,216 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen px-6 pt-20 pb-0 bg-gradient-to-br from-gray-900 to-blue-900/10 text-white relative">
-      <style>{`
-        @keyframes move-line {
-          0% { transform: translateX(0) translateY(0); }
-          25% { transform: translateX(100%) translateY(0); }
-          50% { transform: translateX(100%) translateY(100%); }
-          75% { transform: translateX(0) translateY(100%); }
-          100% { transform: translateX(0) translateY(0); }
-        }
-      `}</style>
-
+    <div className="min-h-screen px-6 pt-20 pb-0 bg-white text-gray-800 relative">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="max-w-6xl mx-auto relative z-10"
       >
-        <h1 className="text-5xl font-bold text-center mb-10 bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
-          Contact Us
-        </h1>
-
-        {/* Contact Info Boxes */}
-        <div className="grid md:grid-cols-3 gap-6 mb-10">
-          {[
-            { icon: <Phone className="w-6 h-6 text-blue-400" />, text: "Knox: +254726818938 / 0724169963" },
-            { icon: <Mail className="w-6 h-6 text-blue-400" />, text: "knoxvilletechnologies@gmail.com" },
-            { icon: <MapPin className="w-6 h-6 text-blue-400" />, text: "LUCKY SUMMER-RUARAKA-Thoram House building postcode 29885-00100" },
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
-              className="flex items-center gap-4 p-4 bg-gray-800 rounded-xl border border-cyan-400 shadow-md hover:shadow-lg hover:scale-105 transition"
-            >
-              {item.icon}
-              <span>{item.text}</span>
-            </motion.div>
-          ))}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+            Get in Touch
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Have questions or need support? Reach out to our team and we'll get back to you promptly.
+          </p>
         </div>
 
-        {/* WhatsApp Quick Chat */}
-        <div className="flex justify-center mb-12">
-          <motion.a
-            href="https://wa.me/254726818938"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Chat with us on WhatsApp"
-            className="inline-flex items-center gap-3 bg-green-600 text-white px-6 py-3 rounded-full shadow-md hover:bg-green-700 transition-colors duration-200 text-base sm:text-lg"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <FaWhatsapp className="w-6 h-6 shrink-0" />
-            <span className="whitespace-nowrap">Chat with us for instant help</span>
-          </motion.a>
-        </div>
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
+          {/* Contact Information */}
+          <div className="space-y-8">
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-gray-900">Contact Information</h2>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="bg-blue-100 p-3 rounded-full">
+                    <Phone className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Phone</h3>
+                    <p className="text-gray-600">+254 726 818 938</p>
+                    <p className="text-gray-600">+254 724 169 963</p>
+                  </div>
+                </div>
 
-        {/* FORM */}
-        <motion.form
-          onSubmit={handleSubmit}
-          className="bg-gray-900 p-10 rounded-3xl shadow-2xl space-y-8 relative overflow-hidden"
-        >
-          {/* Animated Border */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute w-full h-1 bg-cyan-400 animate-[move-line_6s_linear_infinite]" />
-            <div className="absolute h-full w-1 bg-cyan-400 animate-[move-line_6s_linear_infinite] delay-[1.5s]" style={{ right: 0 }} />
-            <div className="absolute w-full h-1 bg-cyan-400 animate-[move-line_6s_linear_infinite] delay-[3s]" style={{ bottom: 0 }} />
-            <div className="absolute h-full w-1 bg-cyan-400 animate-[move-line_6s_linear_infinite] delay-[4.5s]" />
-          </div>
+                <div className="flex items-start gap-4">
+                  <div className="bg-blue-100 p-3 rounded-full">
+                    <Mail className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Email</h3>
+                    <p className="text-gray-600">knoxvilletechnologies@gmail.com</p>
+                  </div>
+                </div>
 
-          <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <motion.input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Your Name"
-              className="w-full p-4 rounded-xl bg-gray-800 placeholder-gray-400"
-              required
-              whileInView={{ opacity: 1, y: 0 }}
-              initial={{ opacity: 0, y: 20 }}
-              viewport={{ once: true }}
-            />
-            <motion.input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Your Email"
-              className="w-full p-4 rounded-xl bg-gray-800 placeholder-gray-400"
-              required
-              whileInView={{ opacity: 1, y: 0 }}
-              initial={{ opacity: 0, y: 20 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            />
-          </motion.div>
+                <div className="flex items-start gap-4">
+                  <div className="bg-blue-100 p-3 rounded-full">
+                    <MapPin className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Address</h3>
+                    <p className="text-gray-600">LUCKY SUMMER-RUARAKA</p>
+                    <p className="text-gray-600">Opposite Naivas, Thoram House</p>
+                    <p className="text-gray-600">Postcode 29885-00100</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {issues.map((issue) => (
-              <motion.div
-                key={issue.value}
-                onClick={() => setFormData({ ...formData, issue: issue.value })}
-                className={`cursor-pointer p-4 rounded-xl bg-gray-800 flex flex-col items-center gap-2 border-2 ${formData.issue === issue.value ? "border-cyan-400" : "border-transparent"} transition`}
+            {/* WhatsApp Quick Chat */}
+            <div className="pt-4">
+              <motion.a
+                href="https://wa.me/254726818938"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat with us on WhatsApp"
+                className="inline-flex items-center gap-3 bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition-colors duration-200 text-base sm:text-lg"
                 whileHover={{ scale: 1.05 }}
               >
-                {issue.icon}
-                <span>{issue.label}</span>
-              </motion.div>
-            ))}
+                <FaWhatsapp className="w-6 h-6 shrink-0" />
+                <span className="whitespace-nowrap">Chat with us on WhatsApp</span>
+              </motion.a>
+            </div>
+
+            {/* Office Hours */}
+            <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
+              <h3 className="font-semibold text-gray-900 mb-3">Working Hours</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li className="flex justify-between">
+                  <span>Monday - Friday</span>
+                  <span className="font-medium">8:00 AM - 5:00 PM</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Saturday</span>
+                  <span className="font-medium">9:00 AM - 2:00 PM</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Sunday</span>
+                  <span className="font-medium">Closed</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <motion.textarea
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            placeholder="Your Message"
-            rows="5"
-            className="w-full p-4 rounded-xl bg-gray-800 placeholder-gray-400"
-            required
+          {/* Contact Form */}
+          <motion.form
+            onSubmit={handleSubmit}
+            className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 space-y-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          />
-
-          <motion.button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
-            Submit & Find Technician
-          </motion.button>
-        </motion.form>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Send Us a Message</h2>
+            <p className="text-gray-600 mb-6">Fill out the form below and we'll get back to you soon</p>
 
-        <div className="mt-16 text-center text-gray-400 text-sm pb-10">
-        
+            <div className="grid grid-cols-1 gap-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Your Name"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="your.email@example.com"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  What can we help you with?
+                </label>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {issues.map((issue) => (
+                    <motion.div
+                      key={issue.value}
+                      onClick={() => setFormData({ ...formData, issue: issue.value })}
+                      className={`cursor-pointer p-3 rounded-lg flex flex-col items-center gap-2 border ${formData.issue === issue.value ? "border-blue-500 bg-blue-50" : "border-gray-200 hover:border-gray-300"} transition`}
+                      whileHover={{ scale: 1.03 }}
+                    >
+                      {issue.icon}
+                      <span className="text-sm text-center">{issue.label}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                  Your Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="How can we help you?"
+                  rows="5"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  required
+                />
+              </div>
+
+              <motion.button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Submit Message
+              </motion.button>
+            </div>
+          </motion.form>
+        </div>
+
+        {/* Map Section */}
+        <div className="mb-16">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Location</h2>
+          <div className="bg-gray-100 rounded-xl overflow-hidden border border-gray-200 h-96">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.416314657456!2d36.8701933338654!3d-1.2416810249006586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f172f478cf6d7%3A0x9ff70d276cc229f4!2sThoram%20House%2C%20Lucky%20Summer!5e0!3m2!1sen!2ske!4v1717140000000!5m2!1sen!2ske"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              title="Knoxville Technologies Location"
+            ></iframe>
+          </div>
         </div>
       </motion.div>
 
-      {/* Floating WhatsApp */}
+      {/* Floating WhatsApp with Label */}
       <a
         href="https://wa.me/254726818938"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg z-50"
-        aria-label="Chat on WhatsApp"
+        className="fixed bottom-6 right-6 bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-full shadow-lg flex items-center gap-2 z-50 transition-transform hover:scale-110"
+        aria-label="Reach us on WhatsApp"
       >
-        <FaWhatsapp className="w-6 h-6" />
+        <FaWhatsapp className="w-5 h-5" />
+        <span className="text-sm font-medium">Reach Us</span>
       </a>
     </div>
   );

@@ -1,165 +1,269 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Wifi, Clock, CreditCard, HardHat, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
-import CoverageMap from "./CoverageMap";
+import {
+  User,
+  CreditCard,
+  Settings,
+  HelpCircle
+} from "lucide-react";
 
 const faqsData = {
-  Coverage: {
-    icon: <Wifi className="w-5 h-5 text-cyan-400" />,
+  "Account Management": {
+    icon: <User className="w-5 h-5 text-purple-500" />,
     items: [
       {
-        question: "What areas do you currently serve in Nairobi?",
+        question: "How do I create a self-care account?",
         answer: (
-          <div className="space-y-4">
-            <p>
-              Our fiber network currently covers these key areas in Nairobi:
-            </p>
-            <div className="grid md:grid-cols-2 gap-3">
-              <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
-                <h4 className="font-medium text-green-400 flex items-center gap-2 text-sm">
-                  <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                  Available Now
-                </h4>
-                <ul className="list-disc pl-5 mt-2 space-y-1 text-sm">
-                  <li>Westlands (100% coverage)</li>
-                  <li>Kilimani (95% coverage)</li>
-                  <li>Karen (85% coverage)</li>
-                  <li>Lavington (90% coverage)</li>
-                  <li>Parklands (80% coverage)</li>
-                </ul>
-              </div>
-              <div className="bg-yellow-900/20 p-4 rounded-lg border border-yellow-500/30">
-                <h4 className="font-medium text-yellow-400 flex items-center gap-2 text-sm">
-                  <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
-                  Coming Soon
-                </h4>
-                <ul className="list-disc pl-5 mt-2 space-y-1 text-sm">
-                  <li>Runda (Q3 2024)</li>
-                  <li>Kileleshwa (Q4 2024)</li>
-                  <li>Langata (Q1 2025)</li>
-                </ul>
-              </div>
-            </div>
-            <div className="bg-blue-900/20 p-4 rounded-lg border border-blue-500/30">
-              <h4 className="font-medium text-blue-400 flex items-center gap-2 text-sm">
-                <span className="w-2 h-2 rounded-full bg-blue-500"></span>
-                Planned Expansion
-              </h4>
-              <ul className="list-disc pl-5 mt-2 space-y-1 text-sm">
-                <li>Embakasi (2025)</li>
-                <li>Kasarani (2025)</li>
-                <li>Dagoretti (2026)</li>
-              </ul>
-            </div>
-            <div className="bg-white/5 p-4 rounded-lg">
-              <h4 className="font-medium text-white flex items-center gap-2 text-sm">
-                <MapPin className="w-4 h-4 text-red-400" />
-                Live Coverage Map
-              </h4>
-              <div className="h-48 rounded-lg overflow-hidden border border-white/10 mt-2">
-                <CoverageMap interactive={false} />
-              </div>
-            </div>
-          </div>
-        ),
-      },
-      {
-        question: "How do I check service availability for my address?",
-        answer: (
-          <div className="space-y-4">
-            <p>
-              You can check service availability through these methods:
-            </p>
-            <ol className="list-decimal pl-5 space-y-3 text-sm">
-              <li>
-                <strong>Interactive Map:</strong> Our live coverage map shows real-time availability with color-coded zones:
-                <ul className="list-disc pl-5 mt-2 space-y-1">
-                  <li className="text-green-400">Green: Available now</li>
-                  <li className="text-yellow-400">Yellow: Coming soon</li>
-                  <li className="text-blue-400">Blue: Planned future expansion</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Address Checker:</strong> Enter your exact address on our signup page
-              </li>
-              <li>
-                <strong>On-Site Survey:</strong> Free professional surveys (typically within 72 hours)
-              </li>
+          <div className="space-y-3">
+            <p>To create your self-care account:</p>
+            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+              <li>Visit our self-care portal at selfcare.vtl.co.ke</li>
+              <li>Click on 'Register'</li>
+              <li>Enter your account number and registered phone number</li>
+              <li>Create a password and verify your identity via SMS</li>
+              <li>Complete your profile details</li>
             </ol>
-            <div className="bg-white/5 p-3 rounded-lg border border-white/10 text-xs">
-              <p className="text-gray-400">
-                <strong>Note:</strong> Some buildings may require additional construction.
-              </p>
+            <div className="bg-blue-50 p-3 rounded border border-blue-200 text-sm text-blue-700">
+              <p>Note: Your account number can be found on your invoice or by contacting customer care.</p>
             </div>
           </div>
         ),
       },
       {
-        question: "What's the timeline for new coverage areas?",
+        question: "I forgot my password. How can I reset it?",
         answer: (
-          <div className="space-y-4">
-            <p>
-              Our Nairobi expansion schedule for the next 24 months:
-            </p>
-            <div className="grid md:grid-cols-2 gap-3">
-              <div className="bg-white/5 p-4 rounded-lg border border-yellow-500/20">
-                <h4 className="font-medium text-yellow-400 text-sm">Q3-Q4 2024</h4>
-                <ul className="list-disc pl-5 mt-2 space-y-1 text-sm">
-                  <li>Runda Phase 1 completion</li>
-                  <li>Kileleshwa core activation</li>
-                  <li>Hurlingham expansion</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 p-4 rounded-lg border border-blue-500/20">
-                <h4 className="font-medium text-blue-400 text-sm">2025</h4>
-                <ul className="list-disc pl-5 mt-2 space-y-1 text-sm">
-                  <li>Embakasi corridor deployment</li>
-                  <li>Kasarani infrastructure</li>
-                  <li>Langata Phase 2 completion</li>
-                </ul>
-              </div>
+          <div className="space-y-3">
+            <p>Password reset options:</p>
+            <ul className="list-disc pl-5 space-y-2 text-gray-700">
+              <li>Click 'Forgot Password' on the login page</li>
+              <li>Enter your registered email or phone number</li>
+              <li>Follow the OTP verification process</li>
+              <li>Set a new strong password</li>
+            </ul>
+            <div className="bg-yellow-50 p-3 rounded border border-yellow-200 text-sm text-yellow-800">
+              <p>Security Tip: Use a combination of letters, numbers and special characters for your password.</p>
             </div>
-            <p className="text-xs text-gray-400">
-              <Link to="/expansion-plans" className="text-cyan-400 hover:underline">
-                View detailed expansion roadmap with maps →
-              </Link>
-            </p>
+          </div>
+        ),
+      },
+      {
+        question: "How do I update my account information?",
+        answer: (
+          <div className="space-y-3">
+            <p>To update your account details:</p>
+            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+              <li>Log in to your self-care account</li>
+              <li>Go to 'Profile Settings'</li>
+              <li>Edit the information you want to change</li>
+              <li>Save your changes</li>
+            </ol>
+            <div className="bg-green-50 p-3 rounded border border-green-200 text-sm text-green-800">
+              <p>Important: Some changes may require verification for security purposes.</p>
+            </div>
           </div>
         ),
       },
     ],
   },
-  Installation: {
-    icon: <HardHat className="w-5 h-5 text-teal-400" />,
+  "Billing & Payments": {
+    icon: <CreditCard className="w-5 h-5 text-blue-500" />,
     items: [
       {
-        question: "What's the installation process?",
-        answer: "Our certified technicians handle everything from trenching to equipment setup, typically completing installations within 3-5 business days.",
+        question: "How can I view my current bill?",
+        answer: (
+          <div className="space-y-3">
+            <p>View your bill through:</p>
+            <ul className="list-disc pl-5 space-y-2 text-gray-700">
+              <li>Self-care portal dashboard</li>
+              <li>Email notifications (if subscribed)</li>
+              <li>Mobile app under 'Billing' section</li>
+            </ul>
+            <div className="bg-purple-50 p-3 rounded border border-purple-200 text-sm text-purple-700">
+              <p>Tip: Enable auto-notifications to receive bills directly to your email.</p>
+            </div>
+          </div>
+        ),
       },
       {
-        question: "Do I need special equipment?",
-        answer: "We provide all necessary ONT equipment and routers certified for our 10Gbps network.",
+        question: "What payment methods are available?",
+        answer: (
+          <div className="space-y-3">
+            <p>We accept multiple payment options:</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="bg-gray-50 p-3 rounded border border-green-200 text-sm text-green-700">
+                <h4 className="font-medium mb-2">Online Payments</h4>
+                <ul className="space-y-1">
+                  <li>• M-Pesa</li>
+                  <li>• Credit/Debit Cards</li>
+                  <li>• Bank Transfer</li>
+                </ul>
+              </div>
+              <div className="bg-gray-50 p-3 rounded border border-blue-200 text-sm text-blue-700">
+                <h4 className="font-medium mb-2">Offline Payments</h4>
+                <ul className="space-y-1">
+                  <li>• VTL Payment Centers</li>
+                  <li>• Authorized Agents</li>
+                  <li>• Bank Deposit</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        question: "How do I set up auto-pay?",
+        answer: (
+          <div className="space-y-3">
+            <p>To enable auto-payments:</p>
+            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+              <li>Log in to your self-care account</li>
+              <li>Navigate to 'Payment Methods'</li>
+              <li>Select 'Set Up Auto-Pay'</li>
+              <li>Choose your preferred payment method</li>
+              <li>Set payment threshold and confirm</li>
+            </ol>
+            <div className="bg-yellow-50 p-3 rounded border border-yellow-200 text-sm text-yellow-800">
+              <p>Note: You'll receive notifications before each auto-payment is processed.</p>
+            </div>
+          </div>
+        ),
       },
     ],
   },
-  Billing: {
-    icon: <CreditCard className="w-5 h-5 text-purple-400" />,
+  "Service Management": {
+    icon: <Settings className="w-5 h-5 text-green-500" />,
     items: [
       {
-        question: "What payment methods do you accept?",
-        answer: "We accept all major credit cards, ACH transfers, and offer automatic payment scheduling.",
+        question: "How do I upgrade my internet package?",
+        answer: (
+          <div className="space-y-3">
+            <p>Package upgrade options:</p>
+            <ul className="list-disc pl-5 space-y-2 text-gray-700">
+              <li>Through self-care portal under 'Packages'</li>
+              <li>Via mobile app by selecting new package</li>
+              <li>By contacting customer support</li>
+            </ul>
+            <div className="bg-blue-50 p-3 rounded border border-blue-200 text-sm text-blue-700">
+              <p>Changes take effect immediately or at next billing cycle based on your selection.</p>
+            </div>
+          </div>
+        ),
       },
       {
-        question: "Are there service contracts?",
-        answer: "No long-term contracts - our month-to-month plans include professional installation at no extra cost.",
+        question: "Can I temporarily suspend my service?",
+        answer: (
+          <div className="space-y-3">
+            <p>Service suspension options:</p>
+            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+              <li>Minimum suspension period: 7 days</li>
+              <li>Maximum suspension period: 90 days</li>
+              <li>Reduced monthly charges during suspension</li>
+              <li>Reactivate anytime through self-care</li>
+            </ol>
+            <div className="bg-purple-50 p-3 rounded border border-purple-200 text-sm text-purple-700">
+              <p>Note: Equipment must remain connected during suspension.</p>
+            </div>
+          </div>
+        ),
+      },
+      {
+        question: "How do I report service issues?",
+        answer: (
+          <div className="space-y-3">
+            <p>Service issue reporting channels:</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="bg-red-50 p-3 rounded border border-red-200 text-sm text-red-700">
+                <h4 className="font-medium mb-2">Self-Service</h4>
+                <ul className="space-y-1">
+                  <li>• Online troubleshooting</li>
+                  <li>• Service status check</li>
+                  <li>• Ticket submission</li>
+                </ul>
+              </div>
+              <div className="bg-green-50 p-3 rounded border border-green-200 text-sm text-green-700">
+                <h4 className="font-medium mb-2">Support</h4>
+                <ul className="space-y-1">
+                  <li>• Live chat (24/7)</li>
+                  <li>• Phone support</li>
+                  <li>• Technician dispatch</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+    ],
+  },
+  "Technical Support": {
+    icon: <HelpCircle className="w-5 h-5 text-orange-500" />,
+    items: [
+      {
+        question: "What should I do if my internet is down?",
+        answer: (
+          <div className="space-y-3">
+            <p>First troubleshooting steps:</p>
+            <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+              <li>Check all cable connections</li>
+              <li>Restart your router/modem</li>
+              <li>Check for service alerts in your area</li>
+              <li>Run speed test from self-care portal</li>
+              <li>Submit trouble ticket if issue persists</li>
+            </ol>
+            <div className="bg-red-50 p-3 rounded border border-red-200 text-sm text-red-700">
+              <p>Emergency: Call 0700 123 456 for immediate assistance with outages.</p>
+            </div>
+          </div>
+        ),
+      },
+      {
+        question: "How do I optimize my Wi-Fi connection?",
+        answer: (
+          <div className="space-y-3">
+            <p>Wi-Fi optimization tips:</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="bg-blue-50 p-3 rounded border border-blue-200 text-sm text-blue-700">
+                <h4 className="font-medium mb-2">Placement</h4>
+                <ul className="space-y-1">
+                  <li>• Central location</li>
+                  <li>• Elevated position</li>
+                  <li>• Away from interference</li>
+                </ul>
+              </div>
+              <div className="bg-green-50 p-3 rounded border border-green-200 text-sm text-green-700">
+                <h4 className="font-medium mb-2">Settings</h4>
+                <ul className="space-y-1">
+                  <li>• 5GHz for speed</li>
+                  <li>• 2.4GHz for range</li>
+                  <li>• Channel optimization</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        question: "How do I connect multiple devices?",
+        answer: (
+          <div className="space-y-3">
+            <p>Device connection options:</p>
+            <ul className="list-disc pl-5 space-y-2 text-gray-700">
+              <li>Standard routers support 10-15 devices</li>
+              <li>Upgrade to mesh system for larger homes</li>
+              <li>Use wired connections for stationary devices</li>
+              <li>Enable guest network for visitors</li>
+            </ul>
+            <div className="bg-purple-50 p-3 rounded border border-purple-200 text-sm text-purple-700">
+              <p>Tip: Monitor connected devices through self-care portal.</p>
+            </div>
+          </div>
+        ),
       },
     ],
   },
 };
 
 export default function Faqs() {
-  const [activeCategory, setActiveCategory] = useState("Coverage");
+  const [activeCategory, setActiveCategory] = useState("Account Management");
   const [openIndex, setOpenIndex] = useState(null);
   const [search, setSearch] = useState("");
 
@@ -168,17 +272,7 @@ export default function Faqs() {
   );
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 py-16 px-4 sm:px-6 lg:px-8 text-white relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0LjVMMjQgMjEuNSAyMS41IDI0IDM0LjUgMzYgMzYgMzQuNXpNMTggMzYuNUwxMC41IDI4IDggMzAuNSAxNS41IDM5IDE4IDM2LjV6TTMwLjUgMTguNUwxOS41IDcuNSAxNyAxMCAyOCAyMSAzMC41IDE4LjV6TTM2IDE4LjVMMjQgNS41IDIxLjUgOCAzMy41IDIxIDM2IDE4LjV6TTE4IDMwLjVMMTAuNSAyMyA4IDI1LjUgMTUuNSAzMyAxOCAzMC41eiIvPjwvZz48L2c+PC9zdmc+')]"
-        />
-        
-        {/* Corner Glow */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full filter blur-3xl" />
-      </div>
-
+    <section className="min-h-screen bg-white py-16 px-4 sm:px-6 lg:px-8 text-gray-900 relative overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
@@ -187,33 +281,14 @@ export default function Faqs() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-12"
         >
-          <motion.h2 
-            className="text-3xl sm:text-4xl font-bold text-white mb-3"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-          >
-            Fiber Network Support
-          </motion.h2>
-          <motion.p 
-            className="text-gray-400 max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            Answers to common questions about our fiber optic services in Nairobi
-          </motion.p>
+          <h2 className="text-4xl font-bold mb-2">Knoxville Tech LTD Self-Care Portal</h2>
+          <p className="text-gray-600">Manage your account, services, and get support 24/7</p>
         </motion.div>
 
         {/* Category Tabs */}
-        <motion.div 
-          className="flex flex-wrap gap-2 justify-center mb-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
           {Object.entries(faqsData).map(([key, { icon }]) => (
-            <motion.button
+            <button
               key={key}
               onClick={() => {
                 setActiveCategory(key);
@@ -222,43 +297,29 @@ export default function Faqs() {
               }}
               className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all ${
                 activeCategory === key
-                  ? "bg-cyan-600 text-white shadow-lg shadow-cyan-500/20"
-                  : "bg-white/5 text-gray-300 hover:bg-white/10"
+                  ? "bg-cyan-500 text-white shadow-md"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               {icon}
-              <span className="text-sm font-medium">{key}</span>
-            </motion.button>
+              <span className="text-sm">{key}</span>
+            </button>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Search */}
-        <motion.div 
-          className="max-w-3xl mx-auto mb-8"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <div className="relative">
-            <input
-              type="text"
-              placeholder={`Search ${activeCategory} FAQs...`}
-              className="w-full px-4 py-2 rounded-lg border border-white/10 bg-white/5 placeholder-gray-500 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-sm"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-        </motion.div>
+        {/* Search Bar */}
+        <div className="max-w-xl mx-auto mb-8">
+          <input
+            type="text"
+            placeholder={`Search ${activeCategory} FAQs...`}
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 placeholder-gray-500 text-gray-900 focus:ring-2 focus:ring-cyan-500 text-sm"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
 
-        {/* FAQ Grid */}
-        <motion.div 
-          className="grid md:grid-cols-2 gap-4 max-w-6xl mx-auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
+        {/* FAQ List */}
+        <div className="grid md:grid-cols-2 gap-6">
           <AnimatePresence mode="wait">
             {filteredFaqs.map((faq, i) => (
               <motion.div
@@ -267,98 +328,49 @@ export default function Faqs() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 overflow-hidden"
-                whileHover={{ y: -2 }}
+                className="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden"
               >
-                <motion.button
-                  className="w-full p-4 text-left flex justify-between items-start"
+                <button
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  className="w-full p-4 text-left flex justify-between items-center"
                 >
-                  <div className="flex-1">
-                    <h3 className="text-base font-medium text-white">
-                      {faq.question}
-                    </h3>
-                    <AnimatePresence>
-                      {openIndex === i && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ 
-                            opacity: 1, 
-                            height: "auto",
-                            transition: { 
-                              opacity: { duration: 0.3 },
-                              height: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
-                            }
-                          }}
-                          exit={{ 
-                            opacity: 0, 
-                            height: 0,
-                            transition: { 
-                              opacity: { duration: 0.2 },
-                              height: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
-                            }
-                          }}
-                          className="pt-3 text-gray-300 text-sm"
-                        >
-                          {typeof faq.answer === "string" ? (
-                            <p>{faq.answer}</p>
-                          ) : (
-                            faq.answer
-                          )}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                  <motion.div
+                  <h3 className="text-base font-medium">{faq.question}</h3>
+                  <motion.span
                     animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    className="text-gray-400 ml-3"
+                    className="text-gray-500"
                   >
-                    <ChevronDown className="w-5 h-5" />
-                  </motion.div>
-                </motion.button>
+                    {/* Chevron Icon */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </motion.span>
+                </button>
+                <AnimatePresence>
+                  {openIndex === i && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="px-4 pb-4 text-gray-700 text-sm"
+                    >
+                      {faq.answer}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
-
-        {/* Support CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="mt-12 text-center bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10"
-        >
-          <div className="max-w-2xl mx-auto">
-            <motion.div
-              animate={{ 
-                rotate: [0, 10, -10, 0],
-                transition: { 
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatType: "mirror",
-                  ease: "easeInOut"
-                }
-              }}
-            >
-              <Clock className="w-10 h-10 text-cyan-400 mx-auto mb-3" />
-            </motion.div>
-            <h3 className="text-xl font-semibold text-white mb-2">
-              24/7 Technical Support
-            </h3>
-            <p className="text-gray-400 mb-4 text-sm">
-              Need immediate assistance? Our fiber network experts are always available
-            </p>
-            <Link to="/contact">
-              <motion.button 
-                className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-5 py-2.5 rounded-md text-sm font-medium hover:shadow-lg hover:shadow-cyan-500/20 transition-all"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Contact Support Now
-              </motion.button>
-            </Link>
-          </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

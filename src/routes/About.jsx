@@ -1,232 +1,312 @@
-import React, { useRef, useEffect } from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
+import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  FaNetworkWired,
+  FaShieldAlt,
+  FaCloud,
+  FaGlobe,
+  FaUsers,
+  FaLightbulb,
+} from "react-icons/fa";
 
-// Animations
-const fadeInUp = {
-  hidden: { opacity: 0, y: 50 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1],
-      delay,
-    },
-  }),
-};
+const values = [
+  {
+    icon: <FaShieldAlt className="text-3xl mb-4 text-red-500" />,
+    title: "Integrity",
+    description: "We uphold the highest ethical standards in all our operations and client interactions.",
+  },
+  {
+    icon: <FaLightbulb className="text-3xl mb-4 text-orange-400" />,
+    title: "Innovation",
+    description: "We continuously explore new technologies to deliver cutting-edge solutions.",
+  },
+  {
+    icon: <FaNetworkWired className="text-3xl mb-4 text-blue-500" />,
+    title: "Reliability",
+    description: "Our solutions are built to perform consistently under all conditions.",
+  },
+  {
+    icon: <FaCloud className="text-3xl mb-4 text-green-500" />,
+    title: "Excellence",
+    description: "We strive for perfection in every aspect of our service delivery.",
+  },
+];
 
-// Reveal wrapper
-function RevealSection({ children, delay = 0 }) {
-  const ref = useRef();
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const controls = useAnimation();
+const team = [
+  {
+    name: "Abraham Ooro",
+    role: "Founder & CEO",
+    image: "/chair.jpg",
+    bio: "Visionary leader with 15+ years in network infrastructure development.",
+  },
+  {
+    name: "Zulfa George",
+    role: "ACEO",
+    image: "/madam.jpg",
+    bio: "Expert in network security and large-scale infrastructure deployment.",
+  },
+];
 
-  useEffect(() => {
-    if (isInView) controls.start("visible");
-  }, [isInView, controls]);
+const stats = [
+  { value: "15K+", label: "Networks Deployed" },
+  { value: "98%", label: "Uptime Guarantee" },
+  { value: "40+", label: "Countries Served" },
+  { value: "200+", label: "Satisfied Clients" },
+];
 
+function Navbar() {
   return (
-    <motion.div
-      ref={ref}
-      variants={fadeInUp}
-      initial="hidden"
-      animate={controls}
-      custom={delay}
-    >
-      {children}
-    </motion.div>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-md">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+        <Link to="/" className="text-2xl font-bold text-gray-900">
+          <span className="text-red-500">KNOX</span>
+          <span className="text-blue-500">VILLE</span>
+        </Link>
+        <nav className="space-x-6">
+          {["Home", "About", "Services", "Contact"].map((text) => (
+            <Link key={text} to={`/${text.toLowerCase()}`} className="text-gray-600 hover:text-blue-600">
+              {text}
+            </Link>
+          ))}
+        </nav>
+      </div>
+    </header>
   );
 }
 
-export default function About() {
-  const team = [
-    {
-      name: "Abraham Ooro",
-      role: "Founder & CEO",
-      title: "Visionary Architect",
-      image: "/chair.jpg", // ← public folder
-      bio: "10+ years in network infrastructure innovation. Passionate about creating seamless digital experiences.",
-    },
-    {
-      name: "Zulfa George",
-      role: "ACEO",
-      title: "Network Innovator",
-      image: "/madam.jpg", // ← public folder
-      bio: "Cybersecurity expert with a focus on next-gen network solutions.",
-    },
-  ];
-
-  const stats = [
-    { value: "15K+", label: "Networks Deployed" },
-    { value: "98%", label: "Uptime Guarantee" },
-    { value: "40+", label: "Countries Served" },
-  ];
-
-  const coreValues = [
-    "Integrity",
-    "Innovation",
-    "Reliability",
-    "Security",
-    "Global Vision",
-  ];
-
+function Hero() {
   return (
-    <section
-      id="about"
-      className="relative min-h-screen py-20 px-6 md:px-16 scroll-mt-24 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white overflow-hidden"
-    >
-      {/* Background Particles */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-cyan-400 rounded-full"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -40],
-              opacity: [0.8, 0],
-              x: Math.random() > 0.5 ? [0, -10] : [0, 10],
-            }}
-            transition={{
-              duration: 5 + Math.random() * 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-      </div>
-
-      <div className="relative z-10 max-w-6xl mx-auto">
-        {/* Header */}
-        <RevealSection>
-          <div className="text-center mb-24">
-            <motion.h2
-              className="text-5xl font-bold leading-tight mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                Building the Future
-              </span>
-              <br />
-              <span className="text-2xl font-light mt-2 block text-gray-300">
-                of Global Connectivity
-              </span>
-            </motion.h2>
-            <motion.div
-              className="w-20 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto my-6 rounded-full"
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            />
-            <motion.p
-              className="text-lg text-gray-300 max-w-3xl mx-auto mt-6 leading-relaxed"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              Pioneering network solutions that empower businesses and connect
-              communities through cutting-edge innovation and resilient
-              infrastructure.
-            </motion.p>
-          </div>
-        </RevealSection>
-
-        {/* Team */}
-        <RevealSection delay={0.3}>
-          <div className="grid md:grid-cols-2 gap-12 mb-28">
-            {team.map((member, index) => (
-              <motion.div
-                key={index}
-                className="rounded-xl overflow-hidden shadow-lg bg-gray-900"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + index * 0.1, duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <img
-                  src={member.image}
-                  alt={member.role}
-                  className="w-full h-96 object-cover"
-                />
-                <div className="p-6 text-center">
-                  <h3 className="text-2xl font-bold text-cyan-400">
-                    {member.name}
-                  </h3>
-                  <p className="text-gray-300">{member.role}</p>
-                  <p className="text-sm text-gray-400 italic mt-1">
-                    {member.title}
-                  </p>
-                  <p className="text-gray-300 text-sm mt-4">{member.bio}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </RevealSection>
-
-        {/* Stats */}
-        <RevealSection delay={0.5}>
-          <div className="grid md:grid-cols-3 gap-10 text-center mb-28">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 * index, duration: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <h4 className="text-4xl font-bold text-cyan-400">
-                  {stat.value}
-                </h4>
-                <p className="text-gray-300 mt-2 text-lg">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </RevealSection>
-
-        {/* Core Values */}
-        <RevealSection delay={0.6}>
-          <div className="text-center mb-28">
-            <h3 className="text-3xl font-semibold mb-6 text-cyan-400">
-              Our Core Values
-            </h3>
-            <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
-              {coreValues.map((value, index) => (
-                <motion.span
-                  key={index}
-                  className="px-6 py-2 rounded-full bg-gray-800 text-gray-200 text-sm font-medium border border-cyan-500"
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index, duration: 0.5 }}
-                  viewport={{ once: true }}
-                >
-                  {value}
-                </motion.span>
-              ))}
-            </div>
-          </div>
-        </RevealSection>
-
-        {/* Group Image */}
-        <RevealSection delay={0.7}>
-          <div className="rounded-xl overflow-hidden shadow-lg">
-            <img
-              src="/group.jpg" // ← public folder
-              alt="Team group"
-              className="w-full h-[500px] object-cover"
-            />
-          </div>
-        </RevealSection>
+    <section className="pt-32 pb-20 bg-transparent text-gray-800 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('/network-bg.jpg')] bg-cover bg-center opacity-10" />
+      <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
+        <motion.h1
+          className="text-4xl md:text-6xl font-bold mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <span className="text-red-500">About</span>{" "}
+          <span className="text-blue-500">KNOXVILLE</span>
+        </motion.h1>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          We are a leading provider of innovative network infrastructure solutions, committed to delivering
+          cutting-edge connectivity across Africa and beyond.
+        </p>
       </div>
     </section>
+  );
+}
+
+function About() {
+  return (
+    <section className="py-20 px-6 bg-white text-gray-800">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 className="text-3xl font-bold mb-6 text-blue-600">Who We Are</h2>
+          <p className="mb-4">
+            KNOXVILLE is a premier network infrastructure company specializing in providing robust,
+            scalable, and secure connectivity solutions.
+          </p>
+          <p className="mb-4">
+            Founded in 2015, we have grown to become a trusted partner for businesses and
+            organizations across multiple sectors.
+          </p>
+          <p>
+            Our certified team brings decades of experience in network architecture, cybersecurity, and cloud.
+          </p>
+        </div>
+        <div className="relative">
+          <div className="bg-white rounded-xl overflow-hidden shadow-xl">
+            <img
+              src="/group.jpg"
+              alt="Knoxville Team"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Mission() {
+  return (
+    <section className="py-20 bg-blue-50 text-gray-800">
+      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12">
+        <div className="space-y-8">
+          <div>
+            <h2 className="text-3xl font-bold mb-4 text-red-500">Our Mission</h2>
+            <p>
+              To empower businesses and communities through innovative, reliable, and secure network infrastructure solutions.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-3xl font-bold mb-4 text-blue-500">Our Vision</h2>
+            <p>
+              To be Africa's leading network infrastructure provider, bridging the digital divide and connecting
+              the continent to global opportunities.
+            </p>
+          </div>
+        </div>
+        <div className="space-y-8">
+          <div className="bg-white p-8 rounded-xl border-l-4 border-blue-500 shadow-md">
+            <h3 className="text-xl font-bold mb-4 flex items-center">
+              <FaGlobe className="mr-3 text-blue-500" /> Global Reach
+            </h3>
+            <p>We deliver consistent quality and service wherever our clients need us.</p>
+          </div>
+          <div className="bg-white p-8 rounded-xl border-l-4 border-red-500 shadow-md">
+            <h3 className="text-xl font-bold mb-4 flex items-center">
+              <FaUsers className="mr-3 text-red-500" /> Client-Centric Approach
+            </h3>
+            <p>
+              Our solutions are tailored to each client’s needs, ensuring maximum value and performance.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Values() {
+  return (
+    <section className="py-20 bg-blue-100 text-gray-800">
+      <div className="max-w-6xl mx-auto px-6 text-center">
+        <h2 className="text-3xl font-bold mb-12 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500">
+          Our Core Values
+        </h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {values.map((value, index) => (
+            <motion.div
+              key={index}
+              className="bg-white p-8 rounded-xl border border-blue-200 hover:shadow-lg transition-all"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              {value.icon}
+              <h3 className="text-xl font-bold mb-2">{value.title}</h3>
+              <p>{value.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Team() {
+  return (
+    <section className="py-20 px-6 bg-white text-gray-800">
+      <div className="max-w-6xl mx-auto text-center mb-16">
+        <h2 className="text-3xl font-bold mb-4 text-blue-500">Meet Our Leadership</h2>
+        <p className="max-w-2xl mx-auto text-gray-600">
+          Our team brings together diverse expertise and a shared passion for network innovation.
+        </p>
+      </div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {team.map((member, index) => (
+          <motion.div
+            key={index}
+            className="bg-white rounded-xl overflow-hidden shadow-lg"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="h-64 overflow-hidden">
+              <img src={member.image} alt={`${member.name} photo`} className="w-full h-full object-cover" />
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-bold text-red-500">{member.name}</h3>
+              <p className="text-gray-500 mb-3">{member.role}</p>
+              <p className="text-gray-600 text-sm">{member.bio}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Stats() {
+  return (
+    <section className="py-20 bg-blue-50 text-gray-800">
+      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8 text-center">
+        {stats.map((stat, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h4 className="text-4xl font-bold mb-2 text-blue-500">{stat.value}</h4>
+            <p className="text-lg text-gray-600">{stat.label}</p>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="bg-white text-gray-600 text-sm py-12 border-t border-blue-100">
+      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+        <div>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">
+            <span className="text-red-500">KNOX</span>
+            <span className="text-blue-500">VILLE</span>
+          </h3>
+          <p className="mb-4">Leading network infrastructure solutions provider across Africa.</p>
+          <p>© {new Date().getFullYear()} KNOXVILLE. All rights reserved.</p>
+        </div>
+        <div>
+          <h4 className="text-gray-800 font-bold mb-4">Quick Links</h4>
+          <ul className="space-y-2">
+            {["Home", "About Us", "Services", "Contact"].map((text) => (
+              <li key={text}>
+                <Link to={`/${text.toLowerCase().replace(/\s+/g, "")}`} className="hover:text-blue-500">
+                  {text}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-gray-800 font-bold mb-4">Services</h4>
+          <ul className="space-y-2">
+            <li><Link to="/services" className="hover:text-blue-500">Network Infrastructure</Link></li>
+            <li><Link to="/services" className="hover:text-blue-500">Cloud Solutions</Link></li>
+            <li><Link to="/services" className="hover:text-blue-500">Cybersecurity</Link></li>
+            <li><Link to="/services" className="hover:text-blue-500">Managed Services</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-gray-800 font-bold mb-4">Contact</h4>
+          <address className="not-italic">
+            <p className="mb-2">Nairobi, Kenya</p>
+            <p className="mb-2">knoxvilletechnologies.com</p>
+            <p>+254 726818938</p>
+          </address>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+export default function AboutPage() {
+  return (
+    <div className="bg-gradient-to-br from-white via-blue-50 to-blue-100">
+      <Navbar />
+      <Hero />
+      <About />
+      <Mission />
+      <Values />
+      <Team />
+      <Stats />
+      <Footer />
+    </div>
   );
 }

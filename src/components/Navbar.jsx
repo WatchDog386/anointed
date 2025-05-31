@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-  useRef,
-} from "react";
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Sun, Moon, Globe, Menu, X } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -39,52 +33,26 @@ export default function Navbar() {
 
   useClickOutside(navRef, () => setIsOpen(false));
 
-  const currentPath =
-    location.pathname === "/" ? "home" : location.pathname.slice(1);
+  const currentPath = location.pathname === "/" ? "home" : location.pathname.slice(1);
 
-  const menuItems = useMemo(
-    () => [
-      { label: t("navbar.home"), route: "/", id: "home" },
-      {
-        label: t("navbar.about"),
-        route: "/",
-        scrollToId: "about",
-        id: "about",
-      },
-      {
-        label: t("navbar.services"),
-        route: "/",
-        scrollToId: "services",
-        id: "services",
-      },
-      { label: t("navbar.faq"), route: "/faq", id: "faq" },
-      {
-        label: t("navbar.contact"),
-        route: "/",
-        scrollToId: "contact",
-        id: "contact",
-      },
-      { label: t("navbar.plans"), route: "/wifiplans", id: "wifiplans" },
-      {
-        label: t("navbar.technicians"),
-        route: "/technicians",
-        id: "technicians",
-      },
-      { label: t("navbar.articles"), route: "/articles", id: "articles" },
-    ],
-    [t]
-  );
+  const menuItems = useMemo(() => [
+    { label: t("navbar.home"), route: "/", id: "home" },
+    { label: t("navbar.about"), route: "/", scrollToId: "about", id: "about" },
+    { label: t("navbar.services"), route: "/", scrollToId: "services", id: "services" },
+    { label: t("navbar.faq"), route: "/faq", id: "faq" },
+    { label: t("navbar.contact"), route: "/", scrollToId: "contact", id: "contact" },
+    { label: t("navbar.plans"), route: "/wifiplans", id: "wifiplans" },
+    { label: t("navbar.technicians"), route: "/technicians", id: "technicians" },
+    { label: t("navbar.articles"), route: "/articles", id: "articles" },
+  ], [t]);
 
   const handleScrollLink = (targetId) => {
     const el = document.getElementById(targetId);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const NavItem = ({ item }) => {
-    const commonClasses =
-      "relative pb-1.5 px-1 font-medium transition-all duration-300 group flex items-center justify-center";
+    const commonClasses = "relative pb-1.5 px-1 font-medium transition-all duration-300 group flex items-center justify-center";
 
     if (item.scrollToId) {
       return (
@@ -125,11 +93,7 @@ export default function Navbar() {
         onClick={() => setIsOpen(false)}
       >
         {({ isActive }) => (
-          <motion.div 
-            className="relative"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <motion.div className="relative" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             {item.label}
             <span
               className={`absolute bottom-0 left-0 w-full h-0.5 bg-purple-600 dark:bg-purple-400 transition-transform duration-300 ${
@@ -152,11 +116,7 @@ export default function Navbar() {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
-      {darkMode ? (
-        <Sun size={20} className="text-yellow-400" />
-      ) : (
-        <Moon size={20} className="text-gray-600 dark:text-gray-300" />
-      )}
+      {darkMode ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-gray-600 dark:text-gray-300" />}
     </motion.button>
   );
 
@@ -178,21 +138,15 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 left-0 w-full z-50 px-4 py-3 transition-all duration-500 ${
+      className={`fixed top-0 left-0 w-full z-[999] px-4 py-3 transition-all duration-500 ${
         scrolled
           ? "bg-white/95 dark:bg-gray-900/95 shadow-lg backdrop-blur-xl border-b border-gray-200 dark:border-gray-800"
           : "bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <NavLink
-          to="/"
-          className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight hover:from-blue-500 hover:to-purple-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 rounded-lg dark:focus:ring-offset-gray-900"
-        >
-          <motion.div 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+        <NavLink to="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight hover:from-blue-500 hover:to-purple-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 rounded-lg dark:focus:ring-offset-gray-900">
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             KNOXVILLE
           </motion.div>
         </NavLink>
@@ -215,11 +169,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {isOpen ? (
-            <X size={24} className="text-gray-700 dark:text-gray-200" />
-          ) : (
-            <Menu size={24} className="text-gray-700 dark:text-gray-200" />
-          )}
+          {isOpen ? <X size={24} className="text-gray-700 dark:text-gray-200" /> : <Menu size={24} className="text-gray-700 dark:text-gray-200" />}
         </motion.button>
       </div>
 
@@ -227,18 +177,18 @@ export default function Navbar() {
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ 
-              opacity: 1, 
+            animate={{
+              opacity: 1,
               height: "auto",
-              transition: { 
+              transition: {
                 opacity: { duration: 0.2 },
                 height: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
               }
             }}
-            exit={{ 
-              opacity: 0, 
+            exit={{
+              opacity: 0,
               height: 0,
-              transition: { 
+              transition: {
                 opacity: { duration: 0.1 },
                 height: { duration: 0.2, ease: [0.16, 1, 0.3, 1] }
               }
