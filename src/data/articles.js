@@ -22,7 +22,7 @@ export const articles = [
     content: `Fiber internet uses light to transmit data at blazing speeds, offering higher bandwidth and lower latency compared to traditional copper lines. With Kenya rapidly deploying fiber across urban and rural zones, the digital divide is shrinking fast.`,
     author: "Tech Editorial Team",
     date: "2025-05-26",
-    image: "/fibre.jpg",         // ✅ public path
+    image: "/fibre.webp",         // ✅ public path
     category: "technology",
     readTime: "5 min",
     tags: ["Innovation", "Infrastructure"],
@@ -36,7 +36,7 @@ export const articles = [
     content: `Rural internet opens doors to digital education, telemedicine, e-commerce, and much more. It's a catalyst for community transformation, enabling local talent to thrive in the global economy.`,
     author: "Knoxfill Research Team",
     date: "2025-04-10",
-    image: "/fibre2.jpg",       // ✅ public path
+    image: "/fibre2.webp",       // ✅ public path
     category: "community",
     readTime: "4 min",
     tags: ["Access", "Community", "Equity"],
@@ -50,7 +50,7 @@ export const articles = [
     content: `From checking local infrastructure to scheduling and access requirements, this guide walks you through how to get your fiber installed without delays.`,
     author: "Customer Support",
     date: "2025-03-22",
-    image: "/fibre3.jpg",         // ✅ public path
+    image: "/fibre3.webp",         // ✅ public path
     category: "guides",
     readTime: "3 min",
     tags: ["Installation", "Customer Help"],

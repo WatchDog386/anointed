@@ -48,7 +48,7 @@ const plans = [
     name: "Ultra Plan",
     price: "Ksh 4,999",
     speed: "30Mbps",
-    image: "/back.jpg",
+    image: "/back.webp",
     features: ["High-Speed Everything", "Gaming & 4K", "24/7 Support", "Free Installation"],
     type: "home"
   },

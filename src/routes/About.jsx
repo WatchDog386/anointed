@@ -37,13 +37,13 @@ const team = [
   {
     name: "Abraham Ooro",
     role: "Founder & CEO",
-    image: "/chair.jpg",
+    image: "/chair.webp",
     bio: "Visionary leader with 15+ years in network infrastructure development.",
   },
   {
     name: "Zulfa George",
-    role: "ACEO",
-    image: "/madam.jpg",
+    role: "AssCEO",
+    image: "/madam.webp",
     bio: "Expert in network security and large-scale infrastructure deployment.",
   },
 ];
@@ -86,7 +86,7 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <span className="text-red-500">About</span>{" "}
+          <span className="text-red-500">ABOUT</span>{" "}
           <span className="text-blue-500">KNOXVILLE</span>
         </motion.h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -105,21 +105,21 @@ function About() {
         <div>
           <h2 className="text-3xl font-bold mb-6 text-blue-600">Who We Are</h2>
           <p className="mb-4">
-            KNOXVILLE is a premier network infrastructure company specializing in providing robust,
+            Knoxville is a premier network infrastructure company specializing in providing robust,
             scalable, and secure connectivity solutions.
           </p>
           <p className="mb-4">
-            Founded in 2015, we have grown to become a trusted partner for businesses and
+            Founded in 2024, we have grown to become a trusted partner for businesses and
             organizations across multiple sectors.
           </p>
           <p>
-            Our certified team brings decades of experience in network architecture, cybersecurity, and cloud.
+            Our certified technicians brings decades of experience in network architecture, cybersecurity.
           </p>
         </div>
         <div className="relative">
           <div className="bg-white rounded-xl overflow-hidden shadow-xl">
             <img
-              src="/group.jpg"
+              src="/group.webp"
               alt="Knoxville Team"
               className="w-full h-full object-cover"
             />

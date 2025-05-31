@@ -36,7 +36,7 @@ const ImageModal = ({ image, onClose }) => {
 const Hero = () => {
   const navigate = useNavigate();
   const [modalImage, setModalImage] = useState(null);
-  const backgroundImages = ["/fibre.jpg", "/fibre2.jpg", "/fibre3.jpg"];
+  const backgroundImages = ["/fibre.webp", "/fibre2.webp", "/fibre3.webp"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -94,7 +94,7 @@ const Hero = () => {
           initial={{ rotate: -10, opacity: 0 }}
           animate={{ rotate: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          src="/logo4.jpg"
+          src="/logo4.webp"
           alt="Company Logo"
           className="w-28 h-auto object-contain rounded-full border-2 border-blue-800 shadow-lg hover:rotate-6 transition-all duration-300 hover:border-blue-900"
         />
@@ -206,7 +206,7 @@ const Hero = () => {
             className="relative flex items-center justify-center h-full"
           >
             <motion.img
-              src="/worker.jpg"
+              src="/worker.webp"
               alt="Worker"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{
@@ -221,7 +221,7 @@ const Hero = () => {
               }}
             />
 
-            {["/install.jpg", "/internet1.jpg", "/image.jpg"].map((img, i) => {
+            {["/install.webp", "/fibre3.webp", "/image.webp"].map((img, i) => {
               const isModal = i >= 1;
               return (
                 <motion.img
