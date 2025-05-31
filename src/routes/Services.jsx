@@ -183,7 +183,7 @@ function Footer() {
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
         <div>
           <h3 className="text-xl font-bold text-gray-900 mb-4">
-            <span className="text-red-500">NOX</span><span className="text-orange-500">FILL</span>
+            <span className="text-red-500">KNOX</span><span className="text-orange-500">VILLE</span>
           </h3>
           <p className="mb-4">Leading network infrastructure solutions provider across Africa.</p>
           <p>© {new Date().getFullYear()} KNOXVILLE. All rights reserved.</p>
@@ -210,8 +210,8 @@ function Footer() {
           <h4 className="text-gray-900 font-bold mb-4">Contact</h4>
           <address className="not-italic">
             <p className="mb-2">Nairobi, Kenya</p>
-            <p className="mb-2">info@noxfill.com</p>
-            <p>+254 700 000000</p>
+            <p className="mb-2">knoxvilletechnologies.com</p>
+            <p>+254 726896562</p>
           </address>
         </div>
       </div>

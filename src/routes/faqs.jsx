@@ -17,9 +17,9 @@ const faqsData = {
           <div className="space-y-3">
             <p>To create your self-care account:</p>
             <ol className="list-decimal pl-5 space-y-2 text-gray-700">
-              <li>Visit our self-care portal at selfcare.vtl.co.ke</li>
-              <li>Click on 'Register'</li>
-              <li>Enter your account number and registered phone number</li>
+              <li>Visit our self-care portal at knoxvilletechnologies.com</li>
+              <li>Click on 'Get Started'</li>
+              <li>Enter your details as prompted</li>
               <li>Create a password and verify your identity via SMS</li>
               <li>Complete your profile details</li>
             </ol>
@@ -93,7 +93,7 @@ const faqsData = {
               <div className="bg-gray-50 p-3 rounded border border-green-200 text-sm text-green-700">
                 <h4 className="font-medium mb-2">Online Payments</h4>
                 <ul className="space-y-1">
-                  <li>• M-Pesa</li>
+                  <li>• M-Pesa  paybill:4136553</li>
                   <li>• Credit/Debit Cards</li>
                   <li>• Bank Transfer</li>
                 </ul>
@@ -101,7 +101,7 @@ const faqsData = {
               <div className="bg-gray-50 p-3 rounded border border-blue-200 text-sm text-blue-700">
                 <h4 className="font-medium mb-2">Offline Payments</h4>
                 <ul className="space-y-1">
-                  <li>• VTL Payment Centers</li>
+                  <li>• knoxville Payment Centers</li>
                   <li>• Authorized Agents</li>
                   <li>• Bank Deposit</li>
                 </ul>
@@ -210,7 +210,7 @@ const faqsData = {
               <li>Submit trouble ticket if issue persists</li>
             </ol>
             <div className="bg-red-50 p-3 rounded border border-red-200 text-sm text-red-700">
-              <p>Emergency: Call 0700 123 456 for immediate assistance with outages.</p>
+              <p>Emergency: Call 0726896562 for immediate assistance with outages.</p>
             </div>
           </div>
         ),
