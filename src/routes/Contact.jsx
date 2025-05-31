@@ -178,7 +178,7 @@ const Contact = () => {
         </motion.form>
 
         <div className="mt-16 text-center text-gray-400 text-sm pb-10">
-          &copy; {new Date().getFullYear()} Noxfill Solutions. All rights reserved.
+        
         </div>
       </motion.div>
 
