@@ -117,22 +117,24 @@ const Contact = () => {
               <p className="text-gray-700 font-semibold text-base mb-3">Follow us</p>
               <div className="flex gap-6">
                 <motion.a
-                  href="https://www.facebook.com/yourpage"
+                  href="https://www.facebook.com/share/1E5h7zsjFR/"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.2, rotate: 5 }}
                   whileTap={{ scale: 0.9 }}
                   className="text-blue-600 text-3xl hover:text-blue-800 transition"
+                  aria-label="Visit our Facebook page"
                 >
                   <FaFacebook />
                 </motion.a>
                 <motion.a
-                  href="https://www.tiktok.com/@yourhandle"
+                  href="https://www.tiktok.com/@knoxville.home.fi?_t=ZM-8wp8uGRB36k&_r=1"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.2, rotate: -5 }}
                   whileTap={{ scale: 0.9 }}
                   className="text-black text-3xl hover:text-gray-700 transition"
+                  aria-label="Visit our TikTok page"
                 >
                   <FaTiktok />
                 </motion.a>

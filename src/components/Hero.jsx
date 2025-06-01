@@ -37,6 +37,8 @@ const Hero = () => {
   const navigate = useNavigate();
   const [modalImage, setModalImage] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
+  const bgImages = ['/fibre3.webp', '/fibre.webp', '/fibre2.webp'];
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -65,14 +67,24 @@ const Hero = () => {
     },
   };
 
+  // Background image slideshow effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBgIndex((prevIndex) => (prevIndex + 1) % bgImages.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [bgImages.length]);
+
   return (
     <section
       className="relative min-h-screen w-full overflow-hidden bg-white text-gray-900"
       style={{ 
-        backgroundImage: "url('/fibre3.webp')",
+        backgroundImage: `url('${bgImages[currentBgIndex]}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundRepeat: "no-repeat"
+        backgroundRepeat: "no-repeat",
+        transition: 'background-image 1s ease-in-out'
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

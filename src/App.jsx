@@ -1,6 +1,7 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ParallaxProvider } from "react-scroll-parallax";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 // Context
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -23,37 +24,71 @@ import CoverageMap from "./routes/CoverageMap";
 // Components
 import TypewriterHeader from "./components/TypewriterHeader";
 
+const TrackPageViews = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (window.gtag) {
+      window.gtag("config", "G-6TTHG2D146", {
+        page_path: location.pathname,
+      });
+    }
+  }, [location]);
+
+  return null;
+};
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route
+          index
+          element={
+            <>
+              <TypewriterHeader />
+              <Home />
+            </>
+          }
+        />
+        <Route path="about" element={<About />} />
+        <Route path="services" element={<Services />} />
+        <Route path="faq" element={<Faqs />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="wifiplans" element={<WifiPlans />} />
+        <Route path="technicians" element={<Technicians />} />
+        <Route path="technicians/:issue" element={<Technicians />} />
+        <Route path="articles" element={<Articles />} />
+        <Route path="articles/:slug" element={<ArticleDetail />} />
+        <Route path="coverage" element={<CoverageMap />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
+
 export default function App() {
   return (
-    <ParallaxProvider>
-      <LanguageProvider>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route
-              index
-              element={
-                <>
-                  <TypewriterHeader />
-                  <Home />
-                </>
-              }
-            />
-            <Route path="about" element={<About />} />
-            <Route path="services" element={<Services />} />
-            <Route path="faq" element={<Faqs />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="wifiplans" element={<WifiPlans />} />
-            <Route path="technicians" element={<Technicians />} />
-            <Route path="technicians/:issue" element={<Technicians />} />
-            <Route path="articles" element={<Articles />} />
-            <Route path="articles/:slug" element={<ArticleDetail />} />
-            <Route path="coverage" element={<CoverageMap />} />
-          </Route>
+    <HelmetProvider>
+      <ParallaxProvider>
+        <LanguageProvider>
+          {/* Google Analytics */}
+          <Helmet>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-6TTHG2D146"></script>
+            <script>
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-6TTHG2D146');
+              `}
+            </script>
+          </Helmet>
 
-          {/* Catch-all route */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </LanguageProvider>
-    </ParallaxProvider>
+          <TrackPageViews />
+          <AppRoutes />
+        </LanguageProvider>
+      </ParallaxProvider>
+    </HelmetProvider>
   );
 }
