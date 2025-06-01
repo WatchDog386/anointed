@@ -53,8 +53,8 @@ export default function Footer() {
         {/* Contact */}
         <motion.div initial={{ y: 20, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.6 }}>
           <h4 className="text-xl font-semibold text-green-700 mb-3">Contact</h4>
-          <p>Email: <a href="mailto:support@knoxfill.co.ke" className="text-blue-600 hover:underline">support@knoxfill.co.ke</a></p>
-          <p>Phone: <a href="tel:+254700000000" className="text-blue-600 hover:underline">+254 700 000 000</a></p>
+          <p>Email: <a href="mailto:support@knoxfill.co.ke" className="text-blue-600 hover:underline">support@knoxville.co.ke</a></p>
+          <p>Phone: <a href="tel:+254700000000" className="text-blue-600 hover:underline">+254 726818938</a></p>
           <p>Location: Nairobi, Kenya</p>
           <div className="flex space-x-4 mt-4">
             <a href="#" className="text-blue-600 hover:text-green-600 transition"><FaFacebookF /></a>
