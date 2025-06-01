@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "node generate-sitemap.js",
+    "postbuild": "node generate-sitemap.cjs",
     "preview": "vite preview"
   },
   "dependencies": {
