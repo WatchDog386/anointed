@@ -48,10 +48,10 @@ const Contact = () => {
       >
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-            Get in Touch
+            Contact Knoxville Technologies
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Have questions or need support? Reach out to our team and we'll get back to you promptly.
+            Reach out to us for inquiries, support, or to visit our offices in Lucky Summer
           </p>
         </div>
 
@@ -59,16 +59,16 @@ const Contact = () => {
           {/* Contact Information */}
           <div className="space-y-8">
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-gray-900">Contact Information</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Our Contact Details</h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
                   <div className="bg-blue-100 p-3 rounded-full">
                     <Phone className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">Phone</h3>
-                    <p className="text-gray-600">+254 726 818 938</p>
-                    <p className="text-gray-600">+254 724 169 963</p>
+                    <h3 className="font-semibold text-gray-900">Call Us</h3>
+                    <p className="text-gray-600">0726 818 938</p>
+                    <p className="text-gray-600">0724 169 963</p>
                   </div>
                 </div>
 
@@ -77,8 +77,8 @@ const Contact = () => {
                     <Mail className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">Email</h3>
-                    <p className="text-gray-600">knoxvilletechnologies@gmail.com</p>
+                    <h3 className="font-semibold text-gray-900">Email Us</h3>
+                    <p className="text-gray-600">knoxville@gmail.com</p>
                   </div>
                 </div>
 
@@ -87,10 +87,11 @@ const Contact = () => {
                     <MapPin className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">Address</h3>
-                    <p className="text-gray-600">LUCKY SUMMER-RUARAKA</p>
-                    <p className="text-gray-600">Opposite Naivas, Thoram House</p>
-                    <p className="text-gray-600">Postcode 29885-00100</p>
+                    <h3 className="font-semibold text-gray-900">Visit Us</h3>
+                    <p className="text-gray-600">Lucky Summer, Ruaraka</p>
+                    <p className="text-gray-600">Behind Naivas Supermarket</p>
+                    <p className="text-gray-600">Thoram House, Ground Floor</p>
+                    <p className="text-gray-600">Nairobi, Kenya</p>
                   </div>
                 </div>
               </div>
@@ -113,7 +114,7 @@ const Contact = () => {
 
             {/* Office Hours */}
             <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-              <h3 className="font-semibold text-gray-900 mb-3">Working Hours</h3>
+              <h3 className="font-semibold text-gray-900 mb-3">Business Hours</h3>
               <ul className="space-y-2 text-gray-600">
                 <li className="flex justify-between">
                   <span>Monday - Friday</span>
@@ -224,17 +225,20 @@ const Contact = () => {
 
         {/* Map Section */}
         <div className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Location</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Location in Lucky Summer</h2>
           <div className="bg-gray-100 rounded-xl overflow-hidden border border-gray-200 h-96">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.416314657456!2d36.8701933338654!3d-1.2416810249006586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f172f478cf6d7%3A0x9ff70d276cc229f4!2sThoram%20House%2C%20Lucky%20Summer!5e0!3m2!1sen!2ske!4v1717140000000!5m2!1sen!2ske"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.845749464442!2d36.8701933!3d-1.241681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f172f478cf6d7%3A0x9ff70d276cc229f4!2sThoram%20House%2C%20Lucky%20Summer!5e0!3m2!1sen!2ske!4v1717140000000!5m2!1sen!2ske"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen=""
               loading="lazy"
-              title="Knoxville Technologies Location"
+              title="Knoxville Technologies Location - Lucky Summer, Behind Naivas, Thoram House"
             ></iframe>
+          </div>
+          <div className="mt-4 text-center text-gray-600">
+            <p>Find us at Thoram House, behind Naivas Supermarket in Lucky Summer</p>
           </div>
         </div>
       </motion.div>
@@ -248,7 +252,7 @@ const Contact = () => {
         aria-label="Reach us on WhatsApp"
       >
         <FaWhatsapp className="w-5 h-5" />
-        <span className="text-sm font-medium">Reach Us</span>
+        <span className="text-sm font-medium">WhatsApp: 0726 818 938</span>
       </a>
     </div>
   );

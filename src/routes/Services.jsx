@@ -16,14 +16,14 @@ function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/" className="text-2xl font-bold text-gray-900">
-          <span className="text-red-500">KNOX</span>
-          <span className="text-orange-500">VILLE</span>
+          <span className="text-blue-600">KNOX</span>
+          <span className="text-black">VILLE</span>
         </Link>
         <nav className="space-x-6">
-          <Link to="/" className="text-gray-700 hover:text-black">Home</Link>
-          <Link to="/about" className="text-gray-700 hover:text-black">About</Link>
-          <Link to="/services" className="text-gray-700 hover:text-black">Services</Link>
-          <Link to="/contact" className="text-gray-700 hover:text-black">Contact</Link>
+          <Link to="/" className="text-gray-700 hover:text-blue-600">Home</Link>
+          <Link to="/about" className="text-gray-700 hover:text-blue-600">About</Link>
+          <Link to="/services" className="text-gray-700 hover:text-blue-600">Services</Link>
+          <Link to="/contact" className="text-gray-700 hover:text-blue-600">Contact</Link>
         </nav>
       </div>
     </header>
@@ -35,8 +35,9 @@ const services = [
   {
     id: "network",
     title: "Network Infrastructure",
-    description: "Design, implementation and management of robust network solutions for businesses of all sizes.",
-    icon: <FaNetworkWired className="text-4xl text-red-500" />,
+    description:
+      "Design, implementation and management of robust network solutions for businesses of all sizes.",
+    icon: <FaNetworkWired className="text-4xl text-blue-600" />,
     features: [
       "Structured cabling solutions",
       "Wireless network deployment",
@@ -47,8 +48,9 @@ const services = [
   {
     id: "security",
     title: "Security Solutions",
-    description: "Comprehensive cybersecurity measures to protect your digital assets and infrastructure.",
-    icon: <FaShieldAlt className="text-4xl text-orange-500" />,
+    description:
+      "Comprehensive cybersecurity measures to protect your digital assets and infrastructure.",
+    icon: <FaShieldAlt className="text-4xl text-black" />,
     features: [
       "Firewall implementation",
       "Intrusion detection systems",
@@ -59,8 +61,9 @@ const services = [
   {
     id: "cloud",
     title: "Cloud Services",
-    description: "Scalable cloud computing solutions to enhance your business operations and flexibility.",
-    icon: <FaCloud className="text-4xl text-blue-500" />,
+    description:
+      "Scalable cloud computing solutions to enhance your business operations and flexibility.",
+    icon: <FaCloud className="text-4xl text-blue-600" />,
     features: [
       "Cloud migration",
       "Hybrid cloud solutions",
@@ -71,8 +74,9 @@ const services = [
   {
     id: "data-center",
     title: "Data Center Solutions",
-    description: "Enterprise-grade data center services with maximum uptime and reliability.",
-    icon: <FaServer className="text-4xl text-green-500" />,
+    description:
+      "Enterprise-grade data center services with maximum uptime and reliability.",
+    icon: <FaServer className="text-4xl text-black" />,
     features: [
       "Colocation services",
       "Disaster recovery",
@@ -83,8 +87,9 @@ const services = [
   {
     id: "isp",
     title: "ISP Services",
-    description: "High-speed internet connectivity solutions for businesses and residential areas.",
-    icon: <FaWifi className="text-4xl text-purple-500" />,
+    description:
+      "High-speed internet connectivity solutions for businesses and residential areas.",
+    icon: <FaWifi className="text-4xl text-blue-600" />,
     features: [
       "Fiber optic connectivity",
       "Wireless broadband",
@@ -95,8 +100,9 @@ const services = [
   {
     id: "consulting",
     title: "IT Consulting",
-    description: "Expert technology consulting to align your IT strategy with business goals.",
-    icon: <FaGlobe className="text-4xl text-cyan-600" />,
+    description:
+      "Expert technology consulting to align your IT strategy with business goals.",
+    icon: <FaGlobe className="text-4xl text-black" />,
     features: [
       "Technology roadmap",
       "IT infrastructure assessment",
@@ -106,7 +112,7 @@ const services = [
   },
 ];
 
-// Service Card (no image)
+// Service Card
 function ServiceCard({ service }) {
   return (
     <motion.div
@@ -119,12 +125,14 @@ function ServiceCard({ service }) {
         {service.icon}
       </div>
       <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-2">
+          {service.title}
+        </h3>
         <p className="text-gray-600 mb-4 text-sm">{service.description}</p>
         <ul className="space-y-2">
           {service.features.map((feature, index) => (
             <li key={index} className="flex items-start text-sm">
-              <span className="text-red-500 mr-2">•</span>
+              <span className="text-blue-600 mr-2">•</span>
               <span className="text-gray-700">{feature}</span>
             </li>
           ))}
@@ -134,7 +142,7 @@ function ServiceCard({ service }) {
   );
 }
 
-// Services Hero Section
+// Hero Section
 function ServicesHero() {
   return (
     <section className="pt-32 pb-20 bg-white text-center">
@@ -145,25 +153,28 @@ function ServicesHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <span className="text-red-500">Our</span> <span className="text-orange-500">Services</span>
+          <span className="text-blue-600">Our</span>{" "}
+          <span className="text-black">Services</span>
         </motion.h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Comprehensive network infrastructure solutions tailored to your business needs
+          Comprehensive network infrastructure solutions tailored to your
+          business needs
         </p>
       </div>
     </section>
   );
 }
 
-// All Services Display
+// Services Section
 function AllServices() {
   return (
     <section className="py-20 px-6 bg-white text-gray-900">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold mb-4 text-orange-500">What We Offer</h2>
+          <h2 className="text-3xl font-bold mb-4 text-blue-600">What We Offer</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            We provide end-to-end network infrastructure solutions that drive business growth and digital transformation.
+            We provide end-to-end network infrastructure solutions that drive
+            business growth and digital transformation.
           </p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -183,27 +194,30 @@ function Footer() {
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
         <div>
           <h3 className="text-xl font-bold text-gray-900 mb-4">
-            <span className="text-red-500">KNOX</span><span className="text-orange-500">VILLE</span>
+            <span className="text-blue-600">KNOX</span>
+            <span className="text-black">VILLE</span>
           </h3>
-          <p className="mb-4">Leading network infrastructure solutions provider across Africa.</p>
+          <p className="mb-4">
+            Leading network infrastructure solutions provider across Africa.
+          </p>
           <p>© {new Date().getFullYear()} KNOXVILLE. All rights reserved.</p>
         </div>
         <div>
           <h4 className="text-gray-900 font-bold mb-4">Quick Links</h4>
           <ul className="space-y-2">
-            <li><Link to="/" className="hover:text-black">Home</Link></li>
-            <li><Link to="/about" className="hover:text-black">About Us</Link></li>
-            <li><Link to="/services" className="hover:text-black">Services</Link></li>
-            <li><Link to="/contact" className="hover:text-black">Contact</Link></li>
+            <li><Link to="/" className="hover:text-blue-600">Home</Link></li>
+            <li><Link to="/about" className="hover:text-blue-600">About Us</Link></li>
+            <li><Link to="/services" className="hover:text-blue-600">Services</Link></li>
+            <li><Link to="/contact" className="hover:text-blue-600">Contact</Link></li>
           </ul>
         </div>
         <div>
           <h4 className="text-gray-900 font-bold mb-4">Services</h4>
           <ul className="space-y-2">
-            <li><Link to="/services" className="hover:text-black">Network Infrastructure</Link></li>
-            <li><Link to="/services" className="hover:text-black">Security Solutions</Link></li>
-            <li><Link to="/services" className="hover:text-black">Cloud Services</Link></li>
-            <li><Link to="/services" className="hover:text-black">Data Center Solutions</Link></li>
+            <li><Link to="/services" className="hover:text-blue-600">Network Infrastructure</Link></li>
+            <li><Link to="/services" className="hover:text-blue-600">Security Solutions</Link></li>
+            <li><Link to="/services" className="hover:text-blue-600">Cloud Services</Link></li>
+            <li><Link to="/services" className="hover:text-blue-600">Data Center Solutions</Link></li>
           </ul>
         </div>
         <div>
@@ -219,7 +233,7 @@ function Footer() {
   );
 }
 
-// Final Page Export
+// Export Page
 export default function ServicesPage() {
   return (
     <div className="bg-white">

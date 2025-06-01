@@ -25,16 +25,6 @@ const CoverageMap = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [locationError, setLocationError] = useState(null);
   const [isLocating, setIsLocating] = useState(false);
-  const [whatsappForm, setWhatsappForm] = useState({
-    show: false,
-    fullName: '',
-    phone: '',
-    email: '',
-    location: ''
-  });
-
-  // WhatsApp business number (ensure this is correct with country code)
-  const whatsappNumber = "254726818938"; // Removed + for better compatibility
 
   // Sample areas data
   const coveredAreas = [
@@ -47,7 +37,6 @@ const CoverageMap = () => {
     "Laundry",
     "Lucky Summer",
     "Ngomongo",
-    
   ];
 
   const NAIROBI_BOUNDS = [
@@ -275,10 +264,6 @@ const CoverageMap = () => {
 
         const displayName = await getAddressFromCoordinates(userCoords.lat, userCoords.lng);
         setAddress(displayName);
-        setWhatsappForm(prev => ({
-          ...prev,
-          location: displayName
-        }));
 
         setIsLoading(true);
         setShowEligibilityPanel(true);
@@ -301,40 +286,9 @@ const CoverageMap = () => {
     );
   };
 
-  const handleWhatsappSubmit = (e) => {
-    e.preventDefault();
-    
-    // Format phone number by removing any non-digit characters
-    const formattedPhone = whatsappForm.phone.replace(/\D/g, '');
-    
-    // Construct the WhatsApp message
-    const message = `Hello! I'm interested in your WiFi services.%0A%0A` +
-                   `*Name:* ${whatsappForm.fullName}%0A` +
-                   `*Phone:* ${whatsappForm.phone}%0A` +
-                   `*Email:* ${whatsappForm.email}%0A` +
-                   `*Location:* ${whatsappForm.location}%0A%0A` +
-                   `I'm ready to connect!`;
-    
-    // Open WhatsApp with pre-filled message
-    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank', 'noopener,noreferrer');
-    
-    // Reset the form
-    setWhatsappForm({
-      show: false,
-      fullName: '',
-      phone: '',
-      email: '',
-      location: address
-    });
-  };
-
   const handleConnectClick = () => {
-    if (isEligible) {
-      // Redirect to WiFi plans page instead of showing WhatsApp form
-      navigate('/wifiplans');
-    } else {
-      alert("Our services aren't available in your area yet. Please check back later!");
-    }
+    navigate('/wifiplans');
+    setShowEligibilityPanel(false);
   };
 
   return (
@@ -393,10 +347,10 @@ const CoverageMap = () => {
             <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6">
               <h3 className="font-semibold text-blue-800 mb-2">Check Your Address</h3>
               <button 
-                onClick={() => setShowEligibilityPanel(true)}
+                onClick={centerOnUserLocation}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors"
               >
-                Check Eligibility
+                {isLocating ? 'Locating...' : 'Check Eligibility'}
               </button>
             </div>
           </div>
@@ -434,96 +388,6 @@ const CoverageMap = () => {
           />
         )}
       </AnimatePresence>
-
-      {/* WhatsApp Form Modal */}
-      {whatsappForm.show && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <motion.div 
-            className="bg-white rounded-lg shadow-xl max-w-md w-full p-6"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-          >
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-gray-800">Get Connected</h3>
-              <button 
-                onClick={() => setWhatsappForm({...whatsappForm, show: false})}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            
-            <form onSubmit={handleWhatsappSubmit}>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={whatsappForm.fullName}
-                    onChange={(e) => setWhatsappForm({...whatsappForm, fullName: e.target.value})}
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
-                  <input
-                    type="tel"
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={whatsappForm.phone}
-                    onChange={(e) => setWhatsappForm({...whatsappForm, phone: e.target.value})}
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input
-                    type="email"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={whatsappForm.email}
-                    onChange={(e) => setWhatsappForm({...whatsappForm, email: e.target.value})}
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={whatsappForm.location}
-                    onChange={(e) => setWhatsappForm({...whatsappForm, location: e.target.value})}
-                  />
-                </div>
-              </div>
-              
-              <div className="mt-6 flex justify-end space-x-3">
-                <button
-                  type="button"
-                  onClick={() => setWhatsappForm({...whatsappForm, show: false})}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-6.29-3.062c-.545 0-1-.448-1-1s.445-1 1-1c.552 0 1 .448 1 1s-.443 1-1 1m4 0c-.545 0-1-.448-1-1s.445-1 1-1c.552 0 1 .448 1 1s-.443 1-1 1m2.005 9.644c-.366-.01-1.422-.361-2.053-.616l-.086-.035c-.487-.199-1.153-.473-1.623-.762-.543-.333-.915-.669-1.279-1.141-.432-.561-.757-1.236-.964-1.821l-.013-.034c-.309-.84-.175-1.579.024-2.192l.013-.034c.099-.24.26-.624.26-.624s-.159-.397-.198-.606c-.04-.209-.05-.359-.099-.568-.05-.208-.248-.52-.446-.669-.198-.149-.471-.258-.97-.258-.322 0-.644.025-.966.074-.309.05-.619.124-.929.198-.396.099-1.108.347-1.564.644-.447.297-.828.694-1.04 1.141-.223.471-.347 1.033-.347 1.702 0 .669.124 1.379.471 2.118l.013.034c.396.941 1.104 2.06 1.806 2.809.744.793 1.678 1.416 2.488 1.821l.074.037c.669.322 1.847.793 2.379.941.396.112.828.174 1.213.174.57 0 1.074-.062 1.49-.211.446-.16.832-.471 1.104-.941.272-.471.347-1.033.248-1.604-.074-.458-.322-.907-.644-1.191a1.49 1.49 0 00-.793-.347c-.124-.025-.223-.033-.322-.033" />
-                  </svg>
-                  Send via WhatsApp
-                </button>
-              </div>
-            </form>
-          </motion.div>
-        </div>
-      )}
     </motion.div>
   );
 };

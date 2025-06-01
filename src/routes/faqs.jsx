@@ -281,7 +281,7 @@ export default function Faqs() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold mb-2">Knoxville Tech LTD Self-Care Portal</h2>
+          <h2 className="text-4xl font-bold mb-2">Knoxville Tech Ltd - Self-Care Portal</h2>
           <p className="text-gray-600">Manage your account, services, and get support 24/7</p>
         </motion.div>
 

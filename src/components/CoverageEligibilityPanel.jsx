@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Spinner = () => (
   <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -21,6 +22,13 @@ const CrossIcon = () => (
 );
 
 export const CoverageEligibilityPanel = ({ address, isEligible, isLoading, onClose }) => {
+  const navigate = useNavigate();
+
+  const handleGetConnected = () => {
+    navigate('/wifiplans');
+    onClose(); // Close the panel when navigating
+  };
+
   return (
     <motion.div
       className="fixed bottom-6 right-6 z-50 w-full max-w-xs md:max-w-sm"
@@ -108,7 +116,7 @@ export const CoverageEligibilityPanel = ({ address, isEligible, isLoading, onClo
                       ? 'bg-green-600 hover:bg-green-700 text-white'
                       : 'bg-red-600 hover:bg-red-700 text-white'
                   }`}
-                  onClick={() => alert(isEligible ? 'Get connected' : 'Register interest')}
+                  onClick={isEligible ? handleGetConnected : () => alert('Register interest')}
                 >
                   {isEligible ? 'Get Connected Now' : 'Register Your Interest'}
                 </button>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Typewriter } from "react-simple-typewriter";
 
 const ImageModal = ({ image, onClose }) => {
   if (!image) return null;
@@ -38,15 +37,17 @@ const Hero = () => {
   const [modalImage, setModalImage] = useState(null);
   const backgroundImages = ["/fibre.webp", "/fibre2.webp", "/fibre3.webp"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [prevImageIndex, setPrevImageIndex] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     if (isHovered) return;
     const interval = setInterval(() => {
+      setPrevImageIndex(currentImageIndex);
       setCurrentImageIndex((prev) => (prev + 1) % backgroundImages.length);
-    }, 5000); // 5 seconds
+    }, 5000);
     return () => clearInterval(interval);
-  }, [isHovered]);
+  }, [isHovered, currentImageIndex]);
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -77,15 +78,31 @@ const Hero = () => {
 
   return (
     <section
-      className="relative min-h-screen w-full text-white overflow-hidden bg-white"
+      className="relative min-h-screen w-full text-white overflow-hidden bg-blue-900"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {prevImageIndex !== null && (
+        <motion.div
+          key={`prev-${prevImageIndex}`}
+          className="absolute inset-0 bg-cover bg-center"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          style={{
+            backgroundImage: `url(${backgroundImages[prevImageIndex]})`,
+            filter: "brightness(50%)",
+            zIndex: 0,
+          }}
+        />
+      )}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-1000"
+        key={`curr-${currentImageIndex}`}
+        className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 bg-blue-900"
         style={{
           backgroundImage: `url(${backgroundImages[currentImageIndex]})`,
           filter: "brightness(50%)",
+          zIndex: 1,
         }}
       />
 
@@ -128,17 +145,9 @@ const Hero = () => {
               whileHover={{ scale: 1.01 }}
               className="text-base sm:text-xl font-medium text-green-600 mb-6 leading-relaxed transition-all duration-300"
             >
-              <Typewriter
-                words={[
-                  "Unlimited internet for your home with Knoxville Technologies – Home of Fibre Internet",
-                ]}
-                loop={false}
-                cursor
-                cursorStyle="|"
-                typeSpeed={50}
-                deleteSpeed={30}
-                delaySpeed={1000}
-              />
+              <p>
+                Unlimited internet for your home with Knoxville Technologies – Home of Fibre Internet
+              </p>
             </motion.div>
 
             <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-3">
@@ -163,7 +172,7 @@ const Hero = () => {
                 className="border border-blue-800 text-blue-900 bg-blue-100 hover:bg-blue-200 px-6 py-3 rounded-sm font-medium shadow-sm hover:shadow-md"
                 onClick={() => navigate("/coverage")}
               >
-                🗺️ View Coverage
+                🗽️ View Coverage
               </motion.button>
             </motion.div>
 
@@ -252,7 +261,10 @@ const Hero = () => {
             className={`w-3 h-3 rounded-full border-2 ${
               currentImageIndex === idx ? "bg-blue-800 border-blue-800" : "bg-white/30 border-white"
             }`}
-            onClick={() => setCurrentImageIndex(idx)}
+            onClick={() => {
+              setPrevImageIndex(currentImageIndex);
+              setCurrentImageIndex(idx);
+            }}
           />
         ))}
       </div>

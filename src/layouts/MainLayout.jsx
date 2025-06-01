@@ -15,21 +15,21 @@ export default function MainLayout() {
       <ThemeProvider>
         <ScrollToHashElement />
 
-        <div className="min-h-screen w-full bg-gradient-to-br from-black via-stone-800 to-stone-200 relative">
-          <ParticleBackground />
+        <div className="relative min-h-screen w-full bg-white text-gray-900 overflow-hidden">
+          {/* Background image or animation */}
+          <div className="absolute inset-0 z-0">
+            <ParticleBackground />
+          </div>
 
-          <div className="relative min-h-screen w-full z-10">
-            <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-white z-0" />
+          {/* Main content wrapper */}
+          <div className="relative z-10 flex flex-col min-h-screen">
+            <Navbar />
 
-            <div className="relative z-10 text-gray-100">
-              <div className="min-h-screen w-full bg-gradient-to-br from-black via-gray-900 to-white text-gray-100">
-                <Navbar />
-                <main className="pt-32 px-4 sm:px-6 md:px-8">
-                  <Outlet />
-                </main>
-                <Footer />
-              </div>
-            </div>
+            <main className="flex-1 px-0 sm:px-0 md:px-0 mt-4">
+              <Outlet />
+            </main>
+
+            <Footer />
           </div>
         </div>
       </ThemeProvider>
