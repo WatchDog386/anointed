@@ -35,7 +35,7 @@ const ImageModal = ({ image, onClose }) => {
 const Hero = () => {
   const navigate = useNavigate();
   const [modalImage, setModalImage] = useState(null);
-  const backgroundImages = ["/fibre.webp", "/fibre2.webp", "/fibre3.webp"];
+  const backgroundImages = ["/fibre3.webp", "/fibre2.webp", "/fibre.webp"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [prevImageIndex, setPrevImageIndex] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
