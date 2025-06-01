@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import {
   Phone, Mail, MapPin, Wrench, Wifi, Code2, Shield, Cloud,
 } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp, FaFacebook, FaTiktok } from "react-icons/fa";
 
 const issues = [
   { value: "hardware", label: "Hardware", icon: <Wrench className="w-8 h-8 text-yellow-500" /> },
@@ -39,7 +39,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen px-6 pt-20 pb-0 bg-white text-gray-800 relative">
+    <div className="min-h-screen px-6 pt-20 pb-10 bg-white text-gray-800 relative">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -56,7 +56,7 @@ const Contact = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
-          {/* Contact Information */}
+          {/* Contact Info */}
           <div className="space-y-8">
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-gray-900">Our Contact Details</h2>
@@ -97,7 +97,7 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* WhatsApp Quick Chat */}
+            {/* WhatsApp Quick Link */}
             <div className="pt-4">
               <motion.a
                 href="https://wa.me/254726818938"
@@ -107,9 +107,36 @@ const Contact = () => {
                 className="inline-flex items-center gap-3 bg-green-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-700 transition-colors duration-200 text-base sm:text-lg"
                 whileHover={{ scale: 1.05 }}
               >
-                <FaWhatsapp className="w-6 h-6 shrink-0" />
-                <span className="whitespace-nowrap">Chat with us on WhatsApp</span>
+                <FaWhatsapp className="w-6 h-6" />
+                <span>Chat with us on WhatsApp</span>
               </motion.a>
+            </div>
+
+            {/* Social Media Icons */}
+            <div className="pt-6">
+              <p className="text-gray-700 font-semibold text-base mb-3">Follow us</p>
+              <div className="flex gap-6">
+                <motion.a
+                  href="https://www.facebook.com/yourpage"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="text-blue-600 text-3xl hover:text-blue-800 transition"
+                >
+                  <FaFacebook />
+                </motion.a>
+                <motion.a
+                  href="https://www.tiktok.com/@yourhandle"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.2, rotate: -5 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="text-black text-3xl hover:text-gray-700 transition"
+                >
+                  <FaTiktok />
+                </motion.a>
+              </div>
             </div>
 
             {/* Office Hours */}
@@ -223,7 +250,7 @@ const Contact = () => {
           </motion.form>
         </div>
 
-        {/* Map Section */}
+        {/* Map */}
         <div className="mb-16">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Location in Lucky Summer</h2>
           <div className="bg-gray-100 rounded-xl overflow-hidden border border-gray-200 h-96">
@@ -242,18 +269,6 @@ const Contact = () => {
           </div>
         </div>
       </motion.div>
-
-      {/* Floating WhatsApp with Label */}
-      <a
-        href="https://wa.me/254726818938"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-full shadow-lg flex items-center gap-2 z-50 transition-transform hover:scale-110"
-        aria-label="Reach us on WhatsApp"
-      >
-        <FaWhatsapp className="w-5 h-5" />
-        <span className="text-sm font-medium">WhatsApp: 0726 818 938</span>
-      </a>
     </div>
   );
 };

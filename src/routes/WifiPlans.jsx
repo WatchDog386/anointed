@@ -52,7 +52,6 @@ const plans = [
     features: ["High-Speed Everything", "Gaming & 4K", "24/7 Support", "Free Installation"],
     type: "home"
   },
-  // New business plans
   {
     name: "Business Basic",
     price: "Ksh 8,000",
@@ -117,7 +116,6 @@ export default function WifiPlans() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Updated WhatsApp number: 07 2689 6562 -> country code 254726896562
     const whatsappNumber = "254726896562";
     const message = `New Connection Request:%0A%0A` +
                    `*Name:* ${formData.name}%0A` +
@@ -176,22 +174,35 @@ export default function WifiPlans() {
           </div>
         </div>
 
-        {/* Plans Grid */}
+        {/* Plans Grid with Hover Effects */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
           {filteredPlans.map((plan, index) => (
-            <div
+            <motion.div
               key={index}
               onClick={() => toggleFlip(index)}
               className="perspective cursor-pointer"
+              whileHover={{ y: -10 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               <div className={`flip-card ${flippedIndex === index ? "flipped" : ""}`}>
-                {/* Front */}
-                <div className="flip-card-front bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden">
-                  <img
-                    src={plan.image}
-                    alt={plan.name}
-                    className="w-full h-48 object-cover"
-                  />
+                {/* Front Card */}
+                <motion.div 
+                  className="flip-card-front bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden h-full"
+                  whileHover={{ 
+                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                    borderColor: "#0891b2"
+                  }}
+                >
+                  <div className="relative overflow-hidden h-48">
+                    <motion.img
+                      src={plan.image}
+                      alt={plan.name}
+                      className="w-full h-full object-cover"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.5 }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                  </div>
                   <div className="p-6 space-y-4 text-gray-900">
                     <div className="flex justify-between items-center">
                       <h3 className="text-2xl font-semibold">{plan.name}</h3>
@@ -202,10 +213,16 @@ export default function WifiPlans() {
                     <p className="text-cyan-600 font-bold text-xl">{plan.price}</p>
                     <p className="text-sm text-gray-500">Tap to flip & see features</p>
                   </div>
-                </div>
+                </motion.div>
 
-                {/* Back */}
-                <div className="flip-card-back bg-white rounded-xl shadow-xl p-6 border border-gray-200 flex flex-col justify-between">
+                {/* Back Card */}
+                <motion.div 
+                  className="flip-card-back bg-white rounded-xl shadow-xl p-6 border border-gray-200 flex flex-col justify-between h-full"
+                  whileHover={{ 
+                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                    borderColor: "#0891b2"
+                  }}
+                >
                   <div>
                     <h3 className="text-xl font-semibold mb-4 text-gray-900">{plan.name} Features</h3>
                     <ul className="space-y-2 text-sm text-gray-700">
@@ -217,18 +234,23 @@ export default function WifiPlans() {
                       ))}
                     </ul>
                   </div>
-                  <button
+                  <motion.button
                     onClick={(e) => {
                       e.stopPropagation();
                       handlePlanSelect(plan);
                     }}
                     className="mt-6 w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-5 py-3 rounded-lg hover:shadow-lg transition"
+                    whileHover={{ 
+                      scale: 1.05,
+                      background: "linear-gradient(to right, #3b82f6, #06b6d4)"
+                    }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     Get Connected
-                  </button>
-                </div>
+                  </motion.button>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { FaFacebookSquare, FaTiktok, FaWhatsapp } from "react-icons/fa";
 
 const ImageModal = ({ image, onClose }) => {
   if (!image) return null;
@@ -142,7 +143,6 @@ const Hero = () => {
 
             <motion.div
               variants={fadeIn}
-              whileHover={{ scale: 1.01 }}
               className="text-base sm:text-xl font-medium text-green-600 mb-6 leading-relaxed transition-all duration-300"
             >
               <p>
@@ -152,24 +152,18 @@ const Hero = () => {
 
             <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-3">
               <motion.button
-                whileHover={{
-                  scale: 1.03,
-                  boxShadow: "0 10px 20px -5px rgba(59,130,246, 0.3)",
-                }}
+                whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                className="bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-900 hover:to-blue-600 text-white px-6 py-3 rounded-sm font-medium shadow-md hover:shadow-lg transition-all duration-300"
+                className="bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-900 hover:to-blue-600 text-white px-6 py-3 rounded-sm font-medium shadow-md"
                 onClick={() => navigate("/wifiplans")}
               >
                 🚀 Get Started
               </motion.button>
 
               <motion.button
-                whileHover={{
-                  scale: 1.03,
-                  boxShadow: "0 10px 20px -5px rgba(59,130,246,0.2)",
-                }}
+                whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                className="border border-blue-800 text-blue-900 bg-blue-100 hover:bg-blue-200 px-6 py-3 rounded-sm font-medium shadow-sm hover:shadow-md"
+                className="border border-blue-800 text-blue-900 bg-blue-100 hover:bg-blue-200 px-6 py-3 rounded-sm font-medium shadow-sm"
                 onClick={() => navigate("/coverage")}
               >
                 🗽️ View Coverage
@@ -181,31 +175,58 @@ const Hero = () => {
                 (stat, idx) => (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                      transition: {
-                        delay: 0.2 + idx * 0.1,
-                        duration: 0.6,
-                        ease: [0.16, 1, 0.3, 1],
-                      },
-                    }}
-                    whileHover={{
-                      y: -5,
-                      boxShadow: "0 10px 25px -5px rgba(59,130,246,0.3)",
-                    }}
-                    className="relative text-center p-4 bg-blue-100 backdrop-blur-sm rounded-lg shadow-md border border-blue-800 transition-all overflow-hidden"
+                    className="text-center p-4 bg-blue-100 rounded-lg shadow-md border border-blue-800 transition-all"
+                    whileHover={{ y: -5 }}
                   >
-                    <div className="relative z-10 text-xl font-bold text-blue-800">
-                      {stat.value}
-                    </div>
-                    <div className="relative z-10 text-xs text-blue-900 mt-1 uppercase tracking-wider">
+                    <div className="text-xl font-bold text-blue-800">{stat.value}</div>
+                    <div className="text-xs text-blue-900 mt-1 uppercase tracking-wider">
                       {stat.label}
                     </div>
                   </motion.div>
                 )
               )}
+            </motion.div>
+
+            {/* Updated Social Icons */}
+            <motion.div
+              variants={fadeIn}
+              className="mt-12 text-center"
+            >
+              <p className="text-white text-lg font-semibold mb-6 uppercase tracking-wide">
+                Follow Us
+              </p>
+
+              <motion.div
+                className="flex gap-8 items-center justify-center"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, repeatType: "mirror" }}
+              >
+                {[
+                  {
+                    icon: <FaFacebookSquare className="text-blue-600" />,
+                    link: "https://www.facebook.com/share/1E5h7zsjFR/",
+                  },
+                  {
+                    icon: <FaTiktok className="text-black" />,
+                    link: "https://www.tiktok.com/@knoxville.home.fi?_t=ZM-8wp8uGRB36k&_r=1",
+                  },
+                  {
+                    icon: <FaWhatsapp className="text-green-600" />,
+                    link: "https://wa.me/254726818938",
+                  },
+                ].map((item, index) => (
+                  <motion.a
+                    key={index}
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.2 }}
+                    className="bg-white p-5 rounded-full border-4 border-blue-800 shadow-lg transition-transform"
+                  >
+                    <div className="text-5xl">{item.icon}</div>
+                  </motion.a>
+                ))}
+              </motion.div>
             </motion.div>
           </motion.div>
 
@@ -218,18 +239,10 @@ const Hero = () => {
               src="/worker.webp"
               alt="Worker"
               initial={{ scale: 0.95, opacity: 0 }}
-              animate={{
-                scale: 1,
-                opacity: 1,
-                transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-              }}
+              animate={{ scale: 1, opacity: 1 }}
               className="w-[55vw] sm:w-[40vw] md:w-[32vw] max-w-md rounded-lg shadow-xl border-2 border-blue-800 hover:border-blue-900"
-              whileHover={{
-                scale: 1.02,
-                boxShadow: "0 20px 40px -10px rgba(59,130,246,0.3)",
-              }}
+              whileHover={{ scale: 1.02 }}
             />
-
             {["/install.webp", "/fibre3.webp", "/image.webp"].map((img, i) => {
               const isModal = i >= 1;
               return (
@@ -238,7 +251,7 @@ const Hero = () => {
                   src={img}
                   alt={`Floating ${i}`}
                   onClick={isModal ? () => setModalImage({ src: img, alt: `Image ${i}` }) : undefined}
-                  className={`absolute rounded-lg shadow-lg border-2 border-blue-800 ${isModal ? "cursor-pointer" : "pointer-events-none"}`}
+                  className="absolute rounded-lg shadow-lg border-2 border-blue-800 cursor-pointer"
                   style={{
                     width: `${28 - i * 3}vw`,
                     top: `${60 + i * 15}%`,
@@ -246,7 +259,7 @@ const Hero = () => {
                     transform: `translate(-50%, -50%) rotate(${i % 2 === 0 ? -8 + i * 3 : 5}deg)`,
                     zIndex: 2 + i,
                   }}
-                  animate={{ ...floatAnimation }}
+                  animate={floatAnimation}
                 />
               );
             })}
@@ -258,9 +271,7 @@ const Hero = () => {
         {backgroundImages.map((_, idx) => (
           <button
             key={idx}
-            className={`w-3 h-3 rounded-full border-2 ${
-              currentImageIndex === idx ? "bg-blue-800 border-blue-800" : "bg-white/30 border-white"
-            }`}
+            className={`w-3 h-3 rounded-full border-2 ${currentImageIndex === idx ? "bg-blue-800 border-blue-800" : "bg-white/30 border-white"}`}
             onClick={() => {
               setPrevImageIndex(currentImageIndex);
               setCurrentImageIndex(idx);

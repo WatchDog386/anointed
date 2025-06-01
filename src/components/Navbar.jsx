@@ -37,22 +37,16 @@ export default function Navbar() {
 
   const menuItems = useMemo(() => [
     { label: t("home"), route: "/", id: "home" },
-    { label: t("about"), route: "/about", id: "about" },
     { 
-      label: t("knoxville.services"), 
-      id: "services",
-      submenu: [
-        { label: t("fibre"), route: "/fibre", id: "fibre" },
-        { label: t("wifi"), route: "/wifi", id: "wifi" },
-        { label: t("enterprise"), route: "/enterprise", id: "enterprise" },
-      ]
-    },
-    { label: t("WIFI.plans"), route: "/wifiplans", id: "wifiplans" },
+      label: t("About us"), route: "/About", id: "About" },
+      
+    { label: t("knoxville services"), route: "/services", id: "services" },
+    { label: t("WIFIplans"), route: "/wifiplans", id: "wifiplans" },
     { 
-      label: t("knoxville.support"), 
+      label: t("knoxville support"), 
       id: "support",
       submenu: [
-        { label: t(".faq"), route: "/faq", id: "faq" },
+        { label: t("FAQs"), route: "/faq", id: "faq" },
         { label: t("lets talk"), route: "/contact", id: "contact" },
         { label: t("need help? message us"), route: "/technicians", id: "technicians" },
       ]
