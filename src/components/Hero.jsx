@@ -15,7 +15,7 @@ const ImageModal = ({ image, onClose }) => {
       onClick={onClose}
     >
       <motion.div
-        className="relative bg-blue-900 p-4 rounded-md shadow-lg max-w-md w-[90%]"
+        className="relative bg-white p-4 rounded-md shadow-lg max-w-md w-[90%]"
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0.8 }}
@@ -24,7 +24,7 @@ const ImageModal = ({ image, onClose }) => {
         <img src={image.src} alt={image.alt} className="rounded-md" />
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-white text-xl font-bold hover:text-blue-900"
+          className="absolute top-2 right-2 text-black text-xl font-bold hover:text-red-600"
         >
           ✕
         </button>
@@ -36,19 +36,7 @@ const ImageModal = ({ image, onClose }) => {
 const Hero = () => {
   const navigate = useNavigate();
   const [modalImage, setModalImage] = useState(null);
-  const backgroundImages = ["/fibre3.webp", "/fibre2.webp", "/fibre.webp"];
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [prevImageIndex, setPrevImageIndex] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    if (isHovered) return;
-    const interval = setInterval(() => {
-      setPrevImageIndex(currentImageIndex);
-      setCurrentImageIndex((prev) => (prev + 1) % backgroundImages.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isHovered, currentImageIndex]);
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -79,33 +67,17 @@ const Hero = () => {
 
   return (
     <section
-      className="relative min-h-screen w-full text-white overflow-hidden bg-blue-900"
+      className="relative min-h-screen w-full overflow-hidden bg-white text-gray-900"
+      style={{ 
+        backgroundImage: "url('/fibre3.webp')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat"
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {prevImageIndex !== null && (
-        <motion.div
-          key={`prev-${prevImageIndex}`}
-          className="absolute inset-0 bg-cover bg-center"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-          style={{
-            backgroundImage: `url(${backgroundImages[prevImageIndex]})`,
-            filter: "brightness(50%)",
-            zIndex: 0,
-          }}
-        />
-      )}
-      <div
-        key={`curr-${currentImageIndex}`}
-        className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 bg-blue-900"
-        style={{
-          backgroundImage: `url(${backgroundImages[currentImageIndex]})`,
-          filter: "brightness(50%)",
-          zIndex: 1,
-        }}
-      />
+      <div className="absolute inset-0 bg-gradient-to-bl from-black/60 via-black/20 to-transparent pointer-events-none z-0" />
 
       <div className="absolute top-6 left-6 z-20">
         <motion.img
@@ -187,20 +159,11 @@ const Hero = () => {
               )}
             </motion.div>
 
-            {/* Updated Social Icons */}
-            <motion.div
-              variants={fadeIn}
-              className="mt-12 text-center"
-            >
-              <p className="text-white text-lg font-semibold mb-6 uppercase tracking-wide">
+            <motion.div variants={fadeIn} className="mt-12 text-center">
+              <p className="text-gray-900 text-lg font-semibold mb-6 uppercase tracking-wide">
                 Follow Us
               </p>
-
-              <motion.div
-                className="flex gap-8 items-center justify-center"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, repeatType: "mirror" }}
-              >
+              <div className="flex gap-8 items-center justify-center">
                 {[
                   {
                     icon: <FaFacebookSquare className="text-blue-600" />,
@@ -215,18 +178,17 @@ const Hero = () => {
                     link: "https://wa.me/254726818938",
                   },
                 ].map((item, index) => (
-                  <motion.a
+                  <a
                     key={index}
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.2 }}
-                    className="bg-white p-5 rounded-full border-4 border-blue-800 shadow-lg transition-transform"
+                    className="bg-white p-5 rounded-full border-4 border-blue-800 shadow-lg transition-transform hover:scale-110"
                   >
                     <div className="text-5xl">{item.icon}</div>
-                  </motion.a>
+                  </a>
                 ))}
-              </motion.div>
+              </div>
             </motion.div>
           </motion.div>
 
@@ -256,7 +218,8 @@ const Hero = () => {
                     width: `${28 - i * 3}vw`,
                     top: `${60 + i * 15}%`,
                     left: `${60 + i * 5}%`,
-                    transform: `translate(-50%, -50%) rotate(${i % 2 === 0 ? -8 + i * 3 : 5}deg)`,
+                    transform: `translate(-50%, -50%) rotate(${i % 2 === 0 ? -8 + i * 3 : 5}deg)`
+                    ,
                     zIndex: 2 + i,
                   }}
                   animate={floatAnimation}
@@ -267,17 +230,15 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30 flex gap-2">
-        {backgroundImages.map((_, idx) => (
-          <button
-            key={idx}
-            className={`w-3 h-3 rounded-full border-2 ${currentImageIndex === idx ? "bg-blue-800 border-blue-800" : "bg-white/30 border-white"}`}
-            onClick={() => {
-              setPrevImageIndex(currentImageIndex);
-              setCurrentImageIndex(idx);
-            }}
-          />
-        ))}
+      {/* Sharper, Bigger Wave Animation */}
+      <div className="overflow-hidden h-40 relative">
+        <svg className="absolute bottom-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path
+            fill="#1e3a8a"
+            fillOpacity="1"
+            d="M0,160L40,149.3C80,139,160,117,240,128C320,139,400,181,480,181.3C560,181,640,139,720,128C800,117,880,139,960,144C1040,149,1120,139,1200,128C1280,117,1360,107,1400,101.3L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
+          ></path>
+        </svg>
       </div>
 
       <ImageModal image={modalImage} onClose={() => setModalImage(null)} />
