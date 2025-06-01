@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { FaFacebookSquare, FaTiktok, FaWhatsapp } from "react-icons/fa";
+import { Helmet } from "react-helmet";
 
 const ImageModal = ({ image, onClose }) => {
   if (!image) return null;
@@ -68,7 +69,7 @@ const Hero = () => {
   return (
     <section
       className="relative min-h-screen w-full overflow-hidden bg-white text-gray-900"
-      style={{ 
+      style={{
         backgroundImage: "url('/fibre2.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -77,6 +78,14 @@ const Hero = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      <Helmet>
+        <title>Knoxville Internet | Unlimited Home Fibre</title>
+        <meta
+          name="description"
+          content="Knoxville Internet - Reliable and fast fibre internet for your home and business. Explore our packages today."
+        />
+      </Helmet>
+
       <div className="absolute inset-0 bg-gradient-to-bl from-black/60 via-black/20 to-transparent pointer-events-none z-0" />
 
       <div className="absolute top-6 left-6 z-20">
@@ -85,7 +94,7 @@ const Hero = () => {
           animate={{ rotate: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           src="/logo4.webp"
-          alt="Company Logo"
+          alt="Knoxville Internet Logo"
           className="w-28 h-auto object-contain rounded-full border-2 border-blue-800 shadow-lg hover:rotate-6 transition-all duration-300 hover:border-blue-900"
         />
       </div>
@@ -110,7 +119,7 @@ const Hero = () => {
               transition={{ type: "spring", stiffness: 150 }}
               className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-4 bg-gradient-to-r from-blue-800 via-blue-600 to-blue-200 bg-clip-text text-transparent"
             >
-              Knoxville Technologies
+              Knoxville Internet
             </motion.h1>
 
             <motion.div
@@ -118,7 +127,7 @@ const Hero = () => {
               className="text-base sm:text-xl font-medium text-green-600 mb-6 leading-relaxed transition-all duration-300"
             >
               <p>
-                Unlimited internet for your home with Knoxville Technologies – Home of Fibre Internet
+                Unlimited internet for your home with Knoxville Internet – Home of Fibre Internet
               </p>
             </motion.div>
 
@@ -164,7 +173,7 @@ const Hero = () => {
                 Follow Us
               </p>
               <div className="flex gap-8 items-center justify-center">
-                {[
+                {[ 
                   {
                     icon: <FaFacebookSquare className="text-blue-600" />,
                     link: "https://www.facebook.com/share/1E5h7zsjFR/",
@@ -218,8 +227,7 @@ const Hero = () => {
                     width: `${28 - i * 3}vw`,
                     top: `${60 + i * 15}%`,
                     left: `${60 + i * 5}%`,
-                    transform: `translate(-50%, -50%) rotate(${i % 2 === 0 ? -8 + i * 3 : 5}deg)`
-                    ,
+                    transform: `translate(-50%, -50%) rotate(${i % 2 === 0 ? -8 + i * 3 : 5}deg)`,
                     zIndex: 2 + i,
                   }}
                   animate={floatAnimation}
@@ -230,7 +238,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Sharper, Bigger Wave Animation */}
       <div className="overflow-hidden h-40 relative">
         <svg className="absolute bottom-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
           <path
