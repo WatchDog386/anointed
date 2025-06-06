@@ -11,7 +11,7 @@ import { useInView } from "react-intersection-observer";
 const technicians = [
   {
     id: "tech-1",
-    name: "Abraham Ooro",
+    name: "Abraham ",
     role: "Chief Hardware Engineer",
     phone: "+254726818938",
     email: "ooroabraham@gmail.com",
@@ -30,7 +30,7 @@ const technicians = [
   },
   {
     id: "tech-2",
-    name: "Colins Ominde",
+    name: "Colins ",
     role: "Network Architect",
     phone: "+254768085708",
     email: "collinsominde98@gmail.com",
@@ -87,7 +87,7 @@ const technicians = [
   },
   {
     id: "tech-5",
-    name: "Felix Omondi",
+    name: "Felix ",
     role: "IT Support Specialist",
     phone: "+254740869951",
     email: "felixomondi@gmail.com",
