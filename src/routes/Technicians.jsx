@@ -49,7 +49,7 @@ const technicians = [
   },
   {
     id: "tech-3",
-    name: "Bret Gift Ooro",
+    name: "Bret Gift ",
     role: "Software Solutions Expert",
     phone: "+254713116766",
     email: "ggiftotieno@gmail.com",
@@ -68,7 +68,7 @@ const technicians = [
   },
   {
     id: "tech-4",
-    name: "Lameck Ooro",
+    name: "Lameck ",
     role: "Security Specialist",
     phone: "+254758018533",
     email: "lameckooro@gmail.com",
