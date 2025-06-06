@@ -141,7 +141,7 @@ export default function Navbar() {
           to="/" 
           className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight hover:from-blue-500 hover:to-purple-500 transition-all duration-300"
         >
-          Knoxville
+          Knoxville Technologies-Home Fibre
         </NavLink>
 
         <div className="hidden md:flex items-center gap-6 text-sm font-medium">
