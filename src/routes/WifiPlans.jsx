@@ -56,7 +56,7 @@ const plans = [
     name: "Business Basic",
     price: "Ksh 8,000",
     speed: "50Mbps",
-    image: "/business-basic.jpg",
+    image: "/image.webp",
     features: ["5 IP phones", "3 Static IPs", "Priority support", "99.5% uptime"],
     type: "business"
   },
@@ -64,7 +64,7 @@ const plans = [
     name: "Business Plus",
     price: "Ksh 15,000",
     speed: "100Mbps",
-    image: "/business-plus.jpg",
+    image: "/internet1.webp",
     features: ["10 IP phones", "5 Static IPs", "Dedicated line", "99.9% uptime"],
     type: "business"
   },
@@ -72,7 +72,7 @@ const plans = [
     name: "Enterprise",
     price: "Custom",
     speed: "500Mbps+",
-    image: "/enterprise.jpg",
+    image: "/enterprise2.jpg",
     features: ["Unlimited IP phones", "10+ Static IPs", "SLA guarantee", "24/7 monitoring"],
     type: "enterprise"
   }

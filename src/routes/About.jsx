@@ -1,210 +1,187 @@
 import React from "react";
-import { motion } from "framer-motion";
-import {
-  FaNetworkWired,
-  FaShieldAlt,
-  FaCloud,
-  FaGlobe,
-  FaUsers,
-  FaLightbulb,
-} from "react-icons/fa";
-import Navbar from "../components/Navbar"; // Assuming Navbar is reusable
+import Navbar from "../components/Navbar";
 
 const values = [
   {
-    icon: <FaShieldAlt className="text-3xl mb-4 text-red-500" />,
     title: "Integrity",
-    description: "We uphold the highest ethical standards in all our operations and client interactions.",
+    description: "We conduct our business with honesty, transparency, and ethical practices.",
   },
   {
-    icon: <FaLightbulb className="text-3xl mb-4 text-orange-400" />,
     title: "Innovation",
-    description: "We continuously explore new technologies to deliver cutting-edge solutions.",
+    description: "We embrace creativity to deliver cutting-edge solutions for evolving needs.",
   },
   {
-    icon: <FaNetworkWired className="text-3xl mb-4 text-blue-500" />,
-    title: "Reliability",
-    description: "Our solutions are built to perform consistently under all conditions.",
-  },
-  {
-    icon: <FaCloud className="text-3xl mb-4 text-green-500" />,
     title: "Excellence",
-    description: "We strive for perfection in every aspect of our service delivery.",
-  },
-];
-
-const team = [
-  {
-    name: "Abraham Ooro",
-    role: "Founder & CEO",
-    image: "/chair.webp",
-    bio: "Visionary leader with 15+ years in network infrastructure development.",
+    description: "We strive for the highest standards in all our services and products.",
   },
   {
-    name: "Zulfa George",
-    role: "AssCEO",
-    image: "/madam.webp",
-    bio: "Expert in network security and large-scale infrastructure deployment.",
+    title: "Collaboration",
+    description: "We believe in teamwork to achieve shared success with clients and partners.",
   },
 ];
-
-const stats = [
-  { value: "15K+", label: "Networks Deployed" },
-  { value: "98%", label: "Uptime Guarantee" },
-  { value: "40+", label: "Countries Served" },
-  { value: "200+", label: "Satisfied Clients" },
-];
-
-function About() {
-  return (
-    <section className="py-20 px-6 bg-white text-black">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 className="text-3xl font-bold mb-6 text-blue-600">Who We Are</h2>
-          <p className="mb-4">
-            Knoxville is a premier network infrastructure company specializing in providing robust, scalable, and secure connectivity solutions.
-          </p>
-          <p className="mb-4">
-            Founded in 2024, we have grown to become a trusted partner for businesses and organizations across multiple sectors.
-          </p>
-          <p>
-            Our certified technicians bring decades of experience in network architecture, cybersecurity.
-          </p>
-        </div>
-        <div className="relative">
-          <div className="bg-white rounded-xl overflow-hidden shadow-xl">
-            <img src="/group.webp" alt="Knoxville Team" className="w-full h-full object-cover" />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Mission() {
-  return (
-    <section className="py-20 bg-blue-50 text-black">
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12">
-        <div className="space-y-8">
-          <div>
-            <h2 className="text-3xl font-bold mb-4 text-red-500">Our Mission</h2>
-            <p>
-              To empower businesses and communities through innovative, reliable, and secure network infrastructure solutions.
-            </p>
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold mb-4 text-blue-500">Our Vision</h2>
-            <p>
-              To be Africa's leading network infrastructure provider, bridging the digital divide and connecting the continent to global opportunities.
-            </p>
-          </div>
-        </div>
-        <div className="space-y-8">
-          <div className="bg-white p-8 rounded-xl border-l-4 border-blue-500 shadow-md">
-            <h3 className="text-xl font-bold mb-4 flex items-center text-blue-500">
-              <FaGlobe className="mr-3" /> Global Reach
-            </h3>
-            <p>We deliver consistent quality and service wherever our clients need us.</p>
-          </div>
-          <div className="bg-white p-8 rounded-xl border-l-4 border-red-500 shadow-md">
-            <h3 className="text-xl font-bold mb-4 flex items-center text-red-500">
-              <FaUsers className="mr-3" /> Client-Centric Approach
-            </h3>
-            <p>Our solutions are tailored to each client’s needs, ensuring maximum value and performance.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Values() {
-  return (
-    <section className="py-20 bg-blue-100 text-black">
-      <div className="max-w-6xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold mb-12 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-black">
-          Our Core Values
-        </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {values.map((value, index) => (
-            <motion.div
-              key={index}
-              className="bg-white p-8 rounded-xl border border-blue-200 hover:shadow-lg transition-all"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              {value.icon}
-              <h3 className="text-xl font-bold mb-2 text-blue-600">{value.title}</h3>
-              <p>{value.description}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Team() {
-  return (
-    <section className="py-20 px-6 bg-white text-black">
-      <div className="max-w-6xl mx-auto text-center mb-16">
-        <h2 className="text-3xl font-bold mb-4 text-blue-500">Meet Our Leadership</h2>
-        <p className="max-w-2xl mx-auto">Our team brings together diverse expertise and a shared passion for network innovation.</p>
-      </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {team.map((member, index) => (
-          <motion.div
-            key={index}
-            className="bg-white rounded-xl overflow-hidden shadow-lg"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="h-64 overflow-hidden">
-              <img src={member.image} alt={`${member.name} photo`} className="w-full h-full object-cover" />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-bold text-red-500">{member.name}</h3>
-              <p className="text-gray-500 mb-3">{member.role}</p>
-              <p className="text-black text-sm">{member.bio}</p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Stats() {
-  return (
-    <section className="py-20 bg-blue-50 text-black">
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8 text-center">
-        {stats.map((stat, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h4 className="text-4xl font-bold mb-2 text-blue-500">{stat.value}</h4>
-            <p className="text-lg">{stat.label}</p>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 export default function AboutPage() {
   return (
-    <div className="bg-gradient-to-br from-white via-blue-50 to-blue-100">
+    <div className="font-sans text-gray-800 relative">
+      {/* Fixed Background Image for whole page */}
+      <div className="fixed inset-0 -z-10">
+        <img 
+          src="/logo4.webp" 
+          alt="Knoxville Background"
+          className="w-full h-full object-cover opacity-20"
+        />
+      </div>
+      
       <Navbar />
-      <About />
-      <Mission />
-      <Values />
-      <Team />
-      <Stats />
+
+      {/* Hero Section - now normal height */}
+      <section className="relative pt-32 pb-20 text-center text-white bg-[#006d7c]">
+        <div className="container mx-auto px-4 relative z-10">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">About Knoxville</h1>
+          <p className="text-xl md:text-2xl max-w-3xl mx-auto">
+            Pioneering digital solutions that transform businesses and empower communities
+          </p>
+        </div>
+      </section>
+
+      {/* Knoxville Info Section */}
+      <section className="py-20 bg-white bg-opacity-90">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            {/* Text Content */}
+            <div className="lg:w-1/2">
+              <h2 className="text-3xl font-bold text-blue-700 mb-6">What to know of Knoxville</h2>
+              <p className="mb-4 text-gray-700">
+                Founded by an experienced team from some of the biggest telecommunication brands,
+                <strong> Knoxville</strong> offers simple, affordable access to its
+                <strong> full-fibre</strong> network so everyone in the community can benefit,
+                regardless of income, technical knowledge or age. <strong>Knoxville</strong> delivers
+                the fastest broadband in the outskirts of Nairobi and Kiambu, to homes and businesses,
+                public services and community groups can experience its life-changing
+                <strong> full-fibre</strong> connectivity.
+              </p>
+            </div>
+
+            {/* Image */}
+            <div className="lg:w-1/2">
+              <img
+                src="/group2.jpg"
+                alt="Knoxville Group"
+                className="rounded-2xl shadow-lg w-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission & Vision Section */}
+      <section className="py-20 bg-gray-100 bg-opacity-90">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-blue-700 mb-4">Our Purpose</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Driving innovation through purpose-led solutions
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white p-10 rounded-xl shadow-lg border-t-4 border-blue-600">
+              <h3 className="text-2xl font-bold text-blue-700 mb-6">Our Mission</h3>
+              <p className="text-gray-600 mb-6">
+                To empower businesses and communities through reliable, innovative digital
+                infrastructure that enables growth and creates opportunities.
+              </p>
+              <ul className="space-y-3">
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">✓</span>
+                  <span>Deliver cutting-edge solutions</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">✓</span>
+                  <span>Maintain uncompromising quality</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">✓</span>
+                  <span>Foster sustainable digital ecosystems</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white p-10 rounded-xl shadow-lg border-t-4 border-green-600">
+              <h3 className="text-2xl font-bold text-green-700 mb-6">Our Vision</h3>
+              <p className="text-gray-600 mb-6">
+                To be the catalyst for Africa's digital revolution, connecting people, businesses,
+                and ideas through world-class infrastructure and services.
+              </p>
+              <ul className="space-y-3">
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2">✓</span>
+                  <span>Bridge the digital divide</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2">✓</span>
+                  <span>Enable next-generation technologies</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2">✓</span>
+                  <span>Create lasting economic impact</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Core Values Section */}
+      <section className="py-20 bg-white bg-opacity-90">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-blue-700 mb-4">Our Core Values</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              The foundation of everything we do
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {values.map((value, index) => (
+              <div key={index} className="bg-gray-50 p-8 rounded-xl text-center hover:shadow-md transition-all">
+                <div className="w-20 h-20 bg-blue-100 rounded-full mx-auto mb-6 flex items-center justify-center">
+                  <span className="text-2xl font-bold text-blue-700">{index + 1}</span>
+                </div>
+                <h3 className="text-xl font-bold mb-4">{value.title}</h3>
+                <p className="text-gray-600">{value.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Knoxville Bio Section - now with solid color */}
+      <section className="py-20 bg-[#006d7c] text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl font-bold mb-6">Knoxville Bio</h2>
+            <p className="text-lg mb-6">
+              Knoxville Technologies is a Kenyan ISP focused on delivering ultra-fast, reliable, and
+              affordable internet to underserved and developing regions. We deploy high-capacity
+              fiber-optic infrastructure to enable digital inclusion and bridge the connectivity
+              gap in urban and peri-urban communities.
+            </p>
+            <p className="text-lg mb-6">
+              Our team is comprised of professionals with a deep understanding of network
+              design, deployment, and service delivery. We believe everyone deserves access to
+              world-class connectivity, regardless of location or income level. Knoxville aims to
+              be the backbone of digital transformation by supporting education, innovation, and
+              enterprise through better broadband.
+            </p>
+            <p className="text-lg">
+              We are committed to empowering homes and businesses with seamless access to
+              information, communication, and opportunity. Through innovation and collaboration,
+              Knoxville continues to redefine connectivity in Kenya and beyond.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

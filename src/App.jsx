@@ -22,7 +22,7 @@ import ArticleDetail from "./routes/ArticleDetail";
 import CoverageMap from "./routes/CoverageMap";
 
 // Components
-import TypewriterHeader from "./components/TypewriterHeader";
+
 
 const TrackPageViews = () => {
   const location = useLocation();
@@ -46,7 +46,7 @@ function AppRoutes() {
           index
           element={
             <>
-              <TypewriterHeader />
+            
               <Home />
             </>
           }
