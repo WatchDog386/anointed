@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { FaFacebookSquare, FaTiktok, FaWhatsapp } from "react-icons/fa";
@@ -37,6 +37,21 @@ const ImageModal = ({ image, onClose }) => {
 const Hero = () => {
   const navigate = useNavigate();
   const [modalImage, setModalImage] = useState(null);
+  const [bgIndex, setBgIndex] = useState(0);
+  
+  const bgImages = [
+    "/fibre.webp",
+    "/fibre2.webp",
+    "/fibre3.webp"
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % bgImages.length);
+    }, 10000); // Changed to 10 seconds
+    
+    return () => clearInterval(interval);
+  }, []);
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -66,15 +81,7 @@ const Hero = () => {
   };
 
   return (
-    <section
-      className="relative min-h-screen w-full overflow-hidden bg-white text-gray-900"
-      style={{
-        backgroundImage: "url('/fibre2.webp')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <section className="relative min-h-screen w-full overflow-hidden bg-white text-gray-900">
       <Helmet>
         <title>Knoxville Internet | Unlimited Home Fibre</title>
         <meta
@@ -82,6 +89,19 @@ const Hero = () => {
           content="Knoxville Internet - Reliable and fast fibre internet for your home and business. Explore our packages today."
         />
       </Helmet>
+
+      {/* Background Slideshow - Changes every 10 seconds */}
+      <div className="absolute inset-0 z-0">
+        {bgImages.map((img, index) => (
+          <div
+            key={img}
+            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
+              index === bgIndex ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ backgroundImage: `url(${img})` }}
+          />
+        ))}
+      </div>
 
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-bl from-black/60 via-black/30 to-transparent z-0" />
@@ -94,7 +114,7 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           src="/logo4.webp"
           alt="Knoxville Internet Logo"
-          className="w-20 sm:w-24 md:w-28 h-auto object-contain rounded-full border-2 border-blue-800 shadow-lg hover:rotate-6 transition-all duration-300 bg-white"
+          className="w-20 sm:w-24 md:w-28 h-auto object-contain rounded-full"
         />
       </div>
 
@@ -161,7 +181,7 @@ const Hero = () => {
               ].map((stat, idx) => (
                 <motion.div
                   key={idx}
-                  className="text-center p-4 bg-blue-100 rounded-lg shadow-md border border-blue-800 transition hover:scale-105"
+                  className="text-center p-4 bg-blue-100 rounded-lg shadow-md transition hover:scale-105"
                 >
                   <div className="text-xl font-bold text-blue-800">{stat.value}</div>
                   <div className="text-xs text-blue-900 mt-1 uppercase tracking-wider">{stat.label}</div>
@@ -192,7 +212,7 @@ const Hero = () => {
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-white p-4 rounded-full border-4 border-blue-800 shadow-lg hover:scale-110 transition"
+                    className="bg-white p-4 rounded-full shadow-lg hover:scale-110 transition"
                   >
                     <div className="text-3xl">{item.icon}</div>
                   </a>
@@ -212,7 +232,7 @@ const Hero = () => {
               alt="Worker"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="w-[65vw] sm:w-[50vw] md:w-[36vw] max-w-md rounded-lg shadow-xl border-2 border-blue-800 hover:border-blue-900"
+              className="w-[65vw] sm:w-[50vw] md:w-[36vw] max-w-md rounded-lg shadow-xl"
               whileHover={{ scale: 1.02 }}
             />
             {["/install.webp", "/fibre3.webp", "/image.webp"].map((img, i) => (
@@ -221,7 +241,7 @@ const Hero = () => {
                 src={img}
                 alt={`Floating ${i}`}
                 onClick={() => setModalImage({ src: img, alt: `Image ${i}` })}
-                className="absolute rounded-lg shadow-lg border-2 border-blue-800 cursor-pointer"
+                className="absolute rounded-lg shadow-lg cursor-pointer"
                 style={{
                   width: `${28 - i * 3}vw`,
                   top: `${60 + i * 15}%`,
@@ -234,17 +254,6 @@ const Hero = () => {
             ))}
           </motion.div>
         </div>
-      </div>
-
-      {/* Bottom wave */}
-      <div className="overflow-hidden h-40 relative">
-        <svg className="absolute bottom-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
-          <path
-            fill="#1e3a8a"
-            fillOpacity="1"
-            d="M0,160L40,149.3C80,139,160,117,240,128C320,139,400,181,480,181.3C560,181,640,139,720,128C800,117,880,139,960,144C1040,149,1120,139,1200,128C1280,117,1360,107,1400,101.3L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
-          ></path>
-        </svg>
       </div>
 
       {/* Image Modal */}

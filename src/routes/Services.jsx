@@ -187,52 +187,6 @@ function AllServices() {
   );
 }
 
-// Footer
-function Footer() {
-  return (
-    <footer className="bg-gray-100 text-gray-700 text-sm py-12 border-t border-gray-200">
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
-        <div>
-          <h3 className="text-xl font-bold text-gray-900 mb-4">
-            <span className="text-blue-600">KNOX</span>
-            <span className="text-black">VILLE</span>
-          </h3>
-          <p className="mb-4">
-            Leading network infrastructure solutions provider across Africa.
-          </p>
-          <p>© {new Date().getFullYear()} KNOXVILLE. All rights reserved.</p>
-        </div>
-        <div>
-          <h4 className="text-gray-900 font-bold mb-4">Quick Links</h4>
-          <ul className="space-y-2">
-            <li><Link to="/" className="hover:text-blue-600">Home</Link></li>
-            <li><Link to="/about" className="hover:text-blue-600">About Us</Link></li>
-            <li><Link to="/services" className="hover:text-blue-600">Services</Link></li>
-            <li><Link to="/contact" className="hover:text-blue-600">Contact</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="text-gray-900 font-bold mb-4">Services</h4>
-          <ul className="space-y-2">
-            <li><Link to="/services" className="hover:text-blue-600">Network Infrastructure</Link></li>
-            <li><Link to="/services" className="hover:text-blue-600">Security Solutions</Link></li>
-            <li><Link to="/services" className="hover:text-blue-600">Cloud Services</Link></li>
-            <li><Link to="/services" className="hover:text-blue-600">Data Center Solutions</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="text-gray-900 font-bold mb-4">Contact</h4>
-          <address className="not-italic">
-            <p className="mb-2">Nairobi, Kenya</p>
-            <p className="mb-2">knoxvilletechnologies.com</p>
-            <p>+254 726896562</p>
-          </address>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 // Export Page
 export default function ServicesPage() {
   return (
@@ -240,7 +194,6 @@ export default function ServicesPage() {
       <Navbar />
       <ServicesHero />
       <AllServices />
-      <Footer />
     </div>
   );
 }
