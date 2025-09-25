@@ -10,16 +10,16 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 // Layouts
 import MainLayout from "./layouts/MainLayout";
 
-// Existing Pages
+// Existing Pages (match filenames exactly)
 import Home from "./routes/Home";
 import About from "./routes/About";
 import Stories from "./routes/Stories";
-import Testimonials from "./routes/testimonials";
+import Testimonials from "./routes/testimonials"; // lowercase t
 import CTA from "./routes/CTA";
-import Staff from "./routes/Staff";
+import Staff from "./routes/Staff"; // uppercase S
 import Board from "./routes/Board";
 
-// NEWLY ADDED PAGES (to be created)
+// Newly added pages (match filenames exactly)
 import Gallery from "./routes/Gallery";
 import EducationPrograms from "./routes/EducationPrograms";
 import SpiritualGrowth from "./routes/SpiritualGrowth";
@@ -54,7 +54,7 @@ function AppRoutes() {
         <Route path="stories" element={<Stories />} />
         <Route path="testimonials" element={<Testimonials />} />
         <Route path="cta" element={<CTA />} />
-        
+
         {/* Newly added routes */}
         <Route path="gallery" element={<Gallery />} />
         <Route path="eduprog" element={<EducationPrograms />} />
@@ -76,7 +76,10 @@ export default function App() {
       <ParallaxProvider>
         <LanguageProvider>
           <Helmet>
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-6TTHG2D146"></script>
+            <script
+              async
+              src="https://www.googletagmanager.com/gtag/js?id=G-6TTHG2D146"
+            ></script>
             <script>
               {`
                 window.dataLayer = window.dataLayer || [];
