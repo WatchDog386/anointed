@@ -19,12 +19,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   // === ROTATING HERO IMAGES ===
-  const heroImages = [
-    "/orphans.jpg",
-    "/christian.jpg",
-    "/project.jpg",
-  ];
-
+  const heroImages = ["/orphans.jpg", "/christian.jpg", "/project.jpg"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -34,28 +29,28 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, [heroImages.length]);
 
-  // === FEATURES (Why Support Us) – images removed ===
+  // === FEATURES ===
   const features = [
     {
-      icon: <FaCross className="text-4xl text-[#932528]" />,
+      icon: <FaCross className="text-4xl text-secondary" />,
       title: "Faith-Based Learning",
       description:
         "We integrate Christian values and biblical principles throughout our curriculum to develop spiritually grounded students.",
     },
     {
-      icon: <FaGraduationCap className="text-4xl text-[#932528]" />,
+      icon: <FaGraduationCap className="text-4xl text-secondary" />,
       title: "Academic Excellence",
       description:
         "Our rigorous curriculum challenges students to achieve their highest potential with a balanced approach to education.",
     },
     {
-      icon: <FaHandsHelping className="text-4xl text-[#932528]" />,
+      icon: <FaHandsHelping className="text-4xl text-secondary" />,
       title: "Community Focus",
       description:
         "Our supportive Christian community fosters relationships that last a lifetime and create a sense of belonging.",
     },
     {
-      icon: <FaChild className="text-4xl text-[#932528]" />,
+      icon: <FaChild className="text-4xl text-secondary" />,
       title: "Children & Youth Empowerment",
       description:
         "We empower young people with knowledge, skills, and confidence to become leaders who positively impact their communities.",
@@ -64,17 +59,17 @@ const Hero = () => {
 
   const missionSections = [
     {
-      icon: <FaCross className="text-4xl text-[#2b473f]" />,
+      icon: <FaCross className="text-4xl text-primary" />,
       title: "Sharing the Gospel",
       description: "We're growing God's Kingdom in Kenya, sharing the Good News with future generations.",
     },
     {
-      icon: <FaGraduationCap className="text-4xl text-[#2b473f]" />,
+      icon: <FaGraduationCap className="text-4xl text-primary" />,
       title: "Empowering Leaders",
       description: "We're empowering tomorrow's Christian leaders to fulfill a greater purpose in their communities.",
     },
     {
-      icon: <FaHandsHelping className="text-4xl text-[#2b473f]" />,
+      icon: <FaHandsHelping className="text-4xl text-primary" />,
       title: "Giving Hope",
       description: "We're teaching children about God's unconditional love and that in Him they find delight and hope.",
     },
@@ -92,7 +87,7 @@ const Hero = () => {
       title: (
         <>
           This is your <br />
-          <span className="text-[#8CA9B4]">Invitation</span>
+          <span className="text-accent">Invitation</span>
         </>
       ),
       description:
@@ -114,11 +109,6 @@ const Hero = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
   };
 
-  const fadeInLeft = {
-    hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } },
-  };
-
   const staggerContainer = {
     hidden: {},
     visible: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } },
@@ -132,22 +122,22 @@ const Hero = () => {
           name="description"
           content="Anointed Vessels Christian School empowers vulnerable children and families by breaking cycles of poverty through quality education, holistic growth, and skills development—nurturing future Christian leaders with hope and responsibility."
         />
+        {/* GGCC uses Montserrat + Open Sans + Ernest Emily */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700;800&family=Ernest+Emily:wght@400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&family=Ernest+Emily&display=swap"
           rel="stylesheet"
         />
         <style>{`
-          body { font-family: 'Montserrat', sans-serif; }
-          .font-playfair { font-family: 'Playfair Display', serif; }
+          body { font-family: 'Open Sans', sans-serif; }
+          .font-montserrat { font-family: 'Montserrat', sans-serif; }
           .font-ernest { font-family: 'Ernest Emily', cursive; }
         `}</style>
       </Helmet>
 
       {/* === HERO SECTION === */}
       <section className="relative w-full min-h-[80vh] flex items-center justify-center text-white overflow-hidden">
-        {/* Rotating Background Images */}
         {heroImages.map((img, idx) => (
           <motion.div
             key={idx}
@@ -163,7 +153,7 @@ const Hero = () => {
             />
           </motion.div>
         ))}
-        <div className="absolute inset-0 z-10 bg-black bg-opacity-20"></div>
+        <div className="absolute inset-0 z-10 bg-black bg-opacity-40"></div>
 
         <div className="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-4xl">
           <motion.div
@@ -175,14 +165,13 @@ const Hero = () => {
             <motion.h1
               variants={fadeIn}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight font-ernest"
-              style={{ letterSpacing: "-0.02em" }}
             >
               Welcome to
             </motion.h1>
 
             <motion.h2
               variants={fadeIn}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-montserrat leading-tight"
             >
               Anointed Vessels <br />
               Christian School
@@ -190,7 +179,7 @@ const Hero = () => {
 
             <motion.p
               variants={fadeIn}
-              className="text-lg sm:text-xl md:text-2xl mt-6 max-w-2xl mx-auto"
+              className="text-lg sm:text-xl md:text-2xl mt-6 max-w-2xl mx-auto font-montserrat"
             >
               Excellence in faith-based education for vulnerable children on Mfangano Island.
             </motion.p>
@@ -198,14 +187,14 @@ const Hero = () => {
             <motion.div variants={fadeIn} className="mt-10">
               <button
                 onClick={() => navigate("/about/our-story")}
-                className="inline-block border-2 border-[#932528] text-[#932528] font-bold py-3 px-8 rounded-full hover:bg-[#8CA9B4] hover:text-white transition-all duration-300"
+                className="cta-button"
               >
                 Our Story
               </button>
             </motion.div>
           </motion.div>
 
-          {/* Social Icons */}
+          {/* Social Icons – GGCC style */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -237,8 +226,8 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* === WHY SUPPORT US (Images Removed) === */}
-      <section className="w-full py-16 bg-white">
+      {/* === WHY SUPPORT US === */}
+      <section className="w-full py-16 bg-light">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-12"
@@ -247,10 +236,10 @@ const Hero = () => {
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeIn}
           >
-            <h2 className="text-3xl font-bold text-[#2b473f] mb-4">
+            <h2 className="text-3xl font-bold text-primary font-montserrat mb-4">
               WHY SUPPORT US
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-sans">
               Discover what makes our Christian educational approach unique and effective
             </p>
           </motion.div>
@@ -265,15 +254,14 @@ const Hero = () => {
             {features.map((feature, idx) => (
               <motion.div
                 key={idx}
-                className="bg-white rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+                className="bg-white rounded-xl p-6 text-center border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300"
                 variants={fadeIn}
               >
-                {/* Removed image container */}
                 <div className="mb-3 flex justify-center">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-[#2b473f] mb-3">
+                <h3 className="text-xl font-bold text-primary font-montserrat mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-sm font-sans">
                   {feature.description}
                 </p>
               </motion.div>
@@ -282,75 +270,68 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* === CTA CARDS SECTION === */}
-      <section className="w-full py-12 bg-white">
-        <div className="container mx-auto px-0">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 h-96">
-            {ctaSections.map((cta, idx) => (
+      {/* === CTA CARDS SECTION (GGCC Layout) === */}
+      <section className="w-full py-0">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+          {ctaSections.map((cta, idx) => (
+            <div
+              key={idx}
+              className={`relative h-96 md:h-[500px] ${idx > 0 ? "border-l border-gray-300" : ""}`}
+            >
+              <img
+                src={cta.image}
+                alt={typeof cta.title === "string" ? cta.title : "Call to action"}
+                className="w-full h-full object-cover"
+              />
               <div
-                key={idx}
-                className={`relative overflow-hidden h-full ${idx > 0 ? "border-l border-gray-300" : ""}`}
+                className={`absolute inset-0 flex flex-col justify-center items-center p-6 text-white ${
+                  idx === 1 ? "bg-primary bg-opacity-90" : "bg-black bg-opacity-50"
+                }`}
               >
-                <img
-                  src={cta.image}
-                  alt={typeof cta.title === "string" ? cta.title : "Call to action"}
-                  className="w-full h-full object-cover"
-                />
-                <div
-                  className={`absolute inset-0 flex flex-col justify-center items-center p-6 text-white ${
-                    idx === 1 ? "bg-[#2b473f] bg-opacity-90" : "bg-black bg-opacity-50"
-                  }`}
-                >
-                  <h3 className="text-2xl font-bold mb-4 text-center text-white">
-                    {cta.title}
-                  </h3>
-                  {cta.description && (
-                    <p className="text-sm mb-4 text-center text-white max-w-xs">
-                      {cta.description}
-                    </p>
-                  )}
-                  {cta.buttonText && (
-                    <button
-                      onClick={cta.onClick}
-                      className="bg-white text-[#932528] font-semibold py-2 px-6 rounded-full hover:bg-[#8CA9B4] hover:text-white transition-all duration-300"
-                    >
-                      {cta.buttonText}
-                    </button>
-                  )}
-                  {cta.linkText && (
-                    <a
-                      href={cta.link}
-                      className="text-[#8CA9B4] underline mt-2"
-                    >
-                      {cta.linkText}
-                    </a>
-                  )}
-                </div>
+                <h3 className="text-2xl font-bold mb-4 text-center font-montserrat">
+                  {cta.title}
+                </h3>
+                {cta.description && (
+                  <p className="text-sm mb-4 text-center max-w-xs font-sans">
+                    {cta.description}
+                  </p>
+                )}
+                {cta.buttonText && (
+                  <button
+                    onClick={cta.onClick}
+                    className="bg-white text-secondary font-semibold py-2 px-6 rounded-full hover:bg-accent hover:text-white transition-all duration-300 font-montserrat"
+                  >
+                    {cta.buttonText}
+                  </button>
+                )}
+                {cta.linkText && (
+                  <a href={cta.link} className="text-accent underline mt-2 font-montserrat">
+                    {cta.linkText}
+                  </a>
+                )}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* === MISSION SECTION === */}
-      <section className="w-full py-12 bg-white">
+      <section className="w-full py-12 bg-light">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {missionSections.map((section, idx) => (
               <div key={idx} className="text-center p-6">
                 <div className="mb-4 flex justify-center">{section.icon}</div>
-                <h3 className="text-xl font-bold text-[#2b473f] mb-3">
+                <h3 className="text-xl font-bold text-primary font-montserrat mb-3">
                   {section.title}
                 </h3>
-                <p className="text-gray-600 text-sm">
-                  {section.description}
-                </p>
+                <p className="text-gray-600 text-sm font-sans">{section.description}</p>
               </div>
             ))}
           </div>
 
           <div className="text-center mb-12 max-w-4xl mx-auto">
-            <p className="text-base md:text-lg text-gray-600">
+            <p className="text-base md:text-lg text-gray-700 font-sans">
               Anointed Vessels Christian School (AVCS) is a Christian boarding school in Kenya. AVCS was established following the HIV/AIDS crisis when our founders received God’s call to serve vulnerable and orphaned children. By offering love, nourishment, and a Christian education, we are growing faithful leaders who will carry His message throughout the world.
             </p>
           </div>

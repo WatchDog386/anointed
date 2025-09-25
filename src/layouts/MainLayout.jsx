@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import ScrollToHashElement from "../components/ScrollToHashElement";
+import ScrollToTop from "../components/ScrollToTop";
 import ParticleBackground from "../components/ParticleBackground";
 
 import { ThemeProvider } from "../contexts/ThemeContext";
@@ -12,7 +12,7 @@ import { ThemeProvider } from "../contexts/ThemeContext";
 export default function MainLayout() {
   return (
     <ThemeProvider>
-      <ScrollToHashElement />
+      <ScrollToTop />
 
       <div className="relative min-h-screen w-full bg-white text-gray-900 overflow-hidden">
         {/* Background animation */}

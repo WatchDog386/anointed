@@ -14,9 +14,9 @@ import MainLayout from "./layouts/MainLayout";
 import Home from "./routes/Home";
 import About from "./routes/About";
 import Stories from "./routes/Stories";
-import Testimonials from "./routes/Testimonials"; // ✅ uppercase T to match file Testimonials.jsx
+import Testimonials from "./routes/Testimonials";
 import CTA from "./routes/CTA";
-import Staff from "./routes/Staff"; // ✅ uppercase S to match file Staff.jsx
+import Staff from "./routes/Staff";
 import Board from "./routes/Board";
 
 // Newly added pages (match filenames exactly)
@@ -76,6 +76,58 @@ export default function App() {
       <ParallaxProvider>
         <LanguageProvider>
           <Helmet>
+            {/* GGCC Fonts and Styles */}
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+            <link 
+              href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" 
+              rel="stylesheet" 
+            />
+            
+            {/* Font Awesome Icons */}
+            <link 
+              rel="stylesheet" 
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+            />
+            
+            {/* GGCC Base Styles */}
+            <style>
+              {`
+                /* GGCC Font Setup */
+                body {
+                  font-family: 'Open Sans', sans-serif;
+                  font-weight: 400;
+                  line-height: 1.6;
+                  color: #333;
+                  margin: 0;
+                  padding: 0;
+                  overflow-x: hidden;
+                }
+                
+                h1, h2, h3, h4, h5, h6 {
+                  font-family: 'Montserrat', sans-serif;
+                  font-weight: 700;
+                  line-height: 1.2;
+                  color: #2b473f;
+                  margin: 0;
+                }
+                
+                /* GGCC Color Variables */
+                :root {
+                  --ggcc-primary: #2b473f;
+                  --ggcc-secondary: #932528;
+                  --ggcc-accent: #8CA9B4;
+                  --ggcc-light: #f6f4ee;
+                }
+                
+                /* Smooth scrolling */
+                html {
+                  scroll-behavior: smooth;
+                }
+              `}
+            </style>
+
+            {/* Google Analytics */}
             <script
               async
               src="https://www.googletagmanager.com/gtag/js?id=G-6TTHG2D146"

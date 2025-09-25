@@ -1,5 +1,5 @@
 // src/components/Navbar.jsx
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useClickOutside } from "../hooks/useClickOutside";
@@ -12,7 +12,7 @@ export default function Navbar() {
   const navRef = useRef(null);
 
   // Close mobile menu on route change & scroll to top
-  React.useEffect(() => {
+  useEffect(() => {
     setIsOpen(false);
     setOpenSubmenu(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -22,8 +22,6 @@ export default function Navbar() {
     setIsOpen(false);
     setOpenSubmenu(null);
   });
-
-  const currentPath = location.pathname;
 
   const menuItems = [
     { label: "Home", route: "/", id: "home" },
@@ -62,11 +60,11 @@ export default function Navbar() {
           {isMobile ? (
             <>
               <button
-                className="w-full flex justify-between items-center px-3 py-2.5 font-medium text-gray-800 text-left hover:bg-white/20 rounded-lg transition-all duration-200"
+                className="w-full flex justify-between items-center px-3 py-2.5 font-medium text-primary text-left hover:bg-light rounded-lg transition-all duration-200"
                 onClick={() => setOpenSubmenu(isSubmenuOpen ? null : item.id)}
                 aria-expanded={isSubmenuOpen}
               >
-                <span className="text-sm">{item.label}</span>
+                <span className="text-sm font-montserrat">{item.label}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className={`h-4 w-4 transition-transform duration-200 ${
@@ -89,10 +87,10 @@ export default function Navbar() {
                       key={subItem.id}
                       to={subItem.route}
                       className={({ isActive }) =>
-                        `block px-3 py-2 text-xs font-medium rounded-lg transition-all duration-200 ${
+                        `block px-3 py-2 text-xs font-montserrat rounded-lg transition-all duration-200 ${
                           isActive
-                            ? "text-[#932528] bg-white/30"
-                            : "text-gray-700 hover:text-[#8CA9B4] hover:bg-white/20"
+                            ? "text-secondary bg-light"
+                            : "text-gray-700 hover:text-accent hover:bg-light"
                         }`
                       }
                       onClick={() => {
@@ -108,8 +106,8 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <button className="relative pb-1.5 px-2 font-medium text-gray-800 hover:text-[#8CA9B4] flex items-center gap-1 transition-all duration-200 group-hover:bg-white/20 rounded-lg py-1">
-                <span className="text-sm">{item.label}</span>
+              <button className="relative pb-1.5 px-2 font-medium text-primary hover:text-accent flex items-center gap-1 transition-all duration-200 group-hover:bg-light rounded-lg py-1">
+                <span className="text-sm font-montserrat">{item.label}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-3 w-3 mt-0.5 transition-transform duration-200 group-hover:rotate-180"
@@ -124,17 +122,17 @@ export default function Navbar() {
                 </svg>
               </button>
 
-              {/* Desktop Dropdown */}
-              <div className="absolute left-0 mt-1 w-56 rounded-lg shadow-lg bg-white/95 backdrop-blur-md border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform translate-y-2 group-hover:translate-y-0">
+              {/* Desktop Dropdown — GGCC Style */}
+              <div className="absolute left-0 mt-1 w-56 rounded-lg shadow-lg bg-white border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform translate-y-2 group-hover:translate-y-0">
                 {item.submenu.map((subItem) => (
                   <NavLink
                     key={subItem.id}
                     to={subItem.route}
                     className={({ isActive }) =>
-                      `block px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
+                      `block px-4 py-2.5 text-sm font-montserrat transition-all duration-200 ${
                         isActive
-                          ? "bg-[#f0f9ff] text-[#932528]"
-                          : "text-gray-700 hover:bg-white/50 hover:text-[#8CA9B4]"
+                          ? "bg-light text-secondary"
+                          : "text-gray-700 hover:bg-gray-50 hover:text-accent"
                       }`
                     }
                     onClick={() => setIsOpen(false)}
@@ -153,8 +151,8 @@ export default function Navbar() {
       <NavLink
         to={item.route}
         className={({ isActive }) =>
-          `relative pb-1.5 px-2 font-medium text-sm rounded-lg transition-all duration-200 hover:bg-white/20 py-1 ${
-            isActive ? "text-[#932528]" : "text-gray-800 hover:text-[#8CA9B4]"
+          `relative pb-1.5 px-2 font-medium text-sm font-montserrat rounded-lg transition-all duration-200 hover:bg-light py-1 ${
+            isActive ? "text-secondary" : "text-primary hover:text-accent"
           }`
         }
         onClick={() => setIsOpen(false)}
@@ -167,36 +165,36 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 left-0 w-full z-[999] bg-white/80 backdrop-blur-md shadow-sm border-b border-white/20 font-montserrat"
+      className="fixed top-0 left-0 w-full z-[999] bg-white shadow-sm font-montserrat"
     >
       <div className="max-w-7xl mx-auto px-4 py-2 sm:py-3 flex items-center justify-between">
         {/* Logo */}
         <NavLink to="/" className="flex items-center space-x-3" onClick={() => setIsOpen(false)}>
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#f9fafb] flex items-center justify-center border border-white/30">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white flex items-center justify-center border border-gray-200">
             <img
               src="/Logo.jpg"
               alt="Anointed Vessels Christian School Logo"
               className="w-8 h-8 sm:w-9 sm:h-9 object-contain"
             />
           </div>
-          <span className="text-sm font-bold text-gray-800 hidden sm:block leading-tight">
+          <span className="text-sm font-bold text-primary hidden sm:block leading-tight">
             ANOINTED VESSELS<br />
             CHRISTIAN SCHOOL
           </span>
         </NavLink>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-3 text-sm font-medium">
+        <div className="hidden md:flex items-center gap-4 text-sm font-medium">
           {menuItems.map((item) => (
             <NavItem key={item.id} item={item} isMobile={false} />
           ))}
         </div>
 
-        {/* CTA Button - Desktop */}
+        {/* CTA Button - Desktop (GGCC Style) */}
         <div className="hidden md:block">
           <NavLink
             to="/ChildSponsorship"
-            className="px-4 py-1.5 text-sm rounded-full font-semibold bg-[#932528] text-white hover:bg-[#8CA9B4] transition-all duration-200 hover:scale-105"
+            className="px-5 py-2 text-sm rounded-full font-bold text-white bg-secondary hover:bg-accent transition-all duration-300 hover:-translate-y-0.5 shadow-md"
             onClick={() => setIsOpen(false)}
           >
             Sponsor a Child
@@ -205,7 +203,7 @@ export default function Navbar() {
 
         {/* Mobile menu button */}
         <button
-          className="md:hidden p-2 text-gray-800 hover:bg-white/20 rounded-lg transition-all duration-200"
+          className="md:hidden p-2 text-primary hover:bg-light rounded-lg transition-all duration-200"
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
@@ -234,18 +232,18 @@ export default function Navbar() {
                 height: { duration: 0.2, ease: [0.16, 1, 0.3, 1] },
               },
             }}
-            className="md:hidden overflow-hidden bg-white/95 backdrop-blur-md"
+            className="md:hidden overflow-hidden bg-white border-t border-gray-200"
           >
-            <div className="flex flex-col gap-1 pb-4 border-t border-white/20 mt-2 pt-4 px-4">
+            <div className="flex flex-col gap-1 pb-4 mt-2 pt-4 px-4">
               {menuItems.map((item) => (
-                <div key={item.id} className="border-b border-white/20 pb-3">
+                <div key={item.id} className="border-b border-gray-100 pb-3">
                   <NavItem item={item} isMobile={true} />
                 </div>
               ))}
               <div className="pt-3">
                 <NavLink
                   to="/ChildSponsorship"
-                  className="block w-full text-center bg-[#932528] hover:bg-[#8CA9B4] text-white py-2.5 rounded-lg font-medium text-sm transition-all duration-200"
+                  className="block w-full text-center bg-secondary hover:bg-accent text-white py-2.5 rounded-lg font-bold text-sm transition-all duration-300"
                   onClick={() => setIsOpen(false)}
                 >
                   Sponsor a Child

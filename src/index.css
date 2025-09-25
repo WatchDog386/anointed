@@ -1,17 +1,17 @@
 /* src/index.css */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* === GGCC-Inspired Brand System === */
+/* === GGCC Brand System (Exact Match) === */
 :root {
   --primary: #2b473f;        /* Deep green — headings, text */
   --secondary: #932528;      /* Burgundy — primary CTA */
-  --accent: #8CA9B4;         /* Steel blue — hover, highlights */
-  --light: #f8f9fa;
+  --accent: #8CA9B4;         /* Steel blue — hover, dividers */
+  --light-bg: #f6f4ee;       /* Off-white background */
   --dark: #2d3748;
   --gray: #718096;
   --kenya-black: #000000;
@@ -22,81 +22,464 @@
 
 /* === Base Styles === */
 body {
-  @apply font-sans antialiased text-gray-800 bg-gradient-to-br from-gray-50 to-gray-100 overflow-x-hidden;
+  @apply font-sans antialiased text-gray-800 bg-white overflow-x-hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
   @apply font-montserrat;
 }
 
-/* === Section Title === */
-.section-title {
-  @apply text-center mb-16;
+/* === Divider (GGCC Style: dotted, steel blue, partial width) === */
+.ggcc-divider {
+  @apply border-t border-dotted border-[#8CA9B4] my-8 w-4/5 mx-auto;
 }
 
-.section-title h2 {
-  @apply text-3xl md:text-4xl font-bold text-primary relative inline-block pb-4;
+/* === Link Style (GGCC: green → steel hover) === */
+.ggcc-link {
+  @apply text-[#2b473f] font-montserrat text-sm font-medium hover:text-[#8CA9B4] transition-colors inline-flex items-center;
 }
 
-.section-title h2::after {
-  content: '';
-  @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-secondary to-accent transition-all duration-300;
-}
-
-.section-title:hover h2::after {
-  @apply w-32;
-}
-
-/* === CTA Button === */
+/* === CTA Button (GGCC Style) === */
 .cta-button {
-  @apply inline-block px-6 py-2.5 rounded-full font-semibold text-white bg-secondary border-2 border-secondary transition-all duration-300 hover:bg-accent hover:border-accent hover:-translate-y-0.5 shadow-md;
+  @apply inline-block px-8 py-3 rounded font-montserrat font-bold text-white bg-[#2b473f] hover:bg-[#8CA9B4] transition-colors;
 }
 
-/* === Newsletter & Hero CTA (inverted) === */
-.cta-button--inverted {
-  @apply bg-white text-primary border-white hover:bg-accent hover:text-white;
+/* === Hero Section === */
+.hero-section {
+  height: 370px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-/* === Story Slider Arrows & Dots === */
-.slide-arrow {
-  @apply absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/70 text-primary flex items-center justify-center font-bold text-lg transition-all hover:bg-white hover:text-secondary z-10;
+.hero-overlay {
+  @apply absolute inset-0 bg-black bg-opacity-50;
 }
 
-.slide-arrow.prev { @apply left-4; }
-.slide-arrow.next { @apply right-4; }
-
-.slider-dot {
-  @apply w-3 h-3 rounded-full bg-gray-300 mx-1 transition-all;
+.hero-title {
+  @apply text-4xl md:text-5xl font-bold text-white font-montserrat z-10 text-center px-4 pb-8;
 }
 
-.slider-dot.active {
-  @apply bg-secondary scale-125;
+/* === GGCC ANIMATIONS & TRANSITIONS === */
+
+/* Modal Animations (used in donation forms) */
+@keyframes modal-fade {
+  0% { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* === Footer === */
-.footer-column h3 {
-  @apply text-accent text-xl mb-4;
+@keyframes modal-zoom {
+  0% { transform: scale(.8); }
+  to { transform: scale(1); }
 }
 
-.social-links a {
-  @apply w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center transition-all hover:bg-accent hover:-translate-y-0.5;
+.modal-entering {
+  animation: modal-fade .3s, modal-zoom .6s;
 }
 
-.copyright {
-  @apply pt-8 mt-8 border-t border-white/10 text-center text-white/80;
+.modal-exiting {
+  animation: modal-fade .15s ease-in reverse;
+}
+
+/* Smooth transitions for interactive elements */
+.transition-smooth {
+  transition: all 0.3s ease-in-out;
+}
+
+.transition-fast {
+  transition: all 0.2s ease;
+}
+
+.transition-slower {
+  transition: all 0.6s ease;
+}
+
+/* Button hover effects (GGCC specific) */
+.btn-hover-effect {
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-hover-effect:hover {
+  filter: brightness(1.2);
+  transform: translateY(-1px);
+}
+
+.btn-hover-effect:active {
+  transform: translateY(0);
+}
+
+/* Search opener animation */
+.search-opener {
+  transition: transform 0.3s ease, color 0.2s ease;
+}
+
+.search-opener:hover {
+  transform: scale(1.1);
+}
+
+/* Menu item animations */
+.menu-item {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.menu-item::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #8CA9B4;
+  transition: width 0.3s ease;
+}
+
+.menu-item:hover::after {
+  width: 100%;
+}
+
+/* Image hover effects */
+.image-hover {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.image-hover:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Fade-in animations for content */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-down {
+  opacity: 0;
+  transform: translateY(-30px);
+  animation: fadeInDown 0.6s ease forwards;
+}
+
+@keyframes fadeInDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: fadeInLeft 0.6s ease forwards;
+}
+
+@keyframes fadeInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in-right {
+  opacity: 0;
+  transform: translateX(30px);
+  animation: fadeInRight 0.6s ease forwards;
+}
+
+@keyframes fadeInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Staggered animation for list items */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0.1s; }
+.stagger-item:nth-child(2) { animation-delay: 0.2s; }
+.stagger-item:nth-child(3) { animation-delay: 0.3s; }
+.stagger-item:nth-child(4) { animation-delay: 0.4s; }
+
+/* Loading spinner animation */
+.loading-spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #2b473f;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Pulse animation for attention */
+.pulse-soft {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Slide animations */
+.slide-in-left {
+  animation: slideInLeft 0.5s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.5s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Bounce animation (used in some interactive elements) */
+.bounce-soft {
+  animation: bounceSoft 0.5s;
+}
+
+@keyframes bounceSoft {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Parallax scrolling effect */
+.parallax {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Hover lift effect for cards */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Text reveal animation */
+.text-reveal {
+  overflow: hidden;
+  position: relative;
+}
+
+.text-reveal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #2b473f;
+  animation: textReveal 1.5s ease-in-out forwards;
+}
+
+@keyframes textReveal {
+  to {
+    left: 100%;
+  }
+}
+
+/* Gradient animation for backgrounds */
+.gradient-animate {
+  background: linear-gradient(-45deg, #2b473f, #8CA9B4, #932528, #f6f4ee);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Progress bar animation */
+.progress-bar {
+  animation: progressFill 2s ease-in-out;
+  transform-origin: left;
+}
+
+@keyframes progressFill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Flip animation (used in some interactive cards) */
+.flip-card {
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* Typing animation (for text elements) */
+.typing-animation {
+  overflow: hidden;
+  border-right: 2px solid #2b473f;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: #2b473f; }
+}
+
+/* Shake animation for form validation */
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Zoom in/out animations */
+.zoom-in {
+  animation: zoomIn 0.5s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.zoom-out {
+  animation: zoomOut 0.5s ease;
+}
+
+@keyframes zoomOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+/* Rotate animations */
+.rotate-continuous {
+  animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* === Responsive Adjustments === */
 @media (max-width: 768px) {
-  .section-title h2 {
-    @apply text-2xl;
+  .hero-title {
+    @apply text-3xl pb-6;
   }
-
-  .section-title h2::after {
-    @apply w-16;
+  
+  /* Mobile-specific animations */
+  .mobile-slide-up {
+    animation: mobileSlideUp 0.5s ease;
   }
+  
+  @keyframes mobileSlideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
 
-  .section-title:hover h2::after {
-    @apply w-24;
+/* Print styles - remove animations */
+@media print {
+  * {
+    animation: none !important;
+    transition: none !important;
   }
 }

@@ -84,28 +84,16 @@ export default function Stories() {
 
   return (
     <>
-      {/* Load GGCC Fonts */}
-      <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-      />
-      <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossOrigin="anonymous"
-      />
+      {/* Fonts — GGCC uses Montserrat + Open Sans */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap"
         rel="stylesheet"
       />
       <style>{`
-        body {
-          font-family: 'Open Sans', sans-serif;
-        }
-        h1, h2, h3, h4, h5, h6 {
-          font-family: 'Montserrat', sans-serif;
-          font-weight: 700;
-        }
+        body { font-family: 'Open Sans', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
       `}</style>
 
       {/* Inspiring Stories — GGCC-style full-width slider */}
@@ -118,7 +106,7 @@ export default function Stories() {
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#2b473f]">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
               Inspiring Stories
             </h2>
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
@@ -126,19 +114,19 @@ export default function Stories() {
             </p>
           </motion.div>
 
-          {/* Slider Container — SHARP CORNERS (no rounded-xl, no shadow) */}
+          {/* Slider Container — GGCC uses sharp corners, no rounded, no shadow */}
           <div className="relative max-w-6xl mx-auto h-[500px] overflow-hidden">
-            {/* Navigation Arrows — GGCC style: subtle, white background */}
+            {/* Navigation Arrows — GGCC style: white with subtle opacity */}
             <button
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-white bg-opacity-60 hover:bg-opacity-90 rounded-full flex items-center justify-center font-bold text-lg text-[#2b473f] transition-all duration-300"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-white bg-opacity-60 hover:bg-opacity-90 rounded-full flex items-center justify-center font-bold text-lg text-primary transition-all duration-300"
               aria-label="Previous story"
             >
               {"<"}
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-white bg-opacity-60 hover:bg-opacity-90 rounded-full flex items-center justify-center font-bold text-lg text-[#2b473f] transition-all duration-300"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-white bg-opacity-60 hover:bg-opacity-90 rounded-full flex items-center justify-center font-bold text-lg text-primary transition-all duration-300"
               aria-label="Next story"
             >
               {">"}
@@ -159,7 +147,7 @@ export default function Stories() {
                     backgroundPosition: "center",
                   }}
                 >
-                  {/* GGCC-style dark overlay */}
+                  {/* GGCC-style gradient overlay: dark at bottom */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-10 text-white z-10">
@@ -169,7 +157,7 @@ export default function Stories() {
                     </p>
                     <Link
                       to="/stories"
-                      className="inline-block px-6 py-2.5 rounded-full font-semibold text-white bg-[#932528] hover:bg-[#8CA9B4] transition-all duration-300 transform hover:-translate-y-0.5"
+                      className="cta-button"
                     >
                       Read Full Story
                     </Link>
@@ -178,7 +166,7 @@ export default function Stories() {
               ))}
             </div>
 
-            {/* Dots — GGCC style: small, teal on active */}
+            {/* Dots — GGCC uses small, accent color on active */}
             <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
               {stories.map((_, index) => (
                 <button
@@ -186,7 +174,7 @@ export default function Stories() {
                   onClick={() => goToSlide(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentSlide
-                      ? "bg-[#8CA9B4] scale-125"
+                      ? "bg-accent scale-125"
                       : "bg-white bg-opacity-70"
                   }`}
                   aria-label={`Go to story ${index + 1}`}
@@ -198,7 +186,7 @@ export default function Stories() {
       </section>
 
       {/* Our Mission — GGCC-style cards */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-light">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <motion.div
             className="text-center mb-12"
@@ -207,7 +195,7 @@ export default function Stories() {
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#2b473f]">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
               Our Mission
             </h2>
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
@@ -228,10 +216,10 @@ export default function Stories() {
                 className="bg-white rounded-lg p-6 text-center border border-gray-200 transition-all duration-300 hover:shadow-md hover:-translate-y-1"
                 variants={fadeIn}
               >
-                <div className="text-[#932528] text-4xl mb-4">
+                <div className="text-secondary text-4xl mb-4">
                   <i className={card.icon}></i>
                 </div>
-                <h3 className="text-xl font-bold text-[#2b473f] mb-3">
+                <h3 className="text-xl font-bold text-primary mb-3">
                   {card.title}
                 </h3>
                 <p className="text-gray-600 text-sm">
