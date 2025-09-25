@@ -1,3 +1,4 @@
+// src/main.jsx
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
@@ -6,31 +7,29 @@ import "./index.css";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
-// Preload and inject critical external assets
-const loadExternalResources = () => {
-  // Preload and apply Leaflet CSS
-  const leafletPreload = document.createElement("link");
-  leafletPreload.rel = "preload";
-  leafletPreload.as = "style";
-  leafletPreload.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-  document.head.appendChild(leafletPreload);
+// Optional: Preload critical fonts (GGCC uses Montserrat + Open Sans)
+const preloadFonts = () => {
+  const fonts = [
+    "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap",
+    "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap"
+  ];
 
-  const leafletStyle = document.createElement("link");
-  leafletStyle.rel = "stylesheet";
-  leafletStyle.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-  document.head.appendChild(leafletStyle);
+  fonts.forEach(href => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "style";
+    link.href = href;
+    document.head.appendChild(link);
 
-  // Load Leaflet Omnivore JS
-  const omnivoreScript = document.createElement("script");
-  omnivoreScript.src = "https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js";
-  omnivoreScript.async = true;
-  document.head.appendChild(omnivoreScript);
+    const style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.href = href;
+    document.head.appendChild(style);
+  });
 };
 
-// Initialize and mount React app
 const initApp = () => {
   const root = ReactDOM.createRoot(document.getElementById("root"));
-
   root.render(
     <React.StrictMode>
       <BrowserRouter>
@@ -44,13 +43,13 @@ const initApp = () => {
   );
 };
 
-// Preload resources before rendering
+// Preload fonts early for better LCP (GGCC-like performance)
 if (document.readyState === "complete" || document.readyState === "interactive") {
-  loadExternalResources();
+  preloadFonts();
   setTimeout(initApp, 0);
 } else {
   document.addEventListener("DOMContentLoaded", () => {
-    loadExternalResources();
+    preloadFonts();
     initApp();
   });
 }

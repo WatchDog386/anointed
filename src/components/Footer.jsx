@@ -1,83 +1,174 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaMoon, FaSun } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaVimeoV,
+  FaMapMarkerAlt,
+  FaPhone,
+  FaEnvelope,
+} from "react-icons/fa";
 
 export default function Footer() {
-  const [darkMode, setDarkMode] = useState(false);
-
   return (
     <motion.footer
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}
       viewport={{ once: true }}
-      className={`relative pt-10 px-6 text-sm transition-all duration-500 ${
-        darkMode ? "bg-black text-white" : "bg-white text-black"
-      }`}
+      className="relative pt-12 pb-8 px-6 text-sm bg-[#2b473f] text-white overflow-hidden"
+      style={{
+        backgroundImage: `url('https://ggcckenya.org/wp-content/uploads/2021/01/GGCC_Map.png')`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'right center',
+        backgroundSize: 'contain',
+      }}
     >
-      {/* Dark mode toggle */}
-      <div className="absolute top-4 right-4 cursor-pointer" onClick={() => setDarkMode(!darkMode)}>
-        {darkMode ? (
-          <FaSun className="text-yellow-300 hover:scale-110 transition" />
-        ) : (
-          <FaMoon className="text-blue-500 hover:scale-110 transition" />
-        )}
-      </div>
-
-      {/* Grid content */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 pb-10">
-        {/* About */}
-        <motion.div initial={{ y: 20, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
-          <h4 className="text-2xl font-bold text-blue-600 mb-3">Knoxville Technologies</h4>
-          <p>
-            Providing reliable fiber internet across Kenya. We connect rural and urban areas with
-            affordable, high-speed solutions.
-          </p>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Search */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          <h3 className="text-xl font-bold text-[#8CA9B4] mb-4">Search</h3>
+          <form method="get" action="/" className="flex">
+            <input
+              type="text"
+              name="s"
+              placeholder="Type here..."
+              className="w-full px-4 py-2 text-gray-800 rounded-l focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="bg-[#8CA9B4] text-white px-4 rounded-r hover:bg-white hover:text-[#8CA9B4] transition"
+              aria-label="Search"
+            >
+              🔍
+            </button>
+          </form>
+          <div className="my-4 w-4/5 border-t border-dotted border-[#8CA9B4]"></div>
+          <a
+            href="/donate"
+            className="inline-block bg-[#932528] hover:bg-[#8CA9B4] text-white font-semibold py-2 px-6 rounded-full transition"
+          >
+            Donate
+          </a>
         </motion.div>
 
-        {/* Links */}
-        <motion.div initial={{ y: 20, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}>
-          <h4 className="text-xl font-semibold text-green-700 mb-3">Quick Links</h4>
-          <ul className="space-y-2">
-            {["/", "/about", "/services", "/faq", "/contact"].map((path, i) => (
-              <li key={i}>
-                <NavLink to={path} className="hover:text-blue-500 transition">
-                  {path === "/" ? "Home" : path.replace("/", "").toUpperCase()}
-                </NavLink>
-              </li>
-            ))}
+        {/* Empty Column (GGCC leaves 2nd column empty) */}
+        <div></div>
+
+        {/* The Latest */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <h3 className="text-xl font-bold text-[#8CA9B4] mb-4">The Latest</h3>
+          <ul className="space-y-3">
+            <li>
+              <NavLink
+                to="/stories"
+                className="block hover:text-[#8CA9B4] transition"
+              >
+                Trisha and Lameck: A mother and son
+              </NavLink>
+              <span className="text-[#8CA9B4] text-xs">November 28, 2018</span>
+            </li>
+            <li className="mt-3">
+              <NavLink
+                to="/promise"
+                className="block hover:text-[#8CA9B4] transition"
+              >
+                Promise
+              </NavLink>
+              <span className="text-[#8CA9B4] text-xs">February 27, 2021</span>
+            </li>
           </ul>
         </motion.div>
 
-        {/* Contact */}
-        <motion.div initial={{ y: 20, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.6 }}>
-          <h4 className="text-xl font-semibold text-green-700 mb-3">Contact</h4>
-          <p>Email: <a href="mailto:support@knoxfill.co.ke" className="text-blue-600 hover:underline">support@knoxville.co.ke</a></p>
-          <p>Phone: <a href="tel:+254700000000" className="text-blue-600 hover:underline">+254 726818938</a></p>
-          <p>Location: Nairobi, Kenya</p>
+        {/* Connect */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <h3 className="text-xl font-bold text-[#8CA9B4] mb-4">Connect</h3>
+          <div className="space-y-2 text-sm">
+            <p>
+              <strong className="text-white">Mailing Address:</strong>
+              <br />
+              <span className="text-[#8CA9B4]">PO Box 713, Matthews, NC 28106</span>
+            </p>
+            <p>
+              <strong className="text-white">Office Address:</strong>
+              <br />
+              <span className="text-[#8CA9B4]">
+                10800 Independence Pointe Parkway Suite C, Matthews, NC 28105
+              </span>
+            </p>
+            <p>
+              <strong className="text-white">Call Us:</strong>
+              <br />
+              <span className="text-[#8CA9B4]">(704) 844-1020</span>
+            </p>
+          </div>
+
+          {/* Social Icons — GGCC style */}
           <div className="flex space-x-4 mt-4">
-            <a href="#" className="text-blue-600 hover:text-green-600 transition"><FaFacebookF /></a>
-            <a href="#" className="text-blue-600 hover:text-green-600 transition"><FaTwitter /></a>
-            <a href="#" className="text-blue-600 hover:text-green-600 transition"><FaLinkedinIn /></a>
+            <a
+              href="https://www.facebook.com/GGCCKenya/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-[#8CA9B4] transition text-xl"
+              aria-label="Facebook"
+            >
+              <FaFacebookF />
+            </a>
+            <a
+              href="https://twitter.com/ggcckenya"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-[#8CA9B4] transition text-xl"
+              aria-label="Twitter"
+            >
+              <FaTwitter />
+            </a>
+            <a
+              href="https://www.instagram.com/ggcckenya/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-[#8CA9B4] transition text-xl"
+              aria-label="Instagram"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href="https://vimeo.com/user61609829"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-[#8CA9B4] transition text-xl"
+              aria-label="Vimeo"
+            >
+              <FaVimeoV />
+            </a>
           </div>
         </motion.div>
       </div>
 
-      {/* Wave animation */}
-      <div className="overflow-hidden h-16 relative">
-        <svg className="absolute bottom-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
-          <path
-            fill={darkMode ? "#000" : "#e0f2fe"}
-            fillOpacity="1"
-            d="M0,96L30,106.7C60,117,120,139,180,133.3C240,128,300,96,360,90.7C420,85,480,107,540,117.3C600,128,660,128,720,122.7C780,117,840,107,900,117.3C960,128,1020,160,1080,181.3C1140,203,1200,213,1260,197.3C1320,181,1380,139,1410,117.3L1440,96L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"
-          ></path>
-        </svg>
-      </div>
-
-      {/* Bottom Text */}
-      <div className={`py-4 text-center border-t ${darkMode ? "border-gray-700 text-white" : "border-gray-300 text-green-700"}`}>
-        &copy; {new Date().getFullYear()} Knoxville Technologies. All rights reserved.
+      {/* Bottom Bar */}
+      <div className="max-w-7xl mx-auto mt-12 pt-4 border-t border-[#233A33] text-center text-gray-400 text-sm">
+        <p>
+          Gethsemane Garden Christian Centre. All rights reserved {new Date().getFullYear()}. |{" "}
+          <NavLink to="/financials" className="hover:text-[#8CA9B4]">
+            Financials
+          </NavLink>{" "}
+          |{" "}
+          <span>Website Credit</span>
+        </p>
       </div>
     </motion.footer>
   );

@@ -1,72 +1,77 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+// src/components/Navbar.jsx
+import React, { useState, useRef } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { throttle } from "lodash-es";
 import { useClickOutside } from "../hooks/useClickOutside";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState(null);
   const location = useLocation();
-  const navigate = useNavigate();
   const navRef = useRef(null);
 
-  const handleScroll = useCallback(
-    throttle(() => setScrolled(window.scrollY > 50), 100),
-    []
-  );
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
-  useEffect(() => {
+  // Close mobile menu on route change & scroll to top
+  React.useEffect(() => {
     setIsOpen(false);
+    setOpenSubmenu(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location]);
 
-  useClickOutside(navRef, () => setIsOpen(false));
+  useClickOutside(navRef, () => {
+    setIsOpen(false);
+    setOpenSubmenu(null);
+  });
 
-  const currentPath = location.pathname === "/" ? "home" : location.pathname.slice(1);
+  const currentPath = location.pathname;
 
-  const menuItems = useMemo(() => [
+  const menuItems = [
     { label: "Home", route: "/", id: "home" },
-    { label: "About us", route: "/about", id: "about" },
-    { label: "Services", route: "/services", id: "services" },
-    { label: "WIFI Plans", route: "/wifiplans", id: "wifiplans" },
-    { 
-      label: "Support", 
-      id: "support",
+    {
+      label: "About Us",
+      id: "about",
       submenu: [
-        { label: "FAQs", route: "/faq", id: "faq" },
-        { label: "Contact Us", route: "/contact", id: "contact" },
-        { label: "Technical Support", route: "/technicians", id: "technicians" },
-      ]
+        { label: "Our Story", route: "/about", id: "story" },
+        { label: "Our Staff", route: "/staff", id: "staff" },
+        { label: "Our Board Members", route: "/board", id: "board" },
+        { label: "Gallery/Videos", route: "/gallery", id: "gallery" },
+      ],
     },
-    { label: "Resources", route: "/articles", id: "articles" },
-  ], []);
+    {
+      label: "Our Programs",
+      id: "programs",
+      submenu: [
+        { label: "Education Programs", route: "/eduprog", id: "eduprog" },
+        { label: "Spiritual Development", route: "/SpiritualGrowth", id: "spiritual" },
+        { label: "Community Outreach", route: "/CommunityOutreach", id: "outreach" },
+        { label: "Health & Wellness", route: "/HealthWellness", id: "health" },
+        { label: "Child Sponsorship", route: "/ChildSponsorship", id: "sponsorship" },
+      ],
+    },
+    { label: "Impact", route: "/impacts", id: "impact" },
+    { label: "Get Involved", route: "/Make-An-Impact", id: "involved" },
+    { label: "Contact", route: "/cta", id: "contact" },
+  ];
 
-  const NavItem = ({ item }) => {
-    const commonClasses = "relative pb-1.5 px-1 font-medium transition-all duration-300 group flex items-center justify-center";
+  const NavItem = ({ item, isMobile = false }) => {
+    const isSubmenuOpen = openSubmenu === item.id;
 
-    return (
-      <div className="relative group">
-        {item.submenu ? (
-          <>
-            <button
-              className={`${commonClasses} ${
-                item.submenu.some(sub => sub.id === currentPath)
-                  ? "text-purple-600"
-                  : "text-gray-700 hover:text-purple-600"
-              }`}
-            >
-              <div className="flex items-center gap-1">
-                {item.label}
+    if (item.submenu) {
+      return (
+        <div className={`relative ${isMobile ? "w-full" : "group"}`}>
+          {isMobile ? (
+            <>
+              <button
+                className="w-full flex justify-between items-center px-3 py-2.5 font-medium text-gray-800 text-left hover:bg-white/20 rounded-lg transition-all duration-200"
+                onClick={() => setOpenSubmenu(isSubmenuOpen ? null : item.id)}
+                aria-expanded={isSubmenuOpen}
+              >
+                <span className="text-sm">{item.label}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 mt-0.5"
+                  className={`h-4 w-4 transition-transform duration-200 ${
+                    isSubmenuOpen ? "rotate-180" : ""
+                  }`}
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -76,95 +81,139 @@ export default function Navbar() {
                     clipRule="evenodd"
                   />
                 </svg>
-              </div>
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all duration-300 group-hover:w-full" />
-            </button>
-            
-            <div className="absolute left-0 mt-2 w-48 rounded-lg shadow-lg bg-white border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-              {item.submenu.map((subItem) => (
-                <NavLink
-                  key={subItem.id}
-                  to={subItem.route}
-                  className={({ isActive }) => 
-                    `block px-4 py-2 text-sm ${
-                      isActive 
-                        ? "bg-purple-50 text-purple-600"
-                        : "text-gray-700 hover:bg-gray-100"
-                    }`
-                  }
+              </button>
+              {isSubmenuOpen && (
+                <div className="pl-4 mt-1 space-y-1">
+                  {item.submenu.map((subItem) => (
+                    <NavLink
+                      key={subItem.id}
+                      to={subItem.route}
+                      className={({ isActive }) =>
+                        `block px-3 py-2 text-xs font-medium rounded-lg transition-all duration-200 ${
+                          isActive
+                            ? "text-[#932528] bg-white/30"
+                            : "text-gray-700 hover:text-[#8CA9B4] hover:bg-white/20"
+                        }`
+                      }
+                      onClick={() => {
+                        setIsOpen(false);
+                        setOpenSubmenu(null);
+                      }}
+                    >
+                      {subItem.label}
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <button className="relative pb-1.5 px-2 font-medium text-gray-800 hover:text-[#8CA9B4] flex items-center gap-1 transition-all duration-200 group-hover:bg-white/20 rounded-lg py-1">
+                <span className="text-sm">{item.label}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-3 w-3 mt-0.5 transition-transform duration-200 group-hover:rotate-180"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
                 >
-                  {subItem.label}
-                </NavLink>
-              ))}
-            </div>
-          </>
-        ) : (
-          <NavLink
-            to={item.route}
-            className={({ isActive }) =>
-              `${commonClasses} ${
-                isActive || (item.id === "home" && currentPath === "home")
-                  ? "text-purple-600"
-                  : "text-gray-700 hover:text-purple-600"
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                {item.label}
-                <span
-                  className={`absolute bottom-0 left-0 w-full h-0.5 bg-purple-600 transition-transform duration-300 ${
-                    isActive || (item.id === "home" && currentPath === "home")
-                      ? "scale-x-100"
-                      : "scale-x-0 group-hover:scale-x-100"
-                  }`}
-                />
-              </>
-            )}
-          </NavLink>
-        )}
-      </div>
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+
+              {/* Desktop Dropdown */}
+              <div className="absolute left-0 mt-1 w-56 rounded-lg shadow-lg bg-white/95 backdrop-blur-md border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform translate-y-2 group-hover:translate-y-0">
+                {item.submenu.map((subItem) => (
+                  <NavLink
+                    key={subItem.id}
+                    to={subItem.route}
+                    className={({ isActive }) =>
+                      `block px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
+                        isActive
+                          ? "bg-[#f0f9ff] text-[#932528]"
+                          : "text-gray-700 hover:bg-white/50 hover:text-[#8CA9B4]"
+                      }`
+                    }
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {subItem.label}
+                  </NavLink>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <NavLink
+        to={item.route}
+        className={({ isActive }) =>
+          `relative pb-1.5 px-2 font-medium text-sm rounded-lg transition-all duration-200 hover:bg-white/20 py-1 ${
+            isActive ? "text-[#932528]" : "text-gray-800 hover:text-[#8CA9B4]"
+          }`
+        }
+        onClick={() => setIsOpen(false)}
+      >
+        {item.label}
+      </NavLink>
     );
   };
 
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 left-0 w-full z-[999] px-4 py-3 transition-all duration-500 ${
-        scrolled
-          ? "bg-white/95 shadow-lg backdrop-blur-xl border-b border-gray-200"
-          : "bg-white/90 backdrop-blur-sm"
-      }`}
+      className="fixed top-0 left-0 w-full z-[999] bg-white/80 backdrop-blur-md shadow-sm border-b border-white/20 font-montserrat"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <NavLink 
-          to="/" 
-          className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight hover:from-blue-500 hover:to-purple-500 transition-all duration-300"
-        >
-          Knoxville Technologies-Home Fibre
+      <div className="max-w-7xl mx-auto px-4 py-2 sm:py-3 flex items-center justify-between">
+        {/* Logo */}
+        <NavLink to="/" className="flex items-center space-x-3" onClick={() => setIsOpen(false)}>
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#f9fafb] flex items-center justify-center border border-white/30">
+            <img
+              src="/Logo.jpg"
+              alt="Anointed Vessels Christian School Logo"
+              className="w-8 h-8 sm:w-9 sm:h-9 object-contain"
+            />
+          </div>
+          <span className="text-sm font-bold text-gray-800 hidden sm:block leading-tight">
+            ANOINTED VESSELS<br />
+            CHRISTIAN SCHOOL
+          </span>
         </NavLink>
 
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-3 text-sm font-medium">
           {menuItems.map((item) => (
-            <NavItem key={item.id} item={item} />
+            <NavItem key={item.id} item={item} isMobile={false} />
           ))}
+        </div>
+
+        {/* CTA Button - Desktop */}
+        <div className="hidden md:block">
+          <NavLink
+            to="/ChildSponsorship"
+            className="px-4 py-1.5 text-sm rounded-full font-semibold bg-[#932528] text-white hover:bg-[#8CA9B4] transition-all duration-200 hover:scale-105"
+            onClick={() => setIsOpen(false)}
+          >
+            Sponsor a Child
+          </NavLink>
         </div>
 
         {/* Mobile menu button */}
         <button
-          className="md:hidden p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+          className="md:hidden p-2 text-gray-800 hover:bg-white/20 rounded-lg transition-all duration-200"
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
-          {isOpen ? (
-            <X className="h-6 w-6 text-gray-700" />
-          ) : (
-            <Menu className="h-6 w-6 text-gray-700" />
-          )}
+          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -174,66 +223,34 @@ export default function Navbar() {
               height: "auto",
               transition: {
                 opacity: { duration: 0.2 },
-                height: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
-              }
+                height: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+              },
             }}
             exit={{
               opacity: 0,
               height: 0,
               transition: {
                 opacity: { duration: 0.1 },
-                height: { duration: 0.2, ease: [0.16, 1, 0.3, 1] }
-              }
+                height: { duration: 0.2, ease: [0.16, 1, 0.3, 1] },
+              },
             }}
-            className="md:hidden overflow-hidden"
+            className="md:hidden overflow-hidden bg-white/95 backdrop-blur-md"
           >
-            <div className="flex flex-col gap-4 pb-4 border-t border-gray-200 mt-3 pt-4">
+            <div className="flex flex-col gap-1 pb-4 border-t border-white/20 mt-2 pt-4 px-4">
               {menuItems.map((item) => (
-                <div key={item.id}>
-                  {item.submenu ? (
-                    <div className="flex flex-col">
-                      <button
-                        className="flex justify-between items-center w-full px-4 py-2 text-left text-gray-700"
-                        onClick={() => navigate(item.submenu[0].route)}
-                      >
-                        {item.label}
-                      </button>
-                      <div className="pl-4">
-                        {item.submenu.map((subItem) => (
-                          <NavLink
-                            key={subItem.id}
-                            to={subItem.route}
-                            className={({ isActive }) =>
-                              `block px-4 py-2 text-sm ${
-                                isActive
-                                  ? "text-purple-600"
-                                  : "text-gray-600 hover:text-purple-600"
-                              }`
-                            }
-                            onClick={() => setIsOpen(false)}
-                          >
-                            {subItem.label}
-                          </NavLink>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <NavLink
-                      to={item.route}
-                      className={({ isActive }) =>
-                        `block px-4 py-2 ${
-                          isActive
-                            ? "text-purple-600"
-                            : "text-gray-700 hover:text-purple-600"
-                        }`
-                      }
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.label}
-                    </NavLink>
-                  )}
+                <div key={item.id} className="border-b border-white/20 pb-3">
+                  <NavItem item={item} isMobile={true} />
                 </div>
               ))}
+              <div className="pt-3">
+                <NavLink
+                  to="/ChildSponsorship"
+                  className="block w-full text-center bg-[#932528] hover:bg-[#8CA9B4] text-white py-2.5 rounded-lg font-medium text-sm transition-all duration-200"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Sponsor a Child
+                </NavLink>
+              </div>
             </div>
           </motion.div>
         )}

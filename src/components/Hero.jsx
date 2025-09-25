@@ -1,264 +1,362 @@
+// src/components/Hero.jsx
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { FaFacebookSquare, FaTiktok, FaWhatsapp } from "react-icons/fa";
+import {
+  FaFacebookSquare,
+  FaInstagram,
+  FaTwitter,
+  FaYoutube,
+  FaWhatsapp,
+  FaCross,
+  FaGraduationCap,
+  FaHandsHelping,
+  FaChild,
+} from "react-icons/fa";
 import { Helmet } from "react-helmet";
-
-const ImageModal = ({ image, onClose }) => {
-  if (!image) return null;
-
-  return (
-    <motion.div
-      className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-    >
-      <motion.div
-        className="relative bg-white p-4 rounded-md shadow-lg max-w-md w-[90%]"
-        initial={{ scale: 0.8 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0.8 }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <img src={image.src} alt={image.alt} className="rounded-md" />
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-black text-xl font-bold hover:text-red-600"
-        >
-          ✕
-        </button>
-      </motion.div>
-    </motion.div>
-  );
-};
 
 const Hero = () => {
   const navigate = useNavigate();
-  const [modalImage, setModalImage] = useState(null);
-  const [bgIndex, setBgIndex] = useState(0);
-  
-  const bgImages = [
-    "/fibre.webp",
-    "/fibre2.webp",
-    "/fibre3.webp"
+
+  // === ROTATING HERO IMAGES ===
+  const heroImages = [
+    "/orphans.jpg",
+    "/christian.jpg",
+    "/project.jpg",
   ];
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setBgIndex((prev) => (prev + 1) % bgImages.length);
-    }, 10000); // Changed to 10 seconds
-    
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [heroImages.length]);
 
+  // === FEATURES (Why Support Us) – images removed ===
+  const features = [
+    {
+      icon: <FaCross className="text-4xl text-[#932528]" />,
+      title: "Faith-Based Learning",
+      description:
+        "We integrate Christian values and biblical principles throughout our curriculum to develop spiritually grounded students.",
+    },
+    {
+      icon: <FaGraduationCap className="text-4xl text-[#932528]" />,
+      title: "Academic Excellence",
+      description:
+        "Our rigorous curriculum challenges students to achieve their highest potential with a balanced approach to education.",
+    },
+    {
+      icon: <FaHandsHelping className="text-4xl text-[#932528]" />,
+      title: "Community Focus",
+      description:
+        "Our supportive Christian community fosters relationships that last a lifetime and create a sense of belonging.",
+    },
+    {
+      icon: <FaChild className="text-4xl text-[#932528]" />,
+      title: "Children & Youth Empowerment",
+      description:
+        "We empower young people with knowledge, skills, and confidence to become leaders who positively impact their communities.",
+    },
+  ];
+
+  const missionSections = [
+    {
+      icon: <FaCross className="text-4xl text-[#2b473f]" />,
+      title: "Sharing the Gospel",
+      description: "We're growing God's Kingdom in Kenya, sharing the Good News with future generations.",
+    },
+    {
+      icon: <FaGraduationCap className="text-4xl text-[#2b473f]" />,
+      title: "Empowering Leaders",
+      description: "We're empowering tomorrow's Christian leaders to fulfill a greater purpose in their communities.",
+    },
+    {
+      icon: <FaHandsHelping className="text-4xl text-[#2b473f]" />,
+      title: "Giving Hope",
+      description: "We're teaching children about God's unconditional love and that in Him they find delight and hope.",
+    },
+  ];
+
+  const ctaSections = [
+    {
+      image: "/christian.jpg",
+      title: "Sponsor A Child",
+      buttonText: "Start Today",
+      onClick: () => navigate("/sponsor"),
+    },
+    {
+      image: "https://images.unsplash.com/photo-1506157786151-b8491531f063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      title: (
+        <>
+          This is your <br />
+          <span className="text-[#8CA9B4]">Invitation</span>
+        </>
+      ),
+      description:
+        "There are many ways to serve as God’s hands and feet. Consider making an impact by sponsoring a child, making a donation, or learn how to give in other ways.",
+      linkText: "how to give in other ways",
+      link: "/give",
+    },
+    {
+      image: "/project.jpg",
+      title: "Make A Donation",
+      buttonText: "Give Now",
+      onClick: () => navigate("/donate"),
+    },
+  ];
+
+  // === ANIMATIONS ===
   const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-    },
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
   };
 
-  const staggerChildren = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-    },
+  const fadeInLeft = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } },
   };
 
-  const floatAnimation = {
-    y: [0, -15, 0],
-    transition: {
-      duration: 6,
-      repeat: Infinity,
-      repeatType: "mirror",
-      ease: "easeInOut",
-    },
+  const staggerContainer = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } },
   };
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-white text-gray-900">
+    <>
       <Helmet>
-        <title>Knoxville Internet | Unlimited Home Fibre</title>
+        <title>Anointed Vessels Christian School | Excellence in Faith-Based Education</title>
         <meta
           name="description"
-          content="Knoxville Internet - Reliable and fast fibre internet for your home and business. Explore our packages today."
+          content="Anointed Vessels Christian School empowers vulnerable children and families by breaking cycles of poverty through quality education, holistic growth, and skills development—nurturing future Christian leaders with hope and responsibility."
         />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700;800&family=Ernest+Emily:wght@400&display=swap"
+          rel="stylesheet"
+        />
+        <style>{`
+          body { font-family: 'Montserrat', sans-serif; }
+          .font-playfair { font-family: 'Playfair Display', serif; }
+          .font-ernest { font-family: 'Ernest Emily', cursive; }
+        `}</style>
       </Helmet>
 
-      {/* Background Slideshow - Changes every 10 seconds */}
-      <div className="absolute inset-0 z-0">
-        {bgImages.map((img, index) => (
-          <div
-            key={img}
-            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
-              index === bgIndex ? "opacity-100" : "opacity-0"
-            }`}
-            style={{ backgroundImage: `url(${img})` }}
-          />
+      {/* === HERO SECTION === */}
+      <section className="relative w-full min-h-[80vh] flex items-center justify-center text-white overflow-hidden">
+        {/* Rotating Background Images */}
+        {heroImages.map((img, idx) => (
+          <motion.div
+            key={idx}
+            className="absolute inset-0 z-0"
+            initial={{ opacity: idx === currentImageIndex ? 1 : 0 }}
+            animate={{ opacity: idx === currentImageIndex ? 1 : 0 }}
+            transition={{ duration: 1 }}
+          >
+            <img
+              src={img}
+              alt={`Hero background ${idx + 1}`}
+              className="w-full h-full object-cover object-top"
+            />
+          </motion.div>
         ))}
-      </div>
+        <div className="absolute inset-0 z-10 bg-black bg-opacity-20"></div>
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-bl from-black/60 via-black/30 to-transparent z-0" />
-
-      {/* Fixed & visible logo */}
-      <div className="fixed top-4 left-4 z-50">
-        <motion.img
-          initial={{ rotate: -10, opacity: 0 }}
-          animate={{ rotate: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          src="/logo4.webp"
-          alt="Knoxville Internet Logo"
-          className="w-20 sm:w-24 md:w-28 h-auto object-contain rounded-full"
-        />
-      </div>
-
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 flex flex-col justify-center h-full">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
-          {/* Left Content */}
+        <div className="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-4xl">
           <motion.div
             initial="hidden"
             animate="visible"
-            variants={staggerChildren}
-            className="text-center lg:text-left"
+            variants={staggerContainer}
+            className="space-y-6 sm:space-y-8"
           >
-            <motion.span
-              variants={fadeIn}
-              className="inline-block bg-blue-800 text-white px-4 py-1.5 rounded text-xs font-semibold uppercase tracking-widest shadow"
-            >
-              Fiber Network Solutions
-            </motion.span>
-
             <motion.h1
               variants={fadeIn}
-              whileHover={{ scale: 1.03, rotate: -0.5 }}
-              transition={{ type: "spring", stiffness: 150 }}
-              className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight bg-gradient-to-r from-blue-800 via-blue-600 to-blue-200 bg-clip-text text-transparent"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight font-ernest"
+              style={{ letterSpacing: "-0.02em" }}
             >
-              Knoxville Internet
+              Welcome to
             </motion.h1>
+
+            <motion.h2
+              variants={fadeIn}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+            >
+              Anointed Vessels <br />
+              Christian School
+            </motion.h2>
 
             <motion.p
               variants={fadeIn}
-              className="mt-4 text-base sm:text-lg md:text-xl text-green-600 font-medium"
+              className="text-lg sm:text-xl md:text-2xl mt-6 max-w-2xl mx-auto"
             >
-              Unlimited internet for your home with Knoxville Internet – Home of Fibre Internet
+              Excellence in faith-based education for vulnerable children on Mfangano Island.
             </motion.p>
 
-            {/* CTA buttons */}
-            <motion.div
-              variants={fadeIn}
-              className="mt-6 flex flex-col sm:flex-row justify-center lg:justify-start gap-4"
-            >
-              <button
-                onClick={() => navigate("/wifiplans")}
-                className="bg-gradient-to-r from-blue-800 to-blue-500 hover:from-blue-900 hover:to-blue-600 text-white px-6 py-3 rounded-sm font-medium shadow-md"
-              >
-                🚀 Get Started
-              </button>
-              <button
-                onClick={() => navigate("/coverage")}
-                className="border border-blue-800 text-blue-900 bg-blue-100 hover:bg-blue-200 px-6 py-3 rounded-sm font-medium shadow-sm"
-              >
-                🗺️ View Coverage
-              </button>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              variants={fadeIn}
-              className="mt-10 grid grid-cols-3 gap-3 max-w-sm mx-auto lg:mx-0"
-            >
-              {[
-                { label: "Speed", value: "1.2Gbps" },
-                { label: "Support", value: "24/7" },
-                { label: "Uptime", value: "99.9%" },
-              ].map((stat, idx) => (
-                <motion.div
-                  key={idx}
-                  className="text-center p-4 bg-blue-100 rounded-lg shadow-md transition hover:scale-105"
-                >
-                  <div className="text-xl font-bold text-blue-800">{stat.value}</div>
-                  <div className="text-xs text-blue-900 mt-1 uppercase tracking-wider">{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* Social links */}
             <motion.div variants={fadeIn} className="mt-10">
-              <p className="text-gray-900 text-lg font-semibold uppercase tracking-wide mb-4">Follow Us</p>
-              <div className="flex gap-6 justify-center lg:justify-start">
-                {[
-                  {
-                    icon: <FaFacebookSquare className="text-blue-600" />,
-                    link: "https://www.facebook.com/share/1E5h7zsjFR/",
-                  },
-                  {
-                    icon: <FaTiktok className="text-black" />,
-                    link: "https://www.tiktok.com/@knoxville.home.fi?_t=ZM-8wp8uGRB36k&_r=1",
-                  },
-                  {
-                    icon: <FaWhatsapp className="text-green-600" />,
-                    link: "https://wa.me/254726818938",
-                  },
-                ].map((item, index) => (
-                  <a
-                    key={index}
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-white p-4 rounded-full shadow-lg hover:scale-110 transition"
-                  >
-                    <div className="text-3xl">{item.icon}</div>
-                  </a>
-                ))}
-              </div>
+              <button
+                onClick={() => navigate("/about/our-story")}
+                className="inline-block border-2 border-[#932528] text-[#932528] font-bold py-3 px-8 rounded-full hover:bg-[#8CA9B4] hover:text-white transition-all duration-300"
+              >
+                Our Story
+              </button>
             </motion.div>
           </motion.div>
 
-          {/* Right Visuals */}
+          {/* Social Icons */}
           <motion.div
-            initial="hidden"
-            animate="visible"
-            className="relative flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="mt-16 flex justify-center gap-4"
           >
-            <motion.img
-              src="/worker.webp"
-              alt="Worker"
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="w-[65vw] sm:w-[50vw] md:w-[36vw] max-w-md rounded-lg shadow-xl"
-              whileHover={{ scale: 1.02 }}
-            />
-            {["/install.webp", "/fibre3.webp", "/image.webp"].map((img, i) => (
-              <motion.img
-                key={i}
-                src={img}
-                alt={`Floating ${i}`}
-                onClick={() => setModalImage({ src: img, alt: `Image ${i}` })}
-                className="absolute rounded-lg shadow-lg cursor-pointer"
-                style={{
-                  width: `${28 - i * 3}vw`,
-                  top: `${60 + i * 15}%`,
-                  left: `${60 + i * 5}%`,
-                  transform: `translate(-50%, -50%) rotate(${i % 2 === 0 ? -8 + i * 3 : 5}deg)`,
-                  zIndex: 2 + i,
-                }}
-                animate={floatAnimation}
-              />
+            {[
+              { icon: <FaFacebookSquare size={24} />, link: "#" },
+              { icon: <FaTwitter size={24} />, link: "#" },
+              { icon: <FaInstagram size={24} />, link: "#" },
+              { icon: <FaYoutube size={24} />, link: "#" },
+              {
+                icon: <FaWhatsapp size={24} color="#25D366" />,
+                link: "https://wa.me/254726818938",
+              },
+            ].map((item, idx) => (
+              <a
+                key={idx}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"
+                aria-label="Social link"
+              >
+                {item.icon}
+              </a>
             ))}
           </motion.div>
         </div>
-      </div>
+      </section>
 
-      {/* Image Modal */}
-      <ImageModal image={modalImage} onClose={() => setModalImage(null)} />
-    </section>
+      {/* === WHY SUPPORT US (Images Removed) === */}
+      <section className="w-full py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-12"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeIn}
+          >
+            <h2 className="text-3xl font-bold text-[#2b473f] mb-4">
+              WHY SUPPORT US
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Discover what makes our Christian educational approach unique and effective
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+          >
+            {features.map((feature, idx) => (
+              <motion.div
+                key={idx}
+                className="bg-white rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+                variants={fadeIn}
+              >
+                {/* Removed image container */}
+                <div className="mb-3 flex justify-center">{feature.icon}</div>
+                <h3 className="text-xl font-bold text-[#2b473f] mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* === CTA CARDS SECTION === */}
+      <section className="w-full py-12 bg-white">
+        <div className="container mx-auto px-0">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 h-96">
+            {ctaSections.map((cta, idx) => (
+              <div
+                key={idx}
+                className={`relative overflow-hidden h-full ${idx > 0 ? "border-l border-gray-300" : ""}`}
+              >
+                <img
+                  src={cta.image}
+                  alt={typeof cta.title === "string" ? cta.title : "Call to action"}
+                  className="w-full h-full object-cover"
+                />
+                <div
+                  className={`absolute inset-0 flex flex-col justify-center items-center p-6 text-white ${
+                    idx === 1 ? "bg-[#2b473f] bg-opacity-90" : "bg-black bg-opacity-50"
+                  }`}
+                >
+                  <h3 className="text-2xl font-bold mb-4 text-center text-white">
+                    {cta.title}
+                  </h3>
+                  {cta.description && (
+                    <p className="text-sm mb-4 text-center text-white max-w-xs">
+                      {cta.description}
+                    </p>
+                  )}
+                  {cta.buttonText && (
+                    <button
+                      onClick={cta.onClick}
+                      className="bg-white text-[#932528] font-semibold py-2 px-6 rounded-full hover:bg-[#8CA9B4] hover:text-white transition-all duration-300"
+                    >
+                      {cta.buttonText}
+                    </button>
+                  )}
+                  {cta.linkText && (
+                    <a
+                      href={cta.link}
+                      className="text-[#8CA9B4] underline mt-2"
+                    >
+                      {cta.linkText}
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* === MISSION SECTION === */}
+      <section className="w-full py-12 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {missionSections.map((section, idx) => (
+              <div key={idx} className="text-center p-6">
+                <div className="mb-4 flex justify-center">{section.icon}</div>
+                <h3 className="text-xl font-bold text-[#2b473f] mb-3">
+                  {section.title}
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  {section.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mb-12 max-w-4xl mx-auto">
+            <p className="text-base md:text-lg text-gray-600">
+              Anointed Vessels Christian School (AVCS) is a Christian boarding school in Kenya. AVCS was established following the HIV/AIDS crisis when our founders received God’s call to serve vulnerable and orphaned children. By offering love, nourishment, and a Christian education, we are growing faithful leaders who will carry His message throughout the world.
+            </p>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

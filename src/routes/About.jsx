@@ -1,187 +1,337 @@
+// src/components/About.jsx
 import React from "react";
-import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
+import { motion, useInView } from "framer-motion";
+import { Helmet } from "react-helmet";
 
-const values = [
-  {
-    title: "Integrity",
-    description: "We conduct our business with honesty, transparency, and ethical practices.",
-  },
-  {
-    title: "Innovation",
-    description: "We embrace creativity to deliver cutting-edge solutions for evolving needs.",
-  },
-  {
-    title: "Excellence",
-    description: "We strive for the highest standards in all our services and products.",
-  },
-  {
-    title: "Collaboration",
-    description: "We believe in teamwork to achieve shared success with clients and partners.",
-  },
-];
+// Fade-in wrapper
+const FadeIn = ({ children, delay = 0, className = "" }) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-export default function AboutPage() {
   return (
-    <div className="font-sans text-gray-800 relative">
-      {/* Fixed Background Image for whole page */}
-      <div className="fixed inset-0 -z-10">
-        <img 
-          src="/logo4.webp" 
-          alt="Knoxville Background"
-          className="w-full h-full object-cover opacity-20"
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+export default function About() {
+  // Unsplash fallbacks (replace later with your own)
+  const supportImg = "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
+  const projectImg = "https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
+  const jimmyImg = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80";
+
+  return (
+    <>
+      <Helmet>
+        <title>About Us | Anointed Vessels Christian School</title>
+        <meta
+          name="description"
+          content="Learn about our mission, vision, and values at Anointed Vessels Christian School — providing Christ-centered education to orphans and vulnerable children on Mfangano Island."
         />
-      </div>
-      
-      <Navbar />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
+        <style>{`
+          body { font-family: 'Open Sans', sans-serif; }
+          .font-montserrat { font-family: 'Montserrat', sans-serif; }
+        `}</style>
+      </Helmet>
 
-      {/* Hero Section - now normal height */}
-      <section className="relative pt-32 pb-20 text-center text-white bg-[#006d7c]">
-        <div className="container mx-auto px-4 relative z-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">About Knoxville</h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto">
-            Pioneering digital solutions that transform businesses and empower communities
-          </p>
-        </div>
-      </section>
-
-      {/* Knoxville Info Section */}
-      <section className="py-20 bg-white bg-opacity-90">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            {/* Text Content */}
-            <div className="lg:w-1/2">
-              <h2 className="text-3xl font-bold text-blue-700 mb-6">What to know of Knoxville</h2>
-              <p className="mb-4 text-gray-700">
-                Founded by an experienced team from some of the biggest telecommunication brands,
-                <strong> Knoxville</strong> offers simple, affordable access to its
-                <strong> full-fibre</strong> network so everyone in the community can benefit,
-                regardless of income, technical knowledge or age. <strong>Knoxville</strong> delivers
-                the fastest broadband in the outskirts of Nairobi and Kiambu, to homes and businesses,
-                public services and community groups can experience its life-changing
-                <strong> full-fibre</strong> connectivity.
-              </p>
-            </div>
-
-            {/* Image */}
-            <div className="lg:w-1/2">
-              <img
-                src="/group2.jpg"
-                alt="Knoxville Group"
-                className="rounded-2xl shadow-lg w-full object-cover"
-              />
-            </div>
+      {/* Pure About Content — NO HERO */}
+      <div className="min-h-screen bg-gray-50 font-sans">
+        {/* Breadcrumbs (clean, no hero) */}
+        <div className="bg-white border-b">
+          <div className="container mx-auto px-4 py-4 max-w-6xl">
+            <nav className="text-sm text-gray-600">
+              <Link to="/" className="hover:text-[#932528] transition-colors">
+                Home
+              </Link>
+              <span className="mx-2">/</span>
+              <span className="text-[#932528] font-medium">About Us</span>
+            </nav>
           </div>
         </div>
-      </section>
 
-      {/* Mission & Vision Section */}
-      <section className="py-20 bg-gray-100 bg-opacity-90">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-blue-700 mb-4">Our Purpose</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Driving innovation through purpose-led solutions
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white p-10 rounded-xl shadow-lg border-t-4 border-blue-600">
-              <h3 className="text-2xl font-bold text-blue-700 mb-6">Our Mission</h3>
-              <p className="text-gray-600 mb-6">
-                To empower businesses and communities through reliable, innovative digital
-                infrastructure that enables growth and creates opportunities.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">✓</span>
-                  <span>Deliver cutting-edge solutions</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">✓</span>
-                  <span>Maintain uncompromising quality</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">✓</span>
-                  <span>Foster sustainable digital ecosystems</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-10 rounded-xl shadow-lg border-t-4 border-green-600">
-              <h3 className="text-2xl font-bold text-green-700 mb-6">Our Vision</h3>
-              <p className="text-gray-600 mb-6">
-                To be the catalyst for Africa's digital revolution, connecting people, businesses,
-                and ideas through world-class infrastructure and services.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <span className="text-green-600 mr-2">✓</span>
-                  <span>Bridge the digital divide</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-600 mr-2">✓</span>
-                  <span>Enable next-generation technologies</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-600 mr-2">✓</span>
-                  <span>Create lasting economic impact</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Core Values Section */}
-      <section className="py-20 bg-white bg-opacity-90">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-blue-700 mb-4">Our Core Values</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The foundation of everything we do
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <div key={index} className="bg-gray-50 p-8 rounded-xl text-center hover:shadow-md transition-all">
-                <div className="w-20 h-20 bg-blue-100 rounded-full mx-auto mb-6 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-blue-700">{index + 1}</span>
-                </div>
-                <h3 className="text-xl font-bold mb-4">{value.title}</h3>
-                <p className="text-gray-600">{value.description}</p>
+        {/* About Intro */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="flex flex-col md:flex-row gap-12 items-center">
+              <div className="flex-1">
+                <FadeIn delay={0.1}>
+                  <h1 className="text-3xl md:text-4xl font-bold text-[#2b473f] mb-4 font-montserrat">
+                    Our Humble Beginnings
+                  </h1>
+                  <h2 className="text-xl font-semibold text-[#932528] mb-4 font-montserrat">
+                    Founded with Purpose in 2018
+                  </h2>
+                  <p className="mb-4 text-gray-700">
+                    Anointed Vessels Christian School was established to{" "}
+                    <strong>care for orphans and vulnerable children</strong>, releasing them from poverty-stricken families affected or infected with HIV/AIDS and other chronic illnesses.
+                  </p>
+                  <p className="mb-4 text-gray-700">
+                    We prioritize orphans and vulnerable children in the Mfangano Island area and surroundings, providing them with boarding, education, protection, and Christian nurture.
+                  </p>
+                  <p className="mb-6 text-gray-700">
+                    What began as a response to immediate needs has grown into a transformative ministry serving hundreds of children and families across Mfangano Island, offering both material care and spiritual hope.
+                  </p>
+                  <Link
+                    to="/staff"
+                    className="inline-block bg-[#932528] hover:bg-[#8CA9B4] text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 transform hover:-translate-y-1 font-montserrat"
+                  >
+                    Meet Our Staff
+                  </Link>
+                </FadeIn>
               </div>
-            ))}
+              <div className="flex-1">
+                <FadeIn delay={0.2}>
+                  <div className="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                    <img
+                      src={supportImg}
+                      alt="AVCS Students receiving care"
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                </FadeIn>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Knoxville Bio Section - now with solid color */}
-      <section className="py-20 bg-[#006d7c] text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-bold mb-6">Knoxville Bio</h2>
-            <p className="text-lg mb-6">
-              Knoxville Technologies is a Kenyan ISP focused on delivering ultra-fast, reliable, and
-              affordable internet to underserved and developing regions. We deploy high-capacity
-              fiber-optic infrastructure to enable digital inclusion and bridge the connectivity
-              gap in urban and peri-urban communities.
-            </p>
-            <p className="text-lg mb-6">
-              Our team is comprised of professionals with a deep understanding of network
-              design, deployment, and service delivery. We believe everyone deserves access to
-              world-class connectivity, regardless of location or income level. Knoxville aims to
-              be the backbone of digital transformation by supporting education, innovation, and
-              enterprise through better broadband.
-            </p>
-            <p className="text-lg">
-              We are committed to empowering homes and businesses with seamless access to
-              information, communication, and opportunity. Through innovation and collaboration,
-              Knoxville continues to redefine connectivity in Kenya and beyond.
-            </p>
+        {/* Mission & Vision */}
+        <section className="py-20 bg-[#f9fafb]">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <FadeIn className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-[#2b473f] mb-4 font-montserrat">
+                Our Mission & Vision
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                The guiding principles that shape everything we do
+              </p>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Our Mission",
+                  icon: "🎯",
+                  desc: "To provide excellence in Christ-centered education that equips students spiritually, academically, and socially to fulfill God's purpose for their lives.",
+                },
+                {
+                  title: "Our Vision",
+                  icon: "👁️",
+                  desc: "To be a leading Christian educational institution that develops future leaders who transform their communities through faith, knowledge, and service.",
+                },
+                {
+                  title: "Our Values",
+                  icon: "❤️",
+                  desc: "Faith, Excellence, Integrity, Compassion, and Service—these core values guide our interactions, decisions, and educational approach.",
+                },
+              ].map((item, idx) => (
+                <FadeIn key={idx} delay={0.1 * idx} className="group">
+                  <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border-t-4 border-[#932528] group-hover:border-[#8CA9B4]">
+                    <div className="text-4xl mb-4">{item.icon}</div>
+                    <h3 className="text-xl font-bold text-[#2b473f] mb-3 font-montserrat">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600">{item.desc}</p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        {/* CEO Section */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4 max-w-4xl text-center">
+            <FadeIn className="mb-10">
+              <div className="w-48 h-48 md:w-60 md:h-60 mx-auto rounded-full overflow-hidden shadow-xl mb-6">
+                <img
+                  src={jimmyImg}
+                  alt="Jimmy Carter Owuato - Founding CEO"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h2 className="text-3xl font-bold text-[#2b473f] font-montserrat">Jimmy Carter</h2>
+              <h3 className="text-xl text-[#932528] mb-6 font-montserrat">
+                Founding CEO & Director
+              </h3>
+              <p className="text-gray-700 mb-6 max-w-3xl mx-auto">
+                Jimmy Carter is the visionary founder and CEO of Anointed Vessels Christian School, whose passion for vulnerable children stems from his own experiences growing up on Mfangano Island. After serving in the U.S. military, Jimmy felt called by God to return to his community and make a lasting difference in the lives of children affected by poverty, HIV/AIDS, and other challenges. His deep commitment to Christian education and holistic child development drives the school's mission to rescue children from desperate circumstances and provide them with hope, education, and a foundation in Christ.
+              </p>
+              <Link
+                to="/board"
+                className="inline-block bg-[#932528] hover:bg-[#8CA9B4] text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 font-montserrat"
+              >
+                Learn About Our Partners
+              </Link>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* Core Values */}
+        <section className="py-20 bg-[#f9fafb]">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <FadeIn className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-[#2b473f] mb-4 font-montserrat">
+                Our Core Values & Focus Areas
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                The principles that guide our mission and daily operations
+              </p>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Care for Orphans & Vulnerable Children",
+                  icon: "❤️",
+                  desc: "Give priority to orphans and vulnerable children in the Mfangano Island area and surroundings. Provide them with boarding, education, protection, and Christian nurture.",
+                },
+                {
+                  title: "Christian Discipleship & Biblical Foundation",
+                  icon: "⛪",
+                  desc: "Equip students with the Christian faith as a foundational part of their education. Instill Christian values and prepare students to be Christian leaders.",
+                },
+                {
+                  title: "Education (Academic & Holistic Development)",
+                  icon: "🎓",
+                  desc: "Run a boarding school that focuses not just on academics but also on overall character formation. Provide facilities and associated infrastructure in a locally led way.",
+                },
+                {
+                  title: "Local Leadership & Sustainability",
+                  icon: "👥",
+                  desc: "Emphasize 'locally led' governance, staffing, and decision-making, ensuring leadership is Kenyan, especially local.",
+                },
+                {
+                  title: "Rescue & Hope",
+                  icon: "🤝",
+                  desc: "Go beyond survival by offering hope—both materially and spiritually—to children who have been marginalized.",
+                },
+                {
+                  title: "Impact Beyond the School",
+                  icon: "🌍",
+                  desc: "Prepare graduates to impact Kenya and the world for God's Kingdom as future agents of change.",
+                },
+              ].map((item, idx) => (
+                <FadeIn key={idx} delay={0.05 * idx}>
+                  <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-[#932528] hover:border-[#8CA9B4] transition-colors">
+                    <h3 className="font-bold text-lg text-[#2b473f] mb-3 flex items-start font-montserrat">
+                      <span className="text-xl mr-2">{item.icon}</span>
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm">{item.desc}</p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Staff CTA */}
+        <section className="py-20 text-white text-center bg-gradient-to-r from-[#2b473f] to-[#932528]">
+          <div className="container mx-auto px-4 max-w-3xl">
+            <FadeIn>
+              <h2 className="text-3xl font-bold mb-4 font-montserrat">Meet Our Dedicated Team</h2>
+              <p className="mb-8 opacity-90">
+                Our staff members are committed to providing quality education and care to every child
+              </p>
+              <Link
+                to="/staff"
+                className="inline-block bg-white text-[#2b473f] hover:bg-[#8CA9B4] hover:text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 font-montserrat"
+              >
+                View Our Staff Members
+              </Link>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* Protection */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <FadeIn className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-[#2b473f] font-montserrat">
+                Child Protection & Empowerment
+              </h2>
+            </FadeIn>
+
+            <div className="flex flex-col md:flex-row gap-12 items-center">
+              <div className="flex-1">
+                <FadeIn delay={0.1}>
+                  <h3 className="text-2xl font-bold text-[#2b473f] mb-4 font-montserrat">
+                    Our Commitment to Safety and Development
+                  </h3>
+                  <p className="mb-6 text-gray-700">
+                    At Anointed Vessels Christian School, the safety, dignity, and well-being of every child are our highest priority. We believe that children are a gift from God and must be nurtured in a secure, loving, and Christ-centered environment.
+                  </p>
+                  <h4 className="font-bold text-lg text-[#932528] mb-2 font-montserrat">
+                    Child Protection Commitment
+                  </h4>
+                  <p className="mb-4 text-gray-700">
+                    We provide a safe learning environment where all children are free from physical, emotional, spiritual, or sexual abuse, neglect, and exploitation.
+                  </p>
+                  <h4 className="font-bold text-lg text-[#932528] mb-2 font-montserrat">
+                    Child Empowerment Commitment
+                  </h4>
+                  <p className="text-gray-700">
+                    We empower children with knowledge, life skills, and spiritual guidance to help them grow into responsible, confident, and God-fearing individuals.
+                  </p>
+                </FadeIn>
+              </div>
+              <div className="flex-1">
+                <FadeIn delay={0.2}>
+                  <div className="rounded-xl overflow-hidden shadow-xl">
+                    <img src={projectImg} alt="Children learning" className="w-full object-cover" />
+                  </div>
+                </FadeIn>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA */}
+        <section className="py-20 text-white text-center bg-gradient-to-r from-[#2b473f] to-[#932528]">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <FadeIn>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-montserrat">
+                Join Us in Our Mission
+              </h2>
+              <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
+                Your support helps us provide quality Christian education, protection, and empowerment to vulnerable children on Mfangano Island
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Link
+                  to="/ChildSponsorship"
+                  className="bg-white text-[#2b473f] hover:bg-[#8CA9B4] hover:text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 font-montserrat"
+                >
+                  Sponsor a Child
+                </Link>
+                <a
+                  href="mailto:info@anointedvessels.org"
+                  className="bg-transparent border-2 border-white hover:bg-white hover:text-[#2b473f] font-semibold py-3 px-8 rounded-full transition-all duration-300 font-montserrat"
+                >
+                  Partner With Us
+                </a>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+      </div>
+    </>
   );
 }

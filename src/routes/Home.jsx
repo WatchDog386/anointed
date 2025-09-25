@@ -1,11 +1,12 @@
+// src/routes/Home.jsx
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
 import Hero from "../components/Hero";
-import About from "./About"; // Re-added About
-import Services from "./Services";
-import Faqs from "./faqs";
-import Contact from "./Contact";
+import Stories from "./Stories";
+
+import Testimonials from "./testimonials";
+import CTA from "./CTA";
 
 export default function Home() {
   return (
@@ -33,20 +34,18 @@ export default function Home() {
         <Hero />
       </section>
 
-      <section id="about">
-        <About />
+      <section id="stories">
+        <Stories />
       </section>
 
-      <section id="services">
-        <Services />
+    
+
+      <section id="testimonials">
+        <Testimonials />
       </section>
 
-      <section id="faq">
-        <Faqs />
-      </section>
-
-      <section id="contact">
-        <Contact />
+      <section id="cta">
+        <CTA />
       </section>
     </>
   );

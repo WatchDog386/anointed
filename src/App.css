@@ -1,41 +1,64 @@
-/* Glassmorphism effect */
+/* src/App.css */
+
+/* === Glassmorphism Effect === */
 .glass {
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-/* Optional: Dark mode variant of glass (if needed) */
+/* Dark mode variant (optional) */
 .dark .glass {
-  background: rgba(0, 0, 0, 0.2); /* Slightly darker glass for dark mode */
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Typewriter effect */
+/* === Typewriter Effect === */
 .typewriter {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
-  border-right: 2px solid white;
+  border-right: 2px solid currentColor;
   animation: typing 3s steps(30, end), blink 0.75s step-end infinite;
 }
 
-/* Optional: Make typewriter cursor color adapt to theme */
-.dark .typewriter {
-  border-right-color: #ccc;
-}
-
-/* Keyframes */
 @keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+  from { width: 0; }
+  to { width: 100%; }
 }
 
 @keyframes blink {
-  50% {
-    border-color: transparent;
-  }
+  50% { border-color: transparent; }
+}
+
+/* === Fade-in on Scroll (for legacy or non-Framer use) === */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* === Kenya Flag Top Border === */
+.kenya-flag-border {
+  height: 8px;
+  background: linear-gradient(
+    to right,
+    var(--kenya-black) 0%,
+    var(--kenya-black) 30%,
+    var(--kenya-white) 30%,
+    var(--kenya-white) 35%,
+    var(--kenya-red) 35%,
+    var(--kenya-red) 65%,
+    var(--kenya-white) 65%,
+    var(--kenya-white) 70%,
+    var(--kenya-green) 70%,
+    var(--kenya-green) 100%
+  );
 }

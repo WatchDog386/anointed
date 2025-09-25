@@ -9,19 +9,14 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 // Layouts
 import MainLayout from "./layouts/MainLayout";
 
-// Pages (Routes)
+// AVCS Pages
 import Home from "./routes/Home";
 import About from "./routes/About";
-import Services from "./routes/Services";
-import Faqs from "./routes/faqs";
-import Contact from "./routes/Contact";
-import WifiPlans from "./routes/WifiPlans";
-import Technicians from "./routes/Technicians";
-import Articles from "./routes/Articles";
-import ArticleDetail from "./routes/ArticleDetail";
-import CoverageMap from "./routes/CoverageMap";
-
-// Components
+import Stories from "./routes/Stories";
+import Testimonials from "./routes/testimonials";
+import CTA from "./routes/CTA"; // ✅ renamed from Contact
+import staff from "./routes/staff";
+import Board from "./routes/Board";
 
 
 const TrackPageViews = () => {
@@ -42,25 +37,15 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
-        <Route
-          index
-          element={
-            <>
-            
-              <Home />
-            </>
-          }
-        />
+        <Route index element={<Home />} />
         <Route path="about" element={<About />} />
-        <Route path="services" element={<Services />} />
-        <Route path="faq" element={<Faqs />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="wifiplans" element={<WifiPlans />} />
-        <Route path="technicians" element={<Technicians />} />
-        <Route path="technicians/:issue" element={<Technicians />} />
-        <Route path="articles" element={<Articles />} />
-        <Route path="articles/:slug" element={<ArticleDetail />} />
-        <Route path="coverage" element={<CoverageMap />} />
+        <Route path="staff" element={<staff />} />
+        <Route path="board" element={<Board />} />
+        
+        
+        <Route path="stories" element={<Stories />} />
+        <Route path="testimonials" element={<Testimonials />} />
+        <Route path="cta" element={<CTA />} /> {/* ✅ route for CTA */}
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
@@ -72,7 +57,6 @@ export default function App() {
     <HelmetProvider>
       <ParallaxProvider>
         <LanguageProvider>
-          {/* Google Analytics */}
           <Helmet>
             <script async src="https://www.googletagmanager.com/gtag/js?id=G-6TTHG2D146"></script>
             <script>
