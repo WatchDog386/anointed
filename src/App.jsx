@@ -14,9 +14,9 @@ import MainLayout from "./layouts/MainLayout";
 import Home from "./routes/Home";
 import About from "./routes/About";
 import Stories from "./routes/Stories";
-import Testimonials from "./routes/testimonials"; // lowercase t
+import Testimonials from "./routes/Testimonials"; // ✅ uppercase T to match file Testimonials.jsx
 import CTA from "./routes/CTA";
-import Staff from "./routes/Staff"; // uppercase S
+import Staff from "./routes/Staff"; // ✅ uppercase S to match file Staff.jsx
 import Board from "./routes/Board";
 
 // Newly added pages (match filenames exactly)
