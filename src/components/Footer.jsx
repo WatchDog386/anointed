@@ -6,9 +6,6 @@ import {
   FaTwitter,
   FaInstagram,
   FaVimeoV,
-  FaMapMarkerAlt,
-  FaPhone,
-  FaEnvelope,
 } from "react-icons/fa";
 
 export default function Footer() {
@@ -27,7 +24,7 @@ export default function Footer() {
       }}
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {/* Search */}
+        {/* Column 1: Search + Donate */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -51,17 +48,19 @@ export default function Footer() {
           </form>
           <div className="my-4 w-4/5 border-t border-dotted border-[#8CA9B4]"></div>
           <a
-            href="/donate"
+            href="https://ggcckenya.reachapp.co/donations/new"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block bg-[#932528] hover:bg-[#8CA9B4] text-white font-semibold py-2 px-6 rounded-full transition"
           >
             Donate
           </a>
         </motion.div>
 
-        {/* Empty Column (GGCC leaves 2nd column empty) */}
+        {/* Column 2: Intentionally empty (as in GGCC) */}
         <div></div>
 
-        {/* The Latest */}
+        {/* Column 3: The Latest */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -70,27 +69,31 @@ export default function Footer() {
           <h3 className="text-xl font-bold text-[#8CA9B4] mb-4">The Latest</h3>
           <ul className="space-y-3">
             <li>
-              <NavLink
-                to="/stories"
+              <a
+                href="https://ggcckenya.org/trisha-and-lameck-a-mother-and-son/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block hover:text-[#8CA9B4] transition"
               >
                 Trisha and Lameck: A mother and son
-              </NavLink>
+              </a>
               <span className="text-[#8CA9B4] text-xs">November 28, 2018</span>
             </li>
             <li className="mt-3">
-              <NavLink
-                to="/promise"
+              <a
+                href="https://ggcckenya.org/promise/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block hover:text-[#8CA9B4] transition"
               >
                 Promise
-              </NavLink>
+              </a>
               <span className="text-[#8CA9B4] text-xs">February 27, 2021</span>
             </li>
           </ul>
         </motion.div>
 
-        {/* Connect */}
+        {/* Column 4: Connect */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -101,13 +104,13 @@ export default function Footer() {
             <p>
               <strong className="text-white">Mailing Address:</strong>
               <br />
-              <span className="text-[#8CA9B4]">PO Box 713, Matthews, NC 28106</span>
+              <span className="text-[#8CA9B4]">PO Box 713<br />Matthews, NC 28106</span>
             </p>
             <p>
               <strong className="text-white">Office Address:</strong>
               <br />
               <span className="text-[#8CA9B4]">
-                10800 Independence Pointe Parkway Suite C, Matthews, NC 28105
+                10800 Independence Pointe Parkway Suite C<br />Matthews, NC 28105
               </span>
             </p>
             <p>
@@ -117,7 +120,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Social Icons — GGCC style */}
+          {/* Social Icons */}
           <div className="flex space-x-4 mt-4">
             <a
               href="https://www.facebook.com/GGCCKenya/"
@@ -163,11 +166,23 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto mt-12 pt-4 border-t border-[#233A33] text-center text-gray-400 text-sm">
         <p>
           Gethsemane Garden Christian Centre. All rights reserved {new Date().getFullYear()}. |{" "}
-          <NavLink to="/financials" className="hover:text-[#8CA9B4]">
+          <a
+            href="https://ggcckenya.org/financials/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#8CA9B4]"
+          >
             Financials
-          </NavLink>{" "}
+          </a>{" "}
           |{" "}
-          <span>Website Credit</span>
+          <a
+            href="https://ggcckenya.org/website-credit/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#8CA9B4]"
+          >
+            Website Credit
+          </a>
         </p>
       </div>
     </motion.footer>

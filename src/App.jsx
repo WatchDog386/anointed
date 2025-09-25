@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ParallaxProvider } from "react-scroll-parallax";
@@ -9,15 +10,24 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 // Layouts
 import MainLayout from "./layouts/MainLayout";
 
-// AVCS Pages
+// Existing Pages
 import Home from "./routes/Home";
 import About from "./routes/About";
 import Stories from "./routes/Stories";
 import Testimonials from "./routes/testimonials";
-import CTA from "./routes/CTA"; // ✅ renamed from Contact
-import staff from "./routes/staff";
+import CTA from "./routes/CTA";
+import Staff from "./routes/Staff";
 import Board from "./routes/Board";
 
+// NEWLY ADDED PAGES (to be created)
+import Gallery from "./routes/Gallery";
+import EducationPrograms from "./routes/EducationPrograms";
+import SpiritualGrowth from "./routes/SpiritualGrowth";
+import CommunityOutreach from "./routes/CommunityOutreach";
+import HealthWellness from "./routes/HealthWellness";
+import ChildSponsorship from "./routes/ChildSponsorship";
+import Impact from "./routes/Impact";
+import GetInvolved from "./routes/GetInvolved";
 
 const TrackPageViews = () => {
   const location = useLocation();
@@ -39,13 +49,21 @@ function AppRoutes() {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
-        <Route path="staff" element={<staff />} />
+        <Route path="staff" element={<Staff />} />
         <Route path="board" element={<Board />} />
-        
-        
         <Route path="stories" element={<Stories />} />
         <Route path="testimonials" element={<Testimonials />} />
-        <Route path="cta" element={<CTA />} /> {/* ✅ route for CTA */}
+        <Route path="cta" element={<CTA />} />
+        
+        {/* Newly added routes */}
+        <Route path="gallery" element={<Gallery />} />
+        <Route path="eduprog" element={<EducationPrograms />} />
+        <Route path="SpiritualGrowth" element={<SpiritualGrowth />} />
+        <Route path="CommunityOutreach" element={<CommunityOutreach />} />
+        <Route path="HealthWellness" element={<HealthWellness />} />
+        <Route path="ChildSponsorship" element={<ChildSponsorship />} />
+        <Route path="impacts" element={<Impact />} />
+        <Route path="Make-An-Impact" element={<GetInvolved />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

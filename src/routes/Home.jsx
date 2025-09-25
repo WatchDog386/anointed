@@ -4,31 +4,29 @@ import { Helmet } from "react-helmet-async";
 
 import Hero from "../components/Hero";
 import Stories from "./Stories";
-import About from "./About";
-
-import Testimonials from "./testimonials";
+import Testimonials from "./Testimonials"; // Fixed casing to match standard React convention
 import CTA from "./CTA";
 
 export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Knoxfill Internet | Reliable Fiber Internet in Kenya</title>
+        <title>Anointed Vessels Christian School | Growing Christian Leaders in Kenya</title>
         <meta
           name="description"
-          content="Get fast, affordable, and reliable fiber internet across Kenya. Knoxfill delivers top-tier connectivity to rural and urban communities."
+          content="Anointed Vessels Christian School provides holistic, Christ-centered education to vulnerable children in Kenya. Sponsor a child today and transform a life."
         />
         <meta
           property="og:title"
-          content="Knoxfill Internet | Fast Fiber Internet in Kenya"
+          content="Anointed Vessels Christian School | Holistic Education in Kenya"
         />
         <meta
           property="og:description"
-          content="Experience high-speed fiber internet by Knoxfill. Designed for homes and businesses across Kenya."
+          content="Empowering the next generation of Christian leaders through education, spiritual growth, and community care in Kenya."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://noxfill.co.ke" />
-        {/* <meta property="og:image" content="https://noxfill.co.ke/assets/og-image.webp" /> */}
+        <meta property="og:url" content="https://yourdomain.com" />
+        {/* <meta property="og:image" content="%PUBLIC_URL%/cover.jpg" /> */}
       </Helmet>
 
       <section id="hero">
@@ -37,10 +35,6 @@ export default function Home() {
 
       <section id="stories">
         <Stories />
-      </section>
-
-      <section id="about">
-        <About />
       </section>
 
       <section id="testimonials">
