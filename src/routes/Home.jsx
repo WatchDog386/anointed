@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 
 import Hero from "../components/Hero";
 import Stories from "./Stories";
+import About from "./About";
 
 import Testimonials from "./testimonials";
 import CTA from "./CTA";
@@ -38,7 +39,9 @@ export default function Home() {
         <Stories />
       </section>
 
-    
+      <section id="about">
+        <About />
+      </section>
 
       <section id="testimonials">
         <Testimonials />

@@ -101,7 +101,7 @@ export default function About() {
                 <FadeIn delay={0.2}>
                   <div className="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
                     <img
-                      src={supportImg}
+                      src="/support.jpg"
                       alt="AVCS Students receiving care"
                       className="w-full h-auto object-cover"
                     />
@@ -162,7 +162,7 @@ export default function About() {
             <FadeIn className="mb-10">
               <div className="w-48 h-48 md:w-60 md:h-60 mx-auto rounded-full overflow-hidden shadow-xl mb-6">
                 <img
-                  src={jimmyImg}
+                  src="/Jimmy.jpg"
                   alt="Jimmy Carter Owuato - Founding CEO"
                   className="w-full h-full object-cover"
                 />
@@ -296,7 +296,7 @@ export default function About() {
               <div className="flex-1">
                 <FadeIn delay={0.2}>
                   <div className="rounded-xl overflow-hidden shadow-xl">
-                    <img src={projectImg} alt="Children learning" className="w-full object-cover" />
+                    <img src="/project.jpg" alt="Children learning" className="w-full object-cover" />
                   </div>
                 </FadeIn>
               </div>
