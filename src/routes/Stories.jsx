@@ -84,18 +84,6 @@ export default function Stories() {
 
   return (
     <>
-      {/* Fonts — GGCC uses Montserrat + Open Sans */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap"
-        rel="stylesheet"
-      />
-      <style>{`
-        body { font-family: 'Open Sans', sans-serif; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
-      `}</style>
-
       {/* Inspiring Stories — GGCC-style full-width slider */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -106,10 +94,10 @@ export default function Stories() {
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary font-montserrat">
               Inspiring Stories
             </h2>
-            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-700 max-w-2xl mx-auto font-poppins">
               Discover how AVCS is transforming lives through faith-based education
             </p>
           </motion.div>
@@ -119,14 +107,14 @@ export default function Stories() {
             {/* Navigation Arrows — GGCC style: white with subtle opacity */}
             <button
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-white bg-opacity-60 hover:bg-opacity-90 rounded-full flex items-center justify-center font-bold text-lg text-primary transition-all duration-300"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-white bg-opacity-60 hover:bg-opacity-90 rounded-full flex items-center justify-center font-bold text-lg text-primary transition-all duration-300 font-montserrat"
               aria-label="Previous story"
             >
               {"<"}
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-white bg-opacity-60 hover:bg-opacity-90 rounded-full flex items-center justify-center font-bold text-lg text-primary transition-all duration-300"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-white bg-opacity-60 hover:bg-opacity-90 rounded-full flex items-center justify-center font-bold text-lg text-primary transition-all duration-300 font-montserrat"
               aria-label="Next story"
             >
               {">"}
@@ -151,13 +139,13 @@ export default function Stories() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-10 text-white z-10">
-                    <h3 className="text-2xl md:text-3xl font-bold mb-3">{story.title}</h3>
-                    <p className="text-lg mb-6 opacity-90 max-w-2xl leading-relaxed">
+                    <h3 className="text-2xl md:text-3xl font-bold mb-3 font-montserrat">{story.title}</h3>
+                    <p className="text-lg mb-6 opacity-90 max-w-2xl leading-relaxed font-poppins">
                       {story.description}
                     </p>
                     <Link
                       to="/stories"
-                      className="cta-button"
+                      className="cta-button font-montserrat"
                     >
                       Read Full Story
                     </Link>
@@ -195,10 +183,10 @@ export default function Stories() {
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary font-montserrat">
               Our Mission
             </h2>
-            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-700 max-w-2xl mx-auto font-poppins">
               Discover what makes our Christian educational approach unique and effective
             </p>
           </motion.div>
@@ -219,10 +207,10 @@ export default function Stories() {
                 <div className="text-secondary text-4xl mb-4">
                   <i className={card.icon}></i>
                 </div>
-                <h3 className="text-xl font-bold text-primary mb-3">
+                <h3 className="text-xl font-bold text-primary mb-3 font-montserrat">
                   {card.title}
                 </h3>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-sm font-poppins">
                   {card.description}
                 </p>
               </motion.div>
