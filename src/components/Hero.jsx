@@ -117,17 +117,17 @@ const Hero = () => {
           name="description"
           content="Anointed Vessels Christian School empowers vulnerable children and families by breaking cycles of poverty through quality education, holistic growth, and skills development—nurturing future Christian leaders with hope and responsibility."
         />
-        {/* GGCC uses Montserrat + Open Sans + Ernest Emily */}
+        {/* Updated Fonts: Pacifico for script, Montserrat for sans-serif */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&family=Ernest+Emily&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
         <style>{`
-          body { font-family: 'Open Sans', sans-serif; }
+          body { font-family: 'Poppins', sans-serif; }
           .font-montserrat { font-family: 'Montserrat', sans-serif; }
-          .font-ernest { font-family: 'Ernest Emily', cursive; }
+          .font-script { font-family: 'Pacifico', cursive; }
         `}</style>
       </Helmet>
 
@@ -151,27 +151,28 @@ const Hero = () => {
         {/* Gradient overlay similar to GGCC - darker at bottom */}
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-black/20 to-black/70"></div>
 
-        <div className="relative z-20 text-left px-8 sm:px-12 lg:px-16 pb-16 sm:pb-20 lg:pb-24 max-w-4xl">
+        <div className="relative z-20 text-left px-4 sm:px-8 md:px-12 lg:px-16 pb-12 sm:pb-16 md:pb-20 lg:pb-24 max-w-4xl">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="space-y-4 sm:space-y-6"
+            className="space-y-3 sm:space-y-4 md:space-y-6"
           >
-            <motion.h1
+            {/* Script/Handwritten Font for "Welcome to" */}
+            <motion.h1 
               variants={fadeIn}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.9] font-ernest text-white"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal leading-[0.9] text-white select-none font-script"
               style={{ 
                 textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                fontWeight: '700'
               }}
             >
               Welcome to
             </motion.h1>
 
+            {/* Sans-Serif Font for the rest */}
             <motion.h2
               variants={fadeIn}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-montserrat leading-[0.9] text-white"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold font-montserrat leading-[0.9] text-white select-none"
               style={{ 
                 textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                 fontWeight: '700'
@@ -181,10 +182,10 @@ const Hero = () => {
               Christian Center
             </motion.h2>
 
-            <motion.div variants={fadeIn} className="mt-8">
+            <motion.div variants={fadeIn} className="mt-6 sm:mt-8">
               <button
                 onClick={() => navigate("/about/our-story")}
-                className="cta-button bg-accent hover:bg-accent/90 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 font-montserrat text-lg"
+                className="cta-button bg-accent hover:bg-accent/90 text-white font-bold py-2 px-6 sm:py-3 sm:px-8 rounded-lg transition-all duration-300 font-montserrat text-base sm:text-lg"
                 style={{ fontWeight: '600' }}
               >
                 Our Story
@@ -195,25 +196,25 @@ const Hero = () => {
       </section>
 
       {/* === WHY SUPPORT US === */}
-      <section className="w-full py-16 bg-light">
+      <section className="w-full py-12 sm:py-16 bg-light">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            className="text-center mb-12"
+            className="text-center mb-8 sm:mb-12"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeIn}
           >
-            <h2 className="text-3xl font-bold text-primary font-montserrat mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-primary font-montserrat mb-3 sm:mb-4">
               WHY SUPPORT US
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-sans">
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto font-sans">
               Discover what makes our Christian educational approach unique and effective
             </p>
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -222,11 +223,11 @@ const Hero = () => {
             {features.map((feature, idx) => (
               <motion.div
                 key={idx}
-                className="bg-white rounded-xl p-6 text-center border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300"
+                className="bg-white rounded-xl p-4 sm:p-6 text-center border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300"
                 variants={fadeIn}
               >
                 <div className="mb-3 flex justify-center">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-primary font-montserrat mb-3">
+                <h3 className="text-lg sm:text-xl font-bold text-primary font-montserrat mb-2 sm:mb-3">
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 text-sm font-sans">
@@ -244,7 +245,7 @@ const Hero = () => {
           {ctaSections.map((cta, idx) => (
             <div
               key={idx}
-              className={`relative h-96 md:h-[500px] ${idx > 0 ? "border-l border-gray-300" : ""}`}
+              className={`relative h-80 sm:h-96 md:h-[500px] ${idx > 0 ? "border-l border-gray-300" : ""}`}
             >
               <img
                 src={cta.image}
@@ -252,28 +253,28 @@ const Hero = () => {
                 className="w-full h-full object-cover"
               />
               <div
-                className={`absolute inset-0 flex flex-col justify-center items-center p-6 text-white ${
+                className={`absolute inset-0 flex flex-col justify-center items-center p-4 sm:p-6 text-white ${
                   idx === 1 ? "bg-primary bg-opacity-90" : "bg-black bg-opacity-50"
                 }`}
               >
-                <h3 className="text-2xl font-bold mb-4 text-center font-montserrat">
+                <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-center font-montserrat">
                   {cta.title}
                 </h3>
                 {cta.description && (
-                  <p className="text-sm mb-4 text-center max-w-xs font-sans">
+                  <p className="text-xs sm:text-sm mb-3 sm:mb-4 text-center max-w-xs font-sans">
                     {cta.description}
                   </p>
                 )}
                 {cta.buttonText && (
                   <button
                     onClick={cta.onClick}
-                    className="bg-white text-secondary font-semibold py-2 px-6 rounded-full hover:bg-accent hover:text-white transition-all duration-300 font-montserrat"
+                    className="bg-white text-secondary font-semibold py-2 px-4 sm:py-2 sm:px-6 rounded-full hover:bg-accent hover:text-white transition-all duration-300 font-montserrat text-sm sm:text-base"
                   >
                     {cta.buttonText}
                   </button>
                 )}
                 {cta.linkText && (
-                  <a href={cta.link} className="text-accent underline mt-2 font-montserrat">
+                  <a href={cta.link} className="text-accent underline mt-2 font-montserrat text-sm sm:text-base">
                     {cta.linkText}
                   </a>
                 )}
@@ -284,13 +285,13 @@ const Hero = () => {
       </section>
 
       {/* === MISSION SECTION === */}
-      <section className="w-full py-12 bg-light">
+      <section className="w-full py-8 sm:py-12 bg-light">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
             {missionSections.map((section, idx) => (
-              <div key={idx} className="text-center p-6">
-                <div className="mb-4 flex justify-center">{section.icon}</div>
-                <h3 className="text-xl font-bold text-primary font-montserrat mb-3">
+              <div key={idx} className="text-center p-4 sm:p-6">
+                <div className="mb-3 sm:mb-4 flex justify-center">{section.icon}</div>
+                <h3 className="text-lg sm:text-xl font-bold text-primary font-montserrat mb-2 sm:mb-3">
                   {section.title}
                 </h3>
                 <p className="text-gray-600 text-sm font-sans">{section.description}</p>
@@ -298,8 +299,8 @@ const Hero = () => {
             ))}
           </div>
 
-          <div className="text-center mb-12 max-w-4xl mx-auto">
-            <p className="text-base md:text-lg text-gray-700 font-sans">
+          <div className="text-center mb-8 sm:mb-12 max-w-4xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-700 font-sans">
               Anointed Vessels Christian School (AVCS) is a Christian boarding school in Kenya. AVCS was established following the HIV/AIDS crisis when our founders received God's call to serve vulnerable and orphaned children. By offering love, nourishment, and a Christian education, we are growing faithful leaders who will carry His message throughout the world.
             </p>
           </div>
