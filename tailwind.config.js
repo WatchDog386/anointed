@@ -4,11 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // GGCC Brand Colors
+        // Brand Colors
         primary: "#2b473f",       // Dark green – headings, text
         secondary: "#932528",     // Deep red – primary buttons
         accent: "#8CA9B4",        // Steel blue – hover, links, accents
-        light: "#f6f4ee",         // Off-white background (from GGCC CSS)
+        light: "#f6f4ee",         // Off-white background (from  CSS)
         dark: "#1f2937",
         gray: {
           100: "#f3f4f6",
@@ -42,7 +42,7 @@ module.exports = {
         "ggcc-gradient": "linear-gradient(-45deg, #2b473f, #8CA9B4, #932528, #f6f4ee)",
       },
 
-      // GGCC Animation Keyframes
+      //  Animation Keyframes
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0', transform: 'translateY(20px)' },
@@ -52,7 +52,7 @@ module.exports = {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.6' },
         },
-        // GGCC Modal Animations
+        //  Modal Animations
         modalFade: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
@@ -61,7 +61,7 @@ module.exports = {
           '0%': { transform: 'scale(0.8)' },
           '100%': { transform: 'scale(1)' },
         },
-        // GGCC Fade Animations
+        //  Fade Animations
         fadeInUp: {
           '0%': { opacity: '0', transform: 'translateY(30px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
@@ -78,7 +78,7 @@ module.exports = {
           '0%': { opacity: '0', transform: 'translateX(30px)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
-        // GGCC Loading Animations
+        //  Loading Animations
         spin: {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
@@ -87,7 +87,7 @@ module.exports = {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.05)' },
         },
-        // GGCC Slide Animations
+        //  Slide Animations
         slideInLeft: {
           '0%': { transform: 'translateX(-100%)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
@@ -96,29 +96,29 @@ module.exports = {
           '0%': { transform: 'translateX(100%)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
         },
-        // GGCC Bounce Animation
+        // Bounce Animation
         bounceSoft: {
           '0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0)' },
           '40%': { transform: 'translateY(-5px)' },
           '60%': { transform: 'translateY(-3px)' },
         },
-        // GGCC Text Reveal
+        //  Text Reveal
         textReveal: {
           '0%': { left: '0' },
           '100%': { left: '100%' },
         },
-        // GGCC Gradient Shift
+        //  Gradient Shift
         gradientShift: {
           '0%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
           '100%': { backgroundPosition: '0% 50%' },
         },
-        // GGCC Progress Bar
+        //  Progress Bar
         progressFill: {
           '0%': { transform: 'scaleX(0)' },
           '100%': { transform: 'scaleX(1)' },
         },
-        // GGCC Typing Animation
+        //  Typing Animation
         typing: {
           '0%': { width: '0' },
           '100%': { width: '100%' },
@@ -127,13 +127,13 @@ module.exports = {
           '0%, 100%': { borderColor: 'transparent' },
           '50%': { borderColor: '#2b473f' },
         },
-        // GGCC Shake Animation
+        //  Shake Animation
         shake: {
           '0%, 100%': { transform: 'translateX(0)' },
           '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-5px)' },
           '20%, 40%, 60%, 80%': { transform: 'translateX(5px)' },
         },
-        // GGCC Zoom Animations
+        //  Zoom Animations
         zoomIn: {
           '0%': { opacity: '0', transform: 'scale(0.5)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
@@ -142,7 +142,7 @@ module.exports = {
           '0%': { opacity: '1', transform: 'scale(1)' },
           '100%': { opacity: '0', transform: 'scale(0.5)' },
         },
-        // GGCC Rotate Animation
+        //  Rotate Animation
         rotate: {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
@@ -154,51 +154,51 @@ module.exports = {
         },
       },
 
-      // GGCC Animation Classes
+      //  Animation Classes
       animation: {
         'fade-in': 'fadeIn 0.6s ease-out forwards',
         'blink-slow': 'blink 2s infinite',
-        // GGCC Modal Animations
+        //  Modal Animations
         'modal-fade': 'modalFade 0.3s',
         'modal-zoom': 'modalZoom 0.6s',
-        // GGCC Fade Animations
+        //  Fade Animations
         'fade-in-up': 'fadeInUp 0.6s ease forwards',
         'fade-in-down': 'fadeInDown 0.6s ease forwards',
         'fade-in-left': 'fadeInLeft 0.6s ease forwards',
         'fade-in-right': 'fadeInRight 0.6s ease forwards',
-        // GGCC Loading Animations
+        //  Loading Animations
         'spin-slow': 'spin 1s linear infinite',
         'pulse-soft': 'pulseSoft 2s infinite',
-        // GGCC Slide Animations
+        //  Slide Animations
         'slide-in-left': 'slideInLeft 0.5s ease-out',
         'slide-in-right': 'slideInRight 0.5s ease-out',
-        // GGCC Bounce Animation
+        //  Bounce Animation
         'bounce-soft': 'bounceSoft 0.5s',
-        // GGCC Text Animation
+        //  Text Animation
         'typing': 'typing 3.5s steps(40, end)',
         'blink-caret': 'blinkCaret 0.75s step-end infinite',
-        // GGCC Shake Animation
+        //  Shake Animation
         'shake': 'shake 0.5s',
-        // GGCC Zoom Animations
+        //  Zoom Animations
         'zoom-in': 'zoomIn 0.5s ease',
         'zoom-out': 'zoomOut 0.5s ease',
-        // GGCC Rotate Animation
+        //  Rotate Animation
         'rotate-continuous': 'rotate 4s linear infinite',
-        // GGCC Gradient Animation
+        //  Gradient Animation
         'gradient-shift': 'gradientShift 15s ease infinite',
-        // GGCC Progress Animation
+        //  Progress Animation
         'progress-fill': 'progressFill 2s ease-in-out',
         // Mobile Animation
         'mobile-slide-up': 'mobileSlideUp 0.5s ease',
       },
 
-      // GGCC Transition Timing
+      //  Transition Timing
       transitionTimingFunction: {
         'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
         'bounce-out': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
       },
 
-      // GGCC Transition Duration
+      //  Transition Duration
       transitionDuration: {
         'smooth': '300ms',
         'fast': '200ms',
@@ -224,23 +224,23 @@ module.exports = {
         'kenya-flag': 'linear-gradient(to right, #000 0%, #000 30%, #fff 30%, #fff 35%, #DE2910 35%, #DE2910 65%, #fff 65%, #fff 70%, #006600 70%, #006600 100%)',
       },
 
-      // GGCC Custom Utilities
+      //  Custom Utilities
       spacing: {
         '18': '4.5rem',
         '88': '22rem',
       },
 
-      // GGCC Border Styles
+      //  Border Styles
       borderWidth: {
         '3': '3px',
       },
 
-      // GGCC Custom Border Styles
+      //  Custom Border Styles
       borderStyle: {
         'dotted': 'dotted',
       },
 
-      // GGCC Custom Opacity
+      //  Custom Opacity
       opacity: {
         '15': '0.15',
         '35': '0.35',
@@ -248,10 +248,10 @@ module.exports = {
     },
   },
   plugins: [
-    // Custom plugin for GGCC-specific utilities
+    // Custom plugin for specific utilities
     function({ addUtilities, theme }) {
       const newUtilities = {
-        // GGCC Button Hover Effects
+        //  Button Hover Effects
         '.btn-hover-effect': {
           transition: 'all 0.2s ease',
           position: 'relative',
@@ -264,7 +264,7 @@ module.exports = {
             transform: 'translateY(0)',
           },
         },
-        // GGCC Menu Item Underline
+        //  Menu Item Underline
         '.menu-item-underline': {
           position: 'relative',
           '&::after': {
@@ -281,7 +281,7 @@ module.exports = {
             width: '100%',
           },
         },
-        // GGCC Image Hover Effect
+        //  Image Hover Effect
         '.image-hover': {
           transition: 'transform 0.3s ease, opacity 0.3s ease',
           '&:hover': {
@@ -289,7 +289,7 @@ module.exports = {
             opacity: '0.9',
           },
         },
-        // GGCC Card Hover Effect
+        //  Card Hover Effect
         '.card-hover': {
           transition: 'transform 0.3s ease, box-shadow 0.3s ease',
           '&:hover': {
@@ -297,7 +297,7 @@ module.exports = {
             boxShadow: theme('boxShadow.hover-lift'),
           },
         },
-        // GGCC Text Reveal
+        //  Text Reveal
         '.text-reveal': {
           overflow: 'hidden',
           position: 'relative',
@@ -312,7 +312,7 @@ module.exports = {
             animation: 'textReveal 1.5s ease-in-out forwards',
           },
         },
-        // GGCC Flip Card
+        //  Flip Card
         '.flip-card': {
           perspective: '1000px',
           '.flip-card-inner': {
