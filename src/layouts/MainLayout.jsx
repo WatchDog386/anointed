@@ -15,16 +15,17 @@ export default function MainLayout() {
       <ScrollToTop />
 
       <div className="relative min-h-screen w-full bg-white text-gray-900 overflow-hidden">
-        {/* Background animation */}
+        {/* Background animation (particles) */}
         <div className="absolute inset-0 z-0">
           <ParticleBackground />
         </div>
 
-        {/* Main content wrapper */}
+        {/* Main content stack */}
         <div className="relative z-10 flex flex-col min-h-screen">
           <Navbar />
 
-          <main className="flex-1 px-0 sm:px-0 md:px-0 mt-4">
+          {/* Critical: No top margin/padding — allows Hero to start at viewport top */}
+          <main className="flex-1">
             <Outlet />
           </main>
 

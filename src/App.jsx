@@ -10,7 +10,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 // Layouts
 import MainLayout from "./layouts/MainLayout";
 
-// Existing Pages (match filenames exactly)
+// Existing Pages
 import Home from "./routes/Home";
 import About from "./routes/About";
 import Stories from "./routes/Stories";
@@ -19,7 +19,7 @@ import CTA from "./routes/CTA";
 import Staff from "./routes/Staff";
 import Board from "./routes/Board";
 
-// Newly added pages (match filenames exactly)
+// Newly added pages
 import Gallery from "./routes/Gallery";
 import EducationPrograms from "./routes/EducationPrograms";
 import SpiritualGrowth from "./routes/SpiritualGrowth";

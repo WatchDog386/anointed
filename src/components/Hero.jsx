@@ -117,7 +117,6 @@ const Hero = () => {
           name="description"
           content="Anointed Vessels Christian School empowers vulnerable children and families by breaking cycles of poverty through quality education, holistic growth, and skills development—nurturing future Christian leaders with hope and responsibility."
         />
-        {/* Updated Fonts: Pacifico for script, Montserrat for sans-serif */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -131,8 +130,9 @@ const Hero = () => {
         `}</style>
       </Helmet>
 
-      {/* === HERO SECTION === */}
-      <section className="relative w-full min-h-[80vh] flex items-end justify-start text-white overflow-hidden">
+      {/* === HERO SECTION - Updated for mobile centering and desktop bottom-left === */}
+      {/* items-center on small screens, md:items-end on medium screens and up */}
+      <section className="relative w-full min-h-[80vh] flex items-center md:items-end justify-start text-white overflow-hidden">
         {heroImages.map((img, idx) => (
           <motion.div
             key={idx}
@@ -148,31 +148,37 @@ const Hero = () => {
             />
           </motion.div>
         ))}
-        {/* Gradient overlay similar to GGCC - darker at bottom */}
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-black/20 to-black/70"></div>
 
-        <div className="relative z-20 text-left px-4 sm:px-8 md:px-12 lg:px-16 pb-12 sm:pb-16 md:pb-20 lg:pb-24 max-w-4xl">
+        {/* Text container:
+          - Default (mobile/tablet): text-center, mx-auto (centered)
+          - Medium screen (md:): text-left, md:mx-0 (bottom-left alignment)
+          - Note: Added md:pb-20 for bottom padding on desktop alignment.
+        */}
+        <div className="relative z-20 w-full px-4 sm:px-8 md:px-12 lg:px-16 py-12 md:py-0 pb-12 sm:pb-16 md:pb-20 lg:pb-24 max-w-4xl text-center mx-auto md:text-left md:mx-0">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="space-y-3 sm:space-y-4 md:space-y-6"
+            className="space-y-1 sm:space-y-2 md:space-y-3"
           >
-            {/* Script/Handwritten Font for "Welcome to" */}
+            {/* Welcome to text - Large script font, non-bold weight */}
             <motion.h1 
               variants={fadeIn}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal leading-[0.9] text-white select-none font-script"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-normal leading-[1] text-white select-none font-script"
               style={{ 
                 textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+                // Custom style to ensure it's not bold if font-normal isn't enough
+                fontWeight: '400' 
               }}
             >
               Welcome to
             </motion.h1>
 
-            {/* Sans-Serif Font for the rest */}
+            {/* School name - Bold Montserrat font */}
             <motion.h2
               variants={fadeIn}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold font-montserrat leading-[0.9] text-white select-none"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-montserrat leading-tight text-white select-none"
               style={{ 
                 textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
                 fontWeight: '700'
@@ -182,7 +188,17 @@ const Hero = () => {
               Christian Center
             </motion.h2>
 
-            <motion.div variants={fadeIn} className="mt-6 sm:mt-8">
+            {/* Sub-description - Regular weight text, no bold applied */}
+            <motion.p
+              variants={fadeIn}
+              className="text-base sm:text-lg md:text-xl font-normal font-montserrat text-white pt-2 sm:pt-3 md:pt-4"
+              style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}
+            >
+              Growing the next generation of Christian leaders in Kenya.
+            </motion.p>
+
+
+            <motion.div variants={fadeIn} className="pt-4 sm:pt-6 md:pt-8">
               <button
                 onClick={() => navigate("/about/our-story")}
                 className="cta-button bg-accent hover:bg-accent/90 text-white font-bold py-2 px-6 sm:py-3 sm:px-8 rounded-lg transition-all duration-300 font-montserrat text-base sm:text-lg"
@@ -194,6 +210,8 @@ const Hero = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* --- */}
 
       {/* === WHY SUPPORT US === */}
       <section className="w-full py-12 sm:py-16 bg-light">
@@ -239,7 +257,9 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* === CTA CARDS SECTION (GGCC Layout) === */}
+      {/* --- */}
+
+      {/* === CTA CARDS SECTION === */}
       <section className="w-full py-0">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
           {ctaSections.map((cta, idx) => (
@@ -283,6 +303,8 @@ const Hero = () => {
           ))}
         </div>
       </section>
+
+      {/* --- */}
 
       {/* === MISSION SECTION === */}
       <section className="w-full py-8 sm:py-12 bg-light">
