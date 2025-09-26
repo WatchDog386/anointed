@@ -3,11 +3,6 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import {
-  FaFacebookSquare,
-  FaInstagram,
-  FaTwitter,
-  FaYoutube,
-  FaWhatsapp,
   FaCross,
   FaGraduationCap,
   FaHandsHelping,
@@ -91,7 +86,7 @@ const Hero = () => {
         </>
       ),
       description:
-        "There are many ways to serve as God’s hands and feet. Consider making an impact by sponsoring a child, making a donation, or learn how to give in other ways.",
+        "There are many ways to serve as God's hands and feet. Consider making an impact by sponsoring a child, making a donation, or learn how to give in other ways.",
       linkText: "how to give in other ways",
       link: "/give",
     },
@@ -137,7 +132,7 @@ const Hero = () => {
       </Helmet>
 
       {/* === HERO SECTION === */}
-      <section className="relative w-full min-h-[80vh] flex items-center justify-center text-white overflow-hidden">
+      <section className="relative w-full min-h-[80vh] flex items-end justify-start text-white overflow-hidden">
         {heroImages.map((img, idx) => (
           <motion.div
             key={idx}
@@ -153,75 +148,48 @@ const Hero = () => {
             />
           </motion.div>
         ))}
-        <div className="absolute inset-0 z-10 bg-black bg-opacity-40"></div>
+        {/* Gradient overlay similar to GGCC - darker at bottom */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-black/20 to-black/70"></div>
 
-        <div className="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-4xl">
+        <div className="relative z-20 text-left px-8 sm:px-12 lg:px-16 pb-16 sm:pb-20 lg:pb-24 max-w-4xl">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="space-y-6 sm:space-y-8"
+            className="space-y-4 sm:space-y-6"
           >
             <motion.h1
               variants={fadeIn}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight font-ernest"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.9] font-ernest text-white"
+              style={{ 
+                textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+                fontWeight: '700'
+              }}
             >
               Welcome to
             </motion.h1>
 
             <motion.h2
               variants={fadeIn}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-montserrat leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-montserrat leading-[0.9] text-white"
+              style={{ 
+                textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+                fontWeight: '700'
+              }}
             >
               Anointed Vessels <br />
-              Christian School
+              Christian Center
             </motion.h2>
 
-            <motion.p
-              variants={fadeIn}
-              className="text-lg sm:text-xl md:text-2xl mt-6 max-w-2xl mx-auto font-montserrat"
-            >
-              Excellence in faith-based education for vulnerable children on Mfangano Island.
-            </motion.p>
-
-            <motion.div variants={fadeIn} className="mt-10">
+            <motion.div variants={fadeIn} className="mt-8">
               <button
                 onClick={() => navigate("/about/our-story")}
-                className="cta-button"
+                className="cta-button bg-accent hover:bg-accent/90 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 font-montserrat text-lg"
+                style={{ fontWeight: '600' }}
               >
                 Our Story
               </button>
             </motion.div>
-          </motion.div>
-
-          {/* Social Icons – GGCC style */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="mt-16 flex justify-center gap-4"
-          >
-            {[
-              { icon: <FaFacebookSquare size={24} />, link: "#" },
-              { icon: <FaTwitter size={24} />, link: "#" },
-              { icon: <FaInstagram size={24} />, link: "#" },
-              { icon: <FaYoutube size={24} />, link: "#" },
-              {
-                icon: <FaWhatsapp size={24} color="#25D366" />,
-                link: "https://wa.me/254726818938",
-              },
-            ].map((item, idx) => (
-              <a
-                key={idx}
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 transition-all"
-                aria-label="Social link"
-              >
-                {item.icon}
-              </a>
-            ))}
           </motion.div>
         </div>
       </section>
@@ -332,7 +300,7 @@ const Hero = () => {
 
           <div className="text-center mb-12 max-w-4xl mx-auto">
             <p className="text-base md:text-lg text-gray-700 font-sans">
-              Anointed Vessels Christian School (AVCS) is a Christian boarding school in Kenya. AVCS was established following the HIV/AIDS crisis when our founders received God’s call to serve vulnerable and orphaned children. By offering love, nourishment, and a Christian education, we are growing faithful leaders who will carry His message throughout the world.
+              Anointed Vessels Christian School (AVCS) is a Christian boarding school in Kenya. AVCS was established following the HIV/AIDS crisis when our founders received God's call to serve vulnerable and orphaned children. By offering love, nourishment, and a Christian education, we are growing faithful leaders who will carry His message throughout the world.
             </p>
           </div>
         </div>
