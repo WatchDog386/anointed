@@ -192,7 +192,7 @@ export default function Navbar() {
               <NavLink to="/" className="flex items-center space-x-3" onClick={() => setIsOpen(false)}>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white flex items-center justify-center border-2 border-gray-200 shadow-sm">
                   <img
-                    src="/Logo.jpg"
+                    src="/AVCS LOGO.png"
                     alt="Anointed Vessels Christian School Logo"
                     className="w-10 h-10 sm:w-11 sm:h-11 object-contain"
                   />
