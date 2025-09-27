@@ -130,8 +130,7 @@ const Hero = () => {
         `}</style>
       </Helmet>
 
-      {/* === HERO SECTION - Updated for mobile centering and desktop bottom-left === */}
-      {/* items-center on small screens, md:items-end on medium screens and up */}
+      {/* === HERO SECTION - Reduced font sizes and unbolded text === */}
       <section className="relative w-full min-h-[80vh] flex items-center md:items-end justify-start text-white overflow-hidden">
         {heroImages.map((img, idx) => (
           <motion.div
@@ -150,59 +149,53 @@ const Hero = () => {
         ))}
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-black/20 to-black/70"></div>
 
-        {/* Text container:
-          - Default (mobile/tablet): text-center, mx-auto (centered)
-          - Medium screen (md:): text-left, md:mx-0 (bottom-left alignment)
-          - Note: Added md:pb-20 for bottom padding on desktop alignment.
-        */}
+        {/* Text container */}
         <div className="relative z-20 w-full px-4 sm:px-8 md:px-12 lg:px-16 py-12 md:py-0 pb-12 sm:pb-16 md:pb-20 lg:pb-24 max-w-4xl text-center mx-auto md:text-left md:mx-0">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="space-y-1 sm:space-y-2 md:space-y-3"
+            className="space-y-2 sm:space-y-3 md:space-y-4"
           >
-            {/* Welcome to text - Large script font, non-bold weight */}
+            {/* Welcome to text - Reduced size and unbolded */}
             <motion.h1 
               variants={fadeIn}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-normal leading-[1] text-white select-none font-script"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal leading-[1] text-white select-none font-script"
               style={{ 
                 textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                // Custom style to ensure it's not bold if font-normal isn't enough
-                fontWeight: '400' 
+                fontWeight: '400'
               }}
             >
               Welcome to
             </motion.h1>
 
-            {/* School name - Bold Montserrat font */}
+            {/* School name - Reduced size and unbolded */}
             <motion.h2
               variants={fadeIn}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-montserrat leading-tight text-white select-none"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold font-montserrat leading-tight text-white select-none"
               style={{ 
                 textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                fontWeight: '700'
+                fontWeight: '600'
               }}
             >
               Anointed Vessels <br />
               Christian Center
             </motion.h2>
 
-            {/* Sub-description - Regular weight text, no bold applied */}
+            {/* Sub-description - Reduced size and unbolded */}
             <motion.p
               variants={fadeIn}
-              className="text-base sm:text-lg md:text-xl font-normal font-montserrat text-white pt-2 sm:pt-3 md:pt-4"
+              className="text-sm sm:text-base md:text-lg font-normal font-poppins text-gray-200 pt-2 sm:pt-3 md:pt-4 leading-relaxed"
               style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}
             >
-              Growing the next generation of Christian leaders in Kenya.
+              A place where faith, knowledge, and character unite to shape tomorrow's leaders through Christ-centered education.
             </motion.p>
 
-
-            <motion.div variants={fadeIn} className="pt-4 sm:pt-6 md:pt-8">
+            <motion.div variants={fadeIn} className="pt-4 sm:pt-5 md:pt-6">
               <button
                 onClick={() => navigate("/about/our-story")}
-                className="cta-button bg-accent hover:bg-accent/90 text-white font-bold py-2 px-6 sm:py-3 sm:px-8 rounded-lg transition-all duration-300 font-montserrat text-base sm:text-lg"
-                style={{ fontWeight: '600' }}
+                className="cta-button bg-accent hover:bg-accent/90 text-white font-semibold py-2 px-6 sm:py-2.5 sm:px-7 rounded-lg transition-all duration-300 font-montserrat text-sm sm:text-base"
+                style={{ fontWeight: '500' }}
               >
                 Our Story
               </button>
@@ -210,8 +203,6 @@ const Hero = () => {
           </motion.div>
         </div>
       </section>
-
-      {/* --- */}
 
       {/* === WHY SUPPORT US === */}
       <section className="w-full py-12 sm:py-16 bg-light">
@@ -223,10 +214,10 @@ const Hero = () => {
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeIn}
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-primary font-montserrat mb-3 sm:mb-4">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-primary font-montserrat mb-3 sm:mb-4">
               WHY SUPPORT US
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto font-sans">
+            <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto font-poppins font-normal">
               Discover what makes our Christian educational approach unique and effective
             </p>
           </motion.div>
@@ -245,10 +236,10 @@ const Hero = () => {
                 variants={fadeIn}
               >
                 <div className="mb-3 flex justify-center">{feature.icon}</div>
-                <h3 className="text-lg sm:text-xl font-bold text-primary font-montserrat mb-2 sm:mb-3">
+                <h3 className="text-base sm:text-lg font-semibold text-primary font-montserrat mb-2 sm:mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 text-sm font-sans">
+                <p className="text-gray-600 text-xs sm:text-sm font-poppins font-normal">
                   {feature.description}
                 </p>
               </motion.div>
@@ -256,8 +247,6 @@ const Hero = () => {
           </motion.div>
         </div>
       </section>
-
-      {/* --- */}
 
       {/* === CTA CARDS SECTION === */}
       <section className="w-full py-0">
@@ -277,18 +266,18 @@ const Hero = () => {
                   idx === 1 ? "bg-primary bg-opacity-90" : "bg-black bg-opacity-50"
                 }`}
               >
-                <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-center font-montserrat">
+                <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-center font-montserrat">
                   {cta.title}
                 </h3>
                 {cta.description && (
-                  <p className="text-xs sm:text-sm mb-3 sm:mb-4 text-center max-w-xs font-sans">
+                  <p className="text-xs sm:text-sm mb-3 sm:mb-4 text-center max-w-xs font-poppins font-normal">
                     {cta.description}
                   </p>
                 )}
                 {cta.buttonText && (
                   <button
                     onClick={cta.onClick}
-                    className="bg-white text-secondary font-semibold py-2 px-4 sm:py-2 sm:px-6 rounded-full hover:bg-accent hover:text-white transition-all duration-300 font-montserrat text-sm sm:text-base"
+                    className="bg-white text-secondary font-medium py-2 px-4 sm:py-2 sm:px-6 rounded-full hover:bg-accent hover:text-white transition-all duration-300 font-montserrat text-sm sm:text-base"
                   >
                     {cta.buttonText}
                   </button>
@@ -304,8 +293,6 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* --- */}
-
       {/* === MISSION SECTION === */}
       <section className="w-full py-8 sm:py-12 bg-light">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -313,16 +300,16 @@ const Hero = () => {
             {missionSections.map((section, idx) => (
               <div key={idx} className="text-center p-4 sm:p-6">
                 <div className="mb-3 sm:mb-4 flex justify-center">{section.icon}</div>
-                <h3 className="text-lg sm:text-xl font-bold text-primary font-montserrat mb-2 sm:mb-3">
+                <h3 className="text-base sm:text-lg font-semibold text-primary font-montserrat mb-2 sm:mb-3">
                   {section.title}
                 </h3>
-                <p className="text-gray-600 text-sm font-sans">{section.description}</p>
+                <p className="text-gray-600 text-xs sm:text-sm font-poppins font-normal">{section.description}</p>
               </div>
             ))}
           </div>
 
           <div className="text-center mb-8 sm:mb-12 max-w-4xl mx-auto">
-            <p className="text-sm sm:text-base md:text-lg text-gray-700 font-sans">
+            <p className="text-xs sm:text-sm md:text-base text-gray-700 font-poppins font-normal">
               Anointed Vessels Christian School (AVCS) is a Christian boarding school in Kenya. AVCS was established following the HIV/AIDS crisis when our founders received God's call to serve vulnerable and orphaned children. By offering love, nourishment, and a Christian education, we are growing faithful leaders who will carry His message throughout the world.
             </p>
           </div>
