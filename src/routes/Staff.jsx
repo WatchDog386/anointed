@@ -80,7 +80,7 @@ const Staff = () => {
       role: "Chef",
       category: "support",
       bio: "Md. Sheryl works alongside our kitchen team...",
-      image:"/LEAH.JPG"
+      image:"/SHARON.JPG",
     },
     {
       id: 8,
@@ -129,8 +129,8 @@ const Staff = () => {
           >
             <div className="text-sm text-accent mb-2 font-montserrat">
               <button onClick={() => navigate('/')} className="hover:underline">
-                Home
-              </button> / Our Staff
+              
+              </button> 
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-3 font-script">
               Our Dedicated Staff
