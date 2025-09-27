@@ -36,35 +36,35 @@ const Board = () => {
       id: 1,
       name: "Jimmy Carter Owuato",
       role: "Director/Founder/CEO",
-      image: getUnsplashImage("African male leader", 1),
+      image: "/jimmy.jpg",
       bio: "Jimmy Carter Owuato is the founder and CEO of Anointed Vessels Christian School, a testament to his unwavering commitment to education and community development. With over 15 years of experience in the education sector, Jimmy has served as a teacher, headteacher, and education consultant. His passion for holistic, Christ-centered education led him to establish AVCS to serve orphans and vulnerable children on Mfangano Island."
     },
     {
       id: 2,
       name: "Tonya Ivy",
       role: "Co-Founder Director",
-      image: getUnsplashImage("African woman leader", 2),
+      image:"/TONYA IVY.jpg",
       bio: "Director Tonya Ivy is a dedicated leader and passionate advocate for education and empowerment. With a background in financial management, she co-founded AVCS and shaped its sustainable financial model. Her leadership has enabled the school to support over 1,500 children in Kenya through quality education, nutrition, and spiritual nurture."
     },
     {
       id: 3,
       name: "Lotaya Julie Atieno",
       role: "Director Of Mental Health",
-      image: getUnsplashImage("African woman psychologist", 3),
+      image:"/Latoya.jpg",
       bio: "Director Latoya Julie Atieno brings compassion and expertise in mental health advocacy. With experience in caregiving and refugee support in Germany, she champions emotional well-being and trauma-informed care for our students, ensuring their holistic development in a safe, nurturing environment."
     },
     {
       id: 4,
       name: "Rogers Thiga Manyanki",
       role: "Director of Digital Marketing",
-      image: getUnsplashImage("African man with laptop", 4),
+      image:"/Manyanki.jpg",
       bio: "Rogers Thiga Manyanki leverages digital innovation to amplify AVCS’s mission. From Kibera Slums to leading our online outreach, Rogers uses storytelling and technology to connect supporters worldwide with the transformative work happening on Mfangano Island."
     },
     {
       id: 5,
       name: "Edith Oulo",
-      role: "Director in Charge of Kenyan Operations",
-      image: getUnsplashImage("African woman educator", 5),
+      role: "EDITH.jpg",
+      image: "/EDITH.jpg",
       bio: "Director Edith Oulo ensures the smooth, locally-led operation of AVCS in Kenya. With deep roots in Kenyan education and administration, she upholds our commitment to community ownership, cultural relevance, and excellence in every aspect of school life."
     }
   ];
@@ -73,7 +73,7 @@ const Board = () => {
     { name: "GoFundMe", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/GoFundMe_logo.svg/800px-GoFundMe_logo.svg.png" },
     { name: "World Food Programme", image: "https://www.wfp.org/themes/custom/wfp/images/wfp-logo.svg" },
     { name: "Global Empowerment Mission", image: "https://globalempowermentmission.org/wp-content/uploads/2021/03/GEM-Logo-White-BG.png" },
-    { name: "Village Enterprise", image: "https://villageenterprise.org/wp-content/uploads/2021/05/VE-Logo-Color-RGB.png" }
+    { name: "Village Enterprise", image: "/" }
   ];
 
   const impactStats = [
@@ -95,7 +95,7 @@ const Board = () => {
             variants={fadeIn}
           >
             <div className="text-sm text-accent mb-2 font-montserrat">
-              <Link to="/" className="hover:underline">Home</Link> / Our Board Members
+              <Link to="/" className="hover:underline"></Link> 
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-3 font-script">
               Our Board Members

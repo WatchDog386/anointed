@@ -32,7 +32,7 @@ const Staff = () => {
       role: "Headteacher",
       category: "leadership",
       bio: "MD. Leah Onam provides visionary leadership to Anointed Vessels Christian School...",
-      image: getUnsplashImage("African woman educator", 1)
+      image:"/EPHY.JPG"
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ const Staff = () => {
       role: "Deputy Headteacher",
       category: "leadership",
       bio: "Mr. Erick supports the Headteacher in daily school operations...",
-      image: getUnsplashImage("Kenyan male teacher", 2)
+      image:"/ERICK.JPG"
     },
     {
       id: 3,
@@ -48,7 +48,7 @@ const Staff = () => {
       role: "Senior Teacher",
       category: "leadership",
       bio: "As our Senior Teacher, Mr. Omodia mentors junior staff...",
-      image: getUnsplashImage("African male educator", 3)
+      image:"/PATRICK.JPG"
     },
     {
       id: 4,
@@ -56,7 +56,7 @@ const Staff = () => {
       role: "Financial Officer & Accountant",
       category: "support",
       bio: "Md. Elizabeth manages the school's financial resources...",
-      image: getUnsplashImage("African woman professional", 4)
+      image:"/ELIZABETH.JPG"
     },
     {
       id: 5,
@@ -64,7 +64,7 @@ const Staff = () => {
       role: "School Chairperson",
       category: "support",
       bio: "Mr. Alphonce provides strategic leadership...",
-      image: getUnsplashImage("African elder leader", 5)
+      image:"/VINCENT.JPG"
     },
     {
       id: 6,
@@ -72,7 +72,7 @@ const Staff = () => {
       role: "Chef",
       category: "support",
       bio: "Md. Ann ensures that our students receive nutritious meals...",
-      image: getUnsplashImage("African woman cooking", 6)
+      image:"/NANZALA.JPG"
     },
     {
       id: 7,
@@ -80,7 +80,7 @@ const Staff = () => {
       role: "Chef",
       category: "support",
       bio: "Md. Sheryl works alongside our kitchen team...",
-      image: getUnsplashImage("African chef", 7)
+      image:"/LEAH.JPG"
     },
     {
       id: 8,
@@ -88,7 +88,7 @@ const Staff = () => {
       role: "Teacher",
       category: "teaching",
       bio: "Md. Nanzalla creates engaging classroom environments...",
-      image: getUnsplashImage("African female teacher", 8)
+      image:"/NANZALA.JPG"
     },
     // Add the rest as needed (or keep your full list)
   ];
