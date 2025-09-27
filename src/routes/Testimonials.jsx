@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+// Sample testimonials data
 const testimonials = [
   {
     id: 1,
-    text: "AVCS has been a blessing to our family. The teachers truly care about our children's spiritual growth as much as their academic progress. We've seen such positive changes in our kids since they started attending.",
+    text: "The best thing that happened to me while at GGCC is receiving God's Gift of salvation which has brought peace, healing, hope and complete change in my life.",
+    author: "Finidi George Michael",
+    role: "Student 0648",
+    avatar: "https://placehold.co/60x60/2b473f/FFFFFF/png?text=Student",
+  },
+  {
+    id: 2,
+    text: "AVCS helped me discover my purpose through Christ. The teachers didn’t just teach curriculum — they mentored souls.",
     author: "Mary Wanjiku",
     role: "Parent of two AVCS students",
     avatar: "https://placehold.co/60x60/2b473f/FFFFFF/png?text=Parent",
   },
   {
-    id: 2,
-    text: "The academic standards at AVCS are exceptional, but what really sets the school apart is the character development. My children are learning to be compassionate, responsible, and faith-filled individuals.",
+    id: 3,
+    text: "My child came home every day excited to share what they learned — not just academically, but spiritually. That’s the AVCS difference.",
     author: "James Ochieng",
     role: "AVCS Parent",
     avatar: "https://placehold.co/60x60/2b473f/FFFFFF/png?text=Parent",
@@ -24,105 +32,125 @@ export default function Testimonials() {
 
   const goToSlide = (index) => {
     setCurrentSlide(index);
+    setIsAutoPlaying(false); // Pause auto-play on user interaction
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % testimonials.length);
     setIsAutoPlaying(false);
   };
 
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setIsAutoPlaying(false);
+  };
+
+  // Auto-advance slides
   useEffect(() => {
     let interval;
     if (isAutoPlaying && testimonials.length > 1) {
-      interval = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % testimonials.length);
-      }, 6000);
+      interval = setInterval(nextSlide, 6000);
     }
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
 
-  return (
-    <>
-      {/* GGCC Fonts */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap"
-        rel="stylesheet"
-      />
-      <style>{`
-        body { font-family: 'Open Sans', sans-serif; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
-      `}</style>
+  // Resume auto-play after 5s of inactivity
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isAutoPlaying) {
+        setIsAutoPlaying(true);
+      }
+    }, 5000);
 
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+    return () => clearTimeout(timer);
+  }, [currentSlide]);
+
+  const current = testimonials[currentSlide];
+
+  return (
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+        {/* Heading */}
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-red-800">
+          In Their Own Words
+        </h2>
+
+        {/* Testimonial Container */}
+        <div className="relative flex flex-col items-center">
+          {/* Quote */}
           <motion.div
-            className="text-center mb-12"
+            key={current.id}
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-6"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
-              What Parents & Students Say
-            </h2>
-            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-              Hear from families who have experienced the AVCS difference
+            <p className="text-gray-500 italic text-lg md:text-xl leading-relaxed max-w-3xl mx-auto px-4">
+              "{current.text}"
             </p>
           </motion.div>
 
-          <div className="relative max-w-4xl mx-auto">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          {/* Author */}
+          <div className="text-center mb-8">
+            <p className="text-gray-700 font-serif text-base md:text-lg italic">
+              {current.author} — {current.role}
+            </p>
+          </div>
+
+          {/* Navigation Arrows */}
+          <div className="flex justify-between w-full max-w-xs mb-6">
+            <button
+              onClick={prevSlide}
+              className="p-2 rounded-full hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+              aria-label="Previous testimonial"
             >
-              {testimonials.map((testimonial) => (
-                <div key={testimonial.id} className="min-w-full px-4">
-                  <motion.div
-                    className="bg-white rounded-lg p-8 border border-gray-200 relative transition-all duration-300 hover:shadow-md hover:-translate-y-1"
-                  >
-                    {/* Quote mark — GGCC style */}
-                    <div className="absolute top-6 right-6 text-4xl text-accent opacity-30">
-                      ”
-                    </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-gray-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
 
-                    <p className="text-gray-700 italic text-lg mb-6 pl-6 relative" style={{ lineHeight: 1.8 }}>
-                      {testimonial.text}
-                    </p>
+            <button
+              onClick={nextSlide}
+              className="p-2 rounded-full hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+              aria-label="Next testimonial"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-gray-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
 
-                    <div className="flex items-center mt-6">
-                      <div
-                        className="w-14 h-14 rounded-full flex-shrink-0 border-2 border-secondary"
-                        style={{
-                          backgroundImage: `url(${testimonial.avatar})`,
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                        }}
-                      ></div>
-                      <div className="ml-4">
-                        <h4 className="font-bold text-gray-900">{testimonial.author}</h4>
-                        <p className="text-gray-600 text-sm">{testimonial.role}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-
-            {/* Dots — GGCC style */}
-            <div className="flex justify-center mt-8 space-x-2">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === currentSlide
-                      ? "bg-accent scale-125"
-                      : "bg-gray-300 hover:bg-gray-400"
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                />
-              ))}
-            </div>
+          {/* Dot Indicators */}
+          <div className="flex space-x-2">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentSlide
+                    ? "bg-blue-400 scale-125"
+                    : "bg-gray-600 hover:bg-gray-500"
+                }`}
+                aria-label={`Go to testimonial ${index + 1}`}
+                aria-current={index === currentSlide ? "true" : undefined}
+              />
+            ))}
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
