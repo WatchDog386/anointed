@@ -32,7 +32,7 @@ const Staff = () => {
       role: "Headteacher",
       category: "leadership",
       bio: "MD. Leah Onam provides visionary leadership to Anointed Vessels Christian School...",
-      image:"/EPHY.JPG"
+      image:"/LEAH.JPG"
     },
     {
       id: 2,
@@ -48,7 +48,7 @@ const Staff = () => {
       role: "Senior Teacher",
       category: "leadership",
       bio: "As our Senior Teacher, Mr. Omodia mentors junior staff...",
-      image:"/PATRICK.JPG"
+      image:"/ALBERT.JPG"
     },
     {
       id: 4,
