@@ -35,7 +35,7 @@ export default function Gallery() {
               />
 
             <img
-                src={`/GRADE 3A.jpg`}
+                src={`/GRADE3A.jpg`}
                 alt={`Gallery item ${i + 1}`}
                 className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
               />
