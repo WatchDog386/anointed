@@ -7,7 +7,7 @@ export default function Gallery() {
       {/* Hero Section — Light & Clean */}
       <div 
         className="h-64 md:h-80 bg-cover bg-center flex items-center justify-center relative"
-        style={{ backgroundImage: "url('/LEARNING.JPG')" }}
+        style={{ backgroundImage: "url('/Childrenwaving.JPEG')" }}
       >
         {/* Optional: Light overlay for text readability (not black!) */}
         <div className="absolute inset-0 bg-white bg-opacity-30"></div>
