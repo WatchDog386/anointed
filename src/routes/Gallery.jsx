@@ -29,7 +29,7 @@ export default function Gallery() {
               className="group overflow-hidden rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300"
             >
               <img
-                src={`/gallery-${i + 1}.jpg`}
+                src={`/DRANDCHILDREN.jpg`}
                 alt={`Gallery item ${i + 1}`}
                 className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
               />
