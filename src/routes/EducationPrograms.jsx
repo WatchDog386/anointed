@@ -49,7 +49,7 @@ export default function EducationPrograms() {
       features: [
         "Small class sizes for personal attention",
         "Teachers trained to mentor beyond academics",
-        "Safe classrooms that feel like family",
+        "Safe school environment and classroom that feel like family",
         "Holistic approach to child development"
       ],
       image: "/HAPPY.JPG"
@@ -57,7 +57,7 @@ export default function EducationPrograms() {
     {
       id: 4,
       title: "Beyond the Classroom",
-      description: "Education extends beyond academic learning to include creative arts, sports, leadership development, and practical experiences.",
+      description: "Education extends beyond academic learning to include creative arts, sports, leadership development, and practical experiences, in a way to promote cognitive developement",
       features: [
         "Music, arts, and sports programs",
         "Leadership development for future changemakers",

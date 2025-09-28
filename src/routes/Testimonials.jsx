@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 const testimonials = [
   {
     id: 1,
-    text: "The best thing that happened to me while at GGCC is receiving God's Gift of salvation which has brought peace, healing, hope and complete change in my life.",
-    author: "Finidi George Michael",
+    text: "The best thing that happened to me while at AVCS is receiving God's Gift of salvation which has brought peace, healing, hope and complete change in my life.",
+    author: "Nicole Onam",
     role: "Student 0648",
     avatar: "https://placehold.co/60x60/2b473f/FFFFFF/png?text=Student",
   },
