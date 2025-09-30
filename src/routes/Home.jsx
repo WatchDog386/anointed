@@ -28,7 +28,7 @@ export default function Home() {
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://yourdomain.com" />
-        {/* <meta property="og:image" content="%PUBLIC_URL%/cover.jpg" /> */}
+        {/* <meta property="og:image" content="%PUBLIC_URL%/PRAYING.jpg" /> */}
       </Helmet>
 
       <section id="hero">
