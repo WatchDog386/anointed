@@ -158,7 +158,7 @@ const TestimonialCarousel = () => {
       id: 1,
       name: "Sarah Johnson",
       role: "Child Sponsor",
-      content: "Sponsoring a child through GGCC has been one of the most rewarding experiences. Seeing the progress reports and knowing I'm making a real difference is incredible.",
+      content: "Sponsoring a child through AVCS has been one of the most rewarding experiences. Seeing the progress reports and knowing I'm making a real difference is incredible.",
       image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
     },
     {
@@ -172,7 +172,7 @@ const TestimonialCarousel = () => {
       id: 3,
       name: "Pastor David Martinez",
       role: "Church Partner",
-      content: "Our church's partnership with GGCC has strengthened our global missions focus. The transparency and impact are exceptional.",
+      content: "Our church's partnership with AVCS has strengthened our global missions focus. The transparency and impact are exceptional.",
       image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
     }
   ];
