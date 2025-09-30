@@ -43,7 +43,7 @@ const initApp = () => {
   );
 };
 
-// Preload fonts early for better LCP (GGCC-like performance)
+// Preload fonts early for better LCP 
 if (document.readyState === "complete" || document.readyState === "interactive") {
   preloadFonts();
   setTimeout(initApp, 0);
