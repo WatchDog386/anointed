@@ -24,7 +24,7 @@ const ParticleBackground = () => {
             value: "#3a8decff",
           },
           links: {
-            color: "#f3c8c8ff",
+            color: "#fab4b4ff",
             distance: 150,
             enable: true,
           },
