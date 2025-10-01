@@ -15,6 +15,17 @@ const stories = [
     description: "Inspired by his parents, Jimmy seeks to rise above poverty and inspire others through teaching.",
     image: "/orphans.jpg",
   },
+
+{
+    id: 3,
+    title: "Blessing's Story of Hope", 
+    description: "Blessing’s story proves that with support, even the hardest struggles can give rise to brighter futures.",
+    image: "/orphans.jpg",
+  },
+
+
+
+
 ];
 
 const missionCards = [
