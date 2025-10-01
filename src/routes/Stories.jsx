@@ -20,7 +20,7 @@ const stories = [
     id: 3,
     title: "Blessing's Story of Hope", 
     description: "Blessing’s story proves that with support, even the hardest struggles can give rise to brighter futures.",
-    image: "/orphans.jpg",
+    image: "/GRADE6.jpg",
   },
 
 
