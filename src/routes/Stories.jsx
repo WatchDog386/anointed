@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 const stories = [
   {
     id: 1,
-    title: "Grace's Journey of Hope",
-    description: "From a struggling orphan to a confident student leader, Grace's transformation showcases the power of faith-based education.",
-    image: "/ERICK.JPG",
+    title: "Wildred's Journey of Hope",
+    description: "Despite poverty and her father’s illness, Wildred’s love for learning drives her dream of becoming a nurse.",
+    image: "/PRAYING.JPG",
   },
   {
     id: 2,
