@@ -11,8 +11,8 @@ const stories = [
   },
   {
     id: 2,
-    title: "Michael's Academic Success", 
-    description: "Despite facing numerous challenges, Michael excelled academically and spiritually at AVCS, earning a scholarship to university.",
+    title: "Jimmy Alex's Strory of Resilience", 
+    description: "Inspired by his parents, Jimmy seeks to rise above poverty and inspire others through teaching.",
     image: "/orphans.jpg",
   },
 ];
