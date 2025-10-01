@@ -136,7 +136,7 @@ export default function Stories() {
                       {story.description}
                     </p>
                     <Link
-                      to="/stories"
+                      to="/Wildreds-Story"
                       className="inline-block bg-accent hover:bg-accent/90 text-white font-semibold py-2 px-4 sm:py-2.5 sm:px-6 rounded-lg transition-all duration-300 font-montserrat text-sm sm:text-base"
                     >
                       Read Full Story
