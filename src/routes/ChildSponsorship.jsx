@@ -7,7 +7,7 @@ export default function ChildSponsorship() {
       {/* Hero Banner */}
       <div 
         className="relative h-96 md:h-[500px] bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: "url('/GRADE3.jpg')" }}
+        style={{ backgroundImage: "url('/GRADE3A.jpg')" }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="relative z-10 text-center px-4 max-w-3xl">
