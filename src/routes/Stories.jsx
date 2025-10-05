@@ -13,7 +13,7 @@ const stories = [
     id: 2,
     title: "Jimmy Alex's Strory of Resilience", 
     description: "Inspired by his parents, Jimmy seeks to rise above poverty and inspire others through teaching.",
-    image: "/orphans.jpg",
+    image: "/JimmyAlex.jpg",
   },
 
 {
