@@ -3,6 +3,86 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function CommunityOutreach() {
+  const outreachPrograms = [
+    {
+      id: 1,
+      title: "Neighborhood Literacy & Learning Support",
+      description: "Many children in nearby villages and fishing communities struggle to access quality education. To bridge this gap, our learners and teachers organize simple learning sessions during weekends or holidays.",
+      activities: [
+        "Reading days in local churches or under trees",
+        "Collecting and sharing old books and stationery",
+        "Senior pupils mentoring younger children"
+      ],
+      image: "/literacy-support.jpg"
+    },
+    {
+      id: 2,
+      title: "Giving and Caring for the Needy",
+      description: "Our students are taught that giving is not about plenty but about heart.",
+      activities: [
+        "Compassion Basket program with food and supplies",
+        "Visiting children's homes and hospitals during festive seasons",
+        "Partnering with local churches to support vulnerable families"
+      ],
+      image: "/compassion-basket.jpg"
+    },
+    {
+      id: 3,
+      title: "Environmental Care & Clean-Up Days",
+      description: "We take seriously our duty to care for God's creation.",
+      activities: [
+        "Community clean-up drives around school and lakeshore",
+        "Tree nursery and garden adoption by each class",
+        "Environment Day celebrations with tree planting"
+      ],
+      image: "/environment-care.jpg"
+    },
+    {
+      id: 4,
+      title: "Faith and Spiritual Outreach",
+      description: "As a Christian institution, our outreach is rooted in the Gospel.",
+      activities: [
+        "School fellowship days and inter-school Christian rallies",
+        "Visiting neighboring schools and churches with devotions",
+        "Youth mentorship seminars for purpose and identity in Christ"
+      ],
+      image: "/faith-outreach.jpg"
+    },
+    {
+      id: 5,
+      title: "Health & Hygiene Awareness",
+      description: "Understanding the challenges many rural families face in accessing health education, our school organizes simple awareness sessions.",
+      activities: [
+        "Health talks with local nurses on hygiene and nutrition",
+        "Training on handwashing, sanitation, and menstrual health",
+        "Clean Water Days teaching safe water storage and use"
+      ],
+      image: "/health-hygiene.jpg"
+    },
+    {
+      id: 6,
+      title: "Skills for Life & Community Development",
+      description: "Even as a developing school, we believe in equipping learners with hands-on skills that can benefit the community.",
+      activities: [
+        "Basic training in crafts, gardening, and entrepreneurship",
+        "Joint training sessions with parents",
+        "Work and Learn program for teamwork and responsibility"
+      ],
+      image: "/skills-development.jpg"
+    },
+    {
+      id: 7,
+      title: "Partnerships and Local Involvement",
+      description: "We may be a small school, but we believe in doing great things together.",
+      activities: [
+        "Partnering with local churches, youth groups, and area chiefs",
+        "Encouraging parent participation in community outreach",
+        "Expanding partnerships to reach more families"
+      ],
+      image: "/partnerships.jpg"
+    }
+  ];
+
   return (
     <div className="bg-white font-sans min-h-screen">
       {/* Hero Section */}
@@ -17,28 +97,67 @@ export default function CommunityOutreach() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-16">
-        <p className="text-gray-700 text-center mb-16 max-w-3xl mx-auto">
-          We believe in serving our neighbors as Christ served us. Our students and staff engage in regular outreach to uplift the local community.
-        </p>
+        {/* Introduction */}
+        <div className="text-center mb-16">
+          <p className="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed">
+            At <em>Anointed Vessels Christian School</em> we believe transformation begins right where we are planted. 
+            Though our school is still growing, we remain committed to extending hope, service, and education to the 
+            communities around us. Our outreach programs are designed to nurture compassion in our learners while 
+            uplifting the lives of those in need.
+          </p>
+        </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {[
-            { title: "Food Drives", desc: "Monthly distributions to vulnerable families." },
-            { title: "Clean Water Projects", desc: "Installing wells and filters in rural homes." },
-            { title: "Medical Camps", desc: "Free health check-ups and medicine for locals." }
-          ].map((item, i) => (
-            <div
-              key={i}
-              className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
-            >
-              <h3 className="font-bold text-lg text-primary font-montserrat mb-2">{item.title}</h3>
-              <p className="text-gray-700">{item.desc}</p>
+        {/* Outreach Programs */}
+        <div className="space-y-20">
+          {outreachPrograms.map((program) => (
+            <div key={program.id} className="flex flex-col lg:flex-row gap-8 items-center">
+              {/* 16:9 Image Container */}
+              <div className="lg:w-1/2 w-full">
+                <div className="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg overflow-hidden shadow-md">
+                  <div 
+                    className="w-full h-64 bg-cover bg-center"
+                    style={{ backgroundImage: `url('${program.image}')` }}
+                  ></div>
+                </div>
+              </div>
+              
+              {/* Content */}
+              <div className="lg:w-1/2 w-full">
+                <h2 className="text-2xl md:text-3xl font-bold text-primary font-montserrat mb-4">
+                  {program.title}
+                </h2>
+                <p className="text-gray-700 mb-4 leading-relaxed">
+                  {program.description}
+                </p>
+                <ul className="space-y-2">
+                  {program.activities.map((activity, index) => (
+                    <li key={index} className="flex items-start">
+                      <span className="text-green-600 mr-2">•</span>
+                      <span className="text-gray-700">{activity}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
 
-        <div className="text-center">
-          <Link to="/Make-An-Impact" className="cta-button">
+        {/* Conclusion */}
+        <div className="mt-20 text-center bg-green-50 p-8 rounded-lg border border-green-100">
+          <h2 className="text-2xl font-bold text-gray-800 font-montserrat mb-4">🌱 Conclusion</h2>
+          <p className="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed">
+            Through these humble acts of service, <em>Anointed Vessels Academy</em> is not only shaping students 
+            academically but raising a generation of compassionate leaders—children who know that even small acts 
+            of kindness can light up an entire community.
+          </p>
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center mt-16">
+          <Link 
+            to="/Make-An-Impact" 
+            className="inline-block bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-dark transition-colors duration-300 shadow-md hover:shadow-lg"
+          >
             Join an Outreach Trip
           </Link>
         </div>
