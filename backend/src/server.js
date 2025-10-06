@@ -3,11 +3,11 @@ const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
 
-// Load environment variables from .env file
+// Load environment variables from .env (in parent directory)
 const envPath = path.resolve(__dirname, '../.env');
 dotenv.config({ path: envPath });
 
-// Validate critical env vars
+// Validate critical environment variable
 if (!process.env.JWT_SECRET) {
   console.error('❌ Missing JWT_SECRET in .env');
   process.exit(1);
@@ -16,17 +16,17 @@ if (!process.env.JWT_SECRET) {
 const connectDB = require('./config/db');
 const app = express();
 
-// ✅ Updated allowed origins for your actual frontend
+// ✅ Allowed origins — corrected with no trailing spaces
 const allowedOrigins = [
-  'http://localhost:5173',      // Vite dev (common)
-  'http://localhost:3000',      // Alternative dev
+  'http://localhost:5173',
+  'http://localhost:3000',
   'http://127.0.0.1:5173',
-  'https://anointedvessels.netlify.app'
+  'https://anointedvessels.netlify.app' // ← No spaces!
 ];
 
 app.use(require('cors')({
   origin: (origin, callback) => {
-    // Allow requests with no origin (e.g., mobile apps, curl, server-to-server)
+    // Allow requests with no origin (e.g., mobile apps, cron jobs, server-to-server)
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -51,11 +51,12 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
-// Start server
+// Start server after DB connection
 const startServer = async () => {
   try {
     await connectDB();
     const PORT = process.env.PORT || 5000;
+    // 🔥 MUST bind to 0.0.0.0 for Render to detect the port
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`✅ Backend running on port ${PORT}`);
     });

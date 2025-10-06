@@ -1,19 +1,20 @@
+// src/components/Login.jsx (or wherever your file is)
 import React, { useState } from "react";
 import { Eye, EyeOff, LogIn } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-// ✅ Safe, cross-compatible environment variable handling
-let API_BASE_URL = "http://localhost:5000";
-try {
-  if (typeof import.meta !== "undefined" && import.meta.env?.VITE_API_URL) {
-    API_BASE_URL = import.meta.env.VITE_API_URL;
-  } else if (typeof process !== "undefined" && process.env?.REACT_APP_API_URL) {
-    API_BASE_URL = process.env.REACT_APP_API_URL;
+// ✅ Dynamically determine API base URL
+const getApiBaseUrl = () => {
+  // In production (Netlify), use your Render backend URL
+  if (import.meta.env.PROD) {
+    return "https://anointed-backend.onrender.com"; // 👈 REPLACE WITH YOUR ACTUAL RENDER URL
   }
-} catch (e) {
-  console.warn("Using fallback API_BASE_URL:", e);
-}
+  // In development, use localhost
+  return "http://localhost:5000";
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 const Login = () => {
   const navigate = useNavigate();
