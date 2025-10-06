@@ -8,7 +8,7 @@ export default function CommunityOutreach() {
       {/* Hero Section */}
       <div
         className="h-80 md:h-[500px] bg-cover bg-center flex items-center justify-center relative"
-        style={{ backgroundImage: "url('/hero-outreach.jpg')" }}
+        style={{ backgroundImage: "url('/HAPPY.jpg')" }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <h1 className="text-3xl md:text-5xl font-bold text-white font-montserrat z-10 text-center px-4">
