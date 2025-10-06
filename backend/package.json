@@ -1,10 +1,12 @@
 {
   "name": "anointed-backend",
   "version": "1.0.0",
+  "description": "Backend server for the Anointed project",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "render-build": "echo 'No build step required'"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
