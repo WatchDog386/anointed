@@ -68,9 +68,12 @@ export default function SpiritualGrowth() {
 
           {/* Bible Study and Christian Instruction */}
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="bg-gray-200 rounded-lg aspect-[4/3] flex items-center justify-center">
-              <span className="text-gray-500">Bible Study Image</span>
-            </div>
+
+            <img 
+  src="/bible-study.jpg" 
+  alt="Students participating Bible Study"
+  className="rounded-lg aspect-[4/3] object-cover w-full"
+/>
             <div>
               <h3 className="text-2xl font-bold text-primary font-montserrat mb-4">
                 Bible Study and Christian Instruction
@@ -113,16 +116,22 @@ export default function SpiritualGrowth() {
                 </li>
               </ul>
             </div>
-            <div className="bg-gray-200 rounded-lg aspect-[4/3] flex items-center justify-center">
-              <span className="text-gray-500">Worship Service Image</span>
-            </div>
+
+             <img 
+  src="/worship-service.jpg" 
+  alt="Students participating Worship Service"
+  className="rounded-lg aspect-[4/3] object-cover w-full"
+/>
           </div>
 
           {/* Mentorship and Character Building */}
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="bg-gray-200 rounded-lg aspect-[4/3] flex items-center justify-center">
-              <span className="text-gray-500">Mentorship Image</span>
-            </div>
+
+            <img 
+  src="/mentorship.jpg" 
+  alt="Students participating mentorship programs"
+  className="rounded-lg aspect-[4/3] object-cover w-full"
+/>
             <div>
               <h3 className="text-2xl font-bold text-primary font-montserrat mb-4">
                 Mentorship and Character Building
@@ -165,16 +174,23 @@ export default function SpiritualGrowth() {
                 </li>
               </ul>
             </div>
-            <div className="bg-gray-200 rounded-lg aspect-[4/3] flex items-center justify-center">
-              <span className="text-gray-500">Service Project Image</span>
-            </div>
+
+            <img 
+  src="/community-service.jpg" 
+  alt="Students participating Community Service"
+  className="rounded-lg aspect-[4/3] object-cover w-full"
+/>
           </div>
 
           {/* Partnership with Local Churches */}
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="bg-gray-200 rounded-lg aspect-[4/3] flex items-center justify-center">
-              <span className="text-gray-500">Church Partnership Image</span>
-            </div>
+
+
+            <img 
+  src="/church-partnership.jpg" 
+  alt="Students participating church programs"
+  className="rounded-lg aspect-[4/3] object-cover w-full"
+/>
             <div>
               <h3 className="text-2xl font-bold text-primary font-montserrat mb-4">
                 Partnership with Local Churches
