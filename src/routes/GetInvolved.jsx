@@ -358,10 +358,10 @@ export default function GetInvolved() {
           />
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <ImpactCounter target={500} label="Children Educated" />
+            <ImpactCounter target={300} label="Children Educated" />
             <ImpactCounter target={25} label="Communities Served" />
-            <ImpactCounter target={1000} label="Lives Transformed" />
-            <ImpactCounter target={15} label="Years of Service" />
+            <ImpactCounter target={600} label="Lives Transformed" />
+            <ImpactCounter target={7} label="Years of Service" />
           </div>
         </div>
       </section>
