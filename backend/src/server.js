@@ -3,10 +3,11 @@ const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
 
+// Load environment variables from .env file
 const envPath = path.resolve(__dirname, '../.env');
 dotenv.config({ path: envPath });
 
-// ✅ Only validate JWT_SECRET at startup (required for auth)
+// Validate critical env vars
 if (!process.env.JWT_SECRET) {
   console.error('❌ Missing JWT_SECRET in .env');
   process.exit(1);
@@ -15,23 +16,22 @@ if (!process.env.JWT_SECRET) {
 const connectDB = require('./config/db');
 const app = express();
 
-// ✅ Allow Vite dev server + production domains
+// ✅ Updated allowed origins for your actual frontend
 const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:3000',
+  'http://localhost:5173',      // Vite dev (common)
+  'http://localhost:3000',      // Alternative dev
   'http://127.0.0.1:5173',
-  'https://alcc-chuch.com',
-  'https://www.alcc-chuch.com'
+  'https://anointedvessels.netlify.app'
 ];
 
 app.use(require('cors')({
   origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps, curl)
+    // Allow requests with no origin (e.g., mobile apps, curl, server-to-server)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error(`CORS blocked: ${origin} not in allowed list`));
     }
   },
   credentials: true
@@ -51,12 +51,13 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
+// Start server
 const startServer = async () => {
   try {
     await connectDB();
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`✅ Backend running on http://localhost:${PORT}`);
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`✅ Backend running on port ${PORT}`);
     });
   } catch (error) {
     console.error('💥 Fatal startup error:', error.message);
