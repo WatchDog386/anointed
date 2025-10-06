@@ -1,4 +1,4 @@
-// createAdmins.mjs
+// createAdmin.mjs
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import Admin from './src/models/Admin.js';
@@ -21,7 +21,7 @@ const createAdmins = async () => {
       { email: 'benardmusereke@gmail.com', password: 'Musereke1' }
     ];
 
-    // Validate password length
+    // Validate password length (min 6 characters)
     for (const admin of admins) {
       if (admin.password.length < 6) {
         throw new Error(`❌ Password for ${admin.email} is too short. Must be at least 6 characters.`);
@@ -31,13 +31,13 @@ const createAdmins = async () => {
     for (const adminData of admins) {
       const { email, password } = adminData;
 
-      // Delete existing admin
+      // 🔥 Delete existing admin to ensure clean reset
       const deleted = await Admin.deleteOne({ email });
       if (deleted.deletedCount > 0) {
         console.log(`🗑️  Existing admin ${email} deleted.`);
       }
 
-      // Create new admin
+      // 🔥 Create fresh admin (password will be hashed if your Admin model has pre-save hook)
       const newAdmin = new Admin({ email, password });
       await newAdmin.save();
       console.log(`✅ Admin created successfully → Email: ${email}, Password: ${password}`);

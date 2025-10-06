@@ -1,6 +1,16 @@
 // src/routes/ChildSponsorship.jsx
 import React, { useState, useEffect } from "react";
 
+// ✅ Dynamically determine API base URL
+const getApiBaseUrl = () => {
+  if (import.meta.env.PROD) {
+    return "https://anointed-backend.onrender.com"; // 👈 REPLACE WITH YOUR ACTUAL RENDER URL
+  }
+  return "http://localhost:5000";
+};
+
+const API_BASE_URL = getApiBaseUrl();
+
 export default function ChildSponsorship() {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +21,7 @@ export default function ChildSponsorship() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/students");
+        const response = await fetch(`${API_BASE_URL}/api/students`);
         if (!response.ok) throw new Error("Failed to fetch students");
         const data = await response.json();
         
@@ -97,7 +107,7 @@ export default function ChildSponsorship() {
       <div 
         className="absolute inset-0 opacity-5 z-0"
         style={{
-          backgroundImage: "url('/project.jsc')",
+          backgroundImage: "url('/project.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat"
@@ -176,7 +186,7 @@ export default function ChildSponsorship() {
             onClick={() => openStudentPopup(student)}
             className="px-5 py-2.5 bg-gradient-to-r from-[#8CA9B4] to-[#7a96a0] text-white rounded-xl hover:from-[#7a96a0] hover:to-[#6a8690] transition-all duration-300 font-medium flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
-            Get to Know Flex
+            Get to Know {student.name.split(' ')[0]}
           </button>
           <button className="px-5 py-2.5 bg-gradient-to-r from-[#932528] to-[#7a1e21] text-white rounded-xl hover:from-[#7a1e21] hover:to-[#6a1518] transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
             Sponsor {student.name.split(' ')[0]}
@@ -195,7 +205,7 @@ export default function ChildSponsorship() {
         <div 
           className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200/50 relative"
           style={{
-            backgroundImage: "url('/orphan.jsp')",
+            backgroundImage: "url('/orphan.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -344,11 +354,11 @@ export default function ChildSponsorship() {
             </h2>
             <p className="text-gray-700 mb-6 text-lg leading-relaxed">
               Your monthly gift of $35 provides a child with meals, education, uniforms, 
-              spiritual mentorship, and a safe home at Anointed Vessels Christian School:cite[1].
+              spiritual mentorship, and a safe home at Anointed Vessels Christian School.
             </p>
             <p className="text-gray-700 mb-8 text-lg leading-relaxed">
               You'll receive updates, letters, and photos from your sponsored child — 
-              building a life-changing relationship that transforms both your lives:cite[5].
+              building a life-changing relationship that transforms both your lives.
             </p>
             <div className="flex flex-wrap gap-4">
               <a
@@ -385,7 +395,7 @@ export default function ChildSponsorship() {
           <div 
             className="absolute inset-0 opacity-10"
             style={{
-              backgroundImage: "url('/project.jsc')",
+              backgroundImage: "url('/project.jpg')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat"

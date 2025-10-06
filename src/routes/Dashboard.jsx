@@ -19,6 +19,16 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// ✅ Dynamically determine API base URL
+const getApiBaseUrl = () => {
+  if (import.meta.env.PROD) {
+    return "https://anointed-backend.onrender.com"; // 👈 REPLACE WITH YOUR ACTUAL RENDER URL
+  }
+  return "http://localhost:5000";
+};
+
+const API_BASE_URL = getApiBaseUrl();
+
 const Dashboard = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -68,7 +78,7 @@ const Dashboard = () => {
   const fetchStudents = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/students', {
+      const res = await axios.get(`${API_BASE_URL}/api/students`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -201,10 +211,10 @@ const Dashboard = () => {
       };
 
       if (isEditing) {
-        await axios.put(`http://localhost:5000/api/students/${currentStudentId}`, payload, config);
+        await axios.put(`${API_BASE_URL}/api/students/${currentStudentId}`, payload, config);
         setSuccess('Student updated successfully!');
       } else {
-        await axios.post('http://localhost:5000/api/students', payload, config);
+        await axios.post(`${API_BASE_URL}/api/students`, payload, config);
         setSuccess('Student added successfully!');
       }
 
@@ -250,7 +260,7 @@ const Dashboard = () => {
     if (!window.confirm('Are you sure? This cannot be undone.')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/students/${id}`, {
+      await axios.delete(`${API_BASE_URL}/api/students/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       setStudents(students.filter(s => s._id !== id));
