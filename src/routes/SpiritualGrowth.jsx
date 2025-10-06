@@ -60,10 +60,11 @@ export default function SpiritualGrowth() {
                 </li>
               </ul>
             </div>
-            <div className="order-1 md:order-2 bg-gray-200 rounded-lg aspect-[4/3] flex items-center justify-center">
-              <span className="text-gray-500">Prayer Gathering Image</span>
-            </div>
-          </div>
+            
+            <img src="/images/morning-devotions.jpg" 
+              alt="Students participating in morning devotions"
+              className="rounded-lg aspect-[4/3] object-cover w-full"
+/>          </div>
 
           {/* Bible Study and Christian Instruction */}
           <div className="grid md:grid-cols-2 gap-8 items-center">
