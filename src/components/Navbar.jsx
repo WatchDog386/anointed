@@ -48,7 +48,6 @@ export default function Navbar() {
     },
     { label: "Impact", route: "/impacts", id: "impact" },
     { label: "Get Involved", route: "/Make-An-Impact", id: "involved" },
-    // Contact removed as requested
   ];
 
   const NavItem = ({ item, isMobile = false }) => {
@@ -122,7 +121,7 @@ export default function Navbar() {
                 </svg>
               </button>
 
-              {/* Desktop Dropdown - Very sharp corners */}
+              {/* Desktop Dropdown */}
               <div className="absolute left-0 mt-1 w-56 shadow-lg bg-white/95 backdrop-blur-md border border-gray-200 border-t-2 border-t-accent opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform translate-y-2 group-hover:translate-y-0 rounded-none">
                 {item.submenu.map((subItem) => (
                   <NavLink
@@ -179,9 +178,8 @@ export default function Navbar() {
         className="fixed top-0 left-0 w-full z-[999] bg-white/80 backdrop-blur-md shadow-sm font-montserrat"
       >
         <div className="max-w-7xl mx-auto px-4 py-3 sm:py-4">
-          {/* Main navigation container */}
           <div className="flex items-center justify-between relative">
-            {/* Mobile menu button - Left side on mobile */}
+            {/* Mobile menu button */}
             <button
               className="lg:hidden p-2 text-primary hover:bg-accent/10 hover:text-accent rounded-lg transition-all duration-200"
               onClick={() => setIsOpen(!isOpen)}
@@ -190,7 +188,7 @@ export default function Navbar() {
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
 
-            {/* Logo - Centered on mobile, left on desktop */}
+            {/* Logo */}
             <div className="lg:flex-1 flex justify-center lg:justify-start">
               <NavLink to="/" className="flex items-center space-x-3" onClick={() => setIsOpen(false)}>
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white flex items-center justify-center border-2 border-gray-200 shadow-sm">
@@ -212,17 +210,22 @@ export default function Navbar() {
               </NavLink>
             </div>
 
-            {/* Desktop Menu - Right aligned on desktop with even spacing */}
+            {/* Desktop Menu + Admin Login + Donate */}
             <div className="hidden lg:flex items-center justify-end flex-1">
-              <div className="flex items-center gap-6 xl:gap-8 text-sm font-normal mr-8">
+              <div className="flex items-center gap-6 xl:gap-8 text-sm font-normal mr-6">
                 {menuItems.map((item) => (
                   <NavItem key={item.id} item={item} isMobile={false} />
                 ))}
+                {/* 🔹 Admin Login - Desktop */}
+                <NavLink
+                  to="/admin/login"
+                  className="px-3 py-2 text-sm font-poppins text-primary hover:text-accent hover:bg-accent/10 rounded-lg transition-all duration-200 whitespace-nowrap"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Admin Login
+                </NavLink>
               </div>
-            </div>
-
-            {/* Donate Button - Right side on desktop, hidden on mobile */}
-            <div className="hidden lg:block">
+              {/* Donate Button */}
               <NavLink
                 to="/ChildSponsorship"
                 className="px-6 py-2.5 text-sm rounded-full font-normal text-white bg-secondary hover:bg-accent transition-all duration-300 hover:-translate-y-0.5 shadow-md font-montserrat whitespace-nowrap"
@@ -232,7 +235,7 @@ export default function Navbar() {
               </NavLink>
             </div>
 
-            {/* Spacer for mobile to balance the hamburger menu */}
+            {/* Spacer for mobile */}
             <div className="lg:hidden w-10 h-10"></div>
           </div>
 
@@ -265,6 +268,16 @@ export default function Navbar() {
                       <NavItem item={item} isMobile={true} />
                     </div>
                   ))}
+                  {/* 🔹 Admin Login - Mobile */}
+                  <div className="pt-2 pb-3 border-b border-gray-100">
+                    <NavLink
+                      to="/admin/login"
+                      className="block px-3 py-2.5 text-sm font-poppins text-primary hover:text-accent hover:bg-accent/10 rounded-lg transition-all duration-200"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Admin Login
+                    </NavLink>
+                  </div>
                   <div className="pt-3">
                     <NavLink
                       to="/ChildSponsorship"
