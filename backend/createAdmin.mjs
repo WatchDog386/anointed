@@ -1,3 +1,4 @@
+// createAdmins.mjs
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import Admin from './src/models/Admin.js';
@@ -14,11 +15,13 @@ const createAdmins = async () => {
     });
     console.log('✅ Connected to MongoDB');
 
-    // 🔥 Use your EXACT desired credentials
+    // 🔥 Both admins included
     const admins = [
-      { email: 'fanteskorri36@gmail.com', password: 'fantes36' } // ← 8 characters, matches your login attempt
+      { email: 'fanteskorri36@gmail.com', password: 'fantes36' },
+      { email: 'benardmusereke@gmail.com', password: 'Musereke1' }
     ];
 
+    // Validate password length
     for (const admin of admins) {
       if (admin.password.length < 6) {
         throw new Error(`❌ Password for ${admin.email} is too short. Must be at least 6 characters.`);
@@ -28,19 +31,19 @@ const createAdmins = async () => {
     for (const adminData of admins) {
       const { email, password } = adminData;
 
-      // 🔥 DELETE existing admin to force password reset
+      // Delete existing admin
       const deleted = await Admin.deleteOne({ email });
       if (deleted.deletedCount > 0) {
         console.log(`🗑️  Existing admin ${email} deleted.`);
       }
 
-      // 🔥 Create fresh admin
+      // Create new admin
       const newAdmin = new Admin({ email, password });
       await newAdmin.save();
       console.log(`✅ Admin created successfully → Email: ${email}, Password: ${password}`);
     }
 
-    console.log('🎉 Admin(s) reset and created successfully.');
+    console.log('🎉 All admin(s) reset and created successfully.');
 
     await mongoose.connection.close();
     console.log('🔌 MongoDB connection closed.');
