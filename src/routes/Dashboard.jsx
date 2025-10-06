@@ -22,7 +22,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 // ✅ Dynamically determine API base URL
 const getApiBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return "https://anointed-backend.onrender.com"; // 👈 REPLACE WITH YOUR ACTUAL RENDER URL
+    return "https://anointed-3v54.onrender.com"; // ✅ YOUR LIVE RENDER BACKEND
   }
   return "http://localhost:5000";
 };
@@ -137,6 +137,7 @@ const Dashboard = () => {
     data.append('folder', 'students');
 
     try {
+      // ✅ Fixed: No extra spaces in URL
       const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
         method: 'POST',
         body: data,

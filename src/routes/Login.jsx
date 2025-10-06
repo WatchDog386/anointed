@@ -1,4 +1,4 @@
-// src/components/Login.jsx (or wherever your file is)
+// src/components/Login.jsx
 import React, { useState } from "react";
 import { Eye, EyeOff, LogIn } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -6,11 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 // ✅ Dynamically determine API base URL
 const getApiBaseUrl = () => {
-  // In production (Netlify), use your Render backend URL
   if (import.meta.env.PROD) {
-    return "https://anointed-backend.onrender.com"; // 👈 REPLACE WITH YOUR ACTUAL RENDER URL
+    return "https://anointed-3v54.onrender.com"; // ✅ YOUR LIVE RENDER BACKEND
   }
-  // In development, use localhost
   return "http://localhost:5000";
 };
 

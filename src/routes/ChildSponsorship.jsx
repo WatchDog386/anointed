@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 // ✅ Dynamically determine API base URL
 const getApiBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return "https://anointed-backend.onrender.com"; // 👈 REPLACE WITH YOUR ACTUAL RENDER URL
+    return "https://anointed-3v54.onrender.com"; // ✅ YOUR LIVE RENDER BACKEND
   }
   return "http://localhost:5000";
 };
