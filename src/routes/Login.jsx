@@ -103,7 +103,7 @@ const Login = () => {
             {/* Enhanced logo section with responsive sizing */}
             <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 mb-4 sm:mb-6">
               <div className="bg-[#2b473f] w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md">
-                <span className="text-white font-bold text-sm sm:text-base md:text-lg">AV</span>
+                <span className="text-white font-bold text-sm sm:text-base md:text-lg">AVCS</span>
               </div>
               <div>
                 <h1 className="text-base sm:text-lg md:text-xl font-bold text-[#2b473f] font-montserrat">Anointed Vessels</h1>
