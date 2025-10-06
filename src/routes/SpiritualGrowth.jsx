@@ -61,7 +61,7 @@ export default function SpiritualGrowth() {
               </ul>
             </div>
             
-            <img src="/images/morning-devotions.jpg" 
+            <img src="/morning-devotions.jpg" 
               alt="Students participating in morning devotions"
               className="rounded-lg aspect-[4/3] object-cover w-full"
 />          </div>
