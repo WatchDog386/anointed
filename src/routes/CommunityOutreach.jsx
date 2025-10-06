@@ -13,7 +13,7 @@ export default function CommunityOutreach() {
         "Collecting and sharing old books and stationery",
         "Senior pupils mentoring younger children"
       ],
-      image: "/literacy-support.jpg"
+      image: "/literacy-support.png"
     },
     {
       id: 2,
