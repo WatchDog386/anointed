@@ -144,7 +144,6 @@ export default function CommunityOutreach() {
 
         {/* Conclusion */}
         <div className="mt-20 text-center bg-green-50 p-8 rounded-lg border border-green-100">
-          <h2 className="text-2xl font-bold text-gray-800 font-montserrat mb-4">🌱 Conclusion</h2>
           <p className="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed">
             Through these humble acts of service, <em>Anointed Vessels Academy</em> is not only shaping students 
             academically but raising a generation of compassionate leaders—children who know that even small acts 
