@@ -19,7 +19,7 @@ import CTA from "./routes/CTA";
 import Staff from "./routes/Staff";
 import Board from "./routes/Board";
 
-// Newly added pages
+// Newly added public pages
 import Gallery from "./routes/Gallery";
 import EducationPrograms from "./routes/EducationPrograms";
 import SpiritualGrowth from "./routes/SpiritualGrowth";
@@ -28,6 +28,11 @@ import HealthWellness from "./routes/HealthWellness";
 import ChildSponsorship from "./routes/ChildSponsorship";
 import Impact from "./routes/Impact";
 import GetInvolved from "./routes/GetInvolved";
+
+// 🔹 Admin routes
+import Login from "./routes/Login";
+import Dashboard from "./routes/Dashboard";
+import ProtectedRoute from "./routes/ProtectedRoute"; // ✅ Added
 
 const TrackPageViews = () => {
   const location = useLocation();
@@ -46,6 +51,7 @@ const TrackPageViews = () => {
 function AppRoutes() {
   return (
     <Routes>
+      {/* Public routes with MainLayout */}
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
@@ -55,7 +61,7 @@ function AppRoutes() {
         <Route path="testimonials" element={<Testimonials />} />
         <Route path="cta" element={<CTA />} />
 
-        {/* Newly added routes */}
+        {/* Newly added public routes */}
         <Route path="gallery" element={<Gallery />} />
         <Route path="eduprog" element={<EducationPrograms />} />
         <Route path="SpiritualGrowth" element={<SpiritualGrowth />} />
@@ -65,6 +71,19 @@ function AppRoutes() {
         <Route path="impacts" element={<Impact />} />
         <Route path="Make-An-Impact" element={<GetInvolved />} />
       </Route>
+
+      {/* 🔹 Admin routes — NO layout wrapper */}
+      <Route path="/admin/login" element={<Login />} />
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
