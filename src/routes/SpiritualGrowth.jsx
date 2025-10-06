@@ -95,35 +95,7 @@ export default function SpiritualGrowth() {
             </div>
           </div>
 
-          {/* Worship and Fellowship */}
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h3 className="text-2xl font-bold text-primary font-montserrat mb-4">
-                Worship and Fellowship
-              </h3>
-              <ul className="space-y-3 text-gray-700">
-                <li className="flex items-start">
-                  <span className="text-accent mr-2">•</span>
-                  <span>Weekly <strong>Fellowship Day</strong> with praise, worship, and testimonies</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-accent mr-2">•</span>
-                  <span>Guest speakers including pastors and missionaries</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-accent mr-2">•</span>
-                  <span>Seasonal events like <strong>school crusades</strong> and community worship</span>
-                </li>
-              </ul>
-            </div>
-
-             <img 
-  src="/worship-service.jpg" 
-  alt="Students participating Worship Service"
-  className="rounded-lg aspect-[4/3] object-cover w-full"
-/>
-          </div>
-
+         
           {/* Mentorship and Character Building */}
           <div className="grid md:grid-cols-2 gap-8 items-center">
 
@@ -223,7 +195,6 @@ export default function SpiritualGrowth() {
               "Daily Devotions", 
               "Bible Instruction", 
               "Prayer Circles", 
-              "Fellowship Days", 
               "Mentorship Programs",
               "Service Projects",
               "Church Partnerships"
