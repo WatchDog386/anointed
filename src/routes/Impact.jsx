@@ -16,8 +16,8 @@ export default function Impact() {
   };
 
   const stats = [
-    { value: "500+", label: "Children Educated" },
-    { value: "15+", label: "Years of Ministry" },
+    { value: "300+", label: "Children Educated" },
+    { value: "7+", label: "Years of Ministry" },
     { value: "95%", label: "Graduation Rate" },
     { value: "100%", label: "Christ-Centered" }
   ];

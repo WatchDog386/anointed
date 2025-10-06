@@ -258,7 +258,7 @@ const Login = () => {
                     ))}
                   </div>
                   <span className="ml-2 sm:ml-3 lg:ml-4 text-xs sm:text-sm lg:text-sm text-white/90 font-medium">
-                    Supporting 500+ children
+                    Supporting 300+ children
                   </span>
                 </div>
               </motion.div>
