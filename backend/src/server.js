@@ -21,12 +21,13 @@ if (process.env.EMAIL_USER && !process.env.EMAIL_PASS) {
 const connectDB = require('./config/db');
 const app = express();
 
-// ✅ Allowed origins — corrected with no trailing spaces
+// ✅ Allowed origins — FIXED: removed trailing spaces!
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
   'http://127.0.0.1:5173',
-  'https://anointedvessels.netlify.app'
+  'https://anointedvessels.netlify.app', // ← NO TRAILING SPACES
+  'https://anointed-3v54.onrender.com'   // ← Optional: allow backend origin too
 ];
 
 app.use(require('cors')({
@@ -49,7 +50,7 @@ app.use(express.json({ limit: '10mb' }));
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/students', require('./routes/studentRoutes'));
-app.use('/api/sponsorship', require('./routes/sponsorshipRoutes')); // ✅ Added sponsorship routes
+app.use('/api/sponsorship', require('./routes/sponsorshipRoutes')); // ✅ Sponsorship routes
 
 // Global error handler
 app.use((err, req, res, next) => {

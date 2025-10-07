@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 // Wildred's story data
 const wildredStory = {
@@ -40,25 +41,14 @@ const wildredStory = {
   images: [
     {
       id: 1,
-      url: "https://images.unsplash.com/photo-1516627145497-ae69578cfc42?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      url: "/PRAYING.JPG",
       alt: "Wildred studying"
-    },
-    {
-      id: 2,
-      url: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      alt: "Children learning"
-    },
-    {
-      id: 3,
-      url: "https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      alt: "Child dreaming of future"
     }
   ]
 };
 
-export default function WildredStory() {
+export default function WilfredStory() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [activeSection, setActiveSection] = useState("story");
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   const nextImage = () => {
@@ -85,47 +75,55 @@ export default function WildredStory() {
     return () => clearInterval(interval);
   }, [isAutoPlaying, currentImageIndex]);
 
-  // Resume auto-play after inactivity
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isAutoPlaying) {
-        setIsAutoPlaying(true);
-      }
-    }, 8000);
-    return () => clearTimeout(timer);
-  }, [currentImageIndex]);
-
   const currentImage = wildredStory.images[currentImageIndex];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-green-50">
+    <section className="py-12 bg-gradient-to-br from-[#f9f8f5] to-[#e9ecef] min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         
+        {/* Back Button */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-6"
+        >
+          <Link
+            to="/stories"
+            className="inline-flex items-center text-sm text-[#2b473f] hover:text-[#932528] transition-colors duration-300 font-semibold"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Stories
+          </Link>
+        </motion.div>
+
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="text-center mb-10"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-blue-900">
-            Wildred Neisha's Story
+          <h1 className="text-3xl md:text-4xl font-bold mb-3 text-[#2b473f] font-montserrat">
+            Wildred Neisha's Journey of Hope
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            A bright young girl with dreams of becoming a nurse, facing challenges but determined to succeed
+          <p className="text-sm md:text-base text-gray-600 max-w-3xl mx-auto font-poppins">
+            Despite poverty and her father's illness, Wildred's love for learning drives her dream of becoming a nurse
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           
-          {/* Image Carousel */}
+          {/* Image Carousel - Fixed to prevent cropping */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="rounded-2xl overflow-hidden shadow-2xl">
+            <div className="rounded-xl overflow-hidden shadow-lg bg-white p-4">
               <motion.img
                 key={currentImage.id}
                 initial={{ opacity: 0, scale: 1.1 }}
@@ -134,44 +132,47 @@ export default function WildredStory() {
                 transition={{ duration: 0.5 }}
                 src={currentImage.url}
                 alt={currentImage.alt}
-                className="w-full h-80 md:h-96 object-cover"
+                className="w-full h-64 md:h-80 object-contain mx-auto" // Changed to object-contain to prevent cropping
+                onError={(e) => {
+                  e.target.src = "/default-student.jpg";
+                }}
               />
             </div>
 
-            {/* Navigation Arrows */}
+            {/* Navigation Arrows - Only show if multiple images */}
             {wildredStory.images.length > 1 && (
               <>
                 <button
                   onClick={prevImage}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2b473f]"
                   aria-label="Previous image"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#2b473f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
                 <button
                   onClick={nextImage}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2b473f]"
                   aria-label="Next image"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#2b473f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
               </>
             )}
 
-            {/* Dot Indicators */}
+            {/* Dot Indicators - Only show if multiple images */}
             {wildredStory.images.length > 1 && (
-              <div className="flex justify-center space-x-3 mt-4">
+              <div className="flex justify-center space-x-2 mt-4">
                 {wildredStory.images.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => goToImage(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
                       index === currentImageIndex
-                        ? "bg-blue-500 scale-125"
+                        ? "bg-[#2b473f] scale-125"
                         : "bg-gray-400 hover:bg-gray-500"
                     }`}
                     aria-label={`Go to image ${index + 1}`}
@@ -186,18 +187,18 @@ export default function WildredStory() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="space-y-8"
+            className="space-y-6"
           >
             {/* Basic Info */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-blue-100">
-              <h2 className="text-2xl font-bold mb-4 text-blue-800">About Wildred</h2>
-              <div className="space-y-3 text-gray-700">
-                <p><span className="font-semibold">Born:</span> {wildredStory.birthDate}</p>
-                <p><span className="font-semibold">Grade:</span> {wildredStory.grade}</p>
-                <p><span className="font-semibold">Family:</span> {wildredStory.familyPosition} in her family</p>
-                <p><span className="font-semibold">Passions:</span> {wildredStory.passions.join(", ")}</p>
+            <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200/50">
+              <h2 className="text-xl font-bold mb-3 text-[#2b473f] font-montserrat">About Wildred</h2>
+              <div className="space-y-2 text-sm text-gray-700 font-poppins">
+                <p><span className="font-semibold text-[#2b473f]">Born:</span> {wildredStory.birthDate}</p>
+                <p><span className="font-semibold text-[#2b473f]">Grade:</span> {wildredStory.grade}</p>
+                <p><span className="font-semibold text-[#2b473f]">Family:</span> {wildredStory.familyPosition} in her family</p>
+                <p><span className="font-semibold text-[#2b473f]">Passions:</span> {wildredStory.passions.join(", ")}</p>
               </div>
-              <p className="mt-4 text-gray-600 italic">{wildredStory.description}</p>
+              <p className="mt-3 text-sm text-gray-600 italic font-poppins">{wildredStory.description}</p>
             </div>
 
             {/* Dream Section */}
@@ -205,28 +206,28 @@ export default function WildredStory() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="bg-gradient-to-r from-blue-500 to-green-500 rounded-2xl p-6 text-white shadow-lg"
+              className="bg-gradient-to-r from-[#2b473f] to-[#3a5c52] rounded-xl p-5 text-white shadow-lg"
             >
-              <h3 className="text-xl font-bold mb-3">Her Dream</h3>
-              <p className="text-lg">"{wildredStory.dream}"</p>
+              <h3 className="text-lg font-bold mb-2 font-montserrat">Her Dream</h3>
+              <p className="text-sm font-poppins">"{wildredStory.dream}"</p>
             </motion.div>
 
             {/* Challenges Section */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-red-100">
-              <h3 className="text-2xl font-bold mb-4 text-red-700">Challenges She Faces</h3>
-              <div className="space-y-4">
+            <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200/50">
+              <h3 className="text-xl font-bold mb-3 text-[#2b473f] font-montserrat">Challenges She Faces</h3>
+              <div className="space-y-3">
                 {wildredStory.challenges.map((challenge, index) => (
                   <motion.div
                     key={challenge.id}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 * index }}
-                    className="flex items-start space-x-4 p-4 bg-red-50 rounded-lg hover:bg-red-100 transition-colors duration-300"
+                    className="flex items-start space-x-3 p-3 bg-[#f6f4ee] rounded-lg hover:bg-[#e9ecef] transition-colors duration-300"
                   >
-                    <span className="text-2xl">{challenge.icon}</span>
+                    <span className="text-xl flex-shrink-0">{challenge.icon}</span>
                     <div>
-                      <h4 className="font-semibold text-red-800">{challenge.title}</h4>
-                      <p className="text-gray-600 text-sm">{challenge.description}</p>
+                      <h4 className="font-semibold text-[#2b473f] text-sm font-montserrat">{challenge.title}</h4>
+                      <p className="text-gray-600 text-xs font-poppins">{challenge.description}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -238,32 +239,47 @@ export default function WildredStory() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
-              className="bg-green-50 rounded-2xl p-6 shadow-lg border border-green-200"
+              className="bg-[#f6f4ee] rounded-xl p-5 shadow-sm border border-[#e9ecef]"
             >
-              <h3 className="text-2xl font-bold mb-4 text-green-800">How You Can Help</h3>
-              <p className="text-gray-700 mb-4">
-                Wildred urgently needs consistent support to continue her education and pursue her dreams.
+              <h3 className="text-xl font-bold mb-3 text-[#2b473f] font-montserrat">How You Can Help</h3>
+              <p className="text-gray-700 text-sm mb-3 font-poppins">
+                Wildred urgently needs consistent support to continue her education and pursue her dreams of becoming a nurse.
               </p>
-              <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex flex-wrap gap-2 mb-4">
                 {wildredStory.needs.map((need, index) => (
                   <motion.span
                     key={index}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.1 * index }}
-                    className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-medium shadow-md"
+                    className="bg-[#932528] text-white px-3 py-1 rounded-full text-xs font-medium font-poppins"
                   >
                     {need}
                   </motion.span>
                 ))}
               </div>
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="w-full bg-[#932528] hover:bg-[#7a1e21] text-white font-semibold py-2.5 px-4 rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#932528] focus:ring-offset-2 text-sm font-montserrat"
               >
                 Support Wildred's Education
               </motion.button>
+            </motion.div>
+
+            {/* CTA to Sponsor */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.0 }}
+              className="text-center"
+            >
+              <Link
+                to="/ChildSponsorship"
+                className="inline-block bg-[#2b473f] hover:bg-[#3a5c52] text-white font-semibold py-2.5 px-6 rounded-lg transition-colors duration-300 text-sm font-montserrat"
+              >
+                Sponsor Another Child
+              </Link>
             </motion.div>
           </motion.div>
         </div>
