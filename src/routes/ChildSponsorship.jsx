@@ -1,8 +1,8 @@
 // src/routes/ChildSponsorship.jsx
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Search, Filter, BookOpen, Download, Heart, Users, Target } from 'lucide-react';
+import { Search, Filter, BookOpen, Download, Heart, Users, Target, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -16,6 +16,186 @@ const getApiBaseUrl = () => {
 };
 const API_BASE_URL = getApiBaseUrl();
 
+// ✅ Optimized SponsorshipFormPopup separated to prevent unnecessary re-renders
+const SponsorshipFormPopup = ({ 
+  isOpen, 
+  student, 
+  onClose, 
+  onSubmit, 
+  formSubmitting 
+}) => {
+  const [formData, setFormData] = useState({
+    sponsorName: '',
+    sponsorEmail: '',
+    sponsorPhone: '',
+    message: '',
+    studentId: ''
+  });
+  const [formError, setFormError] = useState('');
+  const [formSuccess, setFormSuccess] = useState(false);
+
+  // Reset form when student changes
+  useEffect(() => {
+    if (student) {
+      setFormData({
+        sponsorName: '',
+        sponsorEmail: '',
+        sponsorPhone: '',
+        message: '',
+        studentId: student._id
+      });
+      setFormError('');
+      setFormSuccess(false);
+    }
+  }, [student]);
+
+  // ✅ Use useCallback to prevent recreating function on every render
+  const handleFormChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (formError) setFormError('');
+  }, [formError]);
+
+  // ✅ Use useCallback for form submission
+  const handleSubmit = useCallback(async (e) => {
+    e.preventDefault();
+    setFormError('');
+    
+    try {
+      await onSubmit(formData);
+      setFormSuccess(true);
+    } catch (err) {
+      setFormError(err.response?.data?.message || 'Failed to submit sponsorship request.');
+    }
+  }, [formData, onSubmit]);
+
+  if (!isOpen || !student) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div 
+        className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <motion.div 
+          className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-xl border border-gray-200/50 relative z-10"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+        >
+          <div className="p-5 border-b border-gray-200/50">
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-bold text-[#2b473f]">Sponsor {student.name.split(' ')[0]}</h2>
+              <button 
+                onClick={onClose} 
+                className="text-gray-500 hover:text-[#932528] text-xl transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+          
+          <div className="p-5">
+            {formSuccess ? (
+              <div className="text-center py-6">
+                <div className="text-4xl mb-3">✅</div>
+                <h3 className="text-lg font-bold text-green-600 mb-2">Thank You!</h3>
+                <p className="text-sm text-gray-700">
+                  We'll contact you soon to complete the sponsorship.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-3">
+                {/* ✅ Added key props to help React track inputs */}
+                <input
+                  key="sponsorName"
+                  type="text"
+                  name="sponsorName"
+                  value={formData.sponsorName}
+                  onChange={handleFormChange}
+                  placeholder="Full Name *"
+                  required
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
+                />
+                <input
+                  key="sponsorEmail"
+                  type="email"
+                  name="sponsorEmail"
+                  value={formData.sponsorEmail}
+                  onChange={handleFormChange}
+                  placeholder="Email *"
+                  required
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
+                />
+                <input
+                  key="sponsorPhone"
+                  type="tel"
+                  name="sponsorPhone"
+                  value={formData.sponsorPhone}
+                  onChange={handleFormChange}
+                  placeholder="Phone *"
+                  required
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
+                />
+                <textarea
+                  key="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleFormChange}
+                  placeholder="Message (Optional)"
+                  rows={3}
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none resize-none transition-colors"
+                />
+                
+                {formError && (
+                  <motion.p 
+                    className="text-xs text-red-600 bg-red-50 p-2 rounded border border-red-200"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                  >
+                    {formError}
+                  </motion.p>
+                )}
+
+                <div className="flex gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="flex-1 text-sm px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={formSubmitting}
+                    className="flex-1 text-sm px-3 py-2 bg-[#932528] text-white rounded-lg hover:bg-[#7a1e21] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {formSubmitting ? (
+                      <span className="flex items-center justify-center">
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          className="w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"
+                        />
+                        Submitting...
+                      </span>
+                    ) : (
+                      'Submit'
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
 export default function ChildSponsorship() {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,16 +204,7 @@ export default function ChildSponsorship() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
   const [pdfStudent, setPdfStudent] = useState(null);
-  const [sponsorForm, setSponsorForm] = useState({
-    sponsorName: '',
-    sponsorEmail: '',
-    sponsorPhone: '',
-    message: '',
-    studentId: ''
-  });
   const [formSubmitting, setFormSubmitting] = useState(false);
-  const [formSuccess, setFormSuccess] = useState(false);
-  const [formError, setFormError] = useState('');
 
   const [filters, setFilters] = useState({
     searchTerm: '',
@@ -96,60 +267,45 @@ export default function ChildSponsorship() {
 
   const uniqueClasses = [...new Set(students.map(s => s.class).filter(Boolean))].sort();
 
-  const openSponsorPopup = (student) => {
+  // ✅ Use useCallback for event handlers
+  const openSponsorPopup = useCallback((student) => {
     setSelectedStudent(student);
     setIsPopupOpen(true);
-    setSponsorForm({
-      sponsorName: '',
-      sponsorEmail: '',
-      sponsorPhone: '',
-      message: '',
-      studentId: student._id
-    });
-    setFormSuccess(false);
-    setFormError('');
-  };
+  }, []);
 
-  const openPdfPreview = (student) => {
+  const openPdfPreview = useCallback((student) => {
     setPdfStudent(student);
     setIsPdfPreviewOpen(true);
-  };
+  }, []);
 
-  const closeStudentPopup = () => {
+  const closeStudentPopup = useCallback(() => {
     setIsPopupOpen(false);
     setSelectedStudent(null);
-    setFormSuccess(false);
-    setFormError('');
-  };
+  }, []);
 
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    setSponsorForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSponsorSubmit = async (e) => {
-    e.preventDefault();
+  // ✅ Optimized form submission handler
+  const handleSponsorSubmit = useCallback(async (formData) => {
     setFormSubmitting(true);
-    setFormError('');
-    setFormSuccess(false);
-
+    
     try {
       const response = await axios.post(`${API_BASE_URL}/api/sponsorship/interest`, {
-        ...sponsorForm,
+        ...formData,
         studentId: selectedStudent._id
       });
 
       if (response.status === 201) {
-        setFormSuccess(true);
         setStudents(prev => prev.filter(student => student._id !== selectedStudent._id));
         setTimeout(closeStudentPopup, 3000);
+        return response;
       }
-    } catch (err) {
-      setFormError(err.response?.data?.message || 'Failed to submit sponsorship request.');
     } finally {
       setFormSubmitting(false);
     }
-  };
+  }, [selectedStudent, closeStudentPopup]);
+
+  const handleAddStudent = useCallback(() => {
+    navigate('/admin/login');
+  }, [navigate]);
 
   const formatDate = (dateString) => {
     if (!dateString) return '';
@@ -324,107 +480,6 @@ export default function ChildSponsorship() {
     );
   };
 
-  // === Enhanced Sponsorship Form Popup ===
-  const SponsorshipFormPopup = () => {
-    if (!isPopupOpen || !selectedStudent) return null;
-
-    return (
-      <AnimatePresence>
-        <motion.div 
-          className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <motion.div 
-            className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-xl border border-gray-200/50 relative z-10"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-          >
-            <div className="p-5 border-b border-gray-200/50">
-              <div className="flex justify-between items-center">
-                <h2 className="text-lg font-bold text-[#2b473f]">Sponsor {selectedStudent.name.split(' ')[0]}</h2>
-                <button onClick={closeStudentPopup} className="text-gray-500 hover:text-[#932528] text-xl">✕</button>
-              </div>
-            </div>
-            
-            <div className="p-5">
-              {formSuccess ? (
-                <div className="text-center py-6">
-                  <div className="text-4xl mb-3">✅</div>
-                  <h3 className="text-lg font-bold text-green-600 mb-2">Thank You!</h3>
-                  <p className="text-sm text-gray-700">
-                    We'll contact you soon to complete the sponsorship.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSponsorSubmit} className="space-y-3">
-                  <input
-                    type="text"
-                    name="sponsorName"
-                    value={sponsorForm.sponsorName}
-                    onChange={handleFormChange}
-                    placeholder="Full Name *"
-                    required
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:outline-none"
-                  />
-                  <input
-                    type="email"
-                    name="sponsorEmail"
-                    value={sponsorForm.sponsorEmail}
-                    onChange={handleFormChange}
-                    placeholder="Email *"
-                    required
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:outline-none"
-                  />
-                  <input
-                    type="tel"
-                    name="sponsorPhone"
-                    value={sponsorForm.sponsorPhone}
-                    onChange={handleFormChange}
-                    placeholder="Phone *"
-                    required
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:outline-none"
-                  />
-                  <textarea
-                    name="message"
-                    value={sponsorForm.message}
-                    onChange={handleFormChange}
-                    placeholder="Message (Optional)"
-                    rows={3}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:outline-none resize-none"
-                  />
-                  
-                  {formError && (
-                    <p className="text-xs text-red-600 bg-red-50 p-2 rounded">{formError}</p>
-                  )}
-
-                  <div className="flex gap-2 pt-2">
-                    <button
-                      type="button"
-                      onClick={closeStudentPopup}
-                      className="flex-1 text-sm px-3 py-2 border border-gray-300 rounded-lg"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={formSubmitting}
-                      className="flex-1 text-sm px-3 py-2 bg-[#932528] text-white rounded-lg disabled:opacity-50"
-                    >
-                      {formSubmitting ? 'Submitting...' : 'Submit'}
-                    </button>
-                  </div>
-                </form>
-              )}
-            </div>
-          </motion.div>
-        </motion.div>
-      </AnimatePresence>
-    );
-  };
-
   // === Enhanced PDF Preview Modal ===
   const PdfPreviewModal = () => {
     if (!isPdfPreviewOpen || !pdfStudent) return null;
@@ -456,14 +511,14 @@ export default function ChildSponsorship() {
                   generateStudentPdf(pdfStudent);
                   setIsPdfPreviewOpen(false);
                 }}
-                className="px-4 py-2 bg-[#2b473f] text-white rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-[#3a5c52]"
+                className="px-4 py-2 bg-[#2b473f] text-white rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-[#3a5c52] transition-colors"
               >
                 <Download size={16} />
                 Download PDF Bio
               </button>
               <button
                 onClick={() => setIsPdfPreviewOpen(false)}
-                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm"
+                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm hover:bg-gray-50 transition-colors"
               >
                 Cancel
               </button>
@@ -482,9 +537,21 @@ export default function ChildSponsorship() {
 
         {/* Enhanced Filters Section */}
         <div id="filters" className="bg-white rounded-xl p-5 mb-10 border border-gray-200/50">
-          <div className="flex items-center gap-2 mb-4">
-            <Filter size={16} className="text-[#2b473f]" />
-            <h3 className="text-sm font-semibold text-[#2b473f]">Filter Students</h3>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+            <div className="flex items-center gap-2">
+              <Filter size={16} className="text-[#2b473f]" />
+              <h3 className="text-sm font-semibold text-[#2b473f]">Filter Students</h3>
+            </div>
+            {/* 🔹 Add Student Button */}
+            <motion.button
+              onClick={handleAddStudent}
+              className="flex items-center gap-2 px-3 py-2 bg-[#2b473f] text-white rounded-lg text-sm font-medium hover:bg-[#3a5c52] transition-colors shadow-sm"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Plus size={14} />
+              Add Student
+            </motion.button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
             <div className="relative">
@@ -494,13 +561,13 @@ export default function ChildSponsorship() {
                 placeholder="Search name or ID"
                 value={filters.searchTerm}
                 onChange={(e) => setFilters(prev => ({ ...prev, searchTerm: e.target.value }))}
-                className="w-full pl-8 pr-3 py-2 text-xs border border-gray-300 rounded-lg"
+                className="w-full pl-8 pr-3 py-2 text-xs border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
               />
             </div>
             <select
               value={filters.class}
               onChange={(e) => setFilters(prev => ({ ...prev, class: e.target.value }))}
-              className="text-xs py-2 border border-gray-300 rounded-lg"
+              className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
             >
               <option value="">All Classes</option>
               {uniqueClasses.map(cls => (
@@ -512,21 +579,21 @@ export default function ChildSponsorship() {
               placeholder="Min Age"
               value={filters.minAge}
               onChange={(e) => setFilters(prev => ({ ...prev, minAge: e.target.value }))}
-              className="text-xs py-2 border border-gray-300 rounded-lg"
+              className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
             />
             <input
               type="number"
               placeholder="Max Age"
               value={filters.maxAge}
               onChange={(e) => setFilters(prev => ({ ...prev, maxAge: e.target.value }))}
-              className="text-xs py-2 border border-gray-300 rounded-lg"
+              className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
             />
             <input
               type="text"
               placeholder="Academic strength"
               value={filters.academicStrength}
               onChange={(e) => setFilters(prev => ({ ...prev, academicStrength: e.target.value }))}
-              className="text-xs py-2 border border-gray-300 rounded-lg"
+              className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
             />
           </div>
         </div>
@@ -572,7 +639,15 @@ export default function ChildSponsorship() {
         </motion.div>
       </div>
 
-      <SponsorshipFormPopup />
+      {/* ✅ Use the optimized SponsorshipFormPopup component */}
+      <SponsorshipFormPopup 
+        isOpen={isPopupOpen}
+        student={selectedStudent}
+        onClose={closeStudentPopup}
+        onSubmit={handleSponsorSubmit}
+        formSubmitting={formSubmitting}
+      />
+      
       <PdfPreviewModal />
     </div>
   );

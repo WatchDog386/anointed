@@ -32,7 +32,6 @@ export default function Navbar() {
         { label: "Our Story", route: "/about", id: "story" },
         { label: "Our Staff", route: "/staff", id: "staff" },
         { label: "Our Board Members", route: "/board", id: "board" },
-        
       ],
     },
     {
@@ -46,7 +45,7 @@ export default function Navbar() {
         { label: "Child Sponsorship", route: "/ChildSponsorship", id: "sponsorship" },
       ],
     },
-    { label: "Impact", route: "/impacts", id: "impact" },
+    // Removed "Impact" item
     { label: "Get Involved", route: "/Make-An-Impact", id: "involved" },
   ];
 
@@ -210,20 +209,13 @@ export default function Navbar() {
               </NavLink>
             </div>
 
-            {/* Desktop Menu + Admin Login + Donate */}
+            {/* Desktop Menu + Donate */}
             <div className="hidden lg:flex items-center justify-end flex-1">
               <div className="flex items-center gap-6 xl:gap-8 text-sm font-normal mr-6">
                 {menuItems.map((item) => (
                   <NavItem key={item.id} item={item} isMobile={false} />
                 ))}
-                {/* 🔹 Admin Login - Desktop */}
-                <NavLink
-                  to="/admin/login"
-                  className="px-3 py-2 text-sm font-poppins text-primary hover:text-accent hover:bg-accent/10 rounded-lg transition-all duration-200 whitespace-nowrap"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Admin Login
-                </NavLink>
+                {/* 🔹 Admin Login REMOVED */}
               </div>
               {/* Donate Button */}
               <NavLink
@@ -268,16 +260,7 @@ export default function Navbar() {
                       <NavItem item={item} isMobile={true} />
                     </div>
                   ))}
-                  {/* 🔹 Admin Login - Mobile */}
-                  <div className="pt-2 pb-3 border-b border-gray-100">
-                    <NavLink
-                      to="/admin/login"
-                      className="block px-3 py-2.5 text-sm font-poppins text-primary hover:text-accent hover:bg-accent/10 rounded-lg transition-all duration-200"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Admin Login
-                    </NavLink>
-                  </div>
+                  {/* 🔹 Admin Login REMOVED */}
                   <div className="pt-3">
                     <NavLink
                       to="/ChildSponsorship"

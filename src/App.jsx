@@ -29,10 +29,14 @@ import ChildSponsorship from "./routes/ChildSponsorship";
 import Impact from "./routes/Impact";
 import GetInvolved from "./routes/GetInvolved";
 
+// Story Pages - Corrected imports
+import JimmysStory from "./routes/JimmysStory";
+import WildredsStory from "./routes/WildredsStory";
+
 // 🔹 Admin routes
 import Login from "./routes/Login";
 import Dashboard from "./routes/Dashboard";
-import ProtectedRoute from "./routes/ProtectedRoute"; // ✅ Added
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 const TrackPageViews = () => {
   const location = useLocation();
@@ -70,6 +74,10 @@ function AppRoutes() {
         <Route path="ChildSponsorship" element={<ChildSponsorship />} />
         <Route path="impacts" element={<Impact />} />
         <Route path="Make-An-Impact" element={<GetInvolved />} />
+
+        {/* Individual Story Pages - Corrected paths */}
+        <Route path="jimmys-story" element={<JimmysStory />} />
+        <Route path="wildreds-story" element={<WildredsStory />} />
       </Route>
 
       {/* 🔹 Admin routes — NO layout wrapper */}
