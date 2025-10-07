@@ -60,6 +60,24 @@ const studentSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    // Sponsorship fields - NEW
+    isSponsored: {
+      type: Boolean,
+      default: false,
+    },
+    sponsorName: {
+      type: String,
+      trim: true,
+    },
+    sponsorEmail: {
+      type: String,
+      trim: true,
+      match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
+    },
+    sponsorPhone: {
+      type: String,
+      trim: true,
+    },
     sponsorNotes: {
       type: String,
       trim: true,

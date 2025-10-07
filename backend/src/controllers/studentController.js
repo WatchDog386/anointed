@@ -1,5 +1,6 @@
 // backend/src/controllers/studentController.js
 const Student = require('../models/Student');
+const json2csv = require('json2csv').parse;
 
 // REMOVE cloudinary config and all upload logic
 
@@ -30,6 +31,11 @@ const createStudent = async (req, res) => {
     aspirations,
     supportNeeded,
     achievements,
+    // Sponsorship fields - NEW
+    isSponsored,
+    sponsorName,
+    sponsorEmail,
+    sponsorPhone,
     sponsorNotes,
     imageUrl  // ← Now required from frontend
   } = req.body;
@@ -56,8 +62,13 @@ const createStudent = async (req, res) => {
       achievements: achievements 
         ? achievements.split(',').map(s => s.trim()).filter(s => s)
         : [],
-      imageUrl, // ← Directly from frontend
+      // Sponsorship fields - NEW
+      isSponsored: Boolean(isSponsored),
+      sponsorName: sponsorName?.trim(),
+      sponsorEmail: sponsorEmail?.trim(),
+      sponsorPhone: sponsorPhone?.trim(),
       sponsorNotes: sponsorNotes?.trim(),
+      imageUrl, // ← Directly from frontend
     });
 
     await student.save();
@@ -90,6 +101,11 @@ const updateStudent = async (req, res) => {
     aspirations,
     supportNeeded,
     achievements,
+    // Sponsorship fields - NEW
+    isSponsored,
+    sponsorName,
+    sponsorEmail,
+    sponsorPhone,
     sponsorNotes,
     imageUrl
   } = req.body;
@@ -119,6 +135,12 @@ const updateStudent = async (req, res) => {
       ? achievements.split(',').map(s => s.trim()).filter(s => s)
       : student.achievements;
     student.imageUrl = imageUrl || student.imageUrl; // Only update if provided
+    
+    // Sponsorship fields - NEW
+    student.isSponsored = isSponsored !== undefined ? Boolean(isSponsored) : student.isSponsored;
+    student.sponsorName = sponsorName?.trim() || student.sponsorName;
+    student.sponsorEmail = sponsorEmail?.trim() || student.sponsorEmail;
+    student.sponsorPhone = sponsorPhone?.trim() || student.sponsorPhone;
     student.sponsorNotes = sponsorNotes?.trim() || student.sponsorNotes;
 
     await student.save();
@@ -148,9 +170,57 @@ const deleteStudent = async (req, res) => {
   }
 };
 
+// NEW: Export students to CSV
+const exportStudents = async (req, res) => {
+  try {
+    const students = await Student.find().select('-__v');
+    
+    // Format the data for CSV
+    const csvData = students.map(student => ({
+      'Student ID': student.idNumber,
+      'Name': student.name,
+      'Date of Birth': student.dateOfBirth ? student.dateOfBirth.toISOString().split('T')[0] : '',
+      'Class': student.class,
+      'Age': student.age || '',
+      'Personality': student.personality || '',
+      'Academic Strengths': student.academicStrengths || '',
+      'Overall Performance': student.overallPerformance || '',
+      'Family Background': student.familyBackground || '',
+      'Financial Situation': student.financialSituation || '',
+      'Aspirations': student.aspirations || '',
+      'Support Needed': student.supportNeeded || '',
+      'Achievements': Array.isArray(student.achievements) ? student.achievements.join('; ') : student.achievements || '',
+      'Is Sponsored': student.isSponsored ? 'Yes' : 'No',
+      'Sponsor Name': student.sponsorName || '',
+      'Sponsor Email': student.sponsorEmail || '',
+      'Sponsor Phone': student.sponsorPhone || '',
+      'Sponsor Notes': student.sponsorNotes || '',
+      'Image URL': student.imageUrl || '',
+      'Created At': student.createdAt ? student.createdAt.toISOString() : '',
+      'Updated At': student.updatedAt ? student.updatedAt.toISOString() : ''
+    }));
+
+    // Convert to CSV
+    const csv = json2csv(csvData, {
+      fields: Object.keys(csvData[0] || {}),
+      header: true,
+      delimiter: ','
+    });
+
+    // Set headers for file download
+    res.header('Content-Type', 'text/csv');
+    res.header('Content-Disposition', 'attachment; filename=students_export.csv');
+    res.status(200).send(csv);
+  } catch (err) {
+    console.error('❌ Export Students Error:', err.message);
+    res.status(500).json({ message: 'Failed to export students' });
+  }
+};
+
 module.exports = {
   getStudents,
   createStudent,
   updateStudent,
   deleteStudent,
+  exportStudents,
 };

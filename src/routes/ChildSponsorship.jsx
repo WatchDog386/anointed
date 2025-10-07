@@ -1,14 +1,19 @@
 // src/routes/ChildSponsorship.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Search, Filter, BookOpen, Download } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
-// ✅ Dynamically determine API base URL
+// ✅ Dynamically determine API base URL — NO LOCALHOST
 const getApiBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return "https://anointed-backend.onrender.com"; // 👈 REPLACE WITH YOUR ACTUAL RENDER URL
+    return "https://anointed-3v54.onrender.com"; // ✅ Clean, no trailing space
   }
   return "http://localhost:5000";
 };
-
 const API_BASE_URL = getApiBaseUrl();
 
 export default function ChildSponsorship() {
@@ -17,6 +22,29 @@ export default function ChildSponsorship() {
   const [error, setError] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
+  const [pdfStudent, setPdfStudent] = useState(null);
+  const [sponsorForm, setSponsorForm] = useState({
+    sponsorName: '',
+    sponsorEmail: '',
+    sponsorPhone: '',
+    message: '',
+    studentId: ''
+  });
+  const [formSubmitting, setFormSubmitting] = useState(false);
+  const [formSuccess, setFormSuccess] = useState(false);
+  const [formError, setFormError] = useState('');
+
+  // === Filters ===
+  const [filters, setFilters] = useState({
+    searchTerm: '',
+    class: '',
+    minAge: '',
+    maxAge: '',
+    academicStrength: ''
+  });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -25,13 +53,14 @@ export default function ChildSponsorship() {
         if (!response.ok) throw new Error("Failed to fetch students");
         const data = await response.json();
         
-        // ✅ Normalize achievements to string
-        const normalizedStudents = data.map(student => ({
-          ...student,
-          achievements: Array.isArray(student.achievements)
-            ? student.achievements.join(', ')
-            : student.achievements || ''
-        }));
+        const normalizedStudents = data
+          .filter(student => !student.isSponsored)
+          .map(student => ({
+            ...student,
+            achievements: Array.isArray(student.achievements)
+              ? student.achievements.join(', ')
+              : student.achievements || ''
+          }));
         
         setStudents(normalizedStudents);
       } catch (err) {
@@ -45,464 +74,455 @@ export default function ChildSponsorship() {
     fetchStudents();
   }, []);
 
-  // Open popup with student details
-  const openStudentPopup = (student) => {
+  const filteredStudents = useMemo(() => {
+    return students.filter(student => {
+      const matchesSearch = filters.searchTerm === '' || 
+        student.name.toLowerCase().includes(filters.searchTerm.toLowerCase()) ||
+        student.idNumber.toLowerCase().includes(filters.searchTerm.toLowerCase());
+      
+      const matchesClass = filters.class === '' || student.class === filters.class;
+      
+      const age = student.age || 0;
+      const matchesAge = (
+        (filters.minAge === '' || age >= parseInt(filters.minAge, 10)) &&
+        (filters.maxAge === '' || age <= parseInt(filters.maxAge, 10))
+      );
+      
+      const matchesAcademic = filters.academicStrength === '' || 
+        (student.academicStrengths || '').toLowerCase().includes(filters.academicStrength.toLowerCase());
+
+      return matchesSearch && matchesClass && matchesAge && matchesAcademic;
+    });
+  }, [students, filters]);
+
+  const uniqueClasses = [...new Set(students.map(s => s.class).filter(Boolean))].sort();
+
+  const openSponsorPopup = (student) => {
     setSelectedStudent(student);
     setIsPopupOpen(true);
+    setSponsorForm({
+      sponsorName: '',
+      sponsorEmail: '',
+      sponsorPhone: '',
+      message: '',
+      studentId: student._id
+    });
+    setFormSuccess(false);
+    setFormError('');
   };
 
-  // Close popup
+  const openPdfPreview = (student) => {
+    setPdfStudent(student);
+    setIsPdfPreviewOpen(true);
+  };
+
   const closeStudentPopup = () => {
     setIsPopupOpen(false);
     setSelectedStudent(null);
+    setFormSuccess(false);
+    setFormError('');
   };
 
-  // Format date helper
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setSponsorForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSponsorSubmit = async (e) => {
+    e.preventDefault();
+    setFormSubmitting(true);
+    setFormError('');
+    setFormSuccess(false);
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/sponsorship/interest`, {
+        ...sponsorForm,
+        studentId: selectedStudent._id
+      });
+
+      if (response.status === 201) {
+        setFormSuccess(true);
+        setStudents(prev => prev.filter(student => student._id !== selectedStudent._id));
+        setTimeout(closeStudentPopup, 3000);
+      }
+    } catch (err) {
+      setFormError(err.response?.data?.message || 'Failed to submit sponsorship request.');
+    } finally {
+      setFormSubmitting(false);
+    }
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
     const day = date.getDate();
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"];
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const month = monthNames[date.getMonth()];
     const year = date.getFullYear();
-    
-    const getOrdinal = (n) => {
-      const s = ["th", "st", "nd", "rd"];
-      const v = n % 100;
-      return n + (s[(v - 20) % 10] || s[v] || s[0]);
-    };
-    
-    return `${getOrdinal(day)} ${month} ${year}`;
+    return `${day} ${month} ${year}`;
   };
 
-  // Skeleton loader for alternating layout
-  const SkeletonCard = ({ reverse = false }) => (
-    <div className={`bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200/50 animate-pulse ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} flex flex-col mb-8`}>
-      <div className="h-64 md:h-auto md:w-2/5 bg-gradient-to-r from-gray-200 to-gray-300"></div>
-      <div className="p-6 md:w-3/5">
-        <div className="h-7 bg-gradient-to-r from-gray-200 to-gray-300 rounded mb-3 w-3/4"></div>
-        <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-4 bg-gradient-to-r from-gray-200 to-gray-300 rounded"></div>
-          ))}
-        </div>
-        <div className="space-y-2 mt-4">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-4 bg-gradient-to-r from-gray-200 to-gray-300 rounded w-full"></div>
-          ))}
-        </div>
-        <div className="mt-6 flex gap-3">
-          <div className="h-10 bg-gradient-to-r from-gray-200 to-gray-300 rounded w-1/3"></div>
-          <div className="h-10 bg-gradient-to-r from-gray-200 to-gray-300 rounded w-1/3"></div>
-        </div>
+  const generateStudentPdf = (student) => {
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Anointed Vessels Christian School", 14, 20);
+    doc.setFontSize(12);
+    doc.text("Student Full Profile", 14, 30);
+    doc.setLineWidth(0.5);
+    doc.line(14, 32, 200, 32);
+
+    const addSection = (y, label, value) => {
+      if (!value) return y;
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`${label}:`, 14, y);
+      doc.setFont('helvetica', 'normal');
+      const splitText = doc.splitTextToSize(String(value), 180);
+      doc.text(splitText, 14, y + 4);
+      return y + 6 + splitText.length * 5;
+    };
+
+    let yPos = 40;
+    yPos = addSection(yPos, "Full Name", student.name);
+    yPos = addSection(yPos, "ID Number", student.idNumber);
+    yPos = addSection(yPos, "Date of Birth", formatDate(student.dateOfBirth));
+    yPos = addSection(yPos, "Class", student.class);
+    yPos = addSection(yPos, "Age", student.age);
+    yPos = addSection(yPos, "Personality", student.personality);
+    yPos = addSection(yPos, "Academic Strengths", student.academicStrengths);
+    yPos = addSection(yPos, "Overall Performance", student.overallPerformance);
+    yPos = addSection(yPos, "Family Background", student.familyBackground);
+    yPos = addSection(yPos, "Financial Situation", student.financialSituation);
+    yPos = addSection(yPos, "Aspirations", student.aspirations);
+    yPos = addSection(yPos, "Support Needed", student.supportNeeded);
+    yPos = addSection(yPos, "Achievements", student.achievements);
+
+    if (student.isSponsored) {
+      yPos += 5;
+      doc.setFont('helvetica', 'bold');
+      doc.text("Sponsor Information", 14, yPos);
+      doc.setLineWidth(0.3);
+      doc.line(14, yPos + 2, 100, yPos + 2);
+      yPos += 8;
+      yPos = addSection(yPos, "Sponsor Name", student.sponsorName);
+      yPos = addSection(yPos, "Sponsor Email", student.sponsorEmail);
+      yPos = addSection(yPos, "Sponsor Phone", student.sponsorPhone);
+      yPos = addSection(yPos, "Sponsor Notes", student.sponsorNotes);
+    }
+
+    doc.save(`bio_${student.name.replace(/\s+/g, '_')}.pdf`);
+  };
+
+  const SkeletonCard = ({ index }) => (
+    <motion.div 
+      className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-200/30 p-4 mb-5 flex gap-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
+      <div className="w-16 h-20 bg-gray-200 rounded-lg"></div>
+      <div className="flex-1 space-y-2">
+        <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+        <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+        <div className="h-8 bg-gray-200 rounded w-1/3"></div>
       </div>
-    </div>
+    </motion.div>
   );
 
-  // Student profile card component with alternating layout
-  const StudentProfileCard = ({ student, reverse = false }) => (
-    <div className={`bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200/50 hover:shadow-xl transition-all duration-300 mb-8 ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} flex flex-col relative`}>
-      {/* Background Pattern */}
-      <div 
-        className="absolute inset-0 opacity-5 z-0"
-        style={{
-          backgroundImage: "url('/project.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat"
-        }}
-      ></div>
-      
-      {/* Student Image Section */}
-      <div className="md:w-2/5 h-64 md:h-auto relative z-10">
-        <div 
-          className="w-full h-full bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${student.imageUrl || "/default-student.jpg"})`,
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat"
-          }}
-          onError={(e) => {
-            e.target.style.backgroundImage = "url('/default-student.jpg')";
-          }}
-        ></div>
+  const StudentProfileCard = ({ student, index }) => (
+    <motion.div 
+      className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-200/30 p-4 mb-5 flex gap-4"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05 }}
+    >
+      {/* ✅ Passport-style image: 3:4 ratio, object-top */}
+      <div className="flex-shrink-0 w-16 h-20 rounded-lg overflow-hidden border border-gray-200">
+        <img
+          src={student.imageUrl || "/default-student.jpg"}
+          alt={student.name}
+          className="w-full h-full object-cover object-top"
+          onError={(e) => e.target.src = "/default-student.jpg"}
+          loading="lazy"
+        />
       </div>
       
-      {/* Student Details Section */}
-      <div className="p-6 md:w-3/5 flex flex-col relative z-10">
-        <div>
-          <h3 className="text-2xl font-bold text-[#2b473f] font-montserrat mb-3 bg-gradient-to-r from-[#2b473f] to-[#3a5c52] bg-clip-text text-transparent">
-            {student.name}
-          </h3>
-          
-          {/* Basic Information Grid */}
-          <div className="grid grid-cols-2 gap-3 mb-4">
-            <div className="text-sm bg-[#f6f4ee] p-3 rounded-lg">
-              <span className="font-semibold text-[#2b473f]">Student ID:</span>
-              <p className="text-gray-600 mt-1">{student.idNumber || 'N/A'}</p>
-            </div>
-            <div className="text-sm bg-[#f6f4ee] p-3 rounded-lg">
-              <span className="font-semibold text-[#2b473f]">Date of Birth:</span>
-              <p className="text-gray-600 mt-1">{formatDate(student.dateOfBirth)}</p>
-            </div>
-            <div className="text-sm bg-[#f6f4ee] p-3 rounded-lg">
-              <span className="font-semibold text-[#2b473f]">Class:</span>
-              <p className="text-gray-600 mt-1">{student.class || 'Unknown'}</p>
-            </div>
-            <div className="text-sm bg-[#f6f4ee] p-3 rounded-lg">
-              <span className="font-semibold text-[#2b473f]">Age:</span>
-              <p className="text-gray-600 mt-1">{student.age || 'N/A'}</p>
-            </div>
-          </div>
-          
-          {/* Academic Information */}
-          <div className="mt-4 space-y-3">
-            <div className="bg-gradient-to-r from-[#f6f4ee] to-white p-4 rounded-lg border border-gray-200/50">
-              <span className="font-semibold text-[#932528] block mb-1">Personality:</span>
-              <p className="text-gray-800">{student.personality || 'Bright and enthusiastic'}</p>
-            </div>
-            <div className="bg-gradient-to-r from-[#f6f4ee] to-white p-4 rounded-lg border border-gray-200/50">
-              <span className="font-semibold text-[#932528] block mb-1">Academic Strengths:</span>
-              <p className="text-gray-800">{student.academicStrengths || 'N/A'}</p>
-            </div>
-            <div className="bg-gradient-to-r from-[#f6f4ee] to-white p-4 rounded-lg border border-gray-200/50">
-              <span className="font-semibold text-[#932528] block mb-1">Performance:</span>
-              <p className="text-gray-800">{student.overallPerformance || 'N/A'}</p>
-            </div>
-            {student.achievements && (
-              <div className="bg-gradient-to-r from-[#f6f4ee] to-white p-4 rounded-lg border border-gray-200/50">
-                <span className="font-semibold text-[#932528] block mb-1">Achievements:</span>
-                <p className="text-gray-800">{student.achievements}</p>
-              </div>
-            )}
-          </div>
+      <div className="flex-1 min-w-0">
+        <h3 className="text-sm font-bold text-[#2b473f] mb-1 line-clamp-1">{student.name}</h3>
+        <p className="text-xs text-gray-600 mb-2">ID: {student.idNumber} • {student.class}</p>
+        
+        <div className="grid grid-cols-2 gap-2 text-xs mb-2">
+          <span className="bg-[#f6f4ee] px-2 py-1 rounded">DOB: {formatDate(student.dateOfBirth)}</span>
+          <span className="bg-[#f6f4ee] px-2 py-1 rounded">Age: {student.age}</span>
         </div>
         
-        {/* Action Buttons */}
-        <div className="mt-6 flex flex-wrap gap-3">
+        <p className="text-xs text-gray-700 mb-3 line-clamp-2">
+          {student.personality || 'Bright'} learner. Strengths: {student.academicStrengths || 'N/A'}.
+        </p>
+        
+        <div className="flex flex-wrap gap-2">
           <button 
-            onClick={() => openStudentPopup(student)}
-            className="px-5 py-2.5 bg-gradient-to-r from-[#8CA9B4] to-[#7a96a0] text-white rounded-xl hover:from-[#7a96a0] hover:to-[#6a8690] transition-all duration-300 font-medium flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            onClick={() => openPdfPreview(student)}
+            className="text-xs px-2.5 py-1 bg-[#2b473f] text-white rounded text-nowrap flex items-center gap-1"
           >
-            Get to Know {student.name.split(' ')[0]}
+            <BookOpen size={12} />
+            Get to Know {student.name.split(' ')[0]}'s Story
           </button>
-          <button className="px-5 py-2.5 bg-gradient-to-r from-[#932528] to-[#7a1e21] text-white rounded-xl hover:from-[#7a1e21] hover:to-[#6a1518] transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-            Sponsor {student.name.split(' ')[0]}
+          <button 
+            onClick={() => openSponsorPopup(student)}
+            className="text-xs px-2.5 py-1 bg-[#932528] text-white rounded text-nowrap"
+          >
+            Sponsor
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 
-  // Family Background Popup Component
-  const FamilyBackgroundPopup = () => {
+  const SponsorshipFormPopup = () => {
     if (!isPopupOpen || !selectedStudent) return null;
 
     return (
-      <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
-        <div 
-          className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200/50 relative"
-          style={{
-            backgroundImage: "url('/orphan.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundBlendMode: "overlay"
-          }}
+      <AnimatePresence>
+        <motion.div 
+          className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
         >
-          <div className="absolute inset-0 bg-white/95 rounded-2xl"></div>
-          
-          <div className="relative z-10">
-            <div className="p-6 border-b border-gray-200/50 bg-gradient-to-r from-[#f6f4ee] to-white rounded-t-2xl">
+          <motion.div 
+            className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-xl border border-gray-200/50 relative z-10"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+          >
+            <div className="p-5 border-b border-gray-200/50">
               <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-[#2b473f] font-montserrat bg-gradient-to-r from-[#2b473f] to-[#3a5c52] bg-clip-text text-transparent">
-                  Getting to Know {selectedStudent.name}
-                </h2>
-                <button 
-                  onClick={closeStudentPopup}
-                  className="text-gray-500 hover:text-[#932528] text-2xl font-bold transition-colors bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg hover:shadow-xl"
-                >
-                  ×
-                </button>
+                <h2 className="text-lg font-bold text-[#2b473f]">Sponsor {selectedStudent.name.split(' ')[0]}</h2>
+                <button onClick={closeStudentPopup} className="text-gray-500 hover:text-[#932528] text-xl">✕</button>
               </div>
             </div>
             
-            <div className="p-6 space-y-6">
-              {/* Family Background Section */}
-              <div>
-                <h3 className="text-xl font-semibold text-[#932528] mb-3 font-montserrat bg-gradient-to-r from-[#932528] to-[#a83232] bg-clip-text text-transparent">
-                  Family Background
-                </h3>
-                <div className="bg-gradient-to-r from-[#f6f4ee] to-white p-4 rounded-xl border border-gray-200/50 shadow-sm">
-                  <p className="text-gray-700 leading-relaxed">
-                    {selectedStudent.familyBackground || `${selectedStudent.name} comes from a family facing economic challenges. Despite these circumstances, ${selectedStudent.name.split(' ')[0]} remains dedicated to education and building a better future.`}
+            <div className="p-5">
+              {formSuccess ? (
+                <div className="text-center py-6">
+                  <div className="text-4xl mb-3">✅</div>
+                  <h3 className="text-lg font-bold text-green-600 mb-2">Thank You!</h3>
+                  <p className="text-sm text-gray-700">
+                    We’ll contact you soon to complete the sponsorship.
                   </p>
                 </div>
-              </div>
-              
-              {/* Financial Situation Section */}
-              <div>
-                <h3 className="text-xl font-semibold text-[#932528] mb-3 font-montserrat bg-gradient-to-r from-[#932528] to-[#a83232] bg-clip-text text-transparent">
-                  Financial Situation
-                </h3>
-                <div className="bg-gradient-to-r from-[#f6f4ee] to-white p-4 rounded-xl border border-gray-200/50 shadow-sm">
-                  <p className="text-gray-700 leading-relaxed">
-                    {selectedStudent.financialSituation || `The family's financial situation makes it difficult to provide consistent educational support, school supplies, and proper nutrition. Your sponsorship can make a significant difference in ${selectedStudent.name.split(' ')[0]}'s life.`}
-                  </p>
-                </div>
-              </div>
-              
-              {/* Aspirations Section */}
-              <div>
-                <h3 className="text-xl font-semibold text-[#932528] mb-3 font-montserrat bg-gradient-to-r from-[#932528] to-[#a83232] bg-clip-text text-transparent">
-                  Dreams & Aspirations
-                </h3>
-                <div className="bg-gradient-to-r from-[#f6f4ee] to-white p-4 rounded-xl border border-gray-200/50 shadow-sm">
-                  <p className="text-gray-700 leading-relaxed">
-                    {selectedStudent.aspirations || `${selectedStudent.name} dreams of a bright future and is working hard in school to achieve their goals. With proper support and encouragement, these dreams can become reality.`}
-                  </p>
-                </div>
-              </div>
-              
-              {/* Support Needed Section */}
-              {selectedStudent.supportNeeded && (
-                <div>
-                  <h3 className="text-xl font-semibold text-[#932528] mb-3 font-montserrat bg-gradient-to-r from-[#932528] to-[#a83232] bg-clip-text text-transparent">
-                    Support Needed
-                  </h3>
-                  <div className="bg-gradient-to-r from-[#f6f4ee] to-white p-4 rounded-xl border border-gray-200/50 shadow-sm">
-                    <p className="text-gray-700 leading-relaxed">
-                      {selectedStudent.supportNeeded}
-                    </p>
+              ) : (
+                <form onSubmit={handleSponsorSubmit} className="space-y-3">
+                  <input
+                    type="text"
+                    name="sponsorName"
+                    value={sponsorForm.sponsorName}
+                    onChange={handleFormChange}
+                    placeholder="Full Name *"
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:outline-none"
+                  />
+                  <input
+                    type="email"
+                    name="sponsorEmail"
+                    value={sponsorForm.sponsorEmail}
+                    onChange={handleFormChange}
+                    placeholder="Email *"
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:outline-none"
+                  />
+                  <input
+                    type="tel"
+                    name="sponsorPhone"
+                    value={sponsorForm.sponsorPhone}
+                    onChange={handleFormChange}
+                    placeholder="Phone *"
+                    required
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:outline-none"
+                  />
+                  <textarea
+                    name="message"
+                    value={sponsorForm.message}
+                    onChange={handleFormChange}
+                    placeholder="Message (Optional)"
+                    rows={3}
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:outline-none resize-none"
+                  />
+                  
+                  {formError && (
+                    <p className="text-xs text-red-600 bg-red-50 p-2 rounded">{formError}</p>
+                  )}
+
+                  <div className="flex gap-2 pt-2">
+                    <button
+                      type="button"
+                      onClick={closeStudentPopup}
+                      className="flex-1 text-sm px-3 py-2 border border-gray-300 rounded-lg"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={formSubmitting}
+                      className="flex-1 text-sm px-3 py-2 bg-[#932528] text-white rounded-lg disabled:opacity-50"
+                    >
+                      {formSubmitting ? 'Submitting...' : 'Submit'}
+                    </button>
                   </div>
-                </div>
+                </form>
               )}
             </div>
-            
-            <div className="p-6 border-t border-gray-200/50 bg-gradient-to-r from-[#f6f4ee] to-white rounded-b-2xl">
-              <div className="flex justify-between items-center">
-                <button 
-                  onClick={closeStudentPopup}
-                  className="px-5 py-2.5 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100 transition-all duration-300 font-medium shadow-lg hover:shadow-xl"
-                >
-                  Close
-                </button>
-                <button className="px-5 py-2.5 bg-gradient-to-r from-[#932528] to-[#7a1e21] text-white rounded-xl hover:from-[#7a1e21] hover:to-[#6a1518] transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                  Sponsor {selectedStudent.name.split(' ')[0]}
-                </button>
-              </div>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
+    );
+  };
+
+  const PdfPreviewModal = () => {
+    if (!isPdfPreviewOpen || !pdfStudent) return null;
+
+    return (
+      <AnimatePresence>
+        <motion.div 
+          className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div 
+            className="bg-white rounded-xl p-6 max-w-md w-full text-center"
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0.9 }}
+          >
+            <BookOpen className="mx-auto text-[#2b473f] mb-4" size={48} />
+            <h3 className="text-lg font-bold text-[#2b473f] mb-2">
+              {pdfStudent.name}'s Full Story
+            </h3>
+            <p className="text-sm text-gray-600 mb-4">
+              Download a beautifully formatted PDF with all details about {pdfStudent.name.split(' ')[0]}'s life, dreams, and needs.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <button
+                onClick={() => {
+                  generateStudentPdf(pdfStudent);
+                  setIsPdfPreviewOpen(false);
+                }}
+                className="px-4 py-2 bg-[#2b473f] text-white rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-[#3a5c52]"
+              >
+                <Download size={16} />
+                Download PDF Bio
+              </button>
+              <button
+                onClick={() => setIsPdfPreviewOpen(false)}
+                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm"
+              >
+                Cancel
+              </button>
             </div>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
     );
   };
 
   return (
-    <div className="font-open-sans bg-gradient-to-br from-white to-[#f6f4ee] min-h-screen">
-      {/* Enhanced Hero Banner with Background Image */}
-      <div 
-        className="relative h-96 md:h-[600px] bg-cover bg-center flex items-center justify-center shadow-2xl"
-        style={{ 
-          backgroundImage: "url('/project.jpg')",
-          backgroundPosition: "center 30%",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed"
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-[#2b473f]/80 to-[#8CA9B4]/60"></div>
-        <div className="relative z-10 text-center px-4 max-w-4xl">
-          <h1 className="text-4xl md:text-6xl font-bold text-white font-montserrat mb-6 drop-shadow-2xl">
-            Sponsor a Child
-          </h1>
-          <p className="text-xl md:text-2xl text-white font-open-sans mb-8 drop-shadow-2xl max-w-2xl mx-auto leading-relaxed">
-            Transform a life through education, love, and the Gospel
+    <div className="font-open-sans bg-gradient-to-b from-white to-[#f9f8f5] min-h-screen pt-8 pb-12">
+      <div className="max-w-4xl mx-auto px-4">
+        {/* Stats Banner */}
+        <div className="bg-gradient-to-r from-[#2b473f] to-[#3a5c52] rounded-xl p-4 mb-8 text-center text-white">
+          <p className="text-sm">
+            {students.length} children are currently seeking sponsors • $35/month changes a life
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href="#student-profiles"
-              className="inline-block px-8 py-4 bg-[#932528] text-white font-montserrat font-semibold rounded-full hover:bg-[#8CA9B4] transition-all duration-300 hover:scale-105 shadow-2xl transform hover:-translate-y-1"
+        </div>
+
+        {/* Filters */}
+        <div className="bg-white rounded-xl p-4 mb-8 border border-gray-200/50">
+          <div className="flex items-center gap-2 mb-3">
+            <Filter size={14} className="text-[#2b473f]" />
+            <h3 className="text-sm font-semibold text-[#2b473f]">Filter Students</h3>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="relative">
+              <Search size={12} className="absolute left-2 top-2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search name or ID"
+                value={filters.searchTerm}
+                onChange={(e) => setFilters(prev => ({ ...prev, searchTerm: e.target.value }))}
+                className="w-full pl-6 pr-3 py-1.5 text-xs border border-gray-300 rounded-lg"
+              />
+            </div>
+            <select
+              value={filters.class}
+              onChange={(e) => setFilters(prev => ({ ...prev, class: e.target.value }))}
+              className="text-xs py-1.5 border border-gray-300 rounded-lg"
             >
-              Start Sponsoring Today
-            </a>
-            <button className="inline-block px-8 py-4 bg-white/20 text-white font-montserrat font-semibold rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-105 shadow-2xl transform hover:-translate-y-1 backdrop-blur-sm">
-              Learn More
-            </button>
-          </div>
-        </div>
-        
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-          <div className="animate-bounce">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-16 md:py-20">
-        {/* Mission Section */}
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#2b473f] font-montserrat mb-6 bg-gradient-to-r from-[#2b473f] to-[#3a5c52] bg-clip-text text-transparent">
-              Give Hope Through Sponsorship
-            </h2>
-            <p className="text-gray-700 mb-6 text-lg leading-relaxed">
-              Your monthly gift of $35 provides a child with meals, education, uniforms, 
-              spiritual mentorship, and a safe home at Anointed Vessels Christian School.
-            </p>
-            <p className="text-gray-700 mb-8 text-lg leading-relaxed">
-              You'll receive updates, letters, and photos from your sponsored child — 
-              building a life-changing relationship that transforms both your lives.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="#sponsor-form"
-                className="inline-block px-8 py-3 bg-gradient-to-r from-[#932528] to-[#7a1e21] text-white font-montserrat font-semibold rounded-full hover:from-[#7a1e21] hover:to-[#6a1518] transition-all duration-300 hover:scale-105 shadow-lg"
-              >
-                Start Sponsoring Today
-              </a>
-              <button className="inline-block px-8 py-3 border-2 border-[#2b473f] text-[#2b473f] font-montserrat font-semibold rounded-full hover:bg-[#2b473f] hover:text-white transition-all duration-300">
-                Our Mission
-              </button>
-            </div>
-          </div>
-          <div 
-            className="bg-gray-100 rounded-2xl overflow-hidden shadow-2xl h-96 bg-cover bg-center"
-            style={{
-              backgroundImage: "url('/orphans.jpg')",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat"
-            }}
-          >
-            <div className="w-full h-full bg-gradient-to-t from-[#2b473f]/30 to-transparent flex items-end p-6">
-              <p className="text-white text-lg font-semibold drop-shadow-2xl">
-                Happy student at Anointed Vessels Christian School
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Enhanced Impact Stats */}
-        <div className="bg-gradient-to-r from-[#2b473f] to-[#3a5c52] rounded-2xl p-8 md:p-12 text-center mb-16 shadow-2xl relative overflow-hidden">
-          {/* Background Pattern */}
-          <div 
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage: "url('/project.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat"
-            }}
-          ></div>
-          
-          <div className="relative z-10">
-            <h3 className="text-2xl md:text-3xl font-montserrat font-bold text-white mb-4">
-              Your Impact Changes Lives
-            </h3>
-            <p className="text-[#8CA9B4] mb-8 max-w-2xl mx-auto">
-              Every contribution makes a real difference in a child's education and future
-            </p>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-              {[
-                { value: '$35', label: 'Monthly Support', icon: '💰' },
-                { value: '100%', label: 'Goes to the Child', icon: '🎯' },
-                { value: `${students.length}+`, label: 'Lives Transformed', icon: '🌟' },
-                { value: '500+', label: 'Community Impact', icon: '👨‍👩‍👧‍👦' }
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-4xl md:text-5xl font-bold text-white font-montserrat mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-[#8CA9B4] text-sm md:text-base">{stat.label}</div>
-                  <div className="text-2xl mt-2">{stat.icon}</div>
-                </div>
+              <option value="">All Classes</option>
+              {uniqueClasses.map(cls => (
+                <option key={cls} value={cls}>{cls}</option>
               ))}
-            </div>
+            </select>
+            <input
+              type="number"
+              placeholder="Min Age"
+              value={filters.minAge}
+              onChange={(e) => setFilters(prev => ({ ...prev, minAge: e.target.value }))}
+              className="text-xs py-1.5 border border-gray-300 rounded-lg"
+            />
+            <input
+              type="number"
+              placeholder="Max Age"
+              value={filters.maxAge}
+              onChange={(e) => setFilters(prev => ({ ...prev, maxAge: e.target.value }))}
+              className="text-xs py-1.5 border border-gray-300 rounded-lg"
+            />
           </div>
         </div>
 
-        {/* Student Profiles Section */}
-        <div id="student-profiles" className="mb-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#2b473f] font-montserrat mb-4 bg-gradient-to-r from-[#2b473f] to-[#3a5c52] bg-clip-text text-transparent">
-              Meet the Children
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Each child has a unique story and dreams for the future. Your sponsorship can help make those dreams come true.
-            </p>
-          </div>
-
+        {/* Student List */}
+        <div className="mb-12">
+          <h2 className="text-lg font-bold text-[#2b473f] mb-4">Children Seeking Sponsors</h2>
+          
           {error ? (
-            <div className="text-center py-12 bg-red-50 rounded-2xl p-8 max-w-2xl mx-auto border border-red-200">
-              <p className="text-red-600 font-medium text-lg">{error}</p>
-              <button 
-                onClick={() => window.location.reload()}
-                className="mt-6 px-6 py-3 bg-[#932528] text-white rounded-xl hover:bg-[#7a1e21] transition-colors font-medium shadow-lg"
-              >
-                Try Again
-              </button>
+            <div className="text-center py-8 text-red-600">{error}</div>
+          ) : loading ? (
+            Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} index={i} />)
+          ) : filteredStudents.length === 0 ? (
+            <div className="text-center py-10 text-gray-500 italic">
+              No students match your filters.
             </div>
           ) : (
-            <div>
-              {loading 
-                ? Array.from({ length: 4 }).map((_, i) => (
-                    <SkeletonCard key={i} reverse={i % 2 === 1} />
-                  ))
-                : students.length > 0
-                ? students.map((student, index) => (
-                    <StudentProfileCard 
-                      key={student._id} 
-                      student={student}
-                      reverse={index % 2 === 1}
-                    />
-                  ))
-                : (
-                  <div className="bg-white rounded-2xl shadow-lg border border-gray-200/50 p-16 text-center">
-                    <div className="text-6xl mb-4">👨‍🎓</div>
-                    <p className="text-gray-500 italic text-xl">
-                      No students available for sponsorship at this time
-                    </p>
-                    <p className="text-gray-400 mt-2">
-                      Please check back later for new student profiles
-                    </p>
-                  </div>
-                )
-              }
-            </div>
+            filteredStudents.map((student, index) => (
+              <StudentProfileCard key={student._id} student={student} index={index} />
+            ))
           )}
         </div>
 
-        {/* CTA Section */}
-        <div className="bg-gradient-to-r from-[#8CA9B4] to-[#7a96a0] rounded-2xl p-12 text-center shadow-2xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-white font-montserrat mb-4">
-            Ready to Make a Difference?
-          </h2>
-          <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
-            Join hundreds of sponsors who are transforming lives through education and mentorship
+        {/* ✅ NEW: CTA BELOW STUDENTS */}
+        <motion.div 
+          className="bg-gradient-to-r from-[#8CA9B4] to-[#7a96a0] rounded-2xl p-6 text-center shadow-md"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h3 className="text-lg font-bold text-white mb-2">Ready to Change a Life?</h3>
+          <p className="text-white/90 text-sm mb-4">
+            Your sponsorship provides education, meals, mentorship, and hope.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#student-profiles"
-              className="inline-block px-8 py-4 bg-white text-[#2b473f] font-montserrat font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-2xl"
-            >
-              Browse Students
-            </a>
-            <button className="inline-block px-8 py-4 bg-[#932528] text-white font-montserrat font-semibold rounded-full hover:bg-[#7a1e21] transition-all duration-300 hover:scale-105 shadow-2xl">
-              Contact Us
-            </button>
-          </div>
-        </div>
+          <motion.button
+            onClick={() => document.querySelector('h2')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-5 py-2 bg-white text-[#2b473f] font-semibold rounded-full text-sm shadow hover:shadow-md"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Sponsor a Child Now
+          </motion.button>
+        </motion.div>
       </div>
 
-      {/* Family Background Popup */}
-      <FamilyBackgroundPopup />
+      <SponsorshipFormPopup />
+      <PdfPreviewModal />
     </div>
   );
 }

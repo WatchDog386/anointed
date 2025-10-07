@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, Heart, Users, GraduationCap, Globe } from 'lucide-react';
+import { ChevronRight, Heart, Users, GraduationCap, Globe, BookOpen, MapPin, HandCoins, Church } from 'lucide-react';
 
 // Custom Hooks
 const useScrollAnimation = () => {
@@ -37,13 +37,16 @@ const SectionHeader = ({ title, subtitle, centered = true }) => {
       initial={{ opacity: 0, y: 30 }}
       animate={isVisible ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6 }}
-      className={`mb-12 ${centered ? 'text-center' : ''}`}
+      className={`mb-10 ${centered ? 'text-center' : ''}`}
     >
-      <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#2b473f', fontFamily: "'Montserrat', sans-serif" }}>
+      <h2 
+        className="text-3xl md:text-4xl font-bold mb-3 text-[#2b473f]"
+        style={{ fontFamily: "'Montserrat', sans-serif" }}
+      >
         {title}
       </h2>
       {subtitle && (
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-base text-gray-600 max-w-3xl mx-auto leading-relaxed">
           {subtitle}
         </p>
       )}
@@ -51,71 +54,52 @@ const SectionHeader = ({ title, subtitle, centered = true }) => {
   );
 };
 
-const InvolvementCard = ({ icon: Icon, title, description, link, buttonText, image, stats }) => {
+const InvolvementCard = ({ icon: Icon, title, description, link, buttonText, stats }) => {
   const { isHovered, hoverProps } = useHoverAnimation();
   const isVisible = useScrollAnimation();
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 40 }}
       animate={isVisible ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6 }}
-      className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
+      className="bg-white rounded-xl shadow-sm border border-gray-200/50 hover:shadow-md transition-all duration-300 p-6 flex flex-col h-full"
       {...hoverProps}
     >
-      {image && (
-        <div className="relative h-48 overflow-hidden">
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover transition-transform duration-300"
-            style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-20" />
-          <div className="absolute top-4 left-4">
-            <div className="bg-white bg-opacity-90 rounded-full p-3">
-              <Icon className="h-6 w-6" style={{ color: '#932528' }} />
+      <div className="flex items-start gap-4 mb-4">
+        <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-[#f6f4ee] flex items-center justify-center">
+          <Icon className="h-6 w-6 text-[#932528]" />
+        </div>
+        <h3 
+          className="text-xl font-bold text-[#2b473f]"
+          style={{ fontFamily: "'Montserrat', sans-serif" }}
+        >
+          {title}
+        </h3>
+      </div>
+      
+      <p className="text-gray-700 mb-5 flex-1 text-sm leading-relaxed">{description}</p>
+      
+      {stats && (
+        <div className="grid grid-cols-2 gap-3 mb-5">
+          {stats.map((stat, index) => (
+            <div key={index} className="text-center bg-gray-50 py-2 rounded-lg">
+              <div className="font-bold text-[#932528] text-lg">{stat.value}</div>
+              <div className="text-xs text-gray-600 mt-1">{stat.label}</div>
             </div>
-          </div>
+          ))}
         </div>
       )}
       
-      <div className="p-8">
-        <div className="flex items-center mb-4">
-          {!image && <Icon className="h-8 w-8 mr-3" style={{ color: '#932528' }} />}
-          <h3 className="text-2xl font-bold" style={{ color: '#2b473f', fontFamily: "'Montserrat', sans-serif" }}>
-            {title}
-          </h3>
-        </div>
-        
-        <p className="text-gray-600 mb-6 leading-relaxed">{description}</p>
-        
-        {stats && (
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-2xl font-bold" style={{ color: '#932528' }}>{stat.value}</div>
-                <div className="text-sm text-gray-500">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        )}
-        
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link
-            to={link}
-            className="inline-flex items-center px-6 py-3 rounded-full font-semibold transition-all duration-300"
-            style={{
-              backgroundColor: isHovered ? '#8CA9B4' : '#932528',
-              color: 'white',
-              fontFamily: "'Montserrat', sans-serif"
-            }}
-          >
-            {buttonText}
-            <ChevronRight className="h-4 w-4 ml-2" />
-          </Link>
-        </motion.div>
-      </div>
+      <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+        <Link
+          to={link}
+          className="inline-flex items-center justify-center w-full px-4 py-2.5 bg-[#932528] text-white text-sm font-semibold rounded-lg hover:bg-[#7a1e21] transition-colors"
+        >
+          {buttonText}
+          <ChevronRight className="h-4 w-4 ml-1.5" />
+        </Link>
+      </motion.div>
     </motion.div>
   );
 };
@@ -144,10 +128,10 @@ const ImpactCounter = ({ target, label, duration = 2000 }) => {
 
   return (
     <div className="text-center">
-      <div className="text-5xl md:text-6xl font-bold mb-2" style={{ color: '#932528' }}>
+      <div className="text-3xl md:text-4xl font-bold mb-2 text-[#932528]">
         {count.toLocaleString()}+
       </div>
-      <div className="text-lg text-gray-600 uppercase tracking-wider">{label}</div>
+      <div className="text-sm text-gray-600 uppercase tracking-wide">{label}</div>
     </div>
   );
 };
@@ -158,22 +142,19 @@ const TestimonialCarousel = () => {
       id: 1,
       name: "Sarah Johnson",
       role: "Child Sponsor",
-      content: "Sponsoring a child through AVCS has been one of the most rewarding experiences. Seeing the progress reports and knowing I'm making a real difference is incredible.",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+      content: "Sponsoring a child through AVCS has been one of the most rewarding experiences. Seeing the progress reports and knowing I'm making a real difference is incredible."
     },
     {
       id: 2,
       name: "Michael Chen",
       role: "Mission Trip Volunteer",
-      content: "The mission trip changed my perspective on life. The community's faith and resilience inspired me beyond words. Can't wait to go back!",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+      content: "The mission trip changed my perspective on life. The community's faith and resilience inspired me beyond words. Can't wait to go back!"
     },
     {
       id: 3,
       name: "Pastor David Martinez",
       role: "Church Partner",
-      content: "Our church's partnership with AVCS has strengthened our global missions focus. The transparency and impact are exceptional.",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+      content: "Our church's partnership with AVCS has strengthened our global missions focus. The transparency and impact are exceptional."
     }
   ];
 
@@ -187,13 +168,13 @@ const TestimonialCarousel = () => {
   }, [testimonials.length]);
 
   return (
-    <div className="relative bg-gray-50 rounded-3xl p-12">
+    <div className="relative bg-gray-50 rounded-2xl p-8 md:p-10">
       <SectionHeader
         title="Stories of Impact"
         subtitle="Hear from those who have partnered with us to create lasting change"
       />
       
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative h-40 overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -203,36 +184,25 @@ const TestimonialCarousel = () => {
             transition={{ duration: 0.5 }}
             className="absolute inset-0 flex items-center"
           >
-            <div className="grid md:grid-cols-3 gap-8 items-center">
-              <div className="text-center">
-                <img
-                  src={testimonials[currentIndex].image}
-                  alt={testimonials[currentIndex].name}
-                  className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
-                />
-              </div>
-              <div className="md:col-span-2">
-                <blockquote className="text-2xl italic text-gray-700 mb-4">
-                  "{testimonials[currentIndex].content}"
-                </blockquote>
-                <div>
-                  <div className="font-semibold" style={{ color: '#2b473f' }}>
-                    {testimonials[currentIndex].name}
-                  </div>
-                  <div className="text-gray-600">{testimonials[currentIndex].role}</div>
-                </div>
+            <div className="text-center w-full">
+              <blockquote className="text-lg italic text-gray-700 mb-4 px-4">
+                "{testimonials[currentIndex].content}"
+              </blockquote>
+              <div>
+                <div className="font-bold text-[#2b473f]">{testimonials[currentIndex].name}</div>
+                <div className="text-gray-600 text-sm">{testimonials[currentIndex].role}</div>
               </div>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
       
-      <div className="flex justify-center space-x-2 mt-8">
+      <div className="flex justify-center space-x-2 mt-6">
         {testimonials.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === currentIndex ? 'bg-[#932528]' : 'bg-gray-300'
             }`}
           />
@@ -251,7 +221,6 @@ export default function GetInvolved() {
       description: "For just $35 per month, provide education, nutrition, and spiritual guidance to a child in need. Your sponsorship creates lifelong impact and hope.",
       link: "/ChildSponsorship",
       buttonText: "Start Sponsoring",
-      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       stats: [
         { value: "200+", label: "Children Sponsored" },
         { value: "98%", label: "Success Rate" }
@@ -263,31 +232,28 @@ export default function GetInvolved() {
       description: "Experience life-changing service in Kenya. Use your skills in teaching, construction, healthcare, or ministry to make a tangible difference.",
       link: "/mission-trips",
       buttonText: "Learn More",
-      image: "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       stats: [
         { value: "15+", label: "Trips Annualy" },
         { value: "500+", label: "Volunteers" }
       ]
     },
     {
-      icon: GraduationCap,
+      icon: HandCoins,
       title: "Monthly Partnership",
       description: "Provide consistent support through recurring donations. Your ongoing commitment helps us plan effectively and sustain our programs year-round.",
       link: "/donate",
       buttonText: "Become a Partner",
-      image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       stats: [
         { value: "$50K+", label: "Monthly Support" },
         { value: "100%", label: "Funds to Programs" }
       ]
     },
     {
-      icon: Globe,
+      icon: Church,
       title: "Church Partnership",
       description: "Partner with us as a church through mission trips, financial support, or project adoption. Expand God's kingdom together across continents.",
       link: "/partnerships",
       buttonText: "Partner With Us",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       stats: [
         { value: "25+", label: "Church Partners" },
         { value: "5", label: "Countries" }
@@ -297,26 +263,26 @@ export default function GetInvolved() {
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Open Sans', sans-serif" }}>
-      {/* Hero Section */}
-      <section 
-        className="relative h-screen flex items-center justify-center bg-cover bg-center bg-fixed"
-        style={{
-          backgroundImage: `linear-gradient(rgba(43, 71, 63, 0.7), rgba(43, 71, 63, 0.7)), url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')`
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="text-center text-white px-4"
-        >
-          <h1 className="text-5xl md:text-7xl font-bold mb-6" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+      {/* Hero Section — No background image */}
+      <section className="relative bg-[#2b473f] py-24 md:py-32">
+        <div className="max-w-4xl mx-auto px-4 text-center text-white">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl md:text-5xl font-bold mb-5"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
+          >
             Get Involved
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-            Join our mission to raise the next generation of Christian leaders in Kenya. 
-            Your partnership creates eternal impact.
-          </p>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed opacity-90"
+          >
+            Join our mission to raise the next generation of Christian leaders in Kenya. Your partnership creates eternal impact.
+          </motion.p>
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -324,40 +290,25 @@ export default function GetInvolved() {
           >
             <Link
               to="#opportunities"
-              className="bg-[#932528] text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#8CA9B4] transition-colors duration-300 inline-flex items-center"
+              className="bg-[#932528] text-white px-7 py-3.5 rounded-full font-semibold text-base hover:bg-[#8CA9B4] transition-colors duration-300 inline-flex items-center"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
               Explore Opportunities
-              <ChevronRight className="h-5 w-5 ml-2" />
+              <ChevronRight className="h-4 w-4 ml-2" />
             </Link>
           </motion.div>
-        </motion.div>
-        
-        {/* Scroll Indicator */}
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-1 h-3 bg-white rounded-full mt-2"
-            />
-          </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Impact Stats */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-16 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
           <SectionHeader
             title="Our Impact"
             subtitle="Together, we're transforming lives and communities across Kenya"
           />
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
             <ImpactCounter target={300} label="Children Educated" />
             <ImpactCounter target={25} label="Communities Served" />
             <ImpactCounter target={600} label="Lives Transformed" />
@@ -367,14 +318,14 @@ export default function GetInvolved() {
       </section>
 
       {/* Involvement Opportunities */}
-      <section id="opportunities" className="py-20">
+      <section id="opportunities" className="py-16">
         <div className="max-w-7xl mx-auto px-4">
           <SectionHeader
             title="Ways to Get Involved"
             subtitle="Choose how you want to make a difference. Every contribution matters."
           />
           
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-6">
             {involvementOptions.map((option, index) => (
               <InvolvementCard key={index} {...option} />
             ))}
@@ -383,32 +334,35 @@ export default function GetInvolved() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20">
+      <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
           <TestimonialCarousel />
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-[#2b473f] text-white">
+      <section className="py-16 bg-[#2b473f] text-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+            <h2 
+              className="text-3xl md:text-4xl font-bold mb-5"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
               Ready to Make a Difference?
             </h2>
-            <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+            <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
               Join hundreds of partners who are transforming lives in Kenya. Your journey starts today.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link
                   to="/contact"
-                  className="bg-[#932528] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#8CA9B4] transition-colors duration-300 inline-block"
+                  className="bg-[#932528] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8CA9B4] transition-colors duration-300 inline-block text-base"
                 >
                   Get Started Today
                 </Link>
@@ -417,7 +371,7 @@ export default function GetInvolved() {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link
                   to="/about"
-                  className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#2b473f] transition-all duration-300 inline-block"
+                  className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#2b473f] transition-all duration-300 inline-block text-base"
                 >
                   Learn More
                 </Link>
@@ -426,15 +380,6 @@ export default function GetInvolved() {
           </motion.div>
         </div>
       </section>
-
-      {/* Custom Styles */}
-      <style jsx>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
-        
-        html {
-          scroll-behavior: smooth;
-        }
-      `}</style>
     </div>
   );
 }

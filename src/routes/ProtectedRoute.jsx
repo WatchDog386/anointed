@@ -1,4 +1,4 @@
-// /src/routes/ProtectedRoute.jsx
+// src/routes/ProtectedRoute.jsx
 import React, { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
@@ -6,8 +6,8 @@ const ProtectedRoute = ({ children }) => {
   const location = useLocation();
   const token = localStorage.getItem('token');
 
-  // Optional: Validate token format or expiration (basic check)
-  const isValidToken = token && token.length > 20;
+  // Basic token validation: must exist and be reasonably long (JWTs are ~100+ chars)
+  const isValidToken = token && token.length > 50;
 
   useEffect(() => {
     if (!isValidToken) {
@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }) => {
   }, [isValidToken]);
 
   if (!isValidToken) {
-    // Redirect to login, but remember where they tried to go
+    // Redirect to login, preserving the attempted route
     return <Navigate to="/admin/login" state={{ from: location }} replace />;
   }
 
