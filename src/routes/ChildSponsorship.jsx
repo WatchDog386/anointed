@@ -1,6 +1,6 @@
 // src/routes/ChildSponsorship.jsx
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Search, Filter, BookOpen, Heart, Users, Target, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 // ✅ FIXED: Removed trailing spaces in API URL
 const getApiBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return "https://anointed-3v54.onrender.com"; // NO TRAILING SPACES!
+    return "https://anointed-3v54.onrender.com"; // NO SPACES!
   }
   return "http://localhost:5000";
 };
@@ -16,11 +16,49 @@ const API_BASE_URL = getApiBaseUrl();
 
 // Student Story Viewer Component
 const StudentStoryViewer = ({ student, onClose }) => {
-  // Use student.imageUrl as the primary image
-  const studentImage = {
-    url: student.imageUrl || "/default-student.jpg",
-    alt: student.name || "Student"
+  // Normalize images from student data
+  const studentImages = useMemo(() => {
+    if (Array.isArray(student.images) && student.images.length > 0) {
+      return student.images.map((img, idx) => ({
+        id: img.id || idx,
+        url: typeof img === 'string' ? img : (img.url || student.imageUrl || "/default-student.jpg"),
+        alt: img.alt || student.name || "Student"
+      }));
+    }
+    return [{
+      id: 0,
+      url: student.imageUrl || "/default-student.jpg",
+      alt: student.name || "Student"
+    }];
+  }, [student]);
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % studentImages.length);
+    setIsAutoPlaying(false);
   };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + studentImages.length) % studentImages.length);
+    setIsAutoPlaying(false);
+  };
+
+  const goToImage = (index) => {
+    setCurrentImageIndex(index);
+    setIsAutoPlaying(false);
+  };
+
+  useEffect(() => {
+    let interval;
+    if (isAutoPlaying && studentImages.length > 1) {
+      interval = setInterval(nextImage, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, currentImageIndex, studentImages.length]);
+
+  const currentImage = studentImages[currentImageIndex];
 
   return (
     <section className="py-12 bg-gradient-to-br from-[#f9f8f5] to-[#e9ecef] min-h-screen">
@@ -59,23 +97,70 @@ const StudentStoryViewer = ({ student, onClose }) => {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          {/* Image Slot - Now uses student.imageUrl */}
+          {/* Image Carousel */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="rounded-xl overflow-hidden shadow-lg bg-white p-4 flex items-center justify-center">
-              <img
-                src={studentImage.url}
-                alt={studentImage.alt}
-                className="w-full h-64 md:h-80 object-contain"
+            <div className="rounded-xl overflow-hidden shadow-lg bg-white p-4">
+              <motion.img
+                key={currentImage.id}
+                initial={{ opacity: 0, scale: 1.1 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5 }}
+                src={currentImage.url}
+                alt={currentImage.alt}
+                className="w-full h-64 md:h-80 object-contain mx-auto"
                 onError={(e) => {
                   e.target.src = "/default-student.jpg";
                 }}
               />
             </div>
+
+            {/* Navigation Arrows */}
+            {studentImages.length > 1 && (
+              <>
+                <button
+                  onClick={prevImage}
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2b473f]"
+                  aria-label="Previous image"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#2b473f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2b473f]"
+                  aria-label="Next image"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#2b473f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </>
+            )}
+
+            {/* Dot Indicators */}
+            {studentImages.length > 1 && (
+              <div className="flex justify-center space-x-2 mt-4">
+                {studentImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToImage(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentImageIndex
+                        ? "bg-[#2b473f] scale-125"
+                        : "bg-gray-400 hover:bg-gray-500"
+                    }`}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
           </motion.div>
 
           {/* Story Content */}
@@ -130,7 +215,7 @@ const StudentStoryViewer = ({ student, onClose }) => {
             <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200/50">
               <h3 className="text-xl font-bold mb-3 text-[#2b473f] font-montserrat">Challenges He Faces</h3>
               <div className="space-y-3">
-                {Array.isArray(student.challenges) ? (
+                {Array.isArray(student.challenges) && student.challenges.length > 0 ? (
                   student.challenges.map((challenge, index) => (
                     <motion.div
                       key={index}
@@ -186,8 +271,8 @@ const StudentStoryViewer = ({ student, onClose }) => {
                 onClick={() => {
                   onClose();
                   setTimeout(() => {
-                    const btn = document.getElementById(`sponsor-btn-${student._id}`);
-                    if (btn) btn.click();
+                    const sponsorBtn = document.getElementById(`sponsor-btn-${student._id}`);
+                    if (sponsorBtn) sponsorBtn.click();
                   }, 300);
                 }}
               >
@@ -200,9 +285,6 @@ const StudentStoryViewer = ({ student, onClose }) => {
     </section>
   );
 };
-
-// --- Rest of the file remains unchanged EXCEPT minor cleanup in data normalization ---
-// SponsorshipFormPopup and other components are kept exactly as in your working version
 
 const SponsorshipFormPopup = ({ 
   isOpen, 
@@ -296,6 +378,7 @@ const SponsorshipFormPopup = ({
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
                 <input
+                  key="sponsorName"
                   type="text"
                   name="sponsorName"
                   value={formData.sponsorName}
@@ -305,6 +388,7 @@ const SponsorshipFormPopup = ({
                   className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
                 />
                 <input
+                  key="sponsorEmail"
                   type="email"
                   name="sponsorEmail"
                   value={formData.sponsorEmail}
@@ -314,6 +398,7 @@ const SponsorshipFormPopup = ({
                   className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
                 />
                 <input
+                  key="sponsorPhone"
                   type="tel"
                   name="sponsorPhone"
                   value={formData.sponsorPhone}
@@ -323,6 +408,7 @@ const SponsorshipFormPopup = ({
                   className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
                 />
                 <textarea
+                  key="message"
                   name="message"
                   value={formData.message}
                   onChange={handleFormChange}
@@ -394,7 +480,6 @@ export default function ChildSponsorship() {
   });
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -403,24 +488,39 @@ export default function ChildSponsorship() {
         if (!response.ok) throw new Error("Failed to fetch students");
         const data = await response.json();
         
-        // ✅ Only ensure fallbacks — DO NOT override imageUrl
         const normalizedStudents = data
           .filter(student => !student.isSponsored)
-          .map(student => ({
-            ...student,
-            // Keep original imageUrl — do NOT create images array
-            challenges: student.challenges || [
-              { title: "Financial Hardship", description: "Family struggles to afford basic educational needs", icon: "💰" },
-              { title: "Resource Limitations", description: "Lacks learning materials and proper nutrition", icon: "📚" }
-            ],
-            supportNeeded: student.supportNeeded || "School Fees, Nutrition, Learning Materials",
-            description: student.description || "A bright student with big dreams for the future",
-            passions: student.passions || ["Learning", "Playing with friends"],
-            academicStrengths: student.academicStrengths || "Mathematics, Environmental Studies",
-            overallPerformance: student.overallPerformance || "Working hard with potential",
-            familyBackground: student.familyBackground || "Loving family doing their best to support education",
-            aspirations: student.aspirations || "Dreams of becoming a teacher to help others"
-          }));
+          .map(student => {
+            // Normalize images
+            let images = [];
+            if (Array.isArray(student.images) && student.images.length > 0) {
+              images = student.images.map((img, idx) => ({
+                id: img.id || idx,
+                url: typeof img === 'string' ? img : (img.url || student.imageUrl || "/default-student.jpg"),
+                alt: img.alt || student.name || "Student"
+              }));
+            } else if (student.imageUrl) {
+              images = [{ id: 0, url: student.imageUrl, alt: student.name || "Student" }];
+            } else {
+              images = [{ id: 0, url: "/default-student.jpg", alt: "Student" }];
+            }
+
+            return {
+              ...student,
+              images,
+              challenges: student.challenges || [
+                { title: "Financial Hardship", description: "Family struggles to afford basic educational needs", icon: "💰" },
+                { title: "Resource Limitations", description: "Lacks learning materials and proper nutrition", icon: "📚" }
+              ],
+              supportNeeded: student.supportNeeded || "School Fees, Nutrition, Learning Materials",
+              description: student.description || "A bright student with big dreams for the future",
+              passions: student.passions || ["Learning", "Playing with friends"],
+              academicStrengths: student.academicStrengths || "Mathematics, Environmental Studies",
+              overallPerformance: student.overallPerformance || "Working hard with potential",
+              familyBackground: student.familyBackground || "Loving family doing their best to support education",
+              aspirations: student.aspirations || "Dreams of becoming a teacher to help others"
+            };
+          });
         
         setStudents(normalizedStudents);
       } catch (err) {
@@ -654,7 +754,7 @@ export default function ChildSponsorship() {
               </div>
               <select
                 value={filters.class}
-                onChange={(e) => setFilters(prev => ({ ...prev, class: e.target.value }))} 
+                onChange={(e) => setFilters(prev => ({ ...prev, class: e.target.value }))}
                 className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
               >
                 <option value="">All Classes</option>
@@ -666,21 +766,21 @@ export default function ChildSponsorship() {
                 type="number"
                 placeholder="Min Age"
                 value={filters.minAge}
-                onChange={(e) => setFilters(prev => ({ ...prev, minAge: e.target.value }))} 
+                onChange={(e) => setFilters(prev => ({ ...prev, minAge: e.target.value }))}
                 className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
               />
               <input
                 type="number"
                 placeholder="Max Age"
                 value={filters.maxAge}
-                onChange={(e) => setFilters(prev => ({ ...prev, maxAge: e.target.value }))} 
+                onChange={(e) => setFilters(prev => ({ ...prev, maxAge: e.target.value }))}
                 className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
               />
               <input
                 type="text"
                 placeholder="Academic strength"
                 value={filters.academicStrength}
-                onChange={(e) => setFilters(prev => ({ ...prev, academicStrength: e.target.value }))} 
+                onChange={(e) => setFilters(prev => ({ ...prev, academicStrength: e.target.value }))}
                 className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
               />
             </div>
