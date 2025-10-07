@@ -135,37 +135,34 @@ const Staff = () => {
   }, [activeCategory]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-25 to-gray-100 font-sans pt-24 pb-16">
-      {/* Enhanced Page Banner */}
-      <section className="relative bg-gradient-to-r from-primary via-primary-dark to-secondary py-20 sm:py-24 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl relative z-10">
+    <div className="min-h-screen bg-white font-sans pt-24 pb-16">
+      {/* Clean Page Banner */}
+      <section className="relative bg-gradient-to-r from-primary to-primary-dark py-16 sm:py-20 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <div className="text-sm text-accent-light mb-3 font-montserrat font-medium tracking-wide">
+            <div className="text-sm text-accent-light mb-3 font-montserrat font-medium">
               <button onClick={() => navigate('/')} className="hover:underline transition-all duration-300">
                 Home &gt; Our Staff
               </button> 
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-light mb-4 font-script tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-4 font-script">
               Our Dedicated Staff
             </h1>
-            <div className="w-24 h-1 bg-accent mx-auto mb-6"></div>
-            <p className="text-lg sm:text-xl opacity-95 max-w-2xl mx-auto font-poppins leading-relaxed">
-              Meet the passionate educators and professionals who nurture our students' spiritual, physical, and cognitive development
+            <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
+            <p className="text-lg opacity-95 max-w-2xl mx-auto font-poppins leading-relaxed">
+              Meet the passionate educators and professionals who nurture our students' holistic development
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Staff Intro */}
-      <section className="py-16 sm:py-20 bg-transparent">
+      <section className="py-16 sm:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <motion.div
             className="text-center mb-16"
@@ -174,31 +171,28 @@ const Staff = () => {
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-primary mb-4 font-script tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal text-primary mb-4 font-script">
               Our Educational Team
             </h2>
-            <div className="w-20 h-0.5 bg-secondary mx-auto mb-6"></div>
+            <div className="w-16 h-0.5 bg-secondary mx-auto mb-6"></div>
             <p className="text-gray-700 text-lg max-w-2xl mx-auto font-poppins leading-relaxed">
-              Committed professionals guiding our students' holistic development with excellence and compassion
+              Committed professionals guiding our students' holistic development
             </p>
           </motion.div>
 
           <motion.div
-            className="max-w-4xl mx-auto text-center mb-16 bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-soft"
+            className="max-w-4xl mx-auto text-center mb-16 bg-gray-50 rounded-2xl p-8 border border-gray-100"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <p className="text-gray-700 mb-6 text-lg leading-relaxed font-poppins">
+            <p className="text-gray-700 mb-4 text-lg leading-relaxed font-poppins">
               At Anointed Vessels Christian School, our staff are the heart of our mission. Each team member brings unique gifts and professional expertise to create a nurturing environment where children flourish spiritually, academically, and socially.
-            </p>
-            <p className="text-gray-600 leading-relaxed font-poppins">
-              Our commitment to excellence in education is reflected in our carefully selected team of dedicated professionals who embody our Christian values and educational philosophy.
             </p>
           </motion.div>
 
-          {/* Enhanced Category Filter */}
+          {/* Category Filter */}
           <motion.div
             className="flex flex-wrap justify-center gap-3 mb-16"
             initial="hidden"
@@ -210,23 +204,23 @@ const Staff = () => {
               <motion.button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`px-6 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 font-montserrat border-2 shadow-soft hover:shadow-lg ${
+                className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 font-montserrat border ${
                   activeCategory === category.id
-                    ? 'bg-secondary border-secondary text-white shadow-lg scale-105'
-                    : 'bg-white border-gray-200 text-gray-700 hover:border-secondary hover:text-secondary'
+                    ? 'bg-secondary border-secondary text-white shadow-md'
+                    : 'bg-white border-gray-300 text-gray-700 hover:border-secondary hover:text-secondary'
                 }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
               >
                 {category.name}
               </motion.button>
             ))}
           </motion.div>
 
-          {/* Enhanced Staff Layout */}
+          {/* Compact Staff Layout */}
           {filteredStaff.length === 0 ? (
             <motion.div 
-              className="text-center py-20 bg-white/80 backdrop-blur-sm rounded-3xl shadow-soft"
+              className="text-center py-16 bg-gray-50 rounded-2xl border border-gray-100"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -235,48 +229,51 @@ const Staff = () => {
               <p className="text-gray-600 text-lg font-poppins">No staff members found in this category.</p>
             </motion.div>
           ) : (
-            <div className="grid gap-8 sm:gap-12">
-              {filteredStaff.map((member, index) => {
+            <div className="grid gap-6 sm:gap-8">
+              {filteredStaff.map((member) => {
                 const isExpanded = expandedCards.has(member.id);
                 return (
                   <motion.div
                     key={member.id}
-                    className={`bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden shadow-soft hover:shadow-lg transition-all duration-500 ${
-                      isExpanded ? 'ring-2 ring-secondary/20' : ''
+                    className={`bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-all duration-300 ${
+                      isExpanded ? 'ring-2 ring-secondary/20 shadow-lg' : 'shadow-md hover:shadow-lg'
                     }`}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-50px" }}
                     variants={cardVariants}
-                    whileHover={{ y: -5, transition: { duration: 0.3 } }}
+                    whileHover={{ y: -2 }}
                   >
-                    <div className="flex flex-col lg:flex-row items-stretch min-h-96">
-                      {/* Image Section */}
-                      <div className="lg:w-2/5 relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10"></div>
-                        <img
-                          src={member.image}
-                          alt={member.name}
-                          className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                          onError={(e) => {
-                            e.target.src = "https://source.unsplash.com/600x700/?african,professional,educator&sig=" + member.id;
-                          }}
-                        />
-                        <div className="absolute bottom-6 left-6 z-20">
-                          <h3 className="text-2xl font-bold text-white mb-1 font-montserrat tracking-tight">
+                    <div className="flex flex-col md:flex-row">
+                      {/* Compact Image Section */}
+                      <div className="md:w-1/3 lg:w-1/4 relative">
+                        <div className="aspect-[3/4] relative overflow-hidden bg-gray-100">
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            className="w-full h-full object-contain p-2"
+                            onError={(e) => {
+                              e.target.src = "https://source.unsplash.com/400x500/?portrait,professional,educator&sig=" + member.id;
+                            }}
+                          />
+                        </div>
+                        {/* Name and Role overlay for mobile */}
+                        <div className="md:hidden absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                          <h3 className="text-lg font-bold text-white mb-1 font-montserrat">
                             {member.name}
                           </h3>
-                          <span className="text-accent-light font-semibold text-sm font-montserrat tracking-wide">
+                          <span className="text-accent-light font-semibold text-sm font-montserrat">
                             {member.role}
                           </span>
                         </div>
                       </div>
 
                       {/* Content Section */}
-                      <div className="lg:w-3/5 p-8 flex flex-col justify-between">
-                        <div>
-                          <div className="flex items-center gap-3 mb-4 lg:hidden">
-                            <div className="w-2 h-8 bg-secondary rounded-full"></div>
+                      <div className="md:w-2/3 lg:w-3/4 p-6 md:p-8 flex flex-col">
+                        <div className="flex-1">
+                          {/* Name and Role for desktop */}
+                          <div className="hidden md:flex items-center gap-3 mb-4">
+                            <div className="w-1.5 h-6 bg-secondary rounded-full"></div>
                             <div>
                               <h3 className="text-xl font-bold text-primary font-montserrat">
                                 {member.name}
@@ -293,11 +290,11 @@ const Staff = () => {
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: 'auto' }}
                               exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                              className="mb-6"
+                              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                              className="mb-4"
                             >
                               <p className={`text-gray-700 leading-relaxed font-poppins ${
-                                !isExpanded ? 'line-clamp-4' : ''
+                                !isExpanded ? 'line-clamp-3' : ''
                               }`}>
                                 {member.bio}
                               </p>
@@ -307,7 +304,7 @@ const Staff = () => {
 
                         <button
                           onClick={() => toggleExpand(member.id)}
-                          className="flex items-center gap-2 text-secondary font-semibold text-sm hover:text-accent transition-all duration-300 font-montserrat group w-fit"
+                          className="flex items-center gap-2 text-secondary font-semibold text-sm hover:text-accent transition-all duration-300 font-montserrat group w-fit mt-2"
                         >
                           {isExpanded ? 'Show Less' : 'Read Full Bio'}
                           <motion.svg 
@@ -331,14 +328,11 @@ const Staff = () => {
         </div>
       </section>
 
-      {/* Enhanced Call to Action */}
-      <section className="py-20 bg-gradient-to-br from-primary via-primary-dark to-secondary text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-grid-white/[0.03] bg-[size:40px_40px]"></div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl relative z-10">
+      {/* Clean Call to Action */}
+      <section className="py-16 bg-gradient-to-r from-primary to-primary-dark text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
           <motion.h2
-            className="text-4xl sm:text-5xl md:text-6xl font-light mb-6 font-script tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-normal mb-6 font-script"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -346,16 +340,16 @@ const Staff = () => {
           >
             Join Our Mission
           </motion.h2>
-          <div className="w-24 h-1 bg-accent mx-auto mb-8"></div>
+          <div className="w-20 h-1 bg-accent mx-auto mb-8"></div>
           <motion.p
-            className="text-xl mb-10 opacity-95 font-poppins leading-relaxed max-w-2xl mx-auto"
+            className="text-lg mb-8 opacity-95 font-poppins leading-relaxed max-w-2xl mx-auto"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
             transition={{ delay: 0.2 }}
           >
-            Support our dedicated staff as they nurture the next generation of Christian leaders and global citizens
+            Support our dedicated staff as they nurture the next generation of Christian leaders
           </motion.p>
           <motion.div
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
@@ -367,16 +361,16 @@ const Staff = () => {
           >
             <motion.button
               onClick={() => navigate("/ChildSponsorship")}
-              className="bg-white text-primary hover:bg-accent hover:text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl font-montserrat min-w-48"
-              whileHover={{ scale: 1.05, y: -2 }}
+              className="bg-white text-primary hover:bg-accent hover:text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg font-montserrat"
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Sponsor a Child
             </motion.button>
             <motion.button
               onClick={() => {}}
-              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold py-4 px-8 rounded-2xl transition-all duration-300 font-montserrat min-w-48"
-              whileHover={{ scale: 1.05, y: -2 }}
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-xl transition-all duration-300 font-montserrat"
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Donate Now
