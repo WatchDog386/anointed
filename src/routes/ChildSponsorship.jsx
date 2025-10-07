@@ -1,6 +1,6 @@
 // src/routes/ChildSponsorship.jsx
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Search, Filter, BookOpen, Heart, Users, Target, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 // ✅ FIXED: Removed trailing spaces in API URL
 const getApiBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return "https://anointed-3v54.onrender.com"; // ← NO TRAILING SPACES!
+    return "https://anointed-3v54.onrender.com"; // NO SPACES!
   }
   return "http://localhost:5000";
 };
@@ -16,16 +16,32 @@ const API_BASE_URL = getApiBaseUrl();
 
 // Student Story Viewer Component
 const StudentStoryViewer = ({ student, onClose }) => {
+  // Normalize images from student data
+  const studentImages = useMemo(() => {
+    if (Array.isArray(student.images) && student.images.length > 0) {
+      return student.images.map((img, idx) => ({
+        id: img.id || idx,
+        url: typeof img === 'string' ? img : (img.url || student.imageUrl || "/default-student.jpg"),
+        alt: img.alt || student.name || "Student"
+      }));
+    }
+    return [{
+      id: 0,
+      url: student.imageUrl || "/default-student.jpg",
+      alt: student.name || "Student"
+    }];
+  }, [student]);
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % (student.images?.length || 1));
+    setCurrentImageIndex((prev) => (prev + 1) % studentImages.length);
     setIsAutoPlaying(false);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + (student.images?.length || 1)) % (student.images?.length || 1));
+    setCurrentImageIndex((prev) => (prev - 1 + studentImages.length) % studentImages.length);
     setIsAutoPlaying(false);
   };
 
@@ -34,16 +50,15 @@ const StudentStoryViewer = ({ student, onClose }) => {
     setIsAutoPlaying(false);
   };
 
-  // Auto-advance images
   useEffect(() => {
     let interval;
-    if (isAutoPlaying && student.images?.length > 1) {
+    if (isAutoPlaying && studentImages.length > 1) {
       interval = setInterval(nextImage, 5000);
     }
     return () => clearInterval(interval);
-  }, [isAutoPlaying, currentImageIndex, student.images]);
+  }, [isAutoPlaying, currentImageIndex, studentImages.length]);
 
-  const currentImage = student.images?.[currentImageIndex] || { url: "/default-student.jpg", alt: student.name };
+  const currentImage = studentImages[currentImageIndex];
 
   return (
     <section className="py-12 bg-gradient-to-br from-[#f9f8f5] to-[#e9ecef] min-h-screen">
@@ -91,13 +106,13 @@ const StudentStoryViewer = ({ student, onClose }) => {
           >
             <div className="rounded-xl overflow-hidden shadow-lg bg-white p-4">
               <motion.img
-                key={currentImage.id || currentImageIndex}
+                key={currentImage.id}
                 initial={{ opacity: 0, scale: 1.1 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.5 }}
                 src={currentImage.url}
-                alt={currentImage.alt || student.name}
+                alt={currentImage.alt}
                 className="w-full h-64 md:h-80 object-contain mx-auto"
                 onError={(e) => {
                   e.target.src = "/default-student.jpg";
@@ -106,7 +121,7 @@ const StudentStoryViewer = ({ student, onClose }) => {
             </div>
 
             {/* Navigation Arrows */}
-            {student.images?.length > 1 && (
+            {studentImages.length > 1 && (
               <>
                 <button
                   onClick={prevImage}
@@ -130,9 +145,9 @@ const StudentStoryViewer = ({ student, onClose }) => {
             )}
 
             {/* Dot Indicators */}
-            {student.images?.length > 1 && (
+            {studentImages.length > 1 && (
               <div className="flex justify-center space-x-2 mt-4">
-                {student.images.map((_, index) => (
+                {studentImages.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => goToImage(index)}
@@ -200,21 +215,23 @@ const StudentStoryViewer = ({ student, onClose }) => {
             <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200/50">
               <h3 className="text-xl font-bold mb-3 text-[#2b473f] font-montserrat">Challenges He Faces</h3>
               <div className="space-y-3">
-                {student.challenges?.map((challenge, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 * index }}
-                    className="flex items-start space-x-3 p-3 bg-[#f6f4ee] rounded-lg hover:bg-[#e9ecef] transition-colors duration-300"
-                  >
-                    <span className="text-xl flex-shrink-0">{challenge.icon || '⚠️'}</span>
-                    <div>
-                      <h4 className="font-semibold text-[#2b473f] text-sm font-montserrat">{challenge.title}</h4>
-                      <p className="text-gray-600 text-xs font-poppins">{challenge.description}</p>
-                    </div>
-                  </motion.div>
-                )) || (
+                {Array.isArray(student.challenges) && student.challenges.length > 0 ? (
+                  student.challenges.map((challenge, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: 0.2 * index }}
+                      className="flex items-start space-x-3 p-3 bg-[#f6f4ee] rounded-lg hover:bg-[#e9ecef] transition-colors duration-300"
+                    >
+                      <span className="text-xl flex-shrink-0">{challenge.icon || '⚠️'}</span>
+                      <div>
+                        <h4 className="font-semibold text-[#2b473f] text-sm font-montserrat">{challenge.title}</h4>
+                        <p className="text-gray-600 text-xs font-poppins">{challenge.description}</p>
+                      </div>
+                    </motion.div>
+                  ))
+                ) : (
                   <p className="text-gray-600 text-sm">Facing financial and resource challenges that impact education.</p>
                 )}
               </div>
@@ -232,7 +249,10 @@ const StudentStoryViewer = ({ student, onClose }) => {
                 {student.name.split(' ')[0]} needs support to stabilize their education so their dreams don't fade away.
               </p>
               <div className="flex flex-wrap gap-2 mb-4">
-                {(student.supportNeeded?.split(',') || ['School Fees', 'Nutrition', 'Learning Materials']).map((need, index) => (
+                {(typeof student.supportNeeded === 'string' 
+                  ? student.supportNeeded.split(',').map(s => s.trim())
+                  : student.supportNeeded || ['School Fees', 'Nutrition', 'Learning Materials']
+                ).map((need, index) => (
                   <motion.span
                     key={index}
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -240,7 +260,7 @@ const StudentStoryViewer = ({ student, onClose }) => {
                     transition={{ duration: 0.3, delay: 0.1 * index }}
                     className="bg-[#932528] text-white px-3 py-1 rounded-full text-xs font-medium font-poppins"
                   >
-                    {need.trim()}
+                    {need}
                   </motion.span>
                 ))}
               </div>
@@ -250,8 +270,10 @@ const StudentStoryViewer = ({ student, onClose }) => {
                 className="w-full bg-[#932528] hover:bg-[#7a1e21] text-white font-semibold py-2.5 px-4 rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#932528] focus:ring-offset-2 text-sm font-montserrat"
                 onClick={() => {
                   onClose();
-                  // Trigger sponsor popup after closing story
-                  setTimeout(() => document.getElementById(`sponsor-btn-${student._id}`)?.click(), 300);
+                  setTimeout(() => {
+                    const sponsorBtn = document.getElementById(`sponsor-btn-${student._id}`);
+                    if (sponsorBtn) sponsorBtn.click();
+                  }, 300);
                 }}
               >
                 Support {student.name.split(' ')[0]}'s Education
@@ -303,7 +325,6 @@ const SponsorshipFormPopup = ({
     e.preventDefault();
     setFormError('');
     
-    // ✅ Frontend validation
     if (!formData.sponsorName.trim() || !formData.sponsorEmail.trim() || !formData.sponsorPhone.trim()) {
       setFormError('Please fill in all required fields.');
       return;
@@ -448,7 +469,7 @@ export default function ChildSponsorship() {
   const [error, setError] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [viewingStudent, setViewingStudent] = useState(null); // For story viewer
+  const [viewingStudent, setViewingStudent] = useState(null);
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [filters, setFilters] = useState({
     searchTerm: '',
@@ -459,7 +480,6 @@ export default function ChildSponsorship() {
   });
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -470,22 +490,37 @@ export default function ChildSponsorship() {
         
         const normalizedStudents = data
           .filter(student => !student.isSponsored)
-          .map(student => ({
-            ...student,
-            // Ensure all fields exist for story viewer
-            images: student.images || [{ url: "/default-student.jpg", alt: student.name }],
-            challenges: student.challenges || [
-              { title: "Financial Hardship", description: "Family struggles to afford basic educational needs", icon: "💰" },
-              { title: "Resource Limitations", description: "Lacks learning materials and proper nutrition", icon: "📚" }
-            ],
-            supportNeeded: student.supportNeeded || "School Fees, Nutrition, Learning Materials",
-            description: student.description || "A bright student with big dreams for the future",
-            passions: student.passions || ["Learning", "Playing with friends"],
-            academicStrengths: student.academicStrengths || "Mathematics, Environmental Studies",
-            overallPerformance: student.overallPerformance || "Working hard with potential",
-            familyBackground: student.familyBackground || "Loving family doing their best to support education",
-            aspirations: student.aspirations || "Dreams of becoming a teacher to help others"
-          }));
+          .map(student => {
+            // Normalize images
+            let images = [];
+            if (Array.isArray(student.images) && student.images.length > 0) {
+              images = student.images.map((img, idx) => ({
+                id: img.id || idx,
+                url: typeof img === 'string' ? img : (img.url || student.imageUrl || "/default-student.jpg"),
+                alt: img.alt || student.name || "Student"
+              }));
+            } else if (student.imageUrl) {
+              images = [{ id: 0, url: student.imageUrl, alt: student.name || "Student" }];
+            } else {
+              images = [{ id: 0, url: "/default-student.jpg", alt: "Student" }];
+            }
+
+            return {
+              ...student,
+              images,
+              challenges: student.challenges || [
+                { title: "Financial Hardship", description: "Family struggles to afford basic educational needs", icon: "💰" },
+                { title: "Resource Limitations", description: "Lacks learning materials and proper nutrition", icon: "📚" }
+              ],
+              supportNeeded: student.supportNeeded || "School Fees, Nutrition, Learning Materials",
+              description: student.description || "A bright student with big dreams for the future",
+              passions: student.passions || ["Learning", "Playing with friends"],
+              academicStrengths: student.academicStrengths || "Mathematics, Environmental Studies",
+              overallPerformance: student.overallPerformance || "Working hard with potential",
+              familyBackground: student.familyBackground || "Loving family doing their best to support education",
+              aspirations: student.aspirations || "Dreams of becoming a teacher to help others"
+            };
+          });
         
         setStudents(normalizedStudents);
       } catch (err) {
@@ -665,7 +700,7 @@ export default function ChildSponsorship() {
               Get to Know {student.name.split(' ')[0]}'s Story
             </motion.button>
             <motion.button 
-              id={`sponsor-btn-${student._id}`} // For programmatic click
+              id={`sponsor-btn-${student._id}`}
               onClick={() => openSponsorPopup(student)}
               className="text-xs px-3 py-1.5 bg-[#932528] text-white rounded-lg hover:bg-[#7a1e21] transition"
               whileHover={{ scale: 1.02 }}
@@ -719,7 +754,7 @@ export default function ChildSponsorship() {
               </div>
               <select
                 value={filters.class}
-                onChange={(e) => setFilters(prev => ({ ...prev, class: e.target.value }))} 
+                onChange={(e) => setFilters(prev => ({ ...prev, class: e.target.value }))}
                 className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
               >
                 <option value="">All Classes</option>
@@ -731,21 +766,21 @@ export default function ChildSponsorship() {
                 type="number"
                 placeholder="Min Age"
                 value={filters.minAge}
-                onChange={(e) => setFilters(prev => ({ ...prev, minAge: e.target.value }))} 
+                onChange={(e) => setFilters(prev => ({ ...prev, minAge: e.target.value }))}
                 className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
               />
               <input
                 type="number"
                 placeholder="Max Age"
                 value={filters.maxAge}
-                onChange={(e) => setFilters(prev => ({ ...prev, maxAge: e.target.value }))} 
+                onChange={(e) => setFilters(prev => ({ ...prev, maxAge: e.target.value }))}
                 className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
               />
               <input
                 type="text"
                 placeholder="Academic strength"
                 value={filters.academicStrength}
-                onChange={(e) => setFilters(prev => ({ ...prev, academicStrength: e.target.value }))} 
+                onChange={(e) => setFilters(prev => ({ ...prev, academicStrength: e.target.value }))}
                 className="text-xs py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
               />
             </div>
