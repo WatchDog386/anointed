@@ -140,7 +140,7 @@ export default function About() {
                   International Service & Calling
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-base font-poppins mb-4">
-                  After relocating to the United States, Jimmy continued to excel, serving in reputable organizations like McKesson, and later, in the U.S. Army as a Nuclear Specialist and Supply Specialist.
+                  After relocating to the United States, Jimmy continued to excel, serving in reputable organizations like McKesson, and later, in the U.S. Army.
                 </p>
                 <p className="text-gray-600 text-sm sm:text-base font-poppins">
                   Yet, even with such achievements abroad, his heart remained deeply connected to his homeland — to the children of Mfangano who lacked access to education, hope, and the basic necessities of life.

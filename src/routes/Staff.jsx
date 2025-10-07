@@ -8,30 +8,49 @@ const Staff = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [expandedCards, setExpandedCards] = useState(new Set());
 
-  // Animation variants (match Stories.jsx)
+  // Animation variants
   const fadeIn = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        duration: 0.7, 
+        ease: [0.16, 1, 0.3, 1] 
+      } 
+    },
   };
 
   const staggerContainer = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } },
+    visible: { 
+      transition: { 
+        staggerChildren: 0.15, 
+        delayChildren: 0.3 
+      } 
+    },
   };
 
-  const getUnsplashImage = (keyword, id) => {
-    const keywords = keyword.toLowerCase().replace(/\s+/g, '+').replace(/&/g, 'and');
-    return `https://source.unsplash.com/600x700/?african,${keywords},professional&sig=${id}`;
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: { 
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
   };
 
   const staffMembers = [
-    // ... (same as before — keep your full list)
     {
       id: 1,
       name: "MD. Leah Onam",
       role: "Headteacher",
       category: "leadership",
-      bio: "MD. Leah Onam provides visionary leadership to Anointed Vessels Christian School...",
+      bio: "MD. Leah Onam provides visionary leadership to Anointed Vessels Christian School, bringing over 15 years of educational experience and a deep commitment to holistic child development. Her innovative approaches to curriculum design and student engagement have consistently elevated academic performance while nurturing spiritual growth.",
       image:"/LEAH.JPG"
     },
     {
@@ -39,7 +58,7 @@ const Staff = () => {
       name: "Mr. Erick",
       role: "Deputy Headteacher",
       category: "leadership",
-      bio: "Mr. Erick supports the Headteacher in daily school operations...",
+      bio: "Mr. Erick supports the Headteacher in daily school operations with exceptional organizational skills and dedication. His background in educational administration ensures smooth functioning across all departments while maintaining the school's Christian values and academic standards.",
       image:"/ERICK.JPG"
     },
     {
@@ -47,7 +66,7 @@ const Staff = () => {
       name: "Mr. Omodia",
       role: "Senior Teacher",
       category: "leadership",
-      bio: "As our Senior Teacher, Mr. Omodia mentors junior staff...",
+      bio: "As our Senior Teacher, Mr. Omodia mentors junior staff and leads curriculum development initiatives. With a Master's in Education and specialized training in child psychology, he creates learning environments that cater to diverse learning styles and abilities.",
       image:"/ALBERT.JPG"
     },
     {
@@ -55,7 +74,7 @@ const Staff = () => {
       name: "Md. Elizabeth",
       role: "Financial Officer & Accountant",
       category: "support",
-      bio: "Md. Elizabeth manages the school's financial resources...",
+      bio: "Md. Elizabeth manages the school's financial resources with precision and integrity. Her CPA certification and decade of experience in educational finance ensure optimal resource allocation while maintaining transparency and accountability in all financial matters.",
       image:"/ELIZABETH.JPG"
     },
     {
@@ -63,7 +82,7 @@ const Staff = () => {
       name: "Mr. Alphonce Okuku",
       role: "School Chairperson",
       category: "support",
-      bio: "Mr. Alphonce provides strategic leadership...",
+      bio: "Mr. Alphonce provides strategic leadership and governance oversight, bringing extensive experience in educational policy and community development. His visionary guidance has been instrumental in shaping the school's long-term growth and community impact.",
       image:"/VINCENT.JPG"
     },
     {
@@ -71,7 +90,7 @@ const Staff = () => {
       name: "Md. Ann",
       role: "Chef",
       category: "support",
-      bio: "Md. Ann ensures that our students receive nutritious meals...",
+      bio: "Md. Ann ensures that our students receive nutritious, balanced meals that support their growth and learning. With formal training in nutrition and child dietary requirements, she creates menus that are both healthy and appealing to young palates.",
       image:"/NANZALA.JPG"
     },
     {
@@ -79,7 +98,7 @@ const Staff = () => {
       name: "Md. Sheryl",
       role: "Chef",
       category: "support",
-      bio: "Md. Sheryl works alongside our kitchen team...",
+      bio: "Md. Sheryl works alongside our kitchen team to maintain the highest standards of food safety and quality. Her creative approach to meal preparation ensures variety and nutritional excellence in our school feeding program.",
       image:"/SHARON.JPG",
     },
     {
@@ -87,10 +106,9 @@ const Staff = () => {
       name: "Md. Nanzalla",
       role: "Teacher",
       category: "teaching",
-      bio: "Md. Nanzalla creates engaging classroom environments...",
+      bio: "Md. Nanzalla creates engaging classroom environments that foster curiosity and critical thinking. Her specialized training in early childhood education and innovative teaching methodologies make learning both effective and enjoyable for our youngest students.",
       image:"/NANZALA.JPG"
     },
-    // Add the rest as needed (or keep your full list)
   ];
 
   const filteredStaff = activeCategory === 'all' 
@@ -117,9 +135,9 @@ const Staff = () => {
   }, [activeCategory]);
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans pt-24 pb-16">
-      {/* Page Banner */}
-      <section className="relative bg-primary py-16 sm:py-20 text-white text-center">
+    <div className="min-h-screen bg-white font-sans pt-24 pb-16">
+      {/* Clean Page Banner */}
+      <section className="relative bg-gradient-to-r from-primary to-primary-dark py-16 sm:py-20 text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <motion.div
             initial="hidden"
@@ -127,152 +145,180 @@ const Staff = () => {
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <div className="text-sm text-accent mb-2 font-montserrat">
-              <button onClick={() => navigate('/')} className="hover:underline">
-              
+            <div className="text-sm text-accent-light mb-3 font-montserrat font-medium">
+              <button onClick={() => navigate('/')} className="hover:underline transition-all duration-300">
+                Home &gt; Our Staff
               </button> 
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-3 font-script">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-4 font-script">
               Our Dedicated Staff
             </h1>
-            <p className="text-base sm:text-lg opacity-90 max-w-2xl mx-auto font-poppins">
-              Meet the passionate educators who nurture our students' spiritual, physical, and cognitive development
+            <div className="w-20 h-1 bg-accent mx-auto mb-6"></div>
+            <p className="text-lg opacity-95 max-w-2xl mx-auto font-poppins leading-relaxed">
+              Meet the passionate educators and professionals who nurture our students' holistic development
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Staff Intro */}
-      <section className="py-12 sm:py-16 bg-white">
+      <section className="py-16 sm:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <motion.div
-            className="text-center mb-10"
+            className="text-center mb-16"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal text-primary mb-3 font-script">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal text-primary mb-4 font-script">
               Our Educational Team
             </h2>
-            <p className="text-gray-700 max-w-2xl mx-auto font-poppins">
+            <div className="w-16 h-0.5 bg-secondary mx-auto mb-6"></div>
+            <p className="text-gray-700 text-lg max-w-2xl mx-auto font-poppins leading-relaxed">
               Committed professionals guiding our students' holistic development
             </p>
           </motion.div>
 
           <motion.div
-            className="max-w-3xl mx-auto text-center mb-12"
+            className="max-w-4xl mx-auto text-center mb-16 bg-gray-50 rounded-2xl p-8 border border-gray-100"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            <p className="text-gray-700 mb-4 font-poppins">
-              At Anointed Vessels Christian School, our staff are the heart of our mission.
-            </p>
-            <p className="text-gray-700 font-poppins">
-              Each brings unique gifts to create a nurturing environment where children flourish spiritually, academically, and socially.
+            <p className="text-gray-700 mb-4 text-lg leading-relaxed font-poppins">
+              At Anointed Vessels Christian School, our staff are the heart of our mission. Each team member brings unique gifts and professional expertise to create a nurturing environment where children flourish spiritually, academically, and socially.
             </p>
           </motion.div>
 
           {/* Category Filter */}
           <motion.div
-            className="flex flex-wrap justify-center gap-2 md:gap-3 mb-12"
+            className="flex flex-wrap justify-center gap-3 mb-16"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
           >
             {categories.map((category) => (
-              <button
+              <motion.button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`px-4 py-2 md:px-6 md:py-2.5 rounded-full font-medium text-sm md:text-base transition-all duration-300 font-montserrat ${
+                className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 font-montserrat border ${
                   activeCategory === category.id
-                    ? 'bg-secondary text-white'
-                    : 'bg-white text-secondary border border-secondary hover:bg-accent hover:text-white'
+                    ? 'bg-secondary border-secondary text-white shadow-md'
+                    : 'bg-white border-gray-300 text-gray-700 hover:border-secondary hover:text-secondary'
                 }`}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
               >
                 {category.name}
-              </button>
+              </motion.button>
             ))}
           </motion.div>
 
-          {/* Alternating Staff Layout */}
+          {/* Compact Staff Layout */}
           {filteredStaff.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-600 font-poppins">No staff members found in this category.</p>
-            </div>
+            <motion.div 
+              className="text-center py-16 bg-gray-50 rounded-2xl border border-gray-100"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeIn}
+            >
+              <p className="text-gray-600 text-lg font-poppins">No staff members found in this category.</p>
+            </motion.div>
           ) : (
-            <div className="space-y-12 sm:space-y-16">
-              {filteredStaff.map((member, index) => {
-                const isEven = index % 2 === 0;
+            <div className="grid gap-6 sm:gap-8">
+              {filteredStaff.map((member) => {
+                const isExpanded = expandedCards.has(member.id);
                 return (
                   <motion.div
                     key={member.id}
-                    className="flex flex-col md:flex-row items-center gap-6 sm:gap-8"
+                    className={`bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-all duration-300 ${
+                      isExpanded ? 'ring-2 ring-secondary/20 shadow-lg' : 'shadow-md hover:shadow-lg'
+                    }`}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={fadeIn}
+                    viewport={{ once: true, margin: "-50px" }}
+                    variants={cardVariants}
+                    whileHover={{ y: -2 }}
                   >
-                    {/* Image Side */}
-                    <div className={`md:w-2/5 ${isEven ? 'md:order-1' : 'md:order-2'}`}>
-                      <div className="rounded-2xl overflow-hidden shadow-lg">
-                        <img
-                          src={member.image}
-                          alt={member.name}
-                          className="w-full h-auto object-cover"
-                          onError={(e) => {
-                            e.target.src = "https://source.unsplash.com/600x700/?african,professional&sig=fallback";
-                          }}
-                        />
+                    <div className="flex flex-col md:flex-row">
+                      {/* Compact Image Section */}
+                      <div className="md:w-1/3 lg:w-1/4 relative">
+                        <div className="aspect-[3/4] relative overflow-hidden bg-gray-100">
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            className="w-full h-full object-contain p-2"
+                            onError={(e) => {
+                              e.target.src = "https://source.unsplash.com/400x500/?portrait,professional,educator&sig=" + member.id;
+                            }}
+                          />
+                        </div>
+                        {/* Name and Role overlay for mobile */}
+                        <div className="md:hidden absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                          <h3 className="text-lg font-bold text-white mb-1 font-montserrat">
+                            {member.name}
+                          </h3>
+                          <span className="text-accent-light font-semibold text-sm font-montserrat">
+                            {member.role}
+                          </span>
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Info Side */}
-                    <div className={`md:w-3/5 text-center md:text-left ${isEven ? 'md:order-2' : 'md:order-1'}`}>
-                      <h3 className="text-xl sm:text-2xl font-semibold text-primary mb-1 font-montserrat">
-                        {member.name}
-                      </h3>
-                      <span className="text-secondary font-medium block mb-3 font-montserrat">
-                        {member.role}
-                      </span>
-                      
-                      <AnimatePresence>
-                        {expandedCards.has(member.id) ? (
-                          <motion.p
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="text-gray-700 mb-4 leading-relaxed font-poppins"
-                          >
-                            {member.bio}
-                          </motion.p>
-                        ) : (
-                          <p className="text-gray-700 mb-4 leading-relaxed font-poppins line-clamp-3">
-                            {member.bio}
-                          </p>
-                        )}
-                      </AnimatePresence>
+                      {/* Content Section */}
+                      <div className="md:w-2/3 lg:w-3/4 p-6 md:p-8 flex flex-col">
+                        <div className="flex-1">
+                          {/* Name and Role for desktop */}
+                          <div className="hidden md:flex items-center gap-3 mb-4">
+                            <div className="w-1.5 h-6 bg-secondary rounded-full"></div>
+                            <div>
+                              <h3 className="text-xl font-bold text-primary font-montserrat">
+                                {member.name}
+                              </h3>
+                              <span className="text-secondary font-semibold text-sm font-montserrat">
+                                {member.role}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <AnimatePresence mode="wait">
+                            <motion.div
+                              key={isExpanded ? 'expanded' : 'collapsed'}
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                              className="mb-4"
+                            >
+                              <p className={`text-gray-700 leading-relaxed font-poppins ${
+                                !isExpanded ? 'line-clamp-3' : ''
+                              }`}>
+                                {member.bio}
+                              </p>
+                            </motion.div>
+                          </AnimatePresence>
+                        </div>
 
-                      <button
-                        onClick={() => toggleExpand(member.id)}
-                        className="text-secondary font-medium text-sm flex items-center justify-center md:justify-start hover:text-accent transition-colors font-montserrat"
-                      >
-                        {expandedCards.has(member.id) ? 'Show Less' : 'Read Full Bio'}
-                        <svg 
-                          className={`ml-1 w-3 h-3 transition-transform duration-300 ${
-                            expandedCards.has(member.id) ? 'rotate-180' : ''
-                          }`} 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
+                        <button
+                          onClick={() => toggleExpand(member.id)}
+                          className="flex items-center gap-2 text-secondary font-semibold text-sm hover:text-accent transition-all duration-300 font-montserrat group w-fit mt-2"
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </button>
+                          {isExpanded ? 'Show Less' : 'Read Full Bio'}
+                          <motion.svg 
+                            className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                            animate={{ rotate: isExpanded ? 180 : 0 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                          </motion.svg>
+                        </button>
+                      </div>
                     </div>
                   </motion.div>
                 );
@@ -282,20 +328,21 @@ const Staff = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-12 sm:py-16 bg-gradient-to-r from-primary to-secondary text-white">
+      {/* Clean Call to Action */}
+      <section className="py-16 bg-gradient-to-r from-primary to-primary-dark text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
           <motion.h2
-            className="text-3xl sm:text-4xl md:text-5xl font-normal mb-4 font-script"
+            className="text-3xl sm:text-4xl md:text-5xl font-normal mb-6 font-script"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
           >
-            Join Our Educational Mission
+            Join Our Mission
           </motion.h2>
+          <div className="w-20 h-1 bg-accent mx-auto mb-8"></div>
           <motion.p
-            className="text-base sm:text-lg mb-8 opacity-90 font-poppins"
+            className="text-lg mb-8 opacity-95 font-poppins leading-relaxed max-w-2xl mx-auto"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -305,24 +352,29 @@ const Staff = () => {
             Support our dedicated staff as they nurture the next generation of Christian leaders
           </motion.p>
           <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeIn}
             transition={{ delay: 0.4 }}
           >
-            <button
+            <motion.button
               onClick={() => navigate("/ChildSponsorship")}
-              className="inline-block bg-white text-primary hover:bg-accent hover:text-white font-semibold py-2.5 px-6 sm:px-8 rounded-full transition-all duration-300 mr-3 mb-2 sm:mb-0 font-montserrat"
+              className="bg-white text-primary hover:bg-accent hover:text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg font-montserrat"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               Sponsor a Child
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={() => {}}
-              className="inline-block bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-semibold py-2.5 px-6 sm:px-8 rounded-full transition-all duration-300 font-montserrat"
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold py-3 px-6 rounded-xl transition-all duration-300 font-montserrat"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               Donate Now
-            </button>
+            </motion.button>
           </motion.div>
         </div>
       </section>
