@@ -52,20 +52,16 @@ export default function About() {
                   variants={fadeIn}
                 >
                   <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal text-primary font-script mb-4">
-                    Our Humble Beginnings
+                    A Vision Born from Compassion and Faith
                   </h1>
                   <h2 className="text-xl sm:text-2xl font-semibold text-secondary mb-4 font-montserrat">
-                    Founded with Purpose in 2018
+                    The Story of Anointed Vessels
                   </h2>
                   <p className="mb-4 text-gray-700 font-poppins">
-                    Anointed Vessels Christian School was established to{" "}
-                    <strong>care for orphans and vulnerable children</strong>, releasing them from poverty-stricken families affected or infected with HIV/AIDS and other chronic illnesses.
+                    Anointed Vessels Christian School stands as a living testimony of faith, resilience, and love for community. Founded by Jimmy Carter Owuato, the vision was not born in comfort or convenience — it was born from a heart that has known hardship, overcome adversity, and remained steadfast in service to others.
                   </p>
                   <p className="mb-4 text-gray-700 font-poppins">
-                    We prioritize orphans and vulnerable children in the Mfangano Island area and surroundings, providing them with boarding, education, protection, and Christian nurture.
-                  </p>
-                  <p className="mb-6 text-gray-700 font-poppins">
-                    What began as a response to immediate needs has grown into a transformative ministry serving hundreds of children and families across Mfangano Island, offering both material care and spiritual hope.
+                    Jimmy's journey began humbly in Kenya. Having grown up as an orphan, he understood firsthand the struggles faced by many children on Mfangano Island, where poverty, malnutrition, and the effects of HIV/AIDS continue to affect families deeply. Yet, through each season of his life, God was shaping in him a vessel of compassion and purpose.
                   </p>
                   <Link
                     to="/staff"
@@ -96,7 +92,7 @@ export default function About() {
           </div>
         </section>
 
-        {/* Mission & Vision */}
+        {/* Jimmy's Journey Section */}
         <section className="py-12 sm:py-16 bg-light">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
             <motion.div
@@ -107,15 +103,73 @@ export default function About() {
               variants={fadeIn}
             >
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal text-primary font-script mb-3 sm:mb-4">
-                Our Mission & Vision
+                From Humble Beginnings to Global Experience
               </h2>
               <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto font-poppins">
-                The guiding principles that shape everything we do
+                The journey that shaped our founder's vision
               </p>
             </motion.div>
 
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
+              className="grid grid-cols-1 md:grid-cols-2 gap-8"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+            >
+              <motion.div
+                className="bg-white p-6 sm:p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200"
+                variants={fadeIn}
+              >
+                <h3 className="text-lg sm:text-xl font-semibold text-primary font-montserrat mb-4">
+                  Early Foundations
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base font-poppins mb-4">
+                  Jimmy's passion for education took root at Lanet Teachers Training School, where he developed the skills and calling that would one day form the foundation of Anointed Vessels.
+                </p>
+                <p className="text-gray-600 text-sm sm:text-base font-poppins">
+                  His early professional journey began at Suba County Council, where his discipline and diligence opened doors to new opportunities. Later, he transitioned to Madison Insurance, rising from a financial advisor to a manager — a testament to his integrity, excellence, and leadership.
+                </p>
+              </motion.div>
+
+              <motion.div
+                className="bg-white p-6 sm:p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200"
+                variants={fadeIn}
+              >
+                <h3 className="text-lg sm:text-xl font-semibold text-primary font-montserrat mb-4">
+                  International Service & Calling
+                </h3>
+                <p className="text-gray-600 text-sm sm:text-base font-poppins mb-4">
+                  After relocating to the United States, Jimmy continued to excel, serving in reputable organizations like McKesson, and later, in the U.S. Army as a Nuclear Specialist and Supply Specialist.
+                </p>
+                <p className="text-gray-600 text-sm sm:text-base font-poppins">
+                  Yet, even with such achievements abroad, his heart remained deeply connected to his homeland — to the children of Mfangano who lacked access to education, hope, and the basic necessities of life.
+                </p>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Mission & Vision */}
+        <section className="py-12 sm:py-16 bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+            <motion.div
+              className="text-center mb-8 sm:mb-12"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeIn}
+            >
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal text-primary font-script mb-3 sm:mb-4">
+                Our Mission and Work
+              </h2>
+              <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto font-poppins">
+                More than a school — a community of transformation
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
@@ -123,31 +177,36 @@ export default function About() {
             >
               {[
                 {
-                  title: "Our Mission",
-                  icon: "🎯",
-                  desc: "To provide excellence in Christ-centered education that equips students spiritually, academically, and socially to fulfill God's purpose for their lives.",
+                  title: "Quality Education",
+                  icon: "🎓",
+                  desc: "Offer affordable, quality education for children from low-income families.",
                 },
                 {
-                  title: "Our Vision",
-                  icon: "👁️",
-                  desc: "To be a leading Christian educational institution that develops future leaders who transform their communities through faith, knowledge, and service.",
+                  title: "Spiritual Mentorship",
+                  icon: "⛪",
+                  desc: "Provide spiritual mentorship, ensuring learning goes hand in hand with character formation.",
                 },
                 {
-                  title: "Our Values",
+                  title: "Community Support",
+                  icon: "🤝",
+                  desc: "Support widows and families affected by HIV/AIDS, restoring hope and stability.",
+                },
+                {
+                  title: "Holistic Development",
                   icon: "❤️",
-                  desc: "Faith, Excellence, Integrity, Compassion, and Service—these core values guide our interactions, decisions, and educational approach.",
+                  desc: "Promote health, nutrition, and child well-being as key pillars of holistic development.",
                 },
               ].map((item, idx) => (
                 <motion.div
                   key={idx}
-                  className="bg-white p-6 sm:p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200"
+                  className="bg-light p-6 rounded-lg shadow-sm border-l-4 border-secondary hover:border-accent transition-colors"
                   variants={fadeIn}
                 >
-                  <div className="text-4xl mb-4">{item.icon}</div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-primary font-montserrat mb-3">
+                  <h3 className="font-semibold text-primary mb-3 flex items-start font-montserrat">
+                    <span className="text-xl mr-2">{item.icon}</span>
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 text-sm sm:text-base font-poppins">{item.desc}</p>
+                  <p className="text-gray-600 text-sm font-poppins">{item.desc}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -155,7 +214,7 @@ export default function About() {
         </section>
 
         {/* CEO Section */}
-        <section className="py-12 sm:py-16 bg-white">
+        <section className="py-12 sm:py-16 bg-light">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
             <motion.div
               initial="hidden"
@@ -171,13 +230,16 @@ export default function About() {
                 />
               </div>
               <h2 className="text-3xl sm:text-4xl font-normal text-primary font-script mb-2">
-                Jimmy Carter
+                Jimmy Carter Owuato
               </h2>
               <h3 className="text-xl sm:text-2xl text-secondary mb-6 font-montserrat">
-                Founding CEO & Director
+                Founder & Visionary Leader
               </h3>
               <p className="text-gray-700 mb-6 max-w-3xl mx-auto font-poppins">
-                Jimmy Carter is the visionary founder and CEO of Anointed Vessels Christian School, whose passion for vulnerable children stems from his own experiences growing up on Mfangano Island. After serving in the U.S. military, Jimmy felt called by God to return to his community and make a lasting difference in the lives of children affected by poverty, HIV/AIDS, and other challenges. His deep commitment to Christian education and holistic child development drives the school's mission to rescue children from desperate circumstances and provide them with hope, education, and a foundation in Christ.
+                Witnessing the continued suffering of widows, orphans, and persons with disabilities in his community, Jimmy felt an undeniable divine calling to return home and serve. This was not merely an emotional response — it was a spiritual assignment.
+              </p>
+              <p className="text-gray-700 mb-6 max-w-3xl mx-auto font-poppins">
+                Jimmy's life embodies resilience and servant leadership. From his early struggles to his professional success and military service, his journey reflects what it means to be a true vessel — refined through trials, anointed for purpose. His return to Mfangano Island is not just a homecoming; it is a divine mission to uplift others through the same grace that lifted him.
               </p>
               <Link
                 to="/board"
@@ -189,76 +251,48 @@ export default function About() {
           </div>
         </section>
 
-        {/* Core Values */}
-        <section className="py-12 sm:py-16 bg-light">
+        {/* Hope for Future Section */}
+        <section className="py-12 sm:py-16 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-            <motion.div
-              className="text-center mb-8 sm:mb-12"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeIn}
-            >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal text-primary font-script mb-3 sm:mb-4">
-                Our Core Values & Focus Areas
-              </h2>
-              <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto font-poppins">
-                The principles that guide our mission and daily operations
-              </p>
-            </motion.div>
-
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-            >
-              {[
-                {
-                  title: "Care for Orphans & Vulnerable Children",
-                  icon: "❤️",
-                  desc: "Give priority to orphans and vulnerable children in the Mfangano Island area and surroundings. Provide them with boarding, education, protection, and Christian nurture.",
-                },
-                {
-                  title: "Christian Discipleship & Biblical Foundation",
-                  icon: "⛪",
-                  desc: "Equip students with the Christian faith as a foundational part of their education. Instill Christian values and prepare students to be Christian leaders.",
-                },
-                {
-                  title: "Education (Academic & Holistic Development)",
-                  icon: "🎓",
-                  desc: "Run a boarding school that focuses not just on academics but also on overall character formation. Provide facilities and associated infrastructure in a locally led way.",
-                },
-                {
-                  title: "Local Leadership & Sustainability",
-                  icon: "👥",
-                  desc: "Emphasize 'locally led' governance, staffing, and decision-making, ensuring leadership is Kenyan, especially local.",
-                },
-                {
-                  title: "Rescue & Hope",
-                  icon: "🤝",
-                  desc: "Go beyond survival by offering hope—both materially and spiritually—to children who have been marginalized.",
-                },
-                {
-                  title: "Impact Beyond the School",
-                  icon: "🌍",
-                  desc: "Prepare graduates to impact Kenya and the world for God's Kingdom as future agents of change.",
-                },
-              ].map((item, idx) => (
+            <div className="flex flex-col md:flex-row gap-12 items-center">
+              <div className="flex-1">
                 <motion.div
-                  key={idx}
-                  className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-secondary hover:border-accent transition-colors"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
                   variants={fadeIn}
                 >
-                  <h3 className="font-semibold text-primary mb-3 flex items-start font-montserrat">
-                    <span className="text-xl mr-2">{item.icon}</span>
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm font-poppins">{item.desc}</p>
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal text-primary font-script mb-4">
+                    Our Hope for the Future
+                  </h2>
+                  <p className="mb-6 text-gray-700 font-poppins">
+                    Anointed Vessels Christian School continues to grow — brick by brick, prayer by prayer, and child by child. Though still developing, its foundation is firm: faith in God, love for people, and dedication to empowering the next generation.
+                  </p>
+                  <p className="mb-6 text-gray-700 font-poppins">
+                    The dream is clear — to see every child on Mfangano Island equipped not only with academic knowledge but with spiritual wisdom and self-belief to rise above poverty and become leaders of positive change.
+                  </p>
+                  <div className="bg-light p-6 rounded-lg border-l-4 border-accent">
+                    <p className="text-gray-700 italic font-poppins">
+                      "We may start small, but when God anoints a vessel, even a drop of oil can overflow."
+                    </p>
+                    <p className="text-gray-600 mt-2 font-montserrat font-semibold">— Jimmy Carter Owuato</p>
+                  </div>
                 </motion.div>
-              ))}
-            </motion.div>
+              </div>
+              <div className="flex-1">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={fadeIn}
+                  transition={{ delay: 0.2 }}
+                >
+                  <div className="rounded-xl overflow-hidden shadow-xl">
+                    <img src="/project.jpg" alt="Children learning at AVCS" className="w-full object-cover" />
+                  </div>
+                </motion.div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -272,78 +306,18 @@ export default function About() {
               variants={fadeIn}
             >
               <h2 className="text-3xl sm:text-4xl font-normal mb-4 font-script">
-                Meet Our Dedicated Team
+                Join Our Journey of Transformation
               </h2>
               <p className="mb-8 opacity-90 font-poppins">
-                Our staff members are committed to providing quality education and care to every child
+                Be part of a movement that's changing lives through education, faith, and community empowerment
               </p>
               <Link
                 to="/staff"
                 className="inline-block bg-white text-primary hover:bg-accent hover:text-white font-semibold py-2 px-4 sm:py-2.5 sm:px-6 rounded-full transition-all duration-300 font-montserrat text-sm sm:text-base"
               >
-                View Our Staff Members
+                Meet Our Dedicated Team
               </Link>
             </motion.div>
-          </div>
-        </section>
-
-        {/* Protection */}
-        <section className="py-12 sm:py-16 bg-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-            <motion.div
-              className="text-center mb-8 sm:mb-12"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeIn}
-            >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal text-primary font-script">
-                Child Protection & Empowerment
-              </h2>
-            </motion.div>
-
-            <div className="flex flex-col md:flex-row gap-12 items-center">
-              <div className="flex-1">
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-100px" }}
-                  variants={fadeIn}
-                >
-                  <h3 className="text-2xl sm:text-3xl font-semibold text-primary mb-4 font-montserrat">
-                    Our Commitment to Safety and Development
-                  </h3>
-                  <p className="mb-6 text-gray-700 font-poppins">
-                    At Anointed Vessels Christian School, the safety, dignity, and well-being of every child are our highest priority. We believe that children are a gift from God and must be nurtured in a secure, loving, and Christ-centered environment.
-                  </p>
-                  <h4 className="font-semibold text-lg text-secondary mb-2 font-montserrat">
-                    Child Protection Commitment
-                  </h4>
-                  <p className="mb-4 text-gray-700 font-poppins">
-                    We provide a safe learning environment where all children are free from physical, emotional, spiritual, or sexual abuse, neglect, and exploitation.
-                  </p>
-                  <h4 className="font-semibold text-lg text-secondary mb-2 font-montserrat">
-                    Child Empowerment Commitment
-                  </h4>
-                  <p className="text-gray-700 font-poppins">
-                    We empower children with knowledge, life skills, and spiritual guidance to help them grow into responsible, confident, and God-fearing individuals.
-                  </p>
-                </motion.div>
-              </div>
-              <div className="flex-1">
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-100px" }}
-                  variants={fadeIn}
-                  transition={{ delay: 0.2 }}
-                >
-                  <div className="rounded-xl overflow-hidden shadow-xl">
-                    <img src="/project.jpg" alt="Children learning" className="w-full object-cover" />
-                  </div>
-                </motion.div>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -357,10 +331,10 @@ export default function About() {
               variants={fadeIn}
             >
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-6 font-script">
-                Join Us in Our Mission
+                Partner With Our Vision
               </h2>
               <p className="text-base sm:text-lg mb-8 opacity-90 max-w-2xl mx-auto font-poppins">
-                Your support helps us provide quality Christian education, protection, and empowerment to vulnerable children on Mfangano Island
+                Your support helps us continue building this beacon of hope for vulnerable children on Mfangano Island
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Link
