@@ -75,10 +75,10 @@ const Hero = () => {
       image: "/christian.jpg",
       title: "Sponsor A Child",
       buttonText: "Start Today",
-      onClick: () => navigate("/sponsor"),
+      onClick: () => navigate("/ChildSponsorship"),
     },
     {
-      image: "https://images.unsplash.com/photo-1506157786151-b8491531f063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      image: "DRANDCHILDREN.jpg",
       title: (
         <>
           This is your <br />
@@ -88,7 +88,7 @@ const Hero = () => {
       description:
         "There are many ways to serve as God's hands and feet. Consider making an impact by sponsoring a child, making a donation, or learn how to give in other ways.",
       linkText: "how to give in other ways",
-      link: "/give",
+      link: "/ChildSponsorship",
     },
     {
       image: "/project.jpg",

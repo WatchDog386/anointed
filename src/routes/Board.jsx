@@ -77,9 +77,9 @@ const Board = () => {
   ];
 
   const impactStats = [
-    { icon: <GraduationCap className="w-8 h-8 text-secondary" />, number: "500+", label: "Children Educated" },
-    { icon: <Utensils className="w-8 h-8 text-secondary" />, number: "300+", label: "Daily Meals Served" },
-    { icon: <HeartHandshake className="w-8 h-8 text-secondary" />, number: "200+", label: "Families Supported" },
+    { icon: <GraduationCap className="w-8 h-8 text-secondary" />, number: "300+", label: "Children Educated" },
+    { icon: <Utensils className="w-8 h-8 text-secondary" />, number: "3+", label: "Daily Meals Served" },
+    { icon: <HeartHandshake className="w-8 h-8 text-secondary" />, number: "300+", label: "Families Supported" },
     { icon: <BookOpen className="w-8 h-8 text-secondary" />, number: "95%", label: "Success Rate" }
   ];
 
