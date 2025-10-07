@@ -7,16 +7,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
-// ✅ Dynamically determine API base URL
+// ✅ FIXED: Removed trailing spaces in API URL
 const getApiBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return "https://anointed-3v54.onrender.com";
+    return "https://anointed-3v54.onrender.com"; // No spaces!
   }
   return "http://localhost:5000";
 };
 const API_BASE_URL = getApiBaseUrl();
 
-// ✅ Optimized SponsorshipFormPopup separated to prevent unnecessary re-renders
 const SponsorshipFormPopup = ({ 
   isOpen, 
   student, 
@@ -28,45 +27,45 @@ const SponsorshipFormPopup = ({
     sponsorName: '',
     sponsorEmail: '',
     sponsorPhone: '',
-    message: '',
-    studentId: ''
+    message: ''
   });
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState(false);
 
-  // Reset form when student changes
   useEffect(() => {
     if (student) {
       setFormData({
         sponsorName: '',
         sponsorEmail: '',
         sponsorPhone: '',
-        message: '',
-        studentId: student._id
+        message: ''
       });
       setFormError('');
       setFormSuccess(false);
     }
   }, [student]);
 
-  // ✅ Use useCallback to prevent recreating function on every render
   const handleFormChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear error when user starts typing
     if (formError) setFormError('');
   }, [formError]);
 
-  // ✅ Use useCallback for form submission
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setFormError('');
     
+    // ✅ Frontend validation
+    if (!formData.sponsorName.trim() || !formData.sponsorEmail.trim() || !formData.sponsorPhone.trim()) {
+      setFormError('Please fill in all required fields.');
+      return;
+    }
+
     try {
       await onSubmit(formData);
       setFormSuccess(true);
     } catch (err) {
-      setFormError(err.response?.data?.message || 'Failed to submit sponsorship request.');
+      setFormError(err.response?.data?.message || 'Failed to submit sponsorship request. Please try again.');
     }
   }, [formData, onSubmit]);
 
@@ -109,7 +108,6 @@ const SponsorshipFormPopup = ({
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
-                {/* ✅ Added key props to help React track inputs */}
                 <input
                   key="sponsorName"
                   type="text"
@@ -267,7 +265,6 @@ export default function ChildSponsorship() {
 
   const uniqueClasses = [...new Set(students.map(s => s.class).filter(Boolean))].sort();
 
-  // ✅ Use useCallback for event handlers
   const openSponsorPopup = useCallback((student) => {
     setSelectedStudent(student);
     setIsPopupOpen(true);
@@ -283,21 +280,27 @@ export default function ChildSponsorship() {
     setSelectedStudent(null);
   }, []);
 
-  // ✅ Optimized form submission handler
+  // ✅ FIXED: Removed redundant studentId override
   const handleSponsorSubmit = useCallback(async (formData) => {
     setFormSubmitting(true);
     
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/sponsorship/interest`, {
+      // ✅ Send ONLY form data + studentId from selected student
+      const payload = {
         ...formData,
         studentId: selectedStudent._id
-      });
+      };
+
+      const response = await axios.post(`${API_BASE_URL}/api/sponsorship/interest`, payload);
 
       if (response.status === 201) {
+        // Remove sponsored student from list
         setStudents(prev => prev.filter(student => student._id !== selectedStudent._id));
         setTimeout(closeStudentPopup, 3000);
-        return response;
       }
+    } catch (err) {
+      console.error("Sponsorship submission error:", err);
+      throw err; // Re-throw for popup to handle
     } finally {
       setFormSubmitting(false);
     }
@@ -368,7 +371,6 @@ export default function ChildSponsorship() {
     doc.save(`bio_${student.name.replace(/\s+/g, '_')}.pdf`);
   };
 
-  // === Enhanced Stats Banner with Impact Metrics ===
   const StatsBanner = () => (
     <div className="bg-gradient-to-r from-[#2b473f] to-[#3a5c52] rounded-xl p-5 mb-10 text-center text-white">
       <p className="text-sm">
@@ -377,7 +379,6 @@ export default function ChildSponsorship() {
     </div>
   );
 
-  // === Skeleton Loader with enhanced design ===
   const SkeletonCard = ({ reverse = false }) => (
     <motion.div 
       className={`bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-gray-200/30 animate-pulse ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} flex flex-col mb-8`}
@@ -404,7 +405,6 @@ export default function ChildSponsorship() {
     </motion.div>
   );
 
-  // === Enhanced Student Card with professional passport image ===
   const StudentProfileCard = ({ student, index }) => {
     const reverse = index % 2 === 1;
     
@@ -416,7 +416,6 @@ export default function ChildSponsorship() {
         transition={{ delay: index * 0.1 }}
         whileHover={{ y: -5 }}
       >
-        {/* ✅ Enhanced Passport-style Image Container */}
         <div className="md:w-2/5 h-64 md:h-48 relative flex items-center justify-center p-0 m-0">
           <div className="w-32 h-40 bg-white shadow-inner rounded-sm border border-gray-300 overflow-hidden m-0 p-0">
             <img
@@ -429,13 +428,11 @@ export default function ChildSponsorship() {
           </div>
         </div>
         
-        {/* Content Section */}
         <div className="p-5 md:w-3/5">
           <h3 className="text-lg font-bold text-[#2b473f] font-montserrat mb-2 line-clamp-1">
             {student.name}
           </h3>
           
-          {/* Enhanced Info Grid */}
           <div className="grid grid-cols-2 gap-2 text-xs mb-3">
             <div className="bg-[#f6f4ee] p-2 rounded">
               <span className="font-semibold text-[#2b473f]">ID:</span> {student.idNumber}
@@ -455,7 +452,6 @@ export default function ChildSponsorship() {
             {student.personality || 'Bright'} learner. Strengths: {student.academicStrengths || 'N/A'}.
           </p>
           
-          {/* Enhanced Action Buttons */}
           <div className="flex flex-wrap gap-2 mt-3">
             <motion.button 
               onClick={() => openPdfPreview(student)}
@@ -480,7 +476,6 @@ export default function ChildSponsorship() {
     );
   };
 
-  // === Enhanced PDF Preview Modal ===
   const PdfPreviewModal = () => {
     if (!isPdfPreviewOpen || !pdfStudent) return null;
 
@@ -532,17 +527,14 @@ export default function ChildSponsorship() {
   return (
     <div className="font-open-sans bg-gradient-to-b from-white to-[#f9f8f5] min-h-screen pt-8 pb-16">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Enhanced Stats Banner */}
         <StatsBanner />
 
-        {/* Enhanced Filters Section */}
         <div id="filters" className="bg-white rounded-xl p-5 mb-10 border border-gray-200/50">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
             <div className="flex items-center gap-2">
               <Filter size={16} className="text-[#2b473f]" />
               <h3 className="text-sm font-semibold text-[#2b473f]">Filter Students</h3>
             </div>
-            {/* 🔹 Add Student Button */}
             <motion.button
               onClick={handleAddStudent}
               className="flex items-center gap-2 px-3 py-2 bg-[#2b473f] text-white rounded-lg text-sm font-medium hover:bg-[#3a5c52] transition-colors shadow-sm"
@@ -598,7 +590,6 @@ export default function ChildSponsorship() {
           </div>
         </div>
 
-        {/* Student List Section */}
         <div className="mb-12">
           <h2 className="text-xl font-bold text-[#2b473f] mb-5">Children Seeking Sponsors</h2>
           
@@ -617,7 +608,6 @@ export default function ChildSponsorship() {
           )}
         </div>
 
-        {/* Enhanced CTA Section */}
         <motion.div 
           className="bg-gradient-to-r from-[#8CA9B4] to-[#7a96a0] rounded-2xl p-8 text-center shadow-lg"
           initial={{ opacity: 0, y: 20 }}
@@ -639,7 +629,6 @@ export default function ChildSponsorship() {
         </motion.div>
       </div>
 
-      {/* ✅ Use the optimized SponsorshipFormPopup component */}
       <SponsorshipFormPopup 
         isOpen={isPopupOpen}
         student={selectedStudent}
