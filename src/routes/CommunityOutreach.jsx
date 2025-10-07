@@ -6,6 +6,19 @@ export default function CommunityOutreach() {
   const outreachPrograms = [
     {
       id: 1,
+      title: "Tree Planting & Green School Initiative",
+      description: "Simple, hands-on tree planting activities that help our students connect with nature and learn environmental stewardship in practical ways.",
+      activities: [
+        "Each student plants and cares for one tree per year",
+        "Classroom tree nurseries with local species",
+        "Tree planting during birthdays and special events",
+        "Learning about trees that provide food and shade",
+        "Simple gardening and plant care lessons"
+      ],
+      image: "/tree-planting.jpg"
+    },
+    {
+      id: 2,
       title: "Neighborhood Literacy & Learning Support",
       description: "Many children in nearby villages and fishing communities struggle to access quality education. To bridge this gap, our learners and teachers organize simple learning sessions during weekends or holidays.",
       activities: [
@@ -16,7 +29,7 @@ export default function CommunityOutreach() {
       image: "/literacy-support.png"
     },
     {
-      id: 2,
+      id: 3,
       title: "Giving and Caring for the Needy",
       description: "Our students are taught that giving is not about plenty but about heart.",
       activities: [
@@ -27,7 +40,7 @@ export default function CommunityOutreach() {
       image: "/compassion-basket.jpg"
     },
     {
-      id: 3,
+      id: 4,
       title: "Environmental Care & Clean-Up Days",
       description: "We take seriously our duty to care for God's creation.",
       activities: [
@@ -38,7 +51,7 @@ export default function CommunityOutreach() {
       image: "/environment-care.jpg"
     },
     {
-      id: 4,
+      id: 5,
       title: "Faith and Spiritual Outreach",
       description: "As a Christian institution, our outreach is rooted in the Gospel.",
       activities: [
@@ -49,7 +62,7 @@ export default function CommunityOutreach() {
       image: "/faith-outreach.jpg"
     },
     {
-      id: 5,
+      id: 6,
       title: "Health & Hygiene Awareness",
       description: "Understanding the challenges many rural families face in accessing health education, our school organizes simple awareness sessions.",
       activities: [
@@ -60,7 +73,7 @@ export default function CommunityOutreach() {
       image: "/health-hygiene.jpg"
     },
     {
-      id: 6,
+      id: 7,
       title: "Skills for Life & Community Development",
       description: "Even as a developing school, we believe in equipping learners with hands-on skills that can benefit the community.",
       activities: [
@@ -71,7 +84,7 @@ export default function CommunityOutreach() {
       image: "/skills-development.jpg"
     },
     {
-      id: 7,
+      id: 8,
       title: "Partnerships and Local Involvement",
       description: "We may be a small school, but we believe in doing great things together.",
       activities: [
@@ -140,6 +153,36 @@ export default function CommunityOutreach() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Simple Tree Planting Impact */}
+        <div className="mt-16 bg-green-50 p-8 rounded-lg border border-green-100 text-center">
+          <h3 className="text-2xl font-bold text-green-800 mb-4 font-montserrat">
+            Our Growing Green Legacy
+          </h3>
+          <p className="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed mb-4">
+            Through our simple tree planting efforts, our students are learning to care for God's creation 
+            while making our school environment greener and more beautiful. Every tree planted represents 
+            hope for a better tomorrow.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-700">500+</div>
+              <div className="text-green-600 text-sm">Trees Planted</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-700">100%</div>
+              <div className="text-green-600 text-sm">Student Participation</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-700">12</div>
+              <div className="text-green-600 text-sm">Local Species</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-700">Growing</div>
+              <div className="text-green-600 text-sm">Every Day</div>
+            </div>
+          </div>
         </div>
 
         {/* Conclusion */}
