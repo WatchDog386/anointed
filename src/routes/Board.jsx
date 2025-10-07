@@ -34,7 +34,7 @@ const Board = () => {
   const boardMembers = [
     {
       id: 1,
-      name: "Jimmy Carter Owuato",
+      name: "Jimmy Carter",
       role: "Director/Founder/CEO",
       image: "/Jimmy.jpg",
       bio: "Jimmy Carter Owuato is the founder and CEO of Anointed Vessels Christian School, a testament to his unwavering commitment to education and community development. With over 15 years of experience in the education sector, Jimmy has served as a teacher, headteacher, and education consultant. His passion for holistic, Christ-centered education led him to establish AVCS to serve orphans and vulnerable children on Mfangano Island."
@@ -70,10 +70,10 @@ const Board = () => {
   ];
 
   const partners = [
-    { name: "GoFundMe", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/GoFundMe_logo.svg/800px-GoFundMe_logo.svg.png" },
-    { name: "World Food Programme", image: "https://www.wfp.org/themes/custom/wfp/images/wfp-logo.svg" },
-    { name: "Global Empowerment Mission", image: "https://globalempowermentmission.org/wp-content/uploads/2021/03/GEM-Logo-White-BG.png" },
-    { name: "Village Enterprise", image: "/" }
+    { name: "GoFundMe", image: "/GOFUNDME.PNG" },
+    { name: "World Food Programme", image: "/WFP.PNG" },
+    { name: "Global Empowerment Mission", image: "/GLOBALMISSION.png" },
+    { name: "Village Enterprise", image: "/VILLAGE" }
   ];
 
   const impactStats = [
