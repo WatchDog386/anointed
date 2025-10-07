@@ -32,7 +32,7 @@ export default function Navbar() {
         { label: "Our Story", route: "/about", id: "story" },
         { label: "Our Staff", route: "/staff", id: "staff" },
         { label: "Our Board Members", route: "/board", id: "board" },
-        { label: "Gallery/Videos", route: "/gallery", id: "gallery" },
+        
       ],
     },
     {
