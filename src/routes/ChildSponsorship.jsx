@@ -10,7 +10,7 @@ import 'jspdf-autotable';
 // ✅ FIXED: Removed trailing spaces in API URL
 const getApiBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return "https://anointed-3v54.onrender.com"; // No spaces!
+    return "https://anointed-3v54.onrender.com"; // NO SPACES!
   }
   return "http://localhost:5000";
 };
@@ -280,12 +280,10 @@ export default function ChildSponsorship() {
     setSelectedStudent(null);
   }, []);
 
-  // ✅ FIXED: Removed redundant studentId override
   const handleSponsorSubmit = useCallback(async (formData) => {
     setFormSubmitting(true);
     
     try {
-      // ✅ Send ONLY form data + studentId from selected student
       const payload = {
         ...formData,
         studentId: selectedStudent._id
@@ -294,13 +292,13 @@ export default function ChildSponsorship() {
       const response = await axios.post(`${API_BASE_URL}/api/sponsorship/interest`, payload);
 
       if (response.status === 201) {
-        // Remove sponsored student from list
-        setStudents(prev => prev.filter(student => student._id !== selectedStudent._id));
+        // ✅ Remove sponsored student from list immediately
+        setStudents(prev => prev.filter(student => String(student._id) !== String(selectedStudent._id)));
         setTimeout(closeStudentPopup, 3000);
       }
     } catch (err) {
       console.error("Sponsorship submission error:", err);
-      throw err; // Re-throw for popup to handle
+      throw err;
     } finally {
       setFormSubmitting(false);
     }
