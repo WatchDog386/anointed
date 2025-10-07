@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 // ✅ FIXED: Removed trailing spaces in API URL
 const getApiBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return "https://anointed-3v54.onrender.com"; // NO TRAILING SPACES!
+    return "https://anointed-3v54.onrender.com"; // ← NO TRAILING SPACES!
   }
   return "http://localhost:5000";
 };
@@ -16,11 +16,34 @@ const API_BASE_URL = getApiBaseUrl();
 
 // Student Story Viewer Component
 const StudentStoryViewer = ({ student, onClose }) => {
-  // Use student.imageUrl as the primary image
-  const studentImage = {
-    url: student.imageUrl || "/default-student.jpg",
-    alt: student.name || "Student"
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % (student.images?.length || 1));
+    setIsAutoPlaying(false);
   };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + (student.images?.length || 1)) % (student.images?.length || 1));
+    setIsAutoPlaying(false);
+  };
+
+  const goToImage = (index) => {
+    setCurrentImageIndex(index);
+    setIsAutoPlaying(false);
+  };
+
+  // Auto-advance images
+  useEffect(() => {
+    let interval;
+    if (isAutoPlaying && student.images?.length > 1) {
+      interval = setInterval(nextImage, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, currentImageIndex, student.images]);
+
+  const currentImage = student.images?.[currentImageIndex] || { url: "/default-student.jpg", alt: student.name };
 
   return (
     <section className="py-12 bg-gradient-to-br from-[#f9f8f5] to-[#e9ecef] min-h-screen">
@@ -59,23 +82,70 @@ const StudentStoryViewer = ({ student, onClose }) => {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          {/* Image Slot - Now uses student.imageUrl */}
+          {/* Image Carousel */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="rounded-xl overflow-hidden shadow-lg bg-white p-4 flex items-center justify-center">
-              <img
-                src={studentImage.url}
-                alt={studentImage.alt}
-                className="w-full h-64 md:h-80 object-contain"
+            <div className="rounded-xl overflow-hidden shadow-lg bg-white p-4">
+              <motion.img
+                key={currentImage.id || currentImageIndex}
+                initial={{ opacity: 0, scale: 1.1 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5 }}
+                src={currentImage.url}
+                alt={currentImage.alt || student.name}
+                className="w-full h-64 md:h-80 object-contain mx-auto"
                 onError={(e) => {
                   e.target.src = "/default-student.jpg";
                 }}
               />
             </div>
+
+            {/* Navigation Arrows */}
+            {student.images?.length > 1 && (
+              <>
+                <button
+                  onClick={prevImage}
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2b473f]"
+                  aria-label="Previous image"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#2b473f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#2b473f]"
+                  aria-label="Next image"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#2b473f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </>
+            )}
+
+            {/* Dot Indicators */}
+            {student.images?.length > 1 && (
+              <div className="flex justify-center space-x-2 mt-4">
+                {student.images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToImage(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentImageIndex
+                        ? "bg-[#2b473f] scale-125"
+                        : "bg-gray-400 hover:bg-gray-500"
+                    }`}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
           </motion.div>
 
           {/* Story Content */}
@@ -130,23 +200,21 @@ const StudentStoryViewer = ({ student, onClose }) => {
             <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200/50">
               <h3 className="text-xl font-bold mb-3 text-[#2b473f] font-montserrat">Challenges He Faces</h3>
               <div className="space-y-3">
-                {Array.isArray(student.challenges) ? (
-                  student.challenges.map((challenge, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: 0.2 * index }}
-                      className="flex items-start space-x-3 p-3 bg-[#f6f4ee] rounded-lg hover:bg-[#e9ecef] transition-colors duration-300"
-                    >
-                      <span className="text-xl flex-shrink-0">{challenge.icon || '⚠️'}</span>
-                      <div>
-                        <h4 className="font-semibold text-[#2b473f] text-sm font-montserrat">{challenge.title}</h4>
-                        <p className="text-gray-600 text-xs font-poppins">{challenge.description}</p>
-                      </div>
-                    </motion.div>
-                  ))
-                ) : (
+                {student.challenges?.map((challenge, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 * index }}
+                    className="flex items-start space-x-3 p-3 bg-[#f6f4ee] rounded-lg hover:bg-[#e9ecef] transition-colors duration-300"
+                  >
+                    <span className="text-xl flex-shrink-0">{challenge.icon || '⚠️'}</span>
+                    <div>
+                      <h4 className="font-semibold text-[#2b473f] text-sm font-montserrat">{challenge.title}</h4>
+                      <p className="text-gray-600 text-xs font-poppins">{challenge.description}</p>
+                    </div>
+                  </motion.div>
+                )) || (
                   <p className="text-gray-600 text-sm">Facing financial and resource challenges that impact education.</p>
                 )}
               </div>
@@ -164,10 +232,7 @@ const StudentStoryViewer = ({ student, onClose }) => {
                 {student.name.split(' ')[0]} needs support to stabilize their education so their dreams don't fade away.
               </p>
               <div className="flex flex-wrap gap-2 mb-4">
-                {(typeof student.supportNeeded === 'string' 
-                  ? student.supportNeeded.split(',').map(s => s.trim())
-                  : student.supportNeeded || ['School Fees', 'Nutrition', 'Learning Materials']
-                ).map((need, index) => (
+                {(student.supportNeeded?.split(',') || ['School Fees', 'Nutrition', 'Learning Materials']).map((need, index) => (
                   <motion.span
                     key={index}
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -175,7 +240,7 @@ const StudentStoryViewer = ({ student, onClose }) => {
                     transition={{ duration: 0.3, delay: 0.1 * index }}
                     className="bg-[#932528] text-white px-3 py-1 rounded-full text-xs font-medium font-poppins"
                   >
-                    {need}
+                    {need.trim()}
                   </motion.span>
                 ))}
               </div>
@@ -185,10 +250,8 @@ const StudentStoryViewer = ({ student, onClose }) => {
                 className="w-full bg-[#932528] hover:bg-[#7a1e21] text-white font-semibold py-2.5 px-4 rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-[#932528] focus:ring-offset-2 text-sm font-montserrat"
                 onClick={() => {
                   onClose();
-                  setTimeout(() => {
-                    const btn = document.getElementById(`sponsor-btn-${student._id}`);
-                    if (btn) btn.click();
-                  }, 300);
+                  // Trigger sponsor popup after closing story
+                  setTimeout(() => document.getElementById(`sponsor-btn-${student._id}`)?.click(), 300);
                 }}
               >
                 Support {student.name.split(' ')[0]}'s Education
@@ -200,9 +263,6 @@ const StudentStoryViewer = ({ student, onClose }) => {
     </section>
   );
 };
-
-// --- Rest of the file remains unchanged EXCEPT minor cleanup in data normalization ---
-// SponsorshipFormPopup and other components are kept exactly as in your working version
 
 const SponsorshipFormPopup = ({ 
   isOpen, 
@@ -243,6 +303,7 @@ const SponsorshipFormPopup = ({
     e.preventDefault();
     setFormError('');
     
+    // ✅ Frontend validation
     if (!formData.sponsorName.trim() || !formData.sponsorEmail.trim() || !formData.sponsorPhone.trim()) {
       setFormError('Please fill in all required fields.');
       return;
@@ -296,6 +357,7 @@ const SponsorshipFormPopup = ({
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
                 <input
+                  key="sponsorName"
                   type="text"
                   name="sponsorName"
                   value={formData.sponsorName}
@@ -305,6 +367,7 @@ const SponsorshipFormPopup = ({
                   className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
                 />
                 <input
+                  key="sponsorEmail"
                   type="email"
                   name="sponsorEmail"
                   value={formData.sponsorEmail}
@@ -314,6 +377,7 @@ const SponsorshipFormPopup = ({
                   className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
                 />
                 <input
+                  key="sponsorPhone"
                   type="tel"
                   name="sponsorPhone"
                   value={formData.sponsorPhone}
@@ -323,6 +387,7 @@ const SponsorshipFormPopup = ({
                   className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#8CA9B4] focus:border-[#8CA9B4] focus:outline-none transition-colors"
                 />
                 <textarea
+                  key="message"
                   name="message"
                   value={formData.message}
                   onChange={handleFormChange}
@@ -383,7 +448,7 @@ export default function ChildSponsorship() {
   const [error, setError] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [viewingStudent, setViewingStudent] = useState(null);
+  const [viewingStudent, setViewingStudent] = useState(null); // For story viewer
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [filters, setFilters] = useState({
     searchTerm: '',
@@ -403,12 +468,12 @@ export default function ChildSponsorship() {
         if (!response.ok) throw new Error("Failed to fetch students");
         const data = await response.json();
         
-        // ✅ Only ensure fallbacks — DO NOT override imageUrl
         const normalizedStudents = data
           .filter(student => !student.isSponsored)
           .map(student => ({
             ...student,
-            // Keep original imageUrl — do NOT create images array
+            // Ensure all fields exist for story viewer
+            images: student.images || [{ url: "/default-student.jpg", alt: student.name }],
             challenges: student.challenges || [
               { title: "Financial Hardship", description: "Family struggles to afford basic educational needs", icon: "💰" },
               { title: "Resource Limitations", description: "Lacks learning materials and proper nutrition", icon: "📚" }
@@ -600,7 +665,7 @@ export default function ChildSponsorship() {
               Get to Know {student.name.split(' ')[0]}'s Story
             </motion.button>
             <motion.button 
-              id={`sponsor-btn-${student._id}`}
+              id={`sponsor-btn-${student._id}`} // For programmatic click
               onClick={() => openSponsorPopup(student)}
               className="text-xs px-3 py-1.5 bg-[#932528] text-white rounded-lg hover:bg-[#7a1e21] transition"
               whileHover={{ scale: 1.02 }}
