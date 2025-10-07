@@ -51,7 +51,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const CLOUD_NAME = 'dsfwavo7x';
   const UPLOAD_PRESET = 'student_upload';
-
   const [formData, setFormData] = useState({
     idNumber: '',
     name: '',
@@ -225,7 +224,7 @@ const Dashboard = () => {
         await axios.post(`${API_BASE_URL}/api/students`, payload, config);
         setSuccess('Student added successfully!');
       }
-      fetchStudents();
+      fetchStudents(); // ✅ Always refetch to get latest data
       resetForm();
       setTimeout(() => setSuccess(''), 4000);
     } catch (err) {
@@ -321,11 +320,9 @@ const Dashboard = () => {
       s.sponsorName || (s.isSponsored ? 'Yes' : 'No'),
       s.updatedAt ? new Date(s.updatedAt).toLocaleString() : ''
     ]);
-
     let csvContent = "data:text/csv;charset=utf-8," 
       + headers.join(",") + "\n"
       + rows.map(e => e.map(field => `"${String(field).replace(/"/g, '""')}"`).join(",")).join("\n");
-
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -343,7 +340,6 @@ const Dashboard = () => {
     doc.text("Student Full Profile", 14, 30);
     doc.setLineWidth(0.5);
     doc.line(14, 32, 200, 32);
-
     const addSection = (y, label, value) => {
       if (!value) return y;
       doc.setFontSize(10);
@@ -354,7 +350,6 @@ const Dashboard = () => {
       doc.text(splitText, 14, y + 4);
       return y + 6 + splitText.length * 5;
     };
-
     let yPos = 40;
     yPos = addSection(yPos, "ID Number", student.idNumber);
     yPos = addSection(yPos, "Full Name", student.name);
@@ -369,7 +364,6 @@ const Dashboard = () => {
     yPos = addSection(yPos, "Aspirations", student.aspirations);
     yPos = addSection(yPos, "Support Needed", student.supportNeeded);
     yPos = addSection(yPos, "Achievements", student.achievements);
-
     if (student.isSponsored) {
       yPos += 5;
       doc.setFont('helvetica', 'bold');
@@ -382,7 +376,6 @@ const Dashboard = () => {
       yPos = addSection(yPos, "Sponsor Phone", student.sponsorPhone);
       yPos = addSection(yPos, "Sponsor Notes", student.sponsorNotes);
     }
-
     doc.save(`student_profile_${student.name.replace(/\s+/g, '_')}.pdf`);
   };
 
@@ -592,7 +585,6 @@ const Dashboard = () => {
                     </button>
                   </div>
                 </div>
-
                 {exportTarget === 'single' && (
                   <div>
                     <label className="block text-sm font-medium text-[#2b473f] mb-2">Select Student</label>
@@ -611,7 +603,6 @@ const Dashboard = () => {
                     </select>
                   </div>
                 )}
-
                 <button
                   onClick={handleExportChoice}
                   disabled={exportTarget === 'single' && !exportStudent}
