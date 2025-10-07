@@ -2,15 +2,15 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Search, Filter, BookOpen, Download } from 'lucide-react';
+import { Search, Filter, BookOpen, Download, Heart, Users, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
-// ✅ Dynamically determine API base URL — NO LOCALHOST
+// ✅ Dynamically determine API base URL
 const getApiBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return "https://anointed-3v54.onrender.com"; // ✅ Clean, no trailing space
+    return "https://anointed-3v54.onrender.com";
   }
   return "http://localhost:5000";
 };
@@ -35,7 +35,6 @@ export default function ChildSponsorship() {
   const [formSuccess, setFormSuccess] = useState(false);
   const [formError, setFormError] = useState('');
 
-  // === Filters ===
   const [filters, setFilters] = useState({
     searchTerm: '',
     class: '',
@@ -213,71 +212,119 @@ export default function ChildSponsorship() {
     doc.save(`bio_${student.name.replace(/\s+/g, '_')}.pdf`);
   };
 
-  const SkeletonCard = ({ index }) => (
+  // === Enhanced Stats Banner with Impact Metrics ===
+  const StatsBanner = () => (
+    <div className="bg-gradient-to-r from-[#2b473f] to-[#3a5c52] rounded-xl p-5 mb-10 text-center text-white">
+      <p className="text-sm">
+        {students.length} children are currently seeking sponsors • $35/month changes a life
+      </p>
+    </div>
+  );
+
+  // === Skeleton Loader with enhanced design ===
+  const SkeletonCard = ({ reverse = false }) => (
     <motion.div 
-      className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-200/30 p-4 mb-5 flex gap-4"
+      className={`bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-gray-200/30 animate-pulse ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} flex flex-col mb-8`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <div className="w-16 h-20 bg-gray-200 rounded-lg"></div>
-      <div className="flex-1 space-y-2">
-        <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-        <div className="h-3 bg-gray-200 rounded w-1/2"></div>
-        <div className="h-8 bg-gray-200 rounded w-1/3"></div>
-      </div>
-    </motion.div>
-  );
-
-  const StudentProfileCard = ({ student, index }) => (
-    <motion.div 
-      className="bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-200/30 p-4 mb-5 flex gap-4"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05 }}
-    >
-      {/* ✅ Passport-style image: 3:4 ratio, object-top */}
-      <div className="flex-shrink-0 w-16 h-20 rounded-lg overflow-hidden border border-gray-200">
-        <img
-          src={student.imageUrl || "/default-student.jpg"}
-          alt={student.name}
-          className="w-full h-full object-cover object-top"
-          onError={(e) => e.target.src = "/default-student.jpg"}
-          loading="lazy"
-        />
-      </div>
-      
-      <div className="flex-1 min-w-0">
-        <h3 className="text-sm font-bold text-[#2b473f] mb-1 line-clamp-1">{student.name}</h3>
-        <p className="text-xs text-gray-600 mb-2">ID: {student.idNumber} • {student.class}</p>
-        
-        <div className="grid grid-cols-2 gap-2 text-xs mb-2">
-          <span className="bg-[#f6f4ee] px-2 py-1 rounded">DOB: {formatDate(student.dateOfBirth)}</span>
-          <span className="bg-[#f6f4ee] px-2 py-1 rounded">Age: {student.age}</span>
+      <div className="h-64 md:h-48 md:w-2/5 bg-gradient-to-r from-gray-200 to-gray-300 rounded-t-xl md:rounded-l-xl md:rounded-tr-none"></div>
+      <div className="p-5 md:w-3/5">
+        <div className="h-5 bg-gray-200 rounded w-3/4 mb-3"></div>
+        <div className="grid grid-cols-2 gap-2 mt-3 mb-3">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="h-3 bg-gray-200 rounded"></div>
+          ))}
         </div>
-        
-        <p className="text-xs text-gray-700 mb-3 line-clamp-2">
-          {student.personality || 'Bright'} learner. Strengths: {student.academicStrengths || 'N/A'}.
-        </p>
-        
-        <div className="flex flex-wrap gap-2">
-          <button 
-            onClick={() => openPdfPreview(student)}
-            className="text-xs px-2.5 py-1 bg-[#2b473f] text-white rounded text-nowrap flex items-center gap-1"
-          >
-            <BookOpen size={12} />
-            Get to Know {student.name.split(' ')[0]}'s Story
-          </button>
-          <button 
-            onClick={() => openSponsorPopup(student)}
-            className="text-xs px-2.5 py-1 bg-[#932528] text-white rounded text-nowrap"
-          >
-            Sponsor
-          </button>
+        <div className="space-y-2 mt-3">
+          {[...Array(2)].map((_, i) => (
+            <div key={i} className="h-3 bg-gray-200 rounded w-full"></div>
+          ))}
+        </div>
+        <div className="mt-4 flex gap-2">
+          <div className="h-8 bg-gray-200 rounded w-1/3"></div>
         </div>
       </div>
     </motion.div>
   );
 
+  // === Enhanced Student Card with professional passport image ===
+  const StudentProfileCard = ({ student, index }) => {
+    const reverse = index % 2 === 1;
+    
+    return (
+      <motion.div 
+        className={`bg-white/80 backdrop-blur-sm rounded-xl shadow-md overflow-hidden border border-gray-200/30 hover:shadow-lg transition-all duration-300 mb-8 ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} flex flex-col`}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.1 }}
+        whileHover={{ y: -5 }}
+      >
+        {/* ✅ Enhanced Passport-style Image Container */}
+        <div className="md:w-2/5 h-64 md:h-48 relative flex items-center justify-center p-0 m-0">
+          <div className="w-32 h-40 bg-white shadow-inner rounded-sm border border-gray-300 overflow-hidden m-0 p-0">
+            <img
+              src={student.imageUrl || "/default-student.jpg"}
+              alt={student.name}
+              className="w-full h-full object-cover object-top"
+              onError={(e) => e.target.src = "/default-student.jpg"}
+              loading="lazy"
+            />
+          </div>
+        </div>
+        
+        {/* Content Section */}
+        <div className="p-5 md:w-3/5">
+          <h3 className="text-lg font-bold text-[#2b473f] font-montserrat mb-2 line-clamp-1">
+            {student.name}
+          </h3>
+          
+          {/* Enhanced Info Grid */}
+          <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+            <div className="bg-[#f6f4ee] p-2 rounded">
+              <span className="font-semibold text-[#2b473f]">ID:</span> {student.idNumber}
+            </div>
+            <div className="bg-[#f6f4ee] p-2 rounded">
+              <span className="font-semibold text-[#2b473f]">DOB:</span> {formatDate(student.dateOfBirth)}
+            </div>
+            <div className="bg-[#f6f4ee] p-2 rounded">
+              <span className="font-semibold text-[#2b473f]">Class:</span> {student.class}
+            </div>
+            <div className="bg-[#f6f4ee] p-2 rounded">
+              <span className="font-semibold text-[#2b473f]">Age:</span> {student.age}
+            </div>
+          </div>
+          
+          <p className="text-xs text-gray-700 mb-3 line-clamp-2">
+            {student.personality || 'Bright'} learner. Strengths: {student.academicStrengths || 'N/A'}.
+          </p>
+          
+          {/* Enhanced Action Buttons */}
+          <div className="flex flex-wrap gap-2 mt-3">
+            <motion.button 
+              onClick={() => openPdfPreview(student)}
+              className="text-xs px-3 py-1.5 bg-[#2b473f] text-white rounded-lg hover:bg-[#3a5c52] transition flex items-center gap-1"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <BookOpen size={12} />
+              Get to Know {student.name.split(' ')[0]}'s Story
+            </motion.button>
+            <motion.button 
+              onClick={() => openSponsorPopup(student)}
+              className="text-xs px-3 py-1.5 bg-[#932528] text-white rounded-lg hover:bg-[#7a1e21] transition"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Sponsor
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
+
+  // === Enhanced Sponsorship Form Popup ===
   const SponsorshipFormPopup = () => {
     if (!isPopupOpen || !selectedStudent) return null;
 
@@ -308,7 +355,7 @@ export default function ChildSponsorship() {
                   <div className="text-4xl mb-3">✅</div>
                   <h3 className="text-lg font-bold text-green-600 mb-2">Thank You!</h3>
                   <p className="text-sm text-gray-700">
-                    We’ll contact you soon to complete the sponsorship.
+                    We'll contact you soon to complete the sponsorship.
                   </p>
                 </div>
               ) : (
@@ -378,6 +425,7 @@ export default function ChildSponsorship() {
     );
   };
 
+  // === Enhanced PDF Preview Modal ===
   const PdfPreviewModal = () => {
     if (!isPdfPreviewOpen || !pdfStudent) return null;
 
@@ -427,36 +475,32 @@ export default function ChildSponsorship() {
   };
 
   return (
-    <div className="font-open-sans bg-gradient-to-b from-white to-[#f9f8f5] min-h-screen pt-8 pb-12">
-      <div className="max-w-4xl mx-auto px-4">
-        {/* Stats Banner */}
-        <div className="bg-gradient-to-r from-[#2b473f] to-[#3a5c52] rounded-xl p-4 mb-8 text-center text-white">
-          <p className="text-sm">
-            {students.length} children are currently seeking sponsors • $35/month changes a life
-          </p>
-        </div>
+    <div className="font-open-sans bg-gradient-to-b from-white to-[#f9f8f5] min-h-screen pt-8 pb-16">
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Enhanced Stats Banner */}
+        <StatsBanner />
 
-        {/* Filters */}
-        <div className="bg-white rounded-xl p-4 mb-8 border border-gray-200/50">
-          <div className="flex items-center gap-2 mb-3">
-            <Filter size={14} className="text-[#2b473f]" />
+        {/* Enhanced Filters Section */}
+        <div id="filters" className="bg-white rounded-xl p-5 mb-10 border border-gray-200/50">
+          <div className="flex items-center gap-2 mb-4">
+            <Filter size={16} className="text-[#2b473f]" />
             <h3 className="text-sm font-semibold text-[#2b473f]">Filter Students</h3>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
             <div className="relative">
-              <Search size={12} className="absolute left-2 top-2 text-gray-400" />
+              <Search size={14} className="absolute left-3 top-2.5 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search name or ID"
                 value={filters.searchTerm}
                 onChange={(e) => setFilters(prev => ({ ...prev, searchTerm: e.target.value }))}
-                className="w-full pl-6 pr-3 py-1.5 text-xs border border-gray-300 rounded-lg"
+                className="w-full pl-8 pr-3 py-2 text-xs border border-gray-300 rounded-lg"
               />
             </div>
             <select
               value={filters.class}
               onChange={(e) => setFilters(prev => ({ ...prev, class: e.target.value }))}
-              className="text-xs py-1.5 border border-gray-300 rounded-lg"
+              className="text-xs py-2 border border-gray-300 rounded-lg"
             >
               <option value="">All Classes</option>
               {uniqueClasses.map(cls => (
@@ -468,26 +512,33 @@ export default function ChildSponsorship() {
               placeholder="Min Age"
               value={filters.minAge}
               onChange={(e) => setFilters(prev => ({ ...prev, minAge: e.target.value }))}
-              className="text-xs py-1.5 border border-gray-300 rounded-lg"
+              className="text-xs py-2 border border-gray-300 rounded-lg"
             />
             <input
               type="number"
               placeholder="Max Age"
               value={filters.maxAge}
               onChange={(e) => setFilters(prev => ({ ...prev, maxAge: e.target.value }))}
-              className="text-xs py-1.5 border border-gray-300 rounded-lg"
+              className="text-xs py-2 border border-gray-300 rounded-lg"
+            />
+            <input
+              type="text"
+              placeholder="Academic strength"
+              value={filters.academicStrength}
+              onChange={(e) => setFilters(prev => ({ ...prev, academicStrength: e.target.value }))}
+              className="text-xs py-2 border border-gray-300 rounded-lg"
             />
           </div>
         </div>
 
-        {/* Student List */}
+        {/* Student List Section */}
         <div className="mb-12">
-          <h2 className="text-lg font-bold text-[#2b473f] mb-4">Children Seeking Sponsors</h2>
+          <h2 className="text-xl font-bold text-[#2b473f] mb-5">Children Seeking Sponsors</h2>
           
           {error ? (
             <div className="text-center py-8 text-red-600">{error}</div>
           ) : loading ? (
-            Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} index={i} />)
+            Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} reverse={i % 2 === 1} />)
           ) : filteredStudents.length === 0 ? (
             <div className="text-center py-10 text-gray-500 italic">
               No students match your filters.
@@ -499,20 +550,20 @@ export default function ChildSponsorship() {
           )}
         </div>
 
-        {/* ✅ NEW: CTA BELOW STUDENTS */}
+        {/* Enhanced CTA Section */}
         <motion.div 
-          className="bg-gradient-to-r from-[#8CA9B4] to-[#7a96a0] rounded-2xl p-6 text-center shadow-md"
+          className="bg-gradient-to-r from-[#8CA9B4] to-[#7a96a0] rounded-2xl p-8 text-center shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-lg font-bold text-white mb-2">Ready to Change a Life?</h3>
-          <p className="text-white/90 text-sm mb-4">
-            Your sponsorship provides education, meals, mentorship, and hope.
+          <h3 className="text-xl font-bold text-white mb-3">Ready to Change a Life?</h3>
+          <p className="text-white/90 mb-5 max-w-2xl mx-auto">
+            Your sponsorship provides education, meals, mentorship, and hope. Start your journey today.
           </p>
           <motion.button
-            onClick={() => document.querySelector('h2')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-5 py-2 bg-white text-[#2b473f] font-semibold rounded-full text-sm shadow hover:shadow-md"
+            onClick={() => document.getElementById('filters')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-6 py-3 bg-white text-[#2b473f] font-semibold rounded-full shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
