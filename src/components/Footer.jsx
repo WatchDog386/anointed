@@ -105,7 +105,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <h5 className="text-white text-sm font-medium">Mailing Address</h5>
-                    <p className="text-gray-300 text-xs">PO Box 713<br />Matthews, NC 28106</p>
+                    <p className="text-gray-300 text-xs">PO Box 403019<br />Mbita, Mfangano</p>
                   </div>
                 </div>
                 
@@ -115,7 +115,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <h5 className="text-white text-sm font-medium">Office Address</h5>
-                    <p className="text-gray-300 text-xs">10800 Independence Pointe Parkway<br />Suite C, Matthews, NC 28105</p>
+                    <p className="text-gray-300 text-xs">Mbita<br />Mfangano, Along Mfangano Ringroad, Kaswanga</p>
                   </div>
                 </div>
                 
@@ -125,7 +125,8 @@ export default function Footer() {
                   </div>
                   <div>
                     <h5 className="text-white text-sm font-medium">Call Us</h5>
-                    <p className="text-gray-300 text-xs">(704) 844-1020</p>
+                    <p className="text-gray-300 text-xs">(785) 517-1077</p>
+                    <p className="text-gray-300 text-xs">(+254) 708-512-397</p>
                   </div>
                 </div>
                 
@@ -172,27 +173,7 @@ export default function Footer() {
           >
             <h3 className="text-lg font-bold text-[#8CA9B4]">Stay Updated</h3>
             
-            {/* Newsletter Form */}
-            <div className="space-y-3">
-              <p className="text-gray-300 text-sm">Subscribe to our newsletter for updates</p>
-              <form onSubmit={handleNewsletterSubmit} className="flex">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email address"
-                  className="flex-1 px-3 py-2 bg-[#233A33] text-white placeholder-gray-400 rounded-l text-sm focus:outline-none focus:ring-1 focus:ring-[#8CA9B4]"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="bg-[#8CA9B4] hover:bg-[#7a98a3] text-white px-3 py-2 rounded-r text-sm transition-colors"
-                >
-                  <i className="fas fa-paper-plane"></i>
-                </button>
-              </form>
-            </div>
-            
+  
             {/* Get Involved Section - Hidden on mobile, shown on desktop */}
             <div className="hidden md:block space-y-3 pt-2">
               <h3 className="text-lg font-bold text-[#8CA9B4]">Get Involved</h3>
