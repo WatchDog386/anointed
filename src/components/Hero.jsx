@@ -88,7 +88,7 @@ const Hero = () => {
       description:
         "There are many ways to serve as God's hands and feet. Consider making an impact by sponsoring a child, making a donation, or learn how to give in other ways.",
       linkText: "how to give in other ways",
-      link: "/give",
+      link: "/Donate",
     },
     {
       image: "/project.jpg",
