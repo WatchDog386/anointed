@@ -171,7 +171,7 @@ export default function Footer() {
             transition={{ delay: 0.5 }}
             className="space-y-4"
           >
-            <h3 className="text-lg font-bold text-[#8CA9B4]">Stay Updated</h3>
+           
             
   
             {/* Get Involved Section - Hidden on mobile, shown on desktop */}
