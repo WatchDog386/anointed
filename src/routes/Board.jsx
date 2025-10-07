@@ -95,7 +95,7 @@ const Board = () => {
             variants={fadeIn}
           >
             <div className="text-sm text-accent mb-2 font-montserrat">
-              <Link to="/" className="hover:underline"></Link> 
+              <Link to="/" className="hover:underline">YTTYU</Link> 
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-3 font-script">
               Our Board Members
