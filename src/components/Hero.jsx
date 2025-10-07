@@ -75,7 +75,7 @@ const Hero = () => {
       image: "/christian.jpg",
       title: "Sponsor A Child",
       buttonText: "Start Today",
-      onClick: () => navigate("/sponsor"),
+      onClick: () => navigate("/ChildSponsorship"),
     },
     {
       image: "DRANDCHILDREN.jpg",
