@@ -73,7 +73,7 @@ const Board = () => {
     { name: "GoFundMe", image: "/GOFUNDME.PNG" },
     { name: "World Food Programme", image: "/WFP.PNG" },
     { name: "Global Empowerment Mission", image: "/GLOBALMISSION.png" },
-    { name: "Village Enterprise", image: "/VILLAGE" }
+    { name: "Village Enterprise", image: "/VILLAGE.PNG" }
   ];
 
   const impactStats = [
@@ -95,7 +95,7 @@ const Board = () => {
             variants={fadeIn}
           >
             <div className="text-sm text-accent mb-2 font-montserrat">
-              <Link to="/" className="hover:underline">YTTYU</Link> 
+              <Link to="/" className="hover:underline"></Link> 
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-3 font-script">
               Our Board Members
