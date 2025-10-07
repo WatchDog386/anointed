@@ -78,7 +78,7 @@ const Hero = () => {
       onClick: () => navigate("/sponsor"),
     },
     {
-      image: "DRANDCHILDREN",
+      image: "DRANDCHILDREN.jpg",
       title: (
         <>
           This is your <br />
