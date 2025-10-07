@@ -1,8 +1,8 @@
-// backend/src/controllers/sponsorshipController.js
 const Student = require('../models/Student');
+const SponsorshipInterest = require('../models/SponsorshipInterest'); // ✅ NEW
 const nodemailer = require('nodemailer');
 
-// Email configuration - you'll need to set these in your .env file
+// Email configuration
 const EMAIL_CONFIG = {
   host: process.env.EMAIL_HOST || 'smtp.gmail.com',
   port: parseInt(process.env.EMAIL_PORT) || 587,
@@ -12,12 +12,10 @@ const EMAIL_CONFIG = {
   }
 };
 
-// Create email transporter
 const createTransporter = () => {
   return nodemailer.createTransporter(EMAIL_CONFIG);
 };
 
-// Email templates
 const getSponsorConfirmationEmail = (sponsorName, studentName) => {
   return {
     subject: `Thank You for Your Interest in Sponsoring ${studentName}`,
@@ -75,7 +73,6 @@ const submitSponsorshipInterest = async (req, res) => {
     studentId 
   } = req.body;
 
-  // Validation
   if (!sponsorName || !sponsorEmail || !sponsorPhone || !studentId) {
     return res.status(400).json({ 
       message: 'Sponsor name, email, phone, and student ID are required' 
@@ -83,40 +80,33 @@ const submitSponsorshipInterest = async (req, res) => {
   }
 
   try {
-    // Find the student
+    // Verify student exists
     const student = await Student.findById(studentId);
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
 
-    // Check if student is already sponsored
-    if (student.isSponsored) {
-      return res.status(400).json({ 
-        message: 'This student has already been sponsored. Thank you for your interest!' 
-      });
-    }
+    // ✅ CREATE INTEREST RECORD (don't mark student as sponsored yet!)
+    const interest = new SponsorshipInterest({
+      studentId,
+      sponsorName,
+      sponsorEmail,
+      sponsorPhone,
+      message
+    });
 
-    // Update student record to mark as sponsored
-    student.isSponsored = true;
-    student.sponsorName = sponsorName;
-    student.sponsorEmail = sponsorEmail;
-    student.sponsorPhone = sponsorPhone;
-    student.sponsorNotes = message || 'Sponsor showed interest through website form';
-    
-    await student.save();
+    await interest.save();
 
-    // Send confirmation emails (if email config is available)
+    // Send emails if configured
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
       const transporter = createTransporter();
       
-      // Send to sponsor
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: sponsorEmail,
         ...getSponsorConfirmationEmail(sponsorName, student.name)
       });
 
-      // Send to admin
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER,
@@ -128,24 +118,16 @@ const submitSponsorshipInterest = async (req, res) => {
     }
 
     res.status(201).json({ 
-      message: 'Sponsorship interest submitted successfully! We will contact you shortly.',
-      studentId: student._id
+      message: 'Thank you! We’ve received your sponsorship interest and will contact you soon.',
+      interestId: interest._id
     });
 
   } catch (err) {
-    console.error('❌ Sponsorship Interest Error:', err.message);
+    console.error('❌ Sponsorship Interest Error:', err);
     
-    // Handle validation errors from Mongoose
     if (err.name === 'ValidationError') {
       return res.status(400).json({ 
         message: Object.values(err.errors).map(e => e.message)[0] 
-      });
-    }
-    
-    // Handle duplicate key errors (if any)
-    if (err.code === 11000) {
-      return res.status(400).json({ 
-        message: 'This student has already been sponsored. Thank you for your interest!' 
       });
     }
     
