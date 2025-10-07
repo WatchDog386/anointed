@@ -1,4 +1,4 @@
-// backend/src/routes/studentRoutes.js
+// backend/src/routes/studentRoutes.js (updated version)
 const express = require('express');
 const multer = require('multer');
 const {
@@ -6,6 +6,7 @@ const {
   createStudent,
   updateStudent,
   deleteStudent,
+  exportStudents,
 } = require('../controllers/studentController');
 const { protect } = require('../middleware/authMiddleware');
 
@@ -30,8 +31,14 @@ const router = express.Router();
  * @desc    Get all students
  * @access  Public for sponsorship page, Private for admin
  */
-// For your use case, we'll make this PUBLIC since ChildSponsorship.jsx fetches without auth
 router.get('/', getStudents);
+
+/**
+ * @route   GET /api/students/export
+ * @desc    Export students to CSV
+ * @access  Private
+ */
+router.get('/export', protect, exportStudents);
 
 /**
  * @route   POST /api/students

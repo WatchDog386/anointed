@@ -1,5 +1,5 @@
 // src/routes/Dashboard.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { 
@@ -15,18 +15,20 @@ import {
   Search,
   Filter,
   Download,
-  Eye
+  Eye,
+  X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 // ✅ Dynamically determine API base URL
 const getApiBaseUrl = () => {
   if (import.meta.env.PROD) {
-    return "https://anointed-3v54.onrender.com"; // ✅ YOUR LIVE RENDER BACKEND
+    return "https://anointed-3v54.onrender.com"; // ✅ No trailing space
   }
   return "http://localhost:5000";
 };
-
 const API_BASE_URL = getApiBaseUrl();
 
 const Dashboard = () => {
@@ -42,7 +44,10 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterSponsored, setFilterSponsored] = useState('all');
   const [selectedStudent, setSelectedStudent] = useState(null);
-
+  const [deleteConfirm, setDeleteConfirm] = useState({ open: false, studentId: null, studentName: '', inputName: '' });
+  const [exportModalOpen, setExportModalOpen] = useState(false);
+  const [exportTarget, setExportTarget] = useState('all'); // 'all' or 'single'
+  const [exportStudent, setExportStudent] = useState(null);
   const navigate = useNavigate();
   const CLOUD_NAME = 'dsfwavo7x';
   const UPLOAD_PRESET = 'student_upload';
@@ -61,6 +66,10 @@ const Dashboard = () => {
     aspirations: '',
     supportNeeded: '',
     achievements: '',
+    isSponsored: false,
+    sponsorName: '',
+    sponsorEmail: '',
+    sponsorPhone: '',
     sponsorNotes: '',
     imageUrl: '',
   });
@@ -81,12 +90,12 @@ const Dashboard = () => {
       const res = await axios.get(`${API_BASE_URL}/api/students`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      
       const normalizedStudents = res.data.map(student => ({
         ...student,
         achievements: Array.isArray(student.achievements)
           ? student.achievements.join(', ')
-          : student.achievements || ''
+          : student.achievements || '',
+        isSponsored: Boolean(student.isSponsored)
       }));
       setStudents(normalizedStudents);
     } catch (err) {
@@ -100,23 +109,22 @@ const Dashboard = () => {
     }
   };
 
-  // Filter and search students
   const filteredStudents = students.filter(student => {
     const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          student.idNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          student.class.toLowerCase().includes(searchTerm.toLowerCase());
-    
     const matchesFilter = filterSponsored === 'all' ? true :
-                         filterSponsored === 'sponsored' ? student.sponsorNotes :
-                         filterSponsored === 'unsponsored' ? !student.sponsorNotes : true;
-    
+                         filterSponsored === 'sponsored' ? student.isSponsored :
+                         filterSponsored === 'unsponsored' ? !student.isSponsored : true;
     return matchesSearch && matchesFilter;
   });
 
-  // === Handlers (NO LOGIC CHANGES) ===
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({ 
+      ...prev, 
+      [name]: type === 'checkbox' ? checked : value 
+    }));
   };
 
   const handleImageChange = (e) => {
@@ -135,9 +143,7 @@ const Dashboard = () => {
     data.append('file', file);
     data.append('upload_preset', UPLOAD_PRESET);
     data.append('folder', 'students');
-
     try {
-      // ✅ Fixed: No extra spaces in URL
       const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
         method: 'POST',
         body: data,
@@ -168,6 +174,10 @@ const Dashboard = () => {
       aspirations: '',
       supportNeeded: '',
       achievements: '',
+      isSponsored: false,
+      sponsorName: '',
+      sponsorEmail: '',
+      sponsorPhone: '',
       sponsorNotes: '',
       imageUrl: '',
     });
@@ -184,7 +194,6 @@ const Dashboard = () => {
     setLoading(true);
     setError('');
     setSuccess('');
-
     try {
       let imageUrl = formData.imageUrl;
       if (imageFile) {
@@ -196,13 +205,12 @@ const Dashboard = () => {
         setLoading(false);
         return;
       }
-
       const payload = {
         ...formData,
         imageUrl,
-        age: formData.age ? parseInt(formData.age, 10) : undefined
+        age: formData.age ? parseInt(formData.age, 10) : undefined,
+        isSponsored: Boolean(formData.isSponsored)
       };
-
       const token = localStorage.getItem('token');
       const config = {
         headers: {
@@ -210,7 +218,6 @@ const Dashboard = () => {
           'Content-Type': 'application/json',
         },
       };
-
       if (isEditing) {
         await axios.put(`${API_BASE_URL}/api/students/${currentStudentId}`, payload, config);
         setSuccess('Student updated successfully!');
@@ -218,7 +225,6 @@ const Dashboard = () => {
         await axios.post(`${API_BASE_URL}/api/students`, payload, config);
         setSuccess('Student added successfully!');
       }
-
       fetchStudents();
       resetForm();
       setTimeout(() => setSuccess(''), 4000);
@@ -248,6 +254,10 @@ const Dashboard = () => {
       aspirations: student.aspirations || '',
       supportNeeded: student.supportNeeded || '',
       achievements: student.achievements || '',
+      isSponsored: Boolean(student.isSponsored),
+      sponsorName: student.sponsorName || '',
+      sponsorEmail: student.sponsorEmail || '',
+      sponsorPhone: student.sponsorPhone || '',
       sponsorNotes: student.sponsorNotes || '',
       imageUrl: student.imageUrl || '',
     });
@@ -257,15 +267,33 @@ const Dashboard = () => {
     setIsEditing(true);
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure? This cannot be undone.')) return;
+  const openDeleteConfirm = (student) => {
+    setDeleteConfirm({
+      open: true,
+      studentId: student._id,
+      studentName: student.name,
+      inputName: ''
+    });
+  };
+
+  const handleDeleteConfirmChange = (e) => {
+    setDeleteConfirm(prev => ({ ...prev, inputName: e.target.value }));
+  };
+
+  const confirmDelete = async () => {
+    const { studentId, studentName, inputName } = deleteConfirm;
+    if (inputName.trim() !== studentName) {
+      setError('Name does not match. Please type the student’s full name exactly.');
+      return;
+    }
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`${API_BASE_URL}/api/students/${id}`, {
+      await axios.delete(`${API_BASE_URL}/api/students/${studentId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      setStudents(students.filter(s => s._id !== id));
+      setStudents(students.filter(s => s._id !== studentId));
       setSuccess('Student deleted successfully!');
+      setDeleteConfirm({ open: false, studentId: null, studentName: '', inputName: '' });
       setTimeout(() => setSuccess(''), 4000);
     } catch (err) {
       setError('Failed to delete student.');
@@ -281,6 +309,93 @@ const Dashboard = () => {
     navigate('/admin/login');
   };
 
+  // ===== EXPORT FUNCTIONS =====
+  const exportFullListAsCSV = () => {
+    const headers = ['ID No', 'Name', 'Date of Birth', 'Class', 'Age', 'Sponsor Name', 'Last Updated'];
+    const rows = students.map(s => [
+      s.idNumber || '',
+      s.name || '',
+      s.dateOfBirth ? new Date(s.dateOfBirth).toLocaleDateString() : '',
+      s.class || '',
+      s.age || '',
+      s.sponsorName || (s.isSponsored ? 'Yes' : 'No'),
+      s.updatedAt ? new Date(s.updatedAt).toLocaleString() : ''
+    ]);
+
+    let csvContent = "data:text/csv;charset=utf-8," 
+      + headers.join(",") + "\n"
+      + rows.map(e => e.map(field => `"${String(field).replace(/"/g, '""')}"`).join(",")).join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "anointed_students_export.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const exportSingleStudentAsPDF = (student) => {
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Anointed Vessels Christian School", 14, 20);
+    doc.setFontSize(12);
+    doc.text("Student Full Profile", 14, 30);
+    doc.setLineWidth(0.5);
+    doc.line(14, 32, 200, 32);
+
+    const addSection = (y, label, value) => {
+      if (!value) return y;
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`${label}:`, 14, y);
+      doc.setFont('helvetica', 'normal');
+      const splitText = doc.splitTextToSize(String(value), 180);
+      doc.text(splitText, 14, y + 4);
+      return y + 6 + splitText.length * 5;
+    };
+
+    let yPos = 40;
+    yPos = addSection(yPos, "ID Number", student.idNumber);
+    yPos = addSection(yPos, "Full Name", student.name);
+    yPos = addSection(yPos, "Date of Birth", student.dateOfBirth ? new Date(student.dateOfBirth).toLocaleDateString() : '');
+    yPos = addSection(yPos, "Class", student.class);
+    yPos = addSection(yPos, "Age", student.age);
+    yPos = addSection(yPos, "Personality", student.personality);
+    yPos = addSection(yPos, "Academic Strengths", student.academicStrengths);
+    yPos = addSection(yPos, "Overall Performance", student.overallPerformance);
+    yPos = addSection(yPos, "Family Background", student.familyBackground);
+    yPos = addSection(yPos, "Financial Situation", student.financialSituation);
+    yPos = addSection(yPos, "Aspirations", student.aspirations);
+    yPos = addSection(yPos, "Support Needed", student.supportNeeded);
+    yPos = addSection(yPos, "Achievements", student.achievements);
+
+    if (student.isSponsored) {
+      yPos += 5;
+      doc.setFont('helvetica', 'bold');
+      doc.text("Sponsor Information", 14, yPos);
+      doc.setLineWidth(0.3);
+      doc.line(14, yPos + 2, 100, yPos + 2);
+      yPos += 8;
+      yPos = addSection(yPos, "Sponsor Name", student.sponsorName);
+      yPos = addSection(yPos, "Sponsor Email", student.sponsorEmail);
+      yPos = addSection(yPos, "Sponsor Phone", student.sponsorPhone);
+      yPos = addSection(yPos, "Sponsor Notes", student.sponsorNotes);
+    }
+
+    doc.save(`student_profile_${student.name.replace(/\s+/g, '_')}.pdf`);
+  };
+
+  const handleExportChoice = () => {
+    if (exportTarget === 'all') {
+      exportFullListAsCSV(); // CSV for bulk
+      setExportModalOpen(false);
+    } else if (exportTarget === 'single' && exportStudent) {
+      exportSingleStudentAsPDF(exportStudent);
+      setExportModalOpen(false);
+    }
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
@@ -291,9 +406,8 @@ const Dashboard = () => {
     return `${day} ${month} ${year}`;
   };
 
-  // Stats
   const total = students.length;
-  const sponsored = students.filter(s => s.sponsorNotes).length;
+  const sponsored = students.filter(s => s.isSponsored).length;
   const unsponsored = total - sponsored;
 
   return (
@@ -315,7 +429,6 @@ const Dashboard = () => {
               <p className="text-sm text-gray-500">Manage student profiles & sponsorships</p>
             </div>
           </div>
-          
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigate('/')}
@@ -335,25 +448,179 @@ const Dashboard = () => {
         </div>
       </motion.div>
 
-      {/* Alerts */}
+      {/* === MODAL-STYLE SUCCESS/ERROR POPUP (Like Login.jsx) === */}
       <AnimatePresence>
         {(error || success) && (
           <motion.div 
-            className={`fixed top-20 right-4 z-50 max-w-sm p-4 rounded-xl shadow-lg border ${
-              error ? 'bg-red-50 border-red-200 text-red-700' : 'bg-green-50 border-green-200 text-green-700'
-            }`}
-            initial={{ x: 300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: 300, opacity: 0 }}
+            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            <div className="flex items-start gap-3">
-              <div className={`w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${
-                error ? 'bg-red-500' : 'bg-green-500'
-              }`}>
-                <span className="text-white text-xs">!</span>
+            <motion.div 
+              className="bg-white p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl text-center max-w-xs sm:max-w-sm w-full border border-gray-100"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+            >
+              <motion.div 
+                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg ${
+                  error ? 'bg-red-500' : 'bg-gradient-to-br from-[#932528] to-[#7a1e21]'
+                }`}
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+              >
+                {error ? (
+                  <X className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 sm:h-10 sm:w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </motion.div>
+              <h3 className="text-xl sm:text-2xl font-bold text-[#2b473f] mb-2 sm:mb-3 font-montserrat">
+                {error ? 'Action Failed' : 'Success!'}
+              </h3>
+              <p className="text-gray-600 mb-2 text-sm sm:text-base">{error || success}</p>
+              {success && <p className="text-xs sm:text-sm text-gray-500">This message will close shortly...</p>}
+              <div className="mt-4 sm:mt-6 w-full bg-gray-200 rounded-full h-1.5">
+                <motion.div 
+                  className={`h-1.5 rounded-full ${error ? 'bg-red-500' : 'bg-[#932528]'}`}
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: error ? 0.5 : 1.5, ease: "linear" }}
+                />
               </div>
-              <span className="text-sm">{error || success}</span>
-            </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* === DELETE CONFIRMATION MODAL === */}
+      <AnimatePresence>
+        {deleteConfirm.open && (
+          <motion.div 
+            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div 
+              className="bg-white p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl text-center max-w-sm w-full border border-gray-100"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+            >
+              <h3 className="text-xl font-bold text-[#2b473f] mb-2">Confirm Deletion</h3>
+              <p className="text-gray-600 mb-4 text-sm">
+                To prevent accidental deletion, please type the student's full name below:
+              </p>
+              <p className="font-semibold text-[#932528] mb-3">{deleteConfirm.studentName}</p>
+              <input
+                type="text"
+                value={deleteConfirm.inputName}
+                onChange={handleDeleteConfirmChange}
+                placeholder="Type full name to confirm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm mb-4"
+                autoFocus
+              />
+              <div className="flex gap-3 justify-center">
+                <button
+                  onClick={() => setDeleteConfirm({ open: false, studentId: null, studentName: '', inputName: '' })}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmDelete}
+                  disabled={deleteConfirm.inputName.trim() !== deleteConfirm.studentName}
+                  className="px-4 py-2 text-sm font-medium text-white bg-[#932528] rounded-lg hover:bg-[#7a1e21] disabled:opacity-50"
+                >
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* === EXPORT MODAL === */}
+      <AnimatePresence>
+        {exportModalOpen && (
+          <motion.div 
+            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div 
+              className="bg-white p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl max-w-md w-full border border-gray-100"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+            >
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold text-[#2b473f]">Export Data</h3>
+                <button onClick={() => setExportModalOpen(false)} className="text-gray-500 hover:text-gray-700">
+                  <X size={20} />
+                </button>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-[#2b473f] mb-2">Export Type</label>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setExportTarget('all')}
+                      className={`flex-1 py-2 px-3 text-sm rounded-lg border ${
+                        exportTarget === 'all' 
+                          ? 'bg-[#2b473f] text-white border-[#2b473f]' 
+                          : 'bg-white text-gray-700 border-gray-300'
+                      }`}
+                    >
+                      Full List (CSV)
+                    </button>
+                    <button
+                      onClick={() => setExportTarget('single')}
+                      className={`flex-1 py-2 px-3 text-sm rounded-lg border ${
+                        exportTarget === 'single' 
+                          ? 'bg-[#2b473f] text-white border-[#2b473f]' 
+                          : 'bg-white text-gray-700 border-gray-300'
+                      }`}
+                    >
+                      Single Student (PDF)
+                    </button>
+                  </div>
+                </div>
+
+                {exportTarget === 'single' && (
+                  <div>
+                    <label className="block text-sm font-medium text-[#2b473f] mb-2">Select Student</label>
+                    <select
+                      value={exportStudent?._id || ''}
+                      onChange={(e) => {
+                        const student = students.find(s => s._id === e.target.value);
+                        setExportStudent(student || null);
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                    >
+                      <option value="">-- Choose a student --</option>
+                      {students.map(s => (
+                        <option key={s._id} value={s._id}>{s.name} ({s.idNumber})</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                <button
+                  onClick={handleExportChoice}
+                  disabled={exportTarget === 'single' && !exportStudent}
+                  className="w-full py-2.5 bg-[#932528] text-white font-medium rounded-lg hover:bg-[#7a1e21] disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Export
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -367,27 +634,9 @@ const Dashboard = () => {
           transition={{ delay: 0.2 }}
         >
           {[
-            { 
-              label: 'Total Students', 
-              value: total, 
-              icon: Users,
-              color: 'from-[#2b473f] to-[#3a5c52]',
-              bgColor: 'bg-[#2b473f]/10'
-            },
-            { 
-              label: 'Sponsored', 
-              value: sponsored, 
-              icon: UserCheck,
-              color: 'from-[#932528] to-[#a83232]',
-              bgColor: 'bg-[#932528]/10'
-            },
-            { 
-              label: 'Awaiting Sponsor', 
-              value: unsponsored, 
-              icon: UserX,
-              color: 'from-[#8CA9B4] to-[#9bb7c4]',
-              bgColor: 'bg-[#8CA9B4]/10'
-            }
+            { label: 'Total Students', value: total, icon: Users, color: 'from-[#2b473f] to-[#3a5c52]', bgColor: 'bg-[#2b473f]/10' },
+            { label: 'Sponsored', value: sponsored, icon: UserCheck, color: 'from-[#932528] to-[#a83232]', bgColor: 'bg-[#932528]/10' },
+            { label: 'Awaiting Sponsor', value: unsponsored, icon: UserX, color: 'from-[#8CA9B4] to-[#9bb7c4]', bgColor: 'bg-[#8CA9B4]/10' }
           ].map((stat, i) => (
             <div key={i} className="bg-white rounded-2xl p-6 border border-gray-200/50 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
@@ -412,7 +661,6 @@ const Dashboard = () => {
         >
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             <div className="flex flex-col sm:flex-row gap-4 flex-1 w-full">
-              {/* Search */}
               <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                 <input
@@ -423,8 +671,6 @@ const Dashboard = () => {
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#8CA9B4] focus:border-[#2b473f] transition text-sm"
                 />
               </div>
-              
-              {/* Filter */}
               <div className="flex gap-2">
                 <select
                   value={filterSponsored}
@@ -435,14 +681,15 @@ const Dashboard = () => {
                   <option value="sponsored">Sponsored</option>
                   <option value="unsponsored">Unsponsored</option>
                 </select>
-                
-                <button className="px-4 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition flex items-center gap-2 text-sm">
+                <button 
+                  onClick={() => setExportModalOpen(true)}
+                  className="px-4 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition flex items-center gap-2 text-sm"
+                >
                   <Download size={16} />
                   Export
                 </button>
               </div>
             </div>
-            
             <div className="text-sm text-gray-500">
               Showing {filteredStudents.length} of {students.length} students
             </div>
@@ -472,10 +719,8 @@ const Dashboard = () => {
                 </button>
               )}
             </div>
-            
             <div className="p-6">
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Image Upload */}
                 <div className="flex flex-col items-center text-center border-2 border-dashed border-gray-300 rounded-2xl p-6 hover:border-[#8CA9B4] transition-colors">
                   {imagePreview ? (
                     <div className="relative">
@@ -505,8 +750,6 @@ const Dashboard = () => {
                     </div>
                   )}
                 </div>
-
-                {/* Compact Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <InputField label="ID Number" name="idNumber" value={formData.idNumber} onChange={handleChange} required />
                   <InputField label="Full Name" name="name" value={formData.name} onChange={handleChange} required />
@@ -514,8 +757,30 @@ const Dashboard = () => {
                   <InputField label="Class" name="class" value={formData.class} onChange={handleChange} required />
                   <InputField label="Age" name="age" type="number" min="3" max="20" value={formData.age} onChange={handleChange} />
                 </div>
-
-                {/* Text Areas */}
+                <div className="border border-gray-200 rounded-xl p-4">
+                  <h3 className="font-semibold text-[#2b473f] mb-3">Sponsorship Status</h3>
+                  <div className="flex items-center gap-3 mb-4">
+                    <input
+                      type="checkbox"
+                      id="isSponsored"
+                      name="isSponsored"
+                      checked={formData.isSponsored}
+                      onChange={handleChange}
+                      className="w-4 h-4 text-[#2b473f] rounded focus:ring-[#2b473f]"
+                    />
+                    <label htmlFor="isSponsored" className="text-sm font-medium text-gray-700">
+                      This student is sponsored
+                    </label>
+                  </div>
+                  {formData.isSponsored && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-gray-200">
+                      <InputField label="Sponsor Name" name="sponsorName" value={formData.sponsorName} onChange={handleChange} />
+                      <InputField label="Sponsor Email" name="sponsorEmail" value={formData.sponsorEmail} onChange={handleChange} type="email" />
+                      <InputField label="Sponsor Phone" name="sponsorPhone" value={formData.sponsorPhone} onChange={handleChange} />
+                      <TextAreaField label="Sponsor Notes (Private)" name="sponsorNotes" value={formData.sponsorNotes} onChange={handleChange} rows={2} />
+                    </div>
+                  )}
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <TextAreaField label="Personality" name="personality" value={formData.personality} onChange={handleChange} rows={2} />
                   <TextAreaField label="Academic Strengths" name="academicStrengths" value={formData.academicStrengths} onChange={handleChange} rows={2} />
@@ -524,9 +789,7 @@ const Dashboard = () => {
                   <TextAreaField label="Financial Situation" name="financialSituation" value={formData.financialSituation} onChange={handleChange} rows={2} />
                   <TextAreaField label="Support Needed" name="supportNeeded" value={formData.supportNeeded} onChange={handleChange} rows={2} />
                   <TextAreaField label="Achievements" name="achievements" value={formData.achievements} onChange={handleChange} rows={2} />
-                  <TextAreaField label="Sponsor Notes (Private)" name="sponsorNotes" value={formData.sponsorNotes} onChange={handleChange} rows={2} />
                 </div>
-
                 <button
                   type="submit"
                   disabled={loading || uploadingImage}
@@ -579,7 +842,6 @@ const Dashboard = () => {
                 )}
               </h2>
             </div>
-            
             <div className="divide-y divide-gray-100 max-h-[600px] overflow-y-auto">
               {filteredStudents.length === 0 ? (
                 <div className="text-center py-12 text-gray-500">
@@ -601,7 +863,6 @@ const Dashboard = () => {
                     transition={{ delay: index * 0.1 }}
                   >
                     <div className="flex flex-col sm:flex-row gap-4">
-                      {/* Image */}
                       <div className="flex-shrink-0 w-full sm:w-20 h-20">
                         {student.imageUrl ? (
                           <img
@@ -616,8 +877,6 @@ const Dashboard = () => {
                           </div>
                         )}
                       </div>
-                      
-                      {/* Details */}
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start">
                           <div>
@@ -640,7 +899,7 @@ const Dashboard = () => {
                               <Edit3 size={16} />
                             </button>
                             <button
-                              onClick={() => handleDelete(student._id)}
+                              onClick={() => openDeleteConfirm(student)}
                               className="p-2 text-gray-500 hover:text-[#932528] rounded-lg hover:bg-[#932528]/10 transition"
                               title="Delete"
                             >
@@ -648,7 +907,6 @@ const Dashboard = () => {
                             </button>
                           </div>
                         </div>
-                        
                         <div className="mt-2 text-sm text-gray-600 space-y-1">
                           <div className="flex flex-wrap gap-1">
                             <span className="px-2 py-1 bg-[#2b473f]/10 text-[#2b473f] text-xs rounded-lg">
@@ -659,13 +917,16 @@ const Dashboard = () => {
                                 Age: {student.age}
                               </span>
                             )}
-                            {student.sponsorNotes && (
+                            {student.isSponsored ? (
                               <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-lg font-medium">
-                                Sponsored
+                                Sponsored: {student.sponsorName || 'Yes'}
+                              </span>
+                            ) : (
+                              <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-lg font-medium">
+                                Seeking Sponsor
                               </span>
                             )}
                           </div>
-                          
                           <p className="line-clamp-2 text-xs">
                             {student.personality || 'Bright'} learner with strengths in {student.academicStrengths || 'various subjects'}.
                           </p>
@@ -722,8 +983,21 @@ const Dashboard = () => {
                   <DetailRow label="Academic Strengths" value={selectedStudent.academicStrengths} />
                   <DetailRow label="Family Background" value={selectedStudent.familyBackground} />
                   <DetailRow label="Aspirations" value={selectedStudent.aspirations} />
-                  {selectedStudent.sponsorNotes && (
-                    <DetailRow label="Sponsor Notes" value={selectedStudent.sponsorNotes} />
+                  <DetailRow label="Financial Situation" value={selectedStudent.financialSituation} />
+                  <DetailRow label="Support Needed" value={selectedStudent.supportNeeded} />
+                  <DetailRow label="Achievements" value={selectedStudent.achievements} />
+                  {selectedStudent.isSponsored ? (
+                    <div className="border-t border-gray-200 pt-3">
+                      <h4 className="text-sm font-semibold text-green-700 mb-2">Sponsor Information</h4>
+                      <DetailRow label="Sponsor Name" value={selectedStudent.sponsorName} />
+                      <DetailRow label="Sponsor Email" value={selectedStudent.sponsorEmail} />
+                      <DetailRow label="Sponsor Phone" value={selectedStudent.sponsorPhone} />
+                      <DetailRow label="Sponsor Notes" value={selectedStudent.sponsorNotes} />
+                    </div>
+                  ) : (
+                    <div className="border-t border-gray-200 pt-3">
+                      <span className="text-sm text-orange-600 font-medium">This student is currently seeking a sponsor.</span>
+                    </div>
                   )}
                 </div>
               </div>
