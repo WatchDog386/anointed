@@ -83,7 +83,7 @@ const Staff = () => {
       role: "School Chairperson",
       category: "support",
       bio: "Mr. Alphonce provides strategic leadership and governance oversight, bringing extensive experience in educational policy and community development. His visionary guidance has been instrumental in shaping the school's long-term growth and community impact.",
-      image:"/.JPG"
+      image:"/OKUKU.JPG"
     },
     {
       id: 6,
@@ -94,7 +94,7 @@ const Staff = () => {
       image:"/Ann.JPG"
     },
     {
-  id: 11,
+  id: 7,
   name: "Md. Nanzala",
   role: "P1 Teacher",
   category: "teaching",
@@ -102,7 +102,7 @@ const Staff = () => {
   image: "/Nanzala.JPG"
 },
 {
-  id: 12,
+  id: 8,
   name: "Md. Quinter Titus",
   role: "ECD Teacher",
   category: "teaching",
@@ -110,7 +110,7 @@ const Staff = () => {
   image: "/QUEENTERTITUS.JPG"
 },
 {
-  id: 13,
+  id: 9,
   name: "Md. Syprine",
   role: "ECD Teacher",
   category: "teaching",
@@ -118,7 +118,7 @@ const Staff = () => {
   image: "/Syprine.JPG"
 },
 {
-  id: 14,
+  id: 10,
   name: "Mr. Patrick",
   role: "ECD Teacher",
   category: "teaching",
@@ -126,7 +126,7 @@ const Staff = () => {
   image: "/Patrick.JPG"
 },
 {
-  id: 15,
+  id: 11,
   name: "Md. Mercy",
   role: "ECD Teacher",
   category: "teaching",
@@ -135,7 +135,7 @@ const Staff = () => {
 },
 
 {
-      id: 9,
+      id: 12,
 name: "Md. Ephy",
 role: "Teacher",
 category: "teaching",
@@ -143,7 +143,32 @@ bio: "Md. Ephy is a dedicated P1 teacher specializing in Mathematics and Science
 image: "/Ephy.JPG"
 
     },
+{
+  id: 13,
+  name: "Mr. Constantine",
+  role: "P1 Teacher",
+  category: "teaching",
+  bio: "Mr. Constantine is a devoted P1 teacher who brings energy and creativity into the classroom. He focuses on building strong academic foundations while nurturing discipline, confidence, and a love for learning among his pupils through interactive and learner-centered teaching methods.",
+  image: "/Constantine.JPG"
+},
 
+{
+  id: 14,
+  name: "Md. Sheila",
+  role: "Chef",
+  category: "support",
+  bio: "Md. Sheila is a skilled and passionate chef dedicated to preparing nutritious and well-balanced meals for both learners and staff. She ensures hygiene, quality, and variety in every meal, creating a warm dining experience that supports the school’s commitment to health and wellness.",
+  image: "/Sheila.JPG"
+},
+
+{
+  id: 15,
+  name: "Benard",
+  role: "Computer and Digital Literacy Tutor",
+  category: "teaching",
+  bio: "Benard is a skilled Computer and Digital Literacy tutor who equips learners with essential 21st-century technological skills. His lessons combine practical learning and creativity, enabling students to confidently use computers and digital tools for research, communication, and problem-solving.",
+  image: "/Benard.JPG"
+}
 
 
 
