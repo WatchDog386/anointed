@@ -45,7 +45,6 @@ export default function Navbar() {
         { label: "Child Sponsorship", route: "/ChildSponsorship", id: "sponsorship" },
       ],
     },
-    // Removed "Impact" item
     { label: "Get Involved", route: "/Make-An-Impact", id: "involved" },
   ];
 
@@ -58,7 +57,7 @@ export default function Navbar() {
           {isMobile ? (
             <>
               <button
-                className="w-full flex justify-between items-center px-3 py-2.5 font-normal text-primary text-left hover:bg-accent/10 hover:text-accent rounded-lg transition-all duration-200"
+                className="w-full flex justify-between items-center px-3 py-2.5 font-normal text-white text-left hover:bg-white/10 hover:text-gray-100 rounded-lg transition-all duration-200"
                 onClick={() => setOpenSubmenu(isSubmenuOpen ? null : item.id)}
                 aria-expanded={isSubmenuOpen}
               >
@@ -87,8 +86,8 @@ export default function Navbar() {
                       className={({ isActive }) =>
                         `block px-3 py-2 text-xs font-poppins rounded-lg transition-all duration-200 ${
                           isActive
-                            ? "text-secondary bg-accent/10"
-                            : "text-gray-700 hover:text-accent hover:bg-accent/5"
+                            ? "text-secondary bg-white/20"
+                            : "text-gray-200 hover:text-gray-100 hover:bg-white/10"
                         }`
                       }
                       onClick={() => {
@@ -104,7 +103,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <button className="relative px-3 py-2 font-normal text-primary hover:text-accent flex items-center gap-1 transition-all duration-200 group-hover:bg-accent/10 rounded-lg whitespace-nowrap">
+              <button className="relative px-3 py-2 font-normal text-white hover:text-gray-100 flex items-center gap-1 transition-all duration-200 group-hover:bg-white/10 rounded-lg whitespace-nowrap">
                 <span className="text-sm font-poppins">{item.label}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -121,16 +120,16 @@ export default function Navbar() {
               </button>
 
               {/* Desktop Dropdown */}
-              <div className="absolute left-0 mt-1 w-56 shadow-lg bg-white/95 backdrop-blur-md border border-gray-200 border-t-2 border-t-accent opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform translate-y-2 group-hover:translate-y-0 rounded-none">
+              <div className="absolute left-0 mt-1 w-56 shadow-lg bg-black/70 backdrop-blur-md border border-white/10 border-t-2 border-t-secondary opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform translate-y-2 group-hover:translate-y-0 rounded-none">
                 {item.submenu.map((subItem) => (
                   <NavLink
                     key={subItem.id}
                     to={subItem.route}
                     className={({ isActive }) =>
-                      `block px-4 py-2.5 text-sm font-poppins transition-all duration-200 border-b border-gray-100 last:border-b-0 ${
+                      `block px-4 py-2.5 text-sm font-poppins transition-all duration-200 border-b border-white/10 last:border-b-0 ${
                         isActive
-                          ? "bg-accent/10 text-secondary"
-                          : "text-gray-700 hover:bg-accent/5 hover:text-accent"
+                          ? "bg-white/20 text-secondary"
+                          : "text-gray-200 hover:bg-white/10 hover:text-gray-100"
                       }`
                     }
                     onClick={() => setIsOpen(false)}
@@ -149,8 +148,8 @@ export default function Navbar() {
       <NavLink
         to={item.route}
         className={({ isActive }) =>
-          `relative px-3 py-2 font-normal text-sm font-poppins rounded-lg transition-all duration-200 hover:bg-accent/10 hover:text-accent whitespace-nowrap ${
-            isActive ? "text-secondary" : "text-primary"
+          `relative px-3 py-2 font-normal text-sm font-poppins rounded-lg transition-all duration-200 hover:bg-white/10 hover:text-gray-100 whitespace-nowrap ${
+            isActive ? "text-secondary" : "text-white"
           }`
         }
         onClick={() => setIsOpen(false)}
@@ -174,13 +173,19 @@ export default function Navbar() {
 
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 w-full z-[999] bg-white/80 backdrop-blur-md shadow-sm font-montserrat"
+        className="fixed top-0 left-0 w-full z-[999] font-montserrat"
+        style={{
+          background: 'linear-gradient(135deg, #000000 0%, #BB0000 50%, #006600 100%)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)',
+        }}
       >
         <div className="max-w-7xl mx-auto px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between relative">
             {/* Mobile menu button */}
             <button
-              className="lg:hidden p-2 text-primary hover:bg-accent/10 hover:text-accent rounded-lg transition-all duration-200"
+              className="lg:hidden p-2 text-white hover:bg-white/10 hover:text-gray-100 rounded-lg transition-all duration-200"
               onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? "Close menu" : "Open menu"}
             >
@@ -190,7 +195,7 @@ export default function Navbar() {
             {/* Logo */}
             <div className="lg:flex-1 flex justify-center lg:justify-start">
               <NavLink to="/" className="flex items-center space-x-3" onClick={() => setIsOpen(false)}>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white flex items-center justify-center border-2 border-gray-200 shadow-sm">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/20 flex items-center justify-center border-2 border-white/30 shadow-sm">
                   <img
                     src="/AVCS LOGO.png"
                     alt="Anointed Vessels Christian School Logo"
@@ -198,11 +203,11 @@ export default function Navbar() {
                   />
                 </div>
                 <span className="text-sm sm:text-base leading-tight">
-                  <span className="font-script text-xl sm:text-2xl md:text-2xl text-primary/90 font-normal">
+                  <span className="font-script text-xl sm:text-2xl md:text-2xl text-white font-normal">
                     Anointed Vessels
                   </span>
                   <br />
-                  <span className="font-montserrat text-xs sm:text-sm md:text-base text-primary/90 font-light uppercase">
+                  <span className="font-montserrat text-xs sm:text-sm md:text-base text-white/90 font-light uppercase">
                     CHRISTIAN SCHOOL
                   </span>
                 </span>
@@ -215,12 +220,11 @@ export default function Navbar() {
                 {menuItems.map((item) => (
                   <NavItem key={item.id} item={item} isMobile={false} />
                 ))}
-                {/* 🔹 Admin Login REMOVED */}
               </div>
               {/* Donate Button */}
               <NavLink
                 to="/ChildSponsorship"
-                className="px-6 py-2.5 text-sm rounded-full font-normal text-white bg-secondary hover:bg-accent transition-all duration-300 hover:-translate-y-0.5 shadow-md font-montserrat whitespace-nowrap"
+                className="px-6 py-2.5 text-sm rounded-full font-normal text-white bg-secondary hover:bg-yellow-400 transition-all duration-300 hover:-translate-y-0.5 shadow-md font-montserrat whitespace-nowrap"
                 onClick={() => setIsOpen(false)}
               >
                 Donate
@@ -252,19 +256,18 @@ export default function Navbar() {
                     height: { duration: 0.2, ease: [0.16, 1, 0.3, 1] },
                   },
                 }}
-                className="lg:hidden overflow-hidden bg-white/95 backdrop-blur-md border-t border-gray-200 mt-3"
+                className="lg:hidden overflow-hidden bg-black/70 backdrop-blur-md border-t border-white/10 mt-3"
               >
                 <div className="flex flex-col gap-1 pb-4 pt-4 px-4">
                   {menuItems.map((item) => (
-                    <div key={item.id} className="border-b border-gray-100 pb-3 last:border-b-0">
+                    <div key={item.id} className="border-b border-white/10 pb-3 last:border-b-0">
                       <NavItem item={item} isMobile={true} />
                     </div>
                   ))}
-                  {/* 🔹 Admin Login REMOVED */}
                   <div className="pt-3">
                     <NavLink
                       to="/ChildSponsorship"
-                      className="block w-full text-center bg-secondary hover:bg-accent text-white py-3 rounded-lg font-normal text-sm transition-all duration-300 font-montserrat"
+                      className="block w-full text-center bg-secondary hover:bg-yellow-400 text-white py-3 rounded-lg font-normal text-sm transition-all duration-300 font-montserrat"
                       onClick={() => setIsOpen(false)}
                     >
                       Donate
