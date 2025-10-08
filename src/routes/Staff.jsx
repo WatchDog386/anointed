@@ -103,11 +103,11 @@ const Staff = () => {
 },
 {
   id: 12,
-  name: "Md. Quinter",
+  name: "Md. Quinter Titus",
   role: "ECD Teacher",
   category: "teaching",
   bio: "Md. Quinter is a nurturing ECD teacher dedicated to building strong learning foundations in young children. She uses play-based learning and interactive activities to promote creativity, social skills, and early literacy and numeracy development.",
-  image: "/Quinter.JPG"
+  image: "/QUEENTERTITUS.JPG"
 },
 {
   id: 13,
