@@ -149,7 +149,7 @@ image: "/Ephy.JPG"
   role: "P1 Teacher",
   category: "teaching",
   bio: "Mr. Constantine is a devoted P1 teacher who brings energy and creativity into the classroom. He focuses on building strong academic foundations while nurturing discipline, confidence, and a love for learning among his pupils through interactive and learner-centered teaching methods.",
-  image: "/Constantine.JPG"
+  image: "/Obunga.JPG"
 },
 
 {
