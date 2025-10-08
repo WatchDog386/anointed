@@ -94,21 +94,45 @@ const Staff = () => {
       image:"/Ann.JPG"
     },
     {
-      id: 7,
-      name: "Md. Sheryl",
-      role: "Chef",
-      category: "support",
-      bio: "Md. Sheryl works alongside our kitchen team to maintain the highest standards of food safety and quality. Her creative approach to meal preparation ensures variety and nutritional excellence in our school feeding program.",
-      image:"/Sheryl.JPG",
-    },
-    {
-      id: 8,
-      name: "Md. Nanzalla",
-      role: "Teacher",
-      category: "teaching",
-      bio: "Md. Nanzalla creates engaging classroom environments that foster curiosity and critical thinking. Her specialized training in early childhood education and innovative teaching methodologies make learning both effective and enjoyable for our youngest students.",
-      image:"/NANZALA.JPG"
-    },
+  id: 11,
+  name: "Md. Nanzala",
+  role: "P1 Teacher",
+  category: "teaching",
+  bio: "Md. Nanzala is a committed P1 teacher who creates engaging and learner-centered lessons that promote understanding and confidence among pupils. With a passion for holistic development, she inspires learners to think critically and apply knowledge in real-life situations.",
+  image: "/Nanzala.JPG"
+},
+{
+  id: 12,
+  name: "Md. Quinter",
+  role: "ECD Teacher",
+  category: "teaching",
+  bio: "Md. Quinter is a nurturing ECD teacher dedicated to building strong learning foundations in young children. She uses play-based learning and interactive activities to promote creativity, social skills, and early literacy and numeracy development.",
+  image: "/Quinter.JPG"
+},
+{
+  id: 13,
+  name: "Md. Syprine",
+  role: "ECD Teacher",
+  category: "teaching",
+  bio: "Md. Syprine is an enthusiastic ECD teacher who fosters a warm and inclusive classroom atmosphere. Her approach emphasizes hands-on learning and emotional growth, ensuring that every child feels valued and supported in their learning journey.",
+  image: "/Syprine.JPG"
+},
+{
+  id: 14,
+  name: "Mr. Patrick",
+  role: "ECD Teacher",
+  category: "teaching",
+  bio: "Mr. Patrick is a passionate ECD educator who focuses on developing young learners’ curiosity and confidence through creative teaching methods. He integrates storytelling, art, and play to make learning enjoyable and meaningful for every child.",
+  image: "/Patrick.JPG"
+},
+{
+  id: 15,
+  name: "Md. Mercy",
+  role: "ECD Teacher",
+  category: "teaching",
+  bio: "Md. Mercy is a caring and creative ECD teacher who believes in nurturing the whole child—academically, socially, and emotionally. Through fun, interactive lessons, she helps children discover the joy of learning and develop essential early life skills.",
+  image: "/Mercy.JPG"
+},
 
 {
       id: 9,
