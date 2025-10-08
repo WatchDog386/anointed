@@ -17,7 +17,16 @@ export default function Footer() {
       { label: "Spiritual Growth", route: "/SpiritualGrowth" },
       { label: "Child Sponsorship", route: "/ChildSponsorship" },
     ]
-  
+  };
+
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault();
+    // Handle newsletter subscription
+    console.log("Newsletter subscription:", email);
+    setEmail("");
+    alert("Thank you for subscribing to our newsletter!");
+  };
+
   return (
     <motion.footer
       initial={{ opacity: 0, y: 50 }}
@@ -224,8 +233,7 @@ export default function Footer() {
             transition={{ delay: 0.5 }}
             className="space-y-4"
           >
-            
-  
+           
             {/* Get Involved Section - Hidden on mobile, shown on desktop */}
             <div className="hidden md:block space-y-3 pt-2">
               <h3 className="text-lg font-bold text-[#8CA9B4]">Get Involved</h3>
