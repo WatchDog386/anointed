@@ -17,16 +17,7 @@ export default function Footer() {
       { label: "Spiritual Growth", route: "/SpiritualGrowth" },
       { label: "Child Sponsorship", route: "/ChildSponsorship" },
     ]
-  };
-
-  const handleNewsletterSubmit = (e) => {
-    e.preventDefault();
-    // Handle newsletter subscription
-    console.log("Newsletter subscription:", email);
-    setEmail("");
-    alert("Thank you for subscribing to our newsletter!");
-  };
-
+  
   return (
     <motion.footer
       initial={{ opacity: 0, y: 50 }}
@@ -233,27 +224,7 @@ export default function Footer() {
             transition={{ delay: 0.5 }}
             className="space-y-4"
           >
-            {/* Newsletter Form */}
-            <div className="space-y-3">
-              <h3 className="text-lg font-bold text-[#8CA9B4]">Stay Updated</h3>
-              <p className="text-gray-300 text-sm">Subscribe to our newsletter for updates</p>
-              <form onSubmit={handleNewsletterSubmit} className="flex">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email address"
-                  className="flex-1 px-3 py-2 bg-[#233A33] text-white placeholder-gray-400 rounded-l text-sm focus:outline-none focus:ring-1 focus:ring-[#8CA9B4] border border-r-0 border-[#3a5a4f]"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="bg-[#8CA9B4] hover:bg-[#7a98a3] text-white px-4 py-2 rounded-r text-sm transition-colors border border-l-0 border-[#8CA9B4]"
-                >
-                  <i className="fas fa-paper-plane"></i>
-                </button>
-              </form>
-            </div>
+            
   
             {/* Get Involved Section - Hidden on mobile, shown on desktop */}
             <div className="hidden md:block space-y-3 pt-2">
