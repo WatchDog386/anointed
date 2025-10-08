@@ -612,7 +612,7 @@ export default function ChildSponsorship() {
   const StatsBanner = () => (
     <div className="bg-gradient-to-r from-[#2b473f] to-[#3a5c52] rounded-xl p-5 mb-10 text-center text-white">
       <p className="text-sm">
-        {students.length} children are currently seeking sponsors • $35/month changes a life
+        {students.length} children are currently seeking sponsors • $43/month changes a life
       </p>
     </div>
   );
