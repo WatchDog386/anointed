@@ -7,8 +7,8 @@ const stories = [
     id: 1,
     title: "Wildred's Journey of Hope",
     description: "Despite poverty and her father's illness, Wildred's love for learning drives her dream of becoming a nurse.",
-    image: "/PRAYING.JPG",
-    link: "/WILDRED2" // CORRECTED: matches App.jsx route
+    image: "/WILDRED2.JPG",
+    link: "/WildredsStory" // CORRECTED: matches App.jsx route
   },
   {
     id: 2,
