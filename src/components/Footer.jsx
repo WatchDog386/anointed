@@ -143,6 +143,14 @@ export default function Footer() {
                       benardmusereke@gmail.com
                       carterjimmy2017@gmail.com
                     </a>
+                     <a 
+                      href="mailto:carterjimmy2017@gmail.com" 
+                      className="text-gray-300 hover:text-[#8CA9B4] transition-colors text-xs"
+                    >
+                      carterjimmy2017@gmail.com
+                    </a>
+
+
                   </div>
                 </div>
               </div>
