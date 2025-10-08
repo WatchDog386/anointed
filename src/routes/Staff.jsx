@@ -51,7 +51,7 @@ const Staff = () => {
       role: "Headteacher",
       category: "leadership",
       bio: "MD. Leah Onam provides visionary leadership to Anointed Vessels Christian School, bringing over 15 years of educational experience and a deep commitment to holistic child development. Her innovative approaches to curriculum design and student engagement have consistently elevated academic performance while nurturing spiritual growth.",
-      image:"/LEAH.JPG"
+      image:"/Leah.JPG"
     },
     {
       id: 2,
