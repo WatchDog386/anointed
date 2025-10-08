@@ -141,6 +141,7 @@ export default function Footer() {
                       className="text-gray-300 hover:text-[#8CA9B4] transition-colors text-xs"
                     >
                       benardmusereke@gmail.com
+                      carterjimmy2017@gmail.com
                     </a>
                   </div>
                 </div>

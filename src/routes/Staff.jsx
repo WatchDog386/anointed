@@ -63,10 +63,10 @@ const Staff = () => {
     },
     {
       id: 3,
-      name: "Mr. Omodia",
+      name: "Mr. Albert",
       role: "Senior Teacher",
       category: "leadership",
-      bio: "As our Senior Teacher, Mr. Omodia mentors junior staff and leads curriculum development initiatives. With a Master's in Education and specialized training in child psychology, he creates learning environments that cater to diverse learning styles and abilities.",
+      bio: "As our Senior Teacher, Mr. Albert mentors junior staff and leads curriculum development initiatives. With a Master's in Education and specialized training in child psychology, he creates learning environments that cater to diverse learning styles and abilities.",
       image:"/ALBERT.JPG"
     },
     {
@@ -83,7 +83,7 @@ const Staff = () => {
       role: "School Chairperson",
       category: "support",
       bio: "Mr. Alphonce provides strategic leadership and governance oversight, bringing extensive experience in educational policy and community development. His visionary guidance has been instrumental in shaping the school's long-term growth and community impact.",
-      image:"/VINCENT.JPG"
+      image:"/.JPG"
     },
     {
       id: 6,
@@ -91,7 +91,7 @@ const Staff = () => {
       role: "Chef",
       category: "support",
       bio: "Md. Ann ensures that our students receive nutritious, balanced meals that support their growth and learning. With formal training in nutrition and child dietary requirements, she creates menus that are both healthy and appealing to young palates.",
-      image:"/NANZALA.JPG"
+      image:"/Ann.JPG"
     },
     {
       id: 7,
@@ -99,7 +99,7 @@ const Staff = () => {
       role: "Chef",
       category: "support",
       bio: "Md. Sheryl works alongside our kitchen team to maintain the highest standards of food safety and quality. Her creative approach to meal preparation ensures variety and nutritional excellence in our school feeding program.",
-      image:"/SHARON.JPG",
+      image:"/Sheryl.JPG",
     },
     {
       id: 8,
@@ -109,6 +109,20 @@ const Staff = () => {
       bio: "Md. Nanzalla creates engaging classroom environments that foster curiosity and critical thinking. Her specialized training in early childhood education and innovative teaching methodologies make learning both effective and enjoyable for our youngest students.",
       image:"/NANZALA.JPG"
     },
+
+{
+      id: 9,
+name: "Md. Ephy",
+role: "Teacher",
+category: "teaching",
+bio: "Md. Ephy is a dedicated P1 teacher specializing in Mathematics and Science. She plans and delivers engaging lessons that promote critical thinking, problem-solving, and practical application of knowledge. Passionate about nurturing curiosity and excellence, she creates a positive and inclusive learning environment that supports every learner’s growth.",
+image: "/Ephy.JPG"
+
+    },
+
+
+
+
   ];
 
   const filteredStaff = activeCategory === 'all' 
