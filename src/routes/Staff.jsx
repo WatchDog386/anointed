@@ -168,6 +168,15 @@ image: "/Ephy.JPG"
   category: "teaching",
   bio: "Benard is a skilled Computer and Digital Literacy tutor who equips learners with essential 21st-century technological skills. His lessons combine practical learning and creativity, enabling students to confidently use computers and digital tools for research, communication, and problem-solving.",
   image: "/Benard.JPG"
+},
+
+{
+  id: 19,
+  name: "Md. Quinter",
+  role: "P1 Teacher",
+  category: "teaching",
+  bio: "Md. Quinter is a dedicated P1 teacher who fosters a supportive and engaging learning environment. She is passionate about helping learners build strong academic foundations through interactive lessons that inspire confidence, creativity, and a love for learning.",
+  image: "/Quinter.JPG"
 }
 
 
