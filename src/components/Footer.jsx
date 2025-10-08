@@ -33,15 +33,77 @@ export default function Footer() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}
       viewport={{ once: true }}
-      className="relative pt-8 pb-6 px-4 text-sm bg-[#2b473f] text-white overflow-hidden"
-      style={{
-        backgroundImage: `url('https://ggcckenya.org/wp-content/uploads/2021/01/GGCC_Map.png')`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'right center',
-        backgroundSize: 'contain',
-      }}
+      className="relative pt-8 pb-6 px-4 text-sm bg-[#1a2f28] text-white overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      {/* Unique Background Elements */}
+      <div className="absolute inset-0 overflow-hidden opacity-20">
+        {/* African Continent Silhouette with Gradient */}
+        <div 
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 w-1/2 h-3/4"
+          style={{
+            background: `radial-gradient(circle at 70% 50%, 
+              rgba(140, 169, 180, 0.3) 0%,
+              rgba(43, 71, 63, 0.2) 30%,
+              rgba(26, 47, 40, 0.1) 50%,
+              transparent 70%
+            )`,
+            maskImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cpath d='M400,100 Q450,80 500,120 Q550,180 520,250 Q480,320 450,350 Q420,380 380,400 Q340,420 300,410 Q260,400 240,360 Q220,320 230,280 Q240,240 270,210 Q300,180 330,160 Q360,140 400,140 Z' fill='black'/%3E%3C/svg%3E")`,
+            maskRepeat: 'no-repeat',
+            maskPosition: 'right center',
+            maskSize: 'contain',
+            WebkitMaskImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cpath d='M400,100 Q450,80 500,120 Q550,180 520,250 Q480,320 450,350 Q420,380 380,400 Q340,420 300,410 Q260,400 240,360 Q220,320 230,280 Q240,240 270,210 Q300,180 330,160 Q360,140 400,140 Z' fill='black'/%3E%3C/svg%3E")`,
+            WebkitMaskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'right center',
+            WebkitMaskSize: 'contain'
+          }}
+        />
+        
+        {/* Geometric Pattern Overlay */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(30deg, rgba(140, 169, 180, 0.1) 12%, transparent 12.5%, transparent 87%, rgba(140, 169, 180, 0.1) 87.5%, rgba(140, 169, 180, 0.1)),
+              linear-gradient(150deg, rgba(140, 169, 180, 0.1) 12%, transparent 12.5%, transparent 87%, rgba(140, 169, 180, 0.1) 87.5%, rgba(140, 169, 180, 0.1)),
+              linear-gradient(30deg, rgba(140, 169, 180, 0.1) 12%, transparent 12.5%, transparent 87%, rgba(140, 169, 180, 0.1) 87.5%, rgba(140, 169, 180, 0.1)),
+              linear-gradient(150deg, rgba(140, 169, 180, 0.1) 12%, transparent 12.5%, transparent 87%, rgba(140, 169, 180, 0.1) 87.5%, rgba(140, 169, 180, 0.1)),
+              linear-gradient(60deg, rgba(140, 169, 180, 0.1) 25%, transparent 25.5%, transparent 75%, rgba(140, 169, 180, 0.1) 75%, rgba(140, 169, 180, 0.1)),
+              linear-gradient(60deg, rgba(140, 169, 180, 0.1) 25%, transparent 25.5%, transparent 75%, rgba(140, 169, 180, 0.1) 75%, rgba(140, 169, 180, 0.1))
+            `,
+            backgroundSize: '80px 140px',
+            backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px'
+          }}
+        />
+        
+        {/* Floating Elements */}
+        <div className="absolute right-20 top-1/4 w-8 h-8 rounded-full bg-[#8CA9B4] opacity-10 animate-pulse"></div>
+        <div className="absolute right-40 bottom-1/3 w-12 h-12 rounded-full bg-[#932528] opacity-10 animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute right-60 top-1/3 w-6 h-6 rounded-full bg-[#8CA9B4] opacity-15 animate-pulse" style={{animationDelay: '2s'}}></div>
+        
+        {/* Connection Lines */}
+        <svg className="absolute inset-0 w-full h-full" style={{opacity: 0.05}}>
+          <defs>
+            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#8CA9B4" />
+              <stop offset="100%" stopColor="#932528" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M100,400 Q300,350 500,380 Q700,400 750,300"
+            stroke="url(#lineGradient)"
+            strokeWidth="2"
+            fill="none"
+          />
+          <path
+            d="M50,500 Q250,450 450,480 Q650,500 700,400"
+            stroke="url(#lineGradient)"
+            strokeWidth="2"
+            fill="none"
+          />
+        </svg>
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Main Content - 3 columns on mobile, 4 on desktop */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-6">
           {/* About Section */}
@@ -141,8 +203,7 @@ export default function Footer() {
                       className="text-gray-300 hover:text-[#8CA9B4] transition-colors text-xs"
                     >
                       benardmusereke@gmail.com
-                       </a>
-                   
+                    </a>
                   </div>
                 </div>
               </div>
@@ -172,8 +233,27 @@ export default function Footer() {
             transition={{ delay: 0.5 }}
             className="space-y-4"
           >
-           
-            
+            {/* Newsletter Form */}
+            <div className="space-y-3">
+              <h3 className="text-lg font-bold text-[#8CA9B4]">Stay Updated</h3>
+              <p className="text-gray-300 text-sm">Subscribe to our newsletter for updates</p>
+              <form onSubmit={handleNewsletterSubmit} className="flex">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Your email address"
+                  className="flex-1 px-3 py-2 bg-[#233A33] text-white placeholder-gray-400 rounded-l text-sm focus:outline-none focus:ring-1 focus:ring-[#8CA9B4] border border-r-0 border-[#3a5a4f]"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="bg-[#8CA9B4] hover:bg-[#7a98a3] text-white px-4 py-2 rounded-r text-sm transition-colors border border-l-0 border-[#8CA9B4]"
+                >
+                  <i className="fas fa-paper-plane"></i>
+                </button>
+              </form>
+            </div>
   
             {/* Get Involved Section - Hidden on mobile, shown on desktop */}
             <div className="hidden md:block space-y-3 pt-2">
@@ -187,7 +267,7 @@ export default function Footer() {
                 </NavLink>
                 <NavLink
                   to="/Make-An-Impact"
-                  className="inline-block border border-[#8CA9B4] hover:bg-[#8CA9B4] hover:text-[#2b473f] text-[#8CA9B4] font-semibold py-2 px-4 rounded-full transition text-sm w-full text-center"
+                  className="inline-block border border-[#8CA9B4] hover:bg-[#8CA9B4] hover:text-[#1a2f28] text-[#8CA9B4] font-semibold py-2 px-4 rounded-full transition text-sm w-full text-center"
                 >
                   Donate
                 </NavLink>
@@ -213,7 +293,7 @@ export default function Footer() {
             </NavLink>
             <NavLink
               to="/Make-An-Impact"
-              className="border border-[#8CA9B4] hover:bg-[#8CA9B4] hover:text-[#2b473f] text-[#8CA9B4] font-semibold py-2 px-4 rounded-full transition text-sm"
+              className="border border-[#8CA9B4] hover:bg-[#8CA9B4] hover:text-[#1a2f28] text-[#8CA9B4] font-semibold py-2 px-4 rounded-full transition text-sm"
             >
               Donate
             </NavLink>
@@ -225,7 +305,7 @@ export default function Footer() {
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="text-center md:text-left border-t border-[#233A33] pt-4"
+          className="text-center md:text-left border-t border-[#2a453b] pt-4"
         >
           <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-3 md:space-y-0">
             <div className="text-gray-300 text-xs md:text-sm">
@@ -243,7 +323,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar - Simplified */}
-      <div className="max-w-7xl mx-auto mt-4 pt-4 border-t border-[#233A33] text-center text-gray-400 text-xs">
+      <div className="max-w-7xl mx-auto mt-4 pt-4 border-t border-[#2a453b] text-center text-gray-400 text-xs relative z-10">
         <p>
           © {new Date().getFullYear()} Anointed Vessels Christian School. All rights reserved.
         </p>
@@ -269,6 +349,15 @@ export default function Footer() {
         .social-link:hover {
           background-color: #8CA9B4;
           transform: translateY(-2px);
+        }
+        
+        @keyframes pulse {
+          0%, 100% { opacity: 0.1; }
+          50% { opacity: 0.2; }
+        }
+        
+        .animate-pulse {
+          animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
       `}</style>
     </motion.footer>
