@@ -14,7 +14,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   // === ROTATING HERO IMAGES ===
-  const heroImages = ["/orphans.jpg", "/christian.jpg", "/project.jpg"];
+  const heroImages = ["/CHILDREN IN LINE.jpg", "/SCOUT.jpg", "/HAPPYCHILDREN.jpg"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
