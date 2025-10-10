@@ -14,7 +14,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   // === ROTATING HERO IMAGES ===
-  const heroImages = ["/CHILDREN IN LINE.jpg", "/SCOUT.jpg", "/HAPPYCHILDREN.jpg"];
+  const heroImages = ["/CHILDREN IN LINE.jpg", "/SCOUT.jpg", "/POSING FOR PHOTO.jpg", "/EDUCATION.jpg", "/HAPPYCHILDREN.jpg"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -131,22 +131,22 @@ const Hero = () => {
       </Helmet>
 
       {/* === HERO SECTION - Reduced font sizes and unbolded text === */}
-      <section className="relative w-full min-h-[80vh] flex items-center md:items-end justify-start text-white overflow-hidden">
-        {heroImages.map((img, idx) => (
+      <section className="relative w-full h-[80vh] flex items-center md:items-end justify-start text-white overflow-hidden">
+  {heroImages.map((img, idx) => (
           <motion.div
-            key={idx}
-            className="absolute inset-0 z-0"
-            initial={{ opacity: idx === currentImageIndex ? 1 : 0 }}
-            animate={{ opacity: idx === currentImageIndex ? 1 : 0 }}
-            transition={{ duration: 1 }}
-          >
-            <img
-              src={img}
-              alt={`Hero background ${idx + 1}`}
-              className="w-full h-full object-cover object-top"
-            />
-          </motion.div>
-        ))}
+      key={idx}
+      className="absolute inset-0 z-0"
+      initial={{ opacity: idx === currentImageIndex ? 1 : 0 }}
+      animate={{ opacity: idx === currentImageIndex ? 1 : 0 }}
+      transition={{ duration: 1 }}
+    >
+           <img
+        src={img}
+        alt={`Hero background ${idx + 1}`}
+        className="w-full h-full object-cover object-center"
+      />
+    </motion.div>
+  ))}
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-black/20 to-black/70"></div>
 
         {/* Text container */}
