@@ -6,7 +6,7 @@ export default function Gallery() {
 
   // Sample gallery data - replace with your actual images
   const galleryImages = [
-    { id: 1, src: "/DRANDCHILDREN.jpg", alt: "Students and faculty gathering", category: "Child Empowermenmt" },
+    { id: 1, src: "/DRANDCHILDREN.jpg", alt: "Students and faculty gathering", category: "Child" },
     { id: 2, src: "/GRADUANT.jpg", alt: "GRADUANT", category: "academics" },
     { id: 3, src: "/CHILD EMPOWER.JPG", alt: "CHILD EMPOWERMENT", category: "Child Empowerment" },
     { id: 4, src: "/EDUCATION.jpg", alt: "EDUCATION", category: "EDUCATION" },
@@ -19,9 +19,9 @@ export default function Gallery() {
 
   return (
     <div className="min-h-screen bg-gray-50 font-open-sans">
-      {/* Hero Section - Added pt-16 or pt-20 to push content below header */}
+      {/* Hero Section */}
       <section 
-        className="relative pt-16 md:pt-20 h-72 md:h-96 bg-cover bg-center bg-no-repeat flex items-center justify-center"
+        className="relative h-72 md:h-96 bg-cover bg-center bg-no-repeat flex items-center justify-center"
         style={{ backgroundImage: "linear-gradient(rgba(43, 71, 63, 0.7), rgba(43, 71, 63, 0.5)), url('/Childrenwaving.JPEG')" }}
       >
         <div className="text-center text-white px-4 max-w-4xl mx-auto">
