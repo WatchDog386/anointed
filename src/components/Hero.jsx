@@ -24,31 +24,41 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, [heroImages.length]);
 
+  // === FLIP CARDS STATE ===
+  const [flippedCards, setFlippedCards] = useState({});
+
+  const toggleFlip = (index) => {
+    setFlippedCards(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
   // === FEATURES ===
   const features = [
     {
       icon: <FaCross className="text-4xl text-secondary" />,
       title: "Faith-Based Learning",
-      description:
-        "We integrate Christian values and biblical principles throughout our curriculum to develop spiritually grounded students.",
+      description: "We integrate Christian values and biblical principles throughout our curriculum to develop spiritually grounded students.",
+      backContent: "Our faith-based approach ensures students not only excel academically but also grow in their relationship with Christ, developing moral character and spiritual discipline."
     },
     {
       icon: <FaGraduationCap className="text-4xl text-secondary" />,
       title: "Academic Excellence",
-      description:
-        "Our rigorous curriculum challenges students to achieve their highest potential with a balanced approach to education.",
+      description: "Our rigorous curriculum challenges students to achieve their highest potential with a balanced approach to education.",
+      backContent: "We provide quality education that meets national standards while incorporating innovative teaching methods to prepare students for higher education and career success."
     },
     {
       icon: <FaHandsHelping className="text-4xl text-secondary" />,
       title: "Community Focus",
-      description:
-        "Our supportive Christian community fosters relationships that last a lifetime and create a sense of belonging.",
+      description: "Our supportive Christian community fosters relationships that last a lifetime and create a sense of belonging.",
+      backContent: "Through mentorship programs, community service, and family engagement, we build strong support systems that extend beyond the classroom walls."
     },
     {
       icon: <FaChild className="text-4xl text-secondary" />,
       title: "Children & Youth Empowerment",
-      description:
-        "We empower young people with knowledge, skills, and confidence to become leaders who positively impact their communities.",
+      description: "We empower young people with knowledge, skills, and confidence to become leaders who positively impact their communities.",
+      backContent: "Our leadership programs, vocational training, and extracurricular activities equip students with practical skills and confidence to become change-makers."
     },
   ];
 
@@ -109,6 +119,11 @@ const Hero = () => {
     visible: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } },
   };
 
+  const flipVariants = {
+    front: { rotateY: 0 },
+    back: { rotateY: 180 }
+  };
+
   return (
     <>
       <Helmet>
@@ -127,30 +142,34 @@ const Hero = () => {
           body { font-family: 'Poppins', sans-serif; }
           .font-montserrat { font-family: 'Montserrat', sans-serif; }
           .font-script { font-family: 'Pacifico', cursive; }
+          .flip-card { perspective: 1000px; }
+          .flip-card-inner { transition: transform 0.6s; transform-style: preserve-3d; }
+          .flip-card-front, .flip-card-back { backface-visibility: hidden; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+          .flip-card-back { transform: rotateY(180deg); }
         `}</style>
       </Helmet>
 
-      {/* === HERO SECTION - Reduced font sizes and unbolded text === */}
-      <section className="relative w-full h-[80vh] flex items-center md:items-end justify-start text-white overflow-hidden">
-  {heroImages.map((img, idx) => (
+      {/* === FIXED HERO SECTION === */}
+      <section className="relative w-full min-h-screen flex items-center justify-start text-white overflow-hidden pt-16">
+        {heroImages.map((img, idx) => (
           <motion.div
-      key={idx}
-      className="absolute inset-0 z-0"
-      initial={{ opacity: idx === currentImageIndex ? 1 : 0 }}
-      animate={{ opacity: idx === currentImageIndex ? 1 : 0 }}
-      transition={{ duration: 1 }}
-    >
-           <img
-        src={img}
-        alt={`Hero background ${idx + 1}`}
-        className="w-full h-full object-cover object-center"
-      />
-    </motion.div>
-  ))}
+            key={idx}
+            className="absolute inset-0 z-0"
+            initial={{ opacity: idx === currentImageIndex ? 1 : 0 }}
+            animate={{ opacity: idx === currentImageIndex ? 1 : 0 }}
+            transition={{ duration: 1 }}
+          >
+            <img
+              src={img}
+              alt={`Hero background ${idx + 1}`}
+              className="w-full h-full object-cover object-center"
+            />
+          </motion.div>
+        ))}
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-black/20 to-black/70"></div>
 
         {/* Text container */}
-        <div className="relative z-20 w-full px-4 sm:px-8 md:px-12 lg:px-16 py-12 md:py-0 pb-12 sm:pb-16 md:pb-20 lg:pb-24 max-w-4xl text-center mx-auto md:text-left md:mx-0">
+        <div className="relative z-20 w-full px-4 sm:px-8 md:px-12 lg:px-16 py-12 md:py-0 pb-12 sm:pb-16 md:pb-20 lg:pb-24 max-w-4xl text-center mx-auto md:text-left md:mx-0 mt-16">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -204,7 +223,7 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* === WHY SUPPORT US === */}
+      {/* === WHY SUPPORT US WITH FLIP CARDS === */}
       <section className="w-full py-12 sm:py-16 bg-light">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -218,7 +237,7 @@ const Hero = () => {
               WHY SUPPORT US
             </h2>
             <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto font-poppins font-normal">
-              Discover what makes our Christian educational approach unique and effective
+              Click on each card to discover more about what makes our Christian educational approach unique and effective
             </p>
           </motion.div>
 
@@ -232,16 +251,45 @@ const Hero = () => {
             {features.map((feature, idx) => (
               <motion.div
                 key={idx}
-                className="bg-white rounded-xl p-4 sm:p-6 text-center border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300"
+                className="flip-card h-64 cursor-pointer"
+                onClick={() => toggleFlip(idx)}
                 variants={fadeIn}
               >
-                <div className="mb-3 flex justify-center">{feature.icon}</div>
-                <h3 className="text-base sm:text-lg font-semibold text-primary font-montserrat mb-2 sm:mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 text-xs sm:text-sm font-poppins font-normal">
-                  {feature.description}
-                </p>
+                <motion.div
+                  className="flip-card-inner w-full h-full relative"
+                  animate={{ rotateY: flippedCards[idx] ? 180 : 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  {/* FRONT SIDE */}
+                  <div className="flip-card-front bg-white rounded-xl p-6 text-center border border-gray-200 shadow-sm">
+                    <div className="mb-4 flex justify-center">{feature.icon}</div>
+                    <h3 className="text-lg font-semibold text-primary font-montserrat mb-3">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm font-poppins font-normal">
+                      {feature.description}
+                    </p>
+                    <div className="mt-4 text-xs text-accent font-medium">
+                      Click to learn more →
+                    </div>
+                  </div>
+
+                  {/* BACK SIDE */}
+                  <div className="flip-card-back bg-primary text-white rounded-xl p-6 text-center border border-primary shadow-sm">
+                    <div className="mb-4 flex justify-center">
+                      {React.cloneElement(feature.icon, { className: "text-4xl text-white" })}
+                    </div>
+                    <h3 className="text-lg font-semibold font-montserrat mb-3">
+                      {feature.title}
+                    </h3>
+                    <p className="text-white text-sm font-poppins font-normal">
+                      {feature.backContent}
+                    </p>
+                    <div className="mt-4 text-xs text-accent font-medium text-gray-200">
+                      Click to flip back
+                    </div>
+                  </div>
+                </motion.div>
               </motion.div>
             ))}
           </motion.div>
