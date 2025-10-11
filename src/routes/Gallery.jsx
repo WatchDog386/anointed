@@ -7,14 +7,15 @@ export default function Gallery() {
   // Sample gallery data - replace with your actual images
   const galleryImages = [
     { id: 1, src: "/DRANDCHILDREN.jpg", alt: "Students and faculty gathering", category: "community" },
-    { id: 2, src: "/GRADE3A.jpg", alt: "Grade 3A class photo", category: "academics" },
-    { id: 3, src: "/Childrenwaving.JPEG", alt: "Children waving hello", category: "community" },
-    { id: 4, src: "/DRANDCHILDREN.jpg", alt: "School event celebration", category: "events" },
-    { id: 5, src: "/GRADE3A.jpg", alt: "Classroom learning activity", category: "academics" },
-    { id: 6, src: "/Childrenwaving.JPEG", alt: "Student artwork display", category: "arts" },
+    { id: 2, src: "/GRADUANT.jpg", alt: "GRADUANT", category: "academics" },
+    { id: 3, src: "/CHILD EMPOWER.JPG", alt: "CHILD EMPOWERMENT", category: "Child Empowerment" },
+    { id: 4, src: "/EDUCATION.jpg", alt: "EDUCATION", category: "EDUCATION" },
+    { id: 5, src: "/GRADUATION.jpg", alt: "Classroom learning activity", category: "academics" },
+    { id: 6, src: "/Community Engagement.JPG", alt: "Community Engagement", category: "Community Engagement" },
+    { id: 7, src: "/HAPPYCHILDREN.JPG", alt: "HAPPYCHILDREN", category: "Moments" },
   ];
 
-  const categories = ["All", "Community", "Academics", "Events", "Arts"];
+  const categories = ["All", "Community", "Academics", "Events", "Arts", "Child Empowerment", "Education", "Community Engagement", "Moments"];
 
   return (
     <div className="min-h-screen bg-gray-50 font-open-sans">
