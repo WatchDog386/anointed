@@ -6,7 +6,7 @@ export default function Gallery() {
 
   // Sample gallery data - replace with your actual images
   const galleryImages = [
-    { id: 1, src: "/DRANDCHILDREN.jpg", alt: "Students and faculty gathering", category: "community" },
+    { id: 1, src: "/DRANDCHILDREN.jpg", alt: "Students and faculty gathering", category: "Child Empowermenmt" },
     { id: 2, src: "/GRADUANT.jpg", alt: "GRADUANT", category: "academics" },
     { id: 3, src: "/CHILD EMPOWER.JPG", alt: "CHILD EMPOWERMENT", category: "Child Empowerment" },
     { id: 4, src: "/EDUCATION.jpg", alt: "EDUCATION", category: "EDUCATION" },
