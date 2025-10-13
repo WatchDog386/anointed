@@ -220,11 +220,11 @@ export default function GetInvolved() {
     {
       icon: Heart,
       title: "Sponsor a Child",
-      description: "For just $35 per month, provide education, nutrition, and spiritual guidance to a child in need. Your sponsorship creates lifelong impact and hope.",
+      description: "For just $43 per month, provide education, nutrition, and spiritual guidance to a child in need. Your sponsorship creates lifelong impact and hope.",
       link: "/ChildSponsorship",
       buttonText: "Start Sponsoring",
       stats: [
-        { value: "200+", label: "Children Sponsored" },
+       
         { value: "98%", label: "Success Rate" }
       ]
     },
@@ -235,8 +235,8 @@ export default function GetInvolved() {
       link: "/mission-trips",
       buttonText: "Learn More",
       stats: [
-        { value: "15+", label: "Trips Annualy" },
-        { value: "500+", label: "Volunteers" }
+        { value: "Center Site Visit", label: "Annual Trips" },
+       
       ]
     },
     {
@@ -256,10 +256,7 @@ export default function GetInvolved() {
       description: "Partner with us as a church through mission trips, financial support, or project adoption. Expand God's kingdom together across continents.",
       link: "/partnerships",
       buttonText: "Partner With Us",
-      stats: [
-        { value: "25+", label: "Church Partners" },
-        { value: "5", label: "Countries" }
-      ]
+      
     }
   ];
 
