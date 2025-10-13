@@ -198,12 +198,15 @@ export default function Footer() {
                   </div>
                   <div>
                     <h5 className="text-white text-sm font-medium">Email Us</h5>
-                    <a 
-                      href="mailto:benardmusereke@gmail.com" 
-                      className="text-gray-300 hover:text-[#8CA9B4] transition-colors text-xs"
-                    >
-                      benardmusereke@gmail.com
-                    </a>
+                    <a href="mailto:carterjimmy2017@gmail.com" 
+                      className="text-gray-300 hover:text-[#8CA9B4] transition-colors text-xs" >carterjimmy2017@gmail.com</a>
+                      <h5> OR </h5>
+                    <a href="mailto:info@anointedvessels.org" 
+                      className="text-gray-300 hover:text-[#8CA9B4] transition-colors text-xs" >info@anointedvessels.org </a>
+
+
+
+
                   </div>
                 </div>
               </div>

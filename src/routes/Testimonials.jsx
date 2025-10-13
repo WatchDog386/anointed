@@ -13,14 +13,14 @@ const testimonials = [
   {
     id: 2,
     text: "AVCS helped me discover my purpose through Christ. The teachers didn't just teach curriculum — they mentored souls.",
-    author: "Mary Wanjiku",
+    author: "Alphonce Okuku",
     role: "Parent of two AVCS students",
     avatar: "https://placehold.co/60x60/2b473f/FFFFFF/png?text=Parent",
   },
   {
     id: 3,
     text: "My child came home every day excited to share what they learned — not just academically, but spiritually. That's the AVCS difference.",
-    author: "James Ochieng",
+    author: "Mary Magdaline",
     role: "AVCS Parent",
     avatar: "https://placehold.co/60x60/2b473f/FFFFFF/png?text=Parent",
   },

@@ -15,7 +15,7 @@ export default function CommunityOutreach() {
         "Learning about trees that provide food and shade",
         "Simple gardening and plant care lessons"
       ],
-      image: "/tree-planting.jpg"
+      image: "/TREE PLANTING.jpg"
     },
     {
       id: 2,

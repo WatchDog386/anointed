@@ -135,26 +135,28 @@ const ImpactCounter = ({ target, label, duration = 2000 }) => {
     </div>
   );
 };
-
 const TestimonialCarousel = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Sarah Johnson",
-      role: "Child Sponsor",
-      content: "Sponsoring a child through AVCS has been one of the most rewarding experiences. Seeing the progress reports and knowing I'm making a real difference is incredible."
+      name: "Jimmy Carter ",
+      role: "Founder & Project Director",
+      content:
+        "Being part of AVCS has been a lifelong calling. Watching children rise from hardship to hope reminds me daily that faith and education truly transform lives."
     },
     {
       id: 2,
-      name: "Michael Chen",
-      role: "Mission Trip Volunteer",
-      content: "The mission trip changed my perspective on life. The community's faith and resilience inspired me beyond words. Can't wait to go back!"
+      name: "Tonya Ivy",
+      role: "Co-Founder & Director",
+      content:
+        "My journey with AVCS has been deeply fulfilling. Seeing our efforts open doors of opportunity for children confirms that every act of service makes a difference."
     },
     {
       id: 3,
-      name: "Pastor David Martinez",
-      role: "Church Partner",
-      content: "Our church's partnership with AVCS has strengthened our global missions focus. The transparency and impact are exceptional."
+      name: "Edith Oulo",
+      role: "Director, Kenya Operations",
+      content:
+        "Working with AVCS has shown me the power of community-led change. It’s a blessing to witness children flourish through love, learning, and spiritual guidance."
     }
   ];
 
@@ -218,11 +220,11 @@ export default function GetInvolved() {
     {
       icon: Heart,
       title: "Sponsor a Child",
-      description: "For just $35 per month, provide education, nutrition, and spiritual guidance to a child in need. Your sponsorship creates lifelong impact and hope.",
+      description: "For just $43 per month, provide education, nutrition, and spiritual guidance to a child in need. Your sponsorship creates lifelong impact and hope.",
       link: "/ChildSponsorship",
       buttonText: "Start Sponsoring",
       stats: [
-        { value: "200+", label: "Children Sponsored" },
+       
         { value: "98%", label: "Success Rate" }
       ]
     },
@@ -233,8 +235,8 @@ export default function GetInvolved() {
       link: "/mission-trips",
       buttonText: "Learn More",
       stats: [
-        { value: "15+", label: "Trips Annualy" },
-        { value: "500+", label: "Volunteers" }
+        { value: "Center Site Visit", label: "Annual Trips" },
+       
       ]
     },
     {
@@ -254,10 +256,7 @@ export default function GetInvolved() {
       description: "Partner with us as a church through mission trips, financial support, or project adoption. Expand God's kingdom together across continents.",
       link: "/partnerships",
       buttonText: "Partner With Us",
-      stats: [
-        { value: "25+", label: "Church Partners" },
-        { value: "5", label: "Countries" }
-      ]
+      
     }
   ];
 
