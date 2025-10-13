@@ -81,8 +81,8 @@ export default function About() {
                 >
                   <div className="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
                     <img
-                      src="/support.jpg"
-                      alt="AVCS Students receiving care"
+                      src="/GRADUATION.jpg"
+                      alt="AVCS Students Graduation"
                       className="w-full h-auto object-cover"
                     />
                   </div>
