@@ -139,8 +139,8 @@ const TestimonialCarousel = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Jimmy Carter Owuato",
-      role: "Founder & CEO",
+      name: "Jimmy Carter ",
+      role: "Founder & Project Director",
       content:
         "Being part of AVCS has been a lifelong calling. Watching children rise from hardship to hope reminds me daily that faith and education truly transform lives."
     },
