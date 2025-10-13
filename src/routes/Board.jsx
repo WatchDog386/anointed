@@ -71,9 +71,8 @@ const Board = () => {
 
   const partners = [
     { name: "GoFundMe", image: "/GOFUNDME.PNG" },
-    { name: "World Food Programme", image: "/WFP.PNG" },
-    { name: "Global Empowerment Mission", image: "/GLOBALMISSION.png" },
-    { name: "Village Enterprise", image: "/VILLAGE.PNG" }
+    { name: "compasssionlogo", image: "/compasssionlogo.PNG" },
+    
   ];
 
   const impactStats = [
