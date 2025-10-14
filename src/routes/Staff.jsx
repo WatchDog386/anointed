@@ -176,7 +176,7 @@ image: "/Ephy.JPG"
   role: "P1 Teacher",
   category: "teaching",
   bio: "Md. Quinter is a dedicated P1 teacher who fosters a supportive and engaging learning environment. She is passionate about helping learners build strong academic foundations through interactive lessons that inspire confidence, creativity, and a love for learning.",
-  image: "/QuinterP1.JPG"
+  image: "/QINTER.JPG"
 }
 
 
