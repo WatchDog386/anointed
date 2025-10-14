@@ -247,7 +247,7 @@ export default function GetInvolved() {
 ,
       buttonText: "Become a Partner",
       stats: [
-        { value: "$50K+", label: "Monthly Support" },
+        { value: "$43K+ and any other way of suppport that cathes your interest", label: "Monthly Support" },
         { value: "100%", label: "Funds to Programs" }
       ]
     },
