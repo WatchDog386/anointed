@@ -219,7 +219,7 @@ export default function Footer() {
                 <a href="#" className="social-link">
                   <i className="fab fa-twitter"></i>
                 </a>
-                <a href="#" className="social-link">
+                <a href="https://www.instagram.com/vesselschool/" className="social-link">
                   <i className="fab fa-instagram"></i>
                 </a>
                 <a href="https://www.linkedin.com/in/anointed-vessels-christian-school-43b08327a/" className="social-link">
