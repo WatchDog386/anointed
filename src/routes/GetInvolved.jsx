@@ -290,14 +290,18 @@ export default function GetInvolved() {
             whileTap={{ scale: 0.95 }}
             className="inline-block"
           >
-            <Link
-              to="Anointed_Vessels_Privacy_Policy.pdf"
-              className="bg-[#932528] text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-[#8CA9B4] transition-colors duration-300 inline-flex items-center"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Our Privacy Policy
-              <ChevronRight className="h-3 w-3 ml-1" />
-            </Link>
+           <a
+  href="/Anointed_Vessels_Privacy_Policy.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="bg-[#932528] text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-[#8CA9B4] transition-colors duration-300 inline-flex items-center"
+  style={{ fontFamily: "'Montserrat', sans-serif" }}
+>
+  Our Privacy Policy
+  <ChevronRight className="h-3 w-3 ml-1" />
+</a>
+
+
           </motion.div>
         </div>
       </section>
