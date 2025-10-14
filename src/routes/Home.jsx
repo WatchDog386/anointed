@@ -41,7 +41,8 @@ export default function Home() {
       {/* Professional Floating Sponsor Button */}
       <button
         onClick={handleSponsorClick}
-        className="fixed bottom-8 right-8 z-50 bg-white/90 backdrop-blur-sm border-2 border-red-600 hover:bg-red-600 text-red-600 hover:text-white font-semibold py-3 px-5 rounded-full shadow-lg hover:shadow-xl transition-all duration-500 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 hover:translate-y-[-2px]"
+        className="fixed bottom-8 right-8 z-50 bg-transparent border-2 border-red-600 text-red-600 font-semibold py-3 px-5 rounded-full shadow-md hover:shadow-red-500/30 transition-all duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500/40 backdrop-blur-sm"
+
         aria-label="Sponsor a Child"
       >
         Sponsor a Child
