@@ -38,11 +38,11 @@ export default function Home() {
         {/* <meta property="og:image"/HAPPYCHILDREN.jpg" /> */}
       </Helmet>
 
-      {/* Floating Sponsor Button */}
+      {/* Professional Floating Sponsor Button */}
       <button
         onClick={handleSponsorClick}
-        className="fixed bottom-6 right-6 z-50 bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-        aria-label="Join Us in this Journey"
+        className="fixed bottom-8 right-8 z-50 bg-white/90 backdrop-blur-sm border-2 border-red-600 hover:bg-red-600 text-red-600 hover:text-white font-semibold py-3 px-5 rounded-full shadow-lg hover:shadow-xl transition-all duration-500 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 hover:translate-y-[-2px]"
+        aria-label="Sponsor a Child"
       >
         Sponsor a Child
       </button>
