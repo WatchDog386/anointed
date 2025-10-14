@@ -17,6 +17,8 @@ export default function Footer() {
       { label: "Education", route: "/eduprog" },
       { label: "Spiritual Growth", route: "/SpiritualGrowth" },
       { label: "Child Sponsorship", route: "/ChildSponsorship" },
+      { label: "Community Outreach", route: "/CommunityOutreach" },
+      { label: "Health & Wellness", route: "/HealthWellness" },
     ]
   };
 
