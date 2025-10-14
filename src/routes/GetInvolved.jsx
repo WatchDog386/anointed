@@ -290,8 +290,8 @@ export default function GetInvolved() {
             whileTap={{ scale: 0.95 }}
             className="inline-block"
           >
-           <a
-  href="/Anointed_Vessels_Privacy_Policy.pdf"
+          <Link
+  to="/Anointed_Vessels_Privacy_Policy.pdf"
   target="_blank"
   rel="noopener noreferrer"
   className="bg-[#932528] text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-[#8CA9B4] transition-colors duration-300 inline-flex items-center"
@@ -299,7 +299,8 @@ export default function GetInvolved() {
 >
   Our Privacy Policy
   <ChevronRight className="h-3 w-3 ml-1" />
-</a>
+</Link>
+
 
 
           </motion.div>
