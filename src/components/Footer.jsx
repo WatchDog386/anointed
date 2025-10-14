@@ -216,7 +216,7 @@ export default function Footer() {
                 <a href="https://www.facebook.com/profile.php?id=61580364328064" className="social-link">
                   <i className="fab fa-facebook-f"></i>
                 </a>
-                <a href="#" className="social-link">
+                <a href="https://x.com/Vesselschool" className="social-link">
                   <i className="fab fa-twitter"></i>
                 </a>
                 <a href="https://www.instagram.com/vesselschool/" className="social-link">
