@@ -243,7 +243,8 @@ export default function GetInvolved() {
       icon: HandCoins,
       title: "Monthly Partnership",
       description: "Provide consistent support through recurring donations. Your ongoing commitment helps us plan effectively and sustain our programs year-round.",
-      link: "/donate",
+      link: "mailto:carterjimmy2017@gmail.com?subject=Partnership%20Inquiry&body=Hello%20AVCS%20Team,%0D%0AI%20would%20like%20to%20become%20a%20partner.%20Please%20share%20more%20details.%0D%0AThank%20you!"
+,
       buttonText: "Become a Partner",
       stats: [
         { value: "$50K+", label: "Monthly Support" },
