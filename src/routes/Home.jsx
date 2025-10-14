@@ -42,7 +42,7 @@ export default function Home() {
       <button
         onClick={handleSponsorClick}
         className="fixed bottom-6 right-6 z-50 bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-        aria-label="Sponsor a Child"
+        aria-label="Join Us in this Journey"
       >
         Sponsor a Child
       </button>
