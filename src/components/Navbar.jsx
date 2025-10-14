@@ -31,7 +31,7 @@ export default function Navbar() {
       submenu: [
         { label: "Our Story", route: "/about", id: "story" },
         { label: "Our Staff", route: "/staff", id: "staff" },
-        { label: "Our Board Members", route: "/board", id: "board" },
+        { label: "Our Partners", route: "/board", id: "board" },
         { label: "Portfolio", route: "/Gallery", id: "gallery" },
       ],
     },
