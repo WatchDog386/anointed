@@ -235,7 +235,7 @@ export default function Footer() {
                 <a href="https://www.instagram.com/vesselschool/" className="social-link">
                   <i className="fab fa-instagram"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/anointed-vessels-christian-school-43b08327a/" className="social-link">
+                <a href="https://www.linkedin.com/company/109439757/admin/dashboard/" className="social-link">
                   <i className="fab fa-linkedin-in"></i>
                 </a>
                 <a href="https://www.youtube.com/shorts/iRdsUJB1-2s" className="social-link" target="_blank" rel="noopener noreferrer">
