@@ -1,6 +1,7 @@
 // src/routes/Home.jsx
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 import Hero from "../components/Hero";
 import Stories from "./Stories";
@@ -8,6 +9,12 @@ import Testimonials from "./Testimonials"; // ✅ match Testimonials.jsx
 import CTA from "./CTA";
 
 export default function Home() {
+  const navigate = useNavigate();
+
+  const handleSponsorClick = () => {
+    navigate("/ChildSponsorship");
+  };
+
   return (
     <>
       <Helmet>
@@ -30,6 +37,15 @@ export default function Home() {
         <meta property="og:url" content="https://yourdomain.com" />
         {/* <meta property="og:image"/HAPPYCHILDREN.jpg" /> */}
       </Helmet>
+
+      {/* Floating Sponsor Button */}
+      <button
+        onClick={handleSponsorClick}
+        className="fixed bottom-6 right-6 z-50 bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+        aria-label="Sponsor a Child"
+      >
+        Sponsor a Child
+      </button>
 
       <section id="hero">
         <Hero />
