@@ -195,7 +195,7 @@ export default function Footer() {
                   <div>
                     <h5 className="text-white text-sm font-medium">Main Office</h5>
                     <p className="text-gray-300 text-xs">USA<br />5655 Hinton Place, Memphis, Tennessee 38119, USA</p>
-                    <h5 className="text-white text-sm font-medium pt-2">Office Address 2</h5>
+                    <h5 className="text-white text-sm font-medium pt-2">Office Address-Kenya</h5>
                     <p className="text-gray-300 text-xs">Mbita<br />Mfangano, Along Mfangano Ringroad, Kaswanga- Anointed Vessels Christian School</p>
                   </div>
                 </div>
