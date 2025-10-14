@@ -255,7 +255,8 @@ export default function GetInvolved() {
       icon: Church,
       title: "Church Partnership",
       description: "Partner with us as a church through mission trips, financial support, or project adoption. Expand God's kingdom together across continents.",
-      link: "/partnerships",
+      link: "https://mail.google.com/mail/?view=cm&fs=1&to=carterjimmy2017@gmail.com&su=Partnership%20Inquiry&body=Hello%20AVCS%20Team,%0D%0AI%20would%20like%20to%20become%20a%20partner.%20Please%20share%20more%20details.%0D%0AThank%20you!"
+,
       buttonText: "Partner With Us",
       
     }
