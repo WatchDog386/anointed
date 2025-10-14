@@ -184,7 +184,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <h5 className="text-white text-sm font-medium">Mailing Address</h5>
-                    <p className="text-gray-300 text-xs">PO Box 403019<br />Mbita, Mfangano</p>
+                    <p className="text-gray-300 text-xs">PO Box 3-40319<br />Mbita, Mfangano</p>
                   </div>
                 </div>
                 
