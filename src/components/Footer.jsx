@@ -45,7 +45,7 @@ export default function Footer() {
       {/* Floating Sponsor Button */}
       <button
         onClick={handleSponsorClick}
-        className="fixed bottom-8 right-8 z-50 bg-transparent border-2 border-red-600 text-red-600 font-semibold py-3 px-5 rounded-full shadow-md hover:shadow-red-500/30 transition-all duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500/40 backdrop-blur-sm"
+        className="fixed bottom-8 right-8 z-50 bg-transparent border-2 border-blur-600 text-red-600 font-semibold py-3 px-5 rounded-full shadow-md hover:shadow-red-500/30 transition-all duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500/40 backdrop-blur-sm"
         aria-label="Empower a Child, Change a Nation"
       >
         Empower a Child, Change a Nation
