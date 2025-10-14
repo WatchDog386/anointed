@@ -234,7 +234,7 @@ export default function GetInvolved() {
   description:
     "Experience life-changing service in Kenya. Use your skills in teaching, construction, healthcare, or ministry to make a tangible difference. Join us in spreading hope and transforming communities through our outreach programs.",
   link: "mailto:carterjimmy2017@gmail.com?subject=Mission%20Trip%20Inquiry&body=Hello%20AVCS%20Team,%0D%0AI%20am%20interested%20in%20joining%20your%20mission%20trips.%20Please%20share%20more%20details%20and%20requirements.%0D%0AThank%20you!",
-  buttonText: "Click Learn More",
+  buttonText: "Click To Learn More",
       stats: [
         { value: "Center Site Visit", label: "Annual Trips" },
        
