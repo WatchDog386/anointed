@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
   
   // Simplified footer links
   const footerLinks = {
@@ -27,6 +28,10 @@ export default function Footer() {
     alert("Thank you for subscribing to our newsletter!");
   };
 
+  const handleSponsorClick = () => {
+    navigate("/ChildSponsorship");
+  };
+
   return (
     <motion.footer
       initial={{ opacity: 0, y: 50 }}
@@ -35,6 +40,15 @@ export default function Footer() {
       viewport={{ once: true }}
       className="relative pt-8 pb-6 px-4 text-sm bg-[#1a2f28] text-white overflow-hidden"
     >
+      {/* Floating Sponsor Button */}
+      <button
+        onClick={handleSponsorClick}
+        className="fixed bottom-8 right-8 z-50 bg-transparent border-2 border-red-600 text-red-600 font-semibold py-3 px-5 rounded-full shadow-md hover:shadow-red-500/30 transition-all duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500/40 backdrop-blur-sm"
+        aria-label="Sponsor a Child"
+      >
+        Sponsor a Child
+      </button>
+
       {/* Unique Background Elements */}
       <div className="absolute inset-0 overflow-hidden opacity-20">
         {/* African Continent Silhouette with Gradient */}
@@ -203,10 +217,6 @@ export default function Footer() {
                       <h5> OR </h5>
                     <a href="mailto:info@anointedvessels.org" 
                       className="text-gray-300 hover:text-[#8CA9B4] transition-colors text-xs" >info@anointedvessels.org </a>
-
-
-
-
                   </div>
                 </div>
               </div>
@@ -226,11 +236,8 @@ export default function Footer() {
                   <i className="fab fa-linkedin-in"></i>
                 </a>
                 <a href="https://www.youtube.com/shorts/iRdsUJB1-2s" className="social-link" target="_blank" rel="noopener noreferrer">
-  <i className="fab fa-youtube"></i>
-</a>
-
-
-
+                  <i className="fab fa-youtube"></i>
+                </a>
               </div>
             </div>
           </motion.div>
