@@ -213,7 +213,7 @@ export default function Footer() {
               
               {/* Social Icons */}
               <div className="flex space-x-2 pt-2">
-                <a href="#" className="social-link">
+                <a href="https://www.facebook.com/profile.php?id=61580364328064" className="social-link">
                   <i className="fab fa-facebook-f"></i>
                 </a>
                 <a href="#" className="social-link">
