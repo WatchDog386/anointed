@@ -15,10 +15,11 @@ const createAdmins = async () => {
     });
     console.log('✅ Connected to MongoDB');
 
-    // 🔥 Both admins included
+    // 🔥 All admins included
     const admins = [
       { email: 'fanteskorri36@gmail.com', password: 'fantes36' },
-      { email: 'benardmusereke@gmail.com', password: 'Musereke1' }
+      { email: 'benardmusereke@gmail.com', password: 'Musereke1' },
+      { email: 'carterjimmy2017@gmail.com', password: '@VCS#18!' }
     ];
 
     // Validate password length (min 6 characters)
@@ -37,7 +38,7 @@ const createAdmins = async () => {
         console.log(`🗑️  Existing admin ${email} deleted.`);
       }
 
-      // 🔥 Create fresh admin (password will be hashed if your Admin model has pre-save hook)
+      // 🔥 Create fresh admin (password will be hashed if your Admin model has a pre-save hook)
       const newAdmin = new Admin({ email, password });
       await newAdmin.save();
       console.log(`✅ Admin created successfully → Email: ${email}, Password: ${password}`);
