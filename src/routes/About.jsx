@@ -58,7 +58,7 @@ export default function About() {
                     The Story of Anointed Vessels
                   </h2>
                   <p className="mb-4 text-gray-700 font-poppins">
-                    Anointed Vessels Christian School stands as a living testimony of faith, resilience, and love for community. Founded by Jimmy Carter Owuato, the vision was not born in comfort or convenience — it was born from a heart that has known hardship, overcome adversity, and remained steadfast in service to others.
+                    Anointed Vessels Christian School stands as a living testimony of faith, resilience, and love for community. Founded by Jimmy Carter, the vision was not born in comfort or convenience — it was born from a heart that has known hardship, overcome adversity, and remained steadfast in service to others.
                   </p>
                   <p className="mb-4 text-gray-700 font-poppins">
                     Jimmy's journey began humbly in Kenya. Having grown up as an orphan, he understood firsthand the struggles faced by many children on Mfangano Island, where poverty, malnutrition, and the effects of HIV/AIDS continue to affect families deeply. Yet, through each season of his life, God was shaping in him a vessel of compassion and purpose.
@@ -225,12 +225,12 @@ export default function About() {
               <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-60 md:h-60 mx-auto rounded-full overflow-hidden shadow-xl mb-6">
                 <img
                   src="/Jimmy.jpg"
-                  alt="Jimmy Carter Owuato - Founding CEO"
+                  alt="Jimmy Carter - Founding CEO"
                   className="w-full h-full object-cover"
                 />
               </div>
               <h2 className="text-3xl sm:text-4xl font-normal text-primary font-script mb-2">
-                Jimmy Carter Owuato
+                Jimmy Carter
               </h2>
               <h3 className="text-xl sm:text-2xl text-secondary mb-6 font-montserrat">
                 Founder & Visionary Leader
@@ -275,7 +275,7 @@ export default function About() {
                     <p className="text-gray-700 italic font-poppins">
                       "We may start small, but when God anoints a vessel, even a drop of oil can overflow."
                     </p>
-                    <p className="text-gray-600 mt-2 font-montserrat font-semibold">— Jimmy Carter Owuato</p>
+                    <p className="text-gray-600 mt-2 font-montserrat font-semibold">— Jimmy Carter</p>
                   </div>
                 </motion.div>
               </div>
