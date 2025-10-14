@@ -295,7 +295,7 @@ export default function GetInvolved() {
               className="bg-[#932528] text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-[#8CA9B4] transition-colors duration-300 inline-flex items-center"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
-              Explore Opportunities Here
+              Our Privacy Policy
               <ChevronRight className="h-3 w-3 ml-1" />
             </Link>
           </motion.div>
