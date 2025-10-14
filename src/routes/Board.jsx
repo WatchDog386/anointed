@@ -37,7 +37,7 @@ const Board = () => {
       name: "Jimmy Carter",
       role: "Director/Founder/CEO",
       image: "/Jimmy.jpg",
-      bio: "Jimmy Carter Owuato is the founder and CEO of Anointed Vessels Christian School, a testament to his unwavering commitment to education and community development. With over 15 years of experience in the education sector, Jimmy has served as a teacher, headteacher, and education consultant. His passion for holistic, Christ-centered education led him to establish AVCS to serve orphans and vulnerable children on Mfangano Island."
+      bio: "Jimmy Carter is the founder and CEO of Anointed Vessels Christian School, a testament to his unwavering commitment to education and community development. With over 15 years of experience in the education sector, Jimmy has served as a teacher, headteacher, and education consultant. His passion for holistic, Christ-centered education led him to establish AVCS to serve orphans and vulnerable children on Mfangano Island."
     },
     {
       id: 2,
