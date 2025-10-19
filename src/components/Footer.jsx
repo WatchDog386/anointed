@@ -243,6 +243,14 @@ export default function Footer() {
                 <a href="https://www.youtube.com/shorts/iRdsUJB1-2s" className="social-link" target="_blank" rel="noopener noreferrer">
                   <i className="fab fa-youtube"></i>
                 </a>
+                
+                <a  href="https://www.tiktok.com/@yourusernamehttps://www.tiktok.com/@anointed_school?_t=ZT-90f3SOiUtiw&_r=1"  className="social-link"  target="_blank"   rel="noopener noreferrer"
+>                <i className="fab fa-tiktok"></i>
+</a>
+
+
+
+
               </div>
             </div>
           </motion.div>
