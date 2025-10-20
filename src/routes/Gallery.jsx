@@ -133,9 +133,12 @@ export default function Gallery() {
               Watch how we nurture young minds through faith-based education and create 
               a community where every child can thrive and discover their God-given potential.
             </p>
-            <button className="px-8 py-4 bg-[#932528] text-white font-montserrat font-semibold rounded-full hover:bg-[#7a1f22] transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 shadow-lg hover:shadow-xl">
-              Watch Our Story Video
-            </button>
+            <button 
+  onClick={scrollToFooter}
+  className="px-8 py-4 bg-[#932528] text-white font-montserrat font-semibold rounded-full hover:bg-[#7a1f22] transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 shadow-lg hover:shadow-xl"
+>
+  Watch Our Story Video
+</button>
           </div>
         </section>
 
