@@ -5,6 +5,17 @@ export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
 
+  // Scroll to footer function
+  const scrollToFooter = () => {
+    const footerSection = document.getElementById('footer-section');
+    if (footerSection) {
+      footerSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   // Detect mobile viewport
   useEffect(() => {
     const checkMobile = () => {
@@ -134,11 +145,11 @@ export default function Gallery() {
               a community where every child can thrive and discover their God-given potential.
             </p>
             <button 
-  onClick={scrollToFooter}
-  className="px-8 py-4 bg-[#932528] text-white font-montserrat font-semibold rounded-full hover:bg-[#7a1f22] transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 shadow-lg hover:shadow-xl"
->
-  Watch Our Story Video
-</button>
+              onClick={scrollToFooter}
+              className="px-8 py-4 bg-[#932528] text-white font-montserrat font-semibold rounded-full hover:bg-[#7a1f22] transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 shadow-lg hover:shadow-xl"
+            >
+              Watch Our Story Video
+            </button>
           </div>
         </section>
 
