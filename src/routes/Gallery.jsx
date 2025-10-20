@@ -36,14 +36,14 @@ export default function Gallery() {
 
   // Sample gallery data - replace with your actual images
   const galleryImages = [
-    { id: 1, src: "/DRANDCHILDREN.jpg", alt: "Students and faculty gathering", category: "Child" },
+    { id: 1, src: "/DRANDCHILDREN.jpg", alt: "The Director in engagement with the children", category: "Child" },
     { id: 2, src: "/GRADUANT.jpg", alt: "GRADUANT", category: "Academics" },
-    { id: 3, src: "/In gown.JPG", alt: "In gown", category: "Academics" },
-    { id: 4, src: "/CHILD EMPOWER.JPG", alt: "CHILD EMPOWERMENT", category: "Child Empowerment" },
+    { id: 3, src: "/In gown.JPG", alt: "Graduation", category: "Academics" },
+    { id: 4, src: "/CHILD EMPOWER.JPG", alt: "Teacher Instructing a child", category: "Child Empowerment" },
     { id: 5, src: "/EDUCATION.jpg", alt: "EDUCATION", category: "EDUCATION" },
-    { id: 6, src: "/GRADUATION.jpg", alt: "Classroom learning activity", category: "Academics" },
+    { id: 6, src: "/GRADUATION.jpg", alt: "In the classroom walls", category: "Academics" },
     { id: 7, src: "/Community Engagement.JPG", alt: "Community Engagement", category: "Community Engagement" },
-    { id: 8, src: "/HAPPYCHILDREN.JPG", alt: "HAPPYCHILDREN", category: "Moments" },
+    { id: 8, src: "/HAPPYCHILDREN.JPG", alt: "HAPPY CHILDREN", category: "Moments" },
     { id: 9, src: "/Outside.JPG", alt: "Children Having Fun", category: "Moments" },
     { id: 10, src: "/Childrenwaving.JPEG", alt: "Children Waving", category: "Moments" },
   ];
