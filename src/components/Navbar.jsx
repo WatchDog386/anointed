@@ -24,7 +24,9 @@ export default function Navbar() {
   });
 
   const menuItems = [
+    
     { label: "Home", route: "/", id: "home" },
+    { label: "Home", route: "/updates", id: "home" },
     {
       label: "About Us",
       id: "about",
