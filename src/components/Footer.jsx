@@ -67,7 +67,7 @@ export default function Footer() {
   const balloons = [
     { 
       id: 1, 
-      colors: ["#8CA9B4", "#6B8A99", "#A8C6D4"],
+      colors: ["#0f0fe7ff", "#6B8A99", "#A8C6D4"],
       delay: 0, 
       position: { x: "10%", y: "20%" },
       size: "w-10 h-12",
@@ -76,7 +76,7 @@ export default function Footer() {
     },
     { 
       id: 2, 
-      colors: ["#932528", "#B83235", "#FF6B6B"],
+      colors: ["#932528", "#B83235", "#0f0fe7ff"],
       delay: 2, 
       position: { x: "25%", y: "60%" },
       size: "w-12 h-14",
@@ -85,7 +85,7 @@ export default function Footer() {
     },
     { 
       id: 3, 
-      colors: ["#2a453b", "#3A6557", "#4A8A72"],
+      colors: ["#2a453b", "#3A6557", "#0f0fe7ff"],
       delay: 4, 
       position: { x: "40%", y: "40%" },
       size: "w-9 h-11",
@@ -94,7 +94,7 @@ export default function Footer() {
     },
     { 
       id: 4, 
-      colors: ["#8CA9B4", "#A8C6D4", "#6B8A99"],
+      colors: ["#8CA9B4", "#0f0fe7ff", "#6B8A99"],
       delay: 6, 
       position: { x: "60%", y: "30%" },
       size: "w-11 h-13",
@@ -103,7 +103,7 @@ export default function Footer() {
     },
     { 
       id: 5, 
-      colors: ["#932528", "#FF6B6B", "#B83235"],
+      colors: ["#932528", "#0f0fe7ff", "#B83235"],
       delay: 8, 
       position: { x: "75%", y: "50%" },
       size: "w-10 h-12",
@@ -112,7 +112,7 @@ export default function Footer() {
     },
     { 
       id: 6, 
-      colors: ["#2a453b", "#4A8A72", "#3A6557"],
+      colors: ["#2a453b", "#0f0fe7ff", "#3A6557"],
       delay: 10, 
       position: { x: "90%", y: "70%" },
       size: "w-12 h-14",
@@ -121,7 +121,7 @@ export default function Footer() {
     },
     { 
       id: 7, 
-      colors: ["#8CA9B4", "#6B8A99", "#A8C6D4"],
+      colors: ["#0f0fe7ff", "#6B8A99", "#A8C6D4"],
       delay: 12, 
       position: { x: "15%", y: "80%" },
       size: "w-9 h-11",
@@ -130,7 +130,7 @@ export default function Footer() {
     },
     { 
       id: 8, 
-      colors: ["#932528", "#B83235", "#FF6B6B"],
+      colors: ["#932528", "#B83235", "#0f0fe7ff"],
       delay: 14, 
       position: { x: "85%", y: "25%" },
       size: "w-11 h-13",
@@ -292,10 +292,10 @@ export default function Footer() {
               className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#8CA9B4] via-[#932528] to-[#2a453b] opacity-75"
               animate={{
                 background: [
-                  "linear-gradient(45deg, #8CA9B4, #932528, #2a453b)",
-                  "linear-gradient(135deg, #2a453b, #8CA9B4, #932528)",
+                  "linear-gradient(45deg, #8CA9B4, #932528, #0f0fe7ff)",
+                  "linear-gradient(135deg, #2a453b, #0f0fe7ff, #932528)",
                   "linear-gradient(225deg, #932528, #2a453b, #8CA9B4)",
-                  "linear-gradient(315deg, #8CA9B4, #932528, #2a453b)",
+                  "linear-gradient(315deg, #0f0fe7ff, #932528, #2a453b)",
                 ]
               }}
               transition={{
