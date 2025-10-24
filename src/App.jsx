@@ -74,7 +74,6 @@ function AppRoutes() {
         <Route path="ChildSponsorship" element={<ChildSponsorship />} />
         <Route path="impacts" element={<Impact />} />
         <Route path="Make-An-Impact" element={<GetInvolved />} />
-        <Route path="updates" element={<Updates />} />
 
         {/* Individual Story Pages - Corrected paths */}
         <Route path="jimmys-story" element={<JimmysStory />} />
