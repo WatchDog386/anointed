@@ -28,7 +28,6 @@ import HealthWellness from "./routes/HealthWellness";
 import ChildSponsorship from "./routes/ChildSponsorship";
 import Impact from "./routes/Impact";
 import GetInvolved from "./routes/GetInvolved";
-import Updates from "./routes/Updates"; // ← ADD THIS IMPORT
 
 // Story Pages - Corrected imports
 import JimmysStory from "./routes/JimmysStory";
@@ -68,7 +67,6 @@ function AppRoutes() {
 
         {/* Newly added public routes */}
         <Route path="gallery" element={<Gallery />} />
-        <Route path="updates" element={<Updates />} /> {/* ← ADD THIS ROUTE */}
         <Route path="eduprog" element={<EducationPrograms />} />
         <Route path="SpiritualGrowth" element={<SpiritualGrowth />} />
         <Route path="CommunityOutreach" element={<CommunityOutreach />} />
