@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
+  const [showBalloons, setShowBalloons] = useState(false);
   const navigate = useNavigate();
   
   // Simplified footer links
@@ -22,6 +23,11 @@ export default function Footer() {
     ]
   };
 
+  // Show balloons on component mount
+  useEffect(() => {
+    setShowBalloons(true);
+  }, []);
+
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
     // Handle newsletter subscription
@@ -34,6 +40,16 @@ export default function Footer() {
     navigate("/ChildSponsorship");
   };
 
+  // Balloon data with different colors and positions
+  const balloons = [
+    { id: 1, color: "#8CA9B4", delay: 0, position: "10%", size: "w-8 h-10" },
+    { id: 2, color: "#932528", delay: 0.5, position: "25%", size: "w-10 h-12" },
+    { id: 3, color: "#2a453b", delay: 1, position: "40%", size: "w-7 h-9" },
+    { id: 4, color: "#8CA9B4", delay: 1.5, position: "60%", size: "w-9 h-11" },
+    { id: 5, color: "#932528", delay: 2, position: "75%", size: "w-8 h-10" },
+    { id: 6, color: "#2a453b", delay: 2.5, position: "90%", size: "w-10 h-12" },
+  ];
+
   return (
     <motion.footer
       initial={{ opacity: 0, y: 50 }}
@@ -42,11 +58,123 @@ export default function Footer() {
       viewport={{ once: true }}
       className="relative pt-8 pb-6 px-4 text-sm bg-[#1a2f28] text-white overflow-hidden"
     >
+      {/* Animated Balloons */}
+      {showBalloons && (
+        <div className="absolute top-0 left-0 w-full h-32 overflow-hidden pointer-events-none z-20">
+          {balloons.map((balloon) => (
+            <motion.div
+              key={balloon.id}
+              className={`absolute ${balloon.size} rounded-full flex items-center justify-center`}
+              style={{
+                left: balloon.position,
+                bottom: "-50px",
+              }}
+              initial={{ y: 0, opacity: 0 }}
+              animate={{ 
+                y: [-50, -150, -250, -350],
+                opacity: [0, 1, 1, 0],
+                x: [0, Math.random() * 20 - 10, Math.random() * 20 - 10, 0]
+              }}
+              transition={{
+                duration: 8,
+                delay: balloon.delay,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "easeOut"
+              }}
+            >
+              {/* Balloon */}
+              <div 
+                className="w-full h-full rounded-full relative"
+                style={{ backgroundColor: balloon.color }}
+              >
+                {/* Balloon shine */}
+                <div className="absolute top-2 left-2 w-2 h-2 rounded-full bg-white opacity-30"></div>
+                
+                {/* Balloon string */}
+                <div 
+                  className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0.5 h-8"
+                  style={{ backgroundColor: balloon.color }}
+                ></div>
+              </div>
+              
+              {/* Celebration Message - Appears on some balloons */}
+              {balloon.id % 2 === 0 && (
+                <motion.div
+                  className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-white text-[#1a2f28] px-2 py-1 rounded-lg text-xs font-semibold whitespace-nowrap shadow-lg"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: [0, 1.2, 1], opacity: [0, 1, 1] }}
+                  transition={{
+                    duration: 1,
+                    delay: balloon.delay + 2,
+                    repeat: Infinity,
+                    repeatDelay: 6
+                  }}
+                >
+                  {balloon.id === 2 ? "PP2" : balloon.id === 4 ? "Grade 3" : "2025"}
+                </motion.div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      )}
+
+      {/* Main Celebration Banner */}
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ 
+          type: "spring", 
+          stiffness: 200, 
+          damping: 15,
+          delay: 0.5 
+        }}
+        className="relative bg-gradient-to-r from-[#8CA9B4] to-[#932528] rounded-lg p-4 mb-8 mx-auto max-w-2xl text-center shadow-lg z-10"
+      >
+        <div className="absolute -top-2 -left-2 w-6 h-6 bg-white rounded-full flex items-center justify-center">
+          <span className="text-[#932528] text-xs font-bold">🎓</span>
+        </div>
+        <div className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center">
+          <span className="text-[#8CA9B4] text-xs font-bold">⭐</span>
+        </div>
+        
+        <h3 className="text-lg md:text-xl font-bold text-white mb-2">
+          Congratulations Class of 2025!
+        </h3>
+        <p className="text-white text-sm md:text-base">
+          To our PP2 and Grade 3 students on your promotion to the next class. We are proud of you!
+        </p>
+        
+        {/* Floating confetti effect */}
+        <div className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-xs"
+              style={{
+                left: `${(i + 1) * 15}%`,
+                top: "10%",
+              }}
+              animate={{
+                y: [0, -10, 0],
+                rotate: [0, 180, 360],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                delay: i * 0.3,
+              }}
+            >
+              {i % 3 === 0 ? "🎉" : i % 3 === 1 ? "✨" : "🌟"}
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
       {/* Floating Sponsor Button */}
       <button
         onClick={handleSponsorClick}
         className="fixed bottom-8 right-8 z-50 bg-transparent border-2 border-blue-600 text-blue-600 font-semibold py-3 px-5 rounded-full shadow-md hover:shadow-blue-500/30 transition-all duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500/40 backdrop-blur-sm"
-
         aria-label="Empower a Child, Change a Nation"
       >
         Empower a Child, Change a Nation
@@ -247,10 +375,6 @@ export default function Footer() {
                 <a  href="https://www.tiktok.com/@anointed_school?_t=ZT-90f3SOiUtiw&_r=1"  className="social-link"  target="_blank"   rel="noopener noreferrer"
 >                <i className="fab fa-tiktok"></i>
 </a>
-
-
-
-
               </div>
             </div>
           </motion.div>
