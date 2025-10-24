@@ -64,6 +64,7 @@ function AppRoutes() {
         <Route path="stories" element={<Stories />} />
         <Route path="testimonials" element={<Testimonials />} />
         <Route path="cta" element={<CTA />} />
+        <Route path="Updates" element={<Updates />} />
 
         {/* Newly added public routes */}
         <Route path="gallery" element={<Gallery />} />
@@ -74,6 +75,7 @@ function AppRoutes() {
         <Route path="ChildSponsorship" element={<ChildSponsorship />} />
         <Route path="impacts" element={<Impact />} />
         <Route path="Make-An-Impact" element={<GetInvolved />} />
+        <Route path="updates" element={<Updates />} />
 
         {/* Individual Story Pages - Corrected paths */}
         <Route path="jimmys-story" element={<JimmysStory />} />
