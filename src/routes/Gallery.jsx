@@ -58,6 +58,11 @@ export default function Gallery() {
     { id: 9, src: "/Outside.JPG", alt: "Children Having Fun", category: "Moments" },
     { id: 10, src: "/Childrenwaving.JPEG", alt: "Children Waving", category: "Moments" },
     { id: 11, src: "/teacher-AVCS3.jpg" , alt: "Our Male Teaching Staff. From Left: Mr. Erick, Mr. Patrick & Mr. Constatine", category: "Moments" },
+    { id: 12, src: "DSC_1191"},
+    { id: 13, src: "DSC_1200"},
+    { id: 14, src: "DSC_1213"},
+    { id: 15, src: "DSC_1221"},
+    {} 
   ];
 
   const categories = ["All", "Community", "Academics", "Events", "Arts", "Child Empowerment", "Education", "Community Engagement", "Moments"];
