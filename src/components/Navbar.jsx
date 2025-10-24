@@ -48,7 +48,7 @@ export default function Navbar() {
       ],
     },
     { label: "Get Involved", route: "/Make-An-Impact", id: "involved" },
-    { label: "Updates", route: "/Updates", id: "Updates" },
+    { label: "Updates", route: "/Update", id: "Updates" },
   ];
 
   const NavItem = ({ item, isMobile = false }) => {
