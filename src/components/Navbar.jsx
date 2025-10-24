@@ -26,7 +26,6 @@ export default function Navbar() {
   const menuItems = [
     
     { label: "Home", route: "/", id: "home" },
-    { label: "Updates", route: "/updates", id: "home" },
     {
       label: "About Us",
       id: "about",
@@ -49,6 +48,7 @@ export default function Navbar() {
       ],
     },
     { label: "Get Involved", route: "/Make-An-Impact", id: "involved" },
+    { label: "Updates", route: "/Updates", id: "Updates" },
   ];
 
   const NavItem = ({ item, isMobile = false }) => {
