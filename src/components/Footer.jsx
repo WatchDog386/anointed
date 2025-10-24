@@ -264,10 +264,10 @@ export default function Footer() {
           className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#8CA9B4] via-[#932528] to-[#2a453b] opacity-75"
           animate={{
             background: [
-              "linear-gradient(45deg, #8CA9B4, #932528, #2a453b)",
-              "linear-gradient(135deg, #2a453b, #8CA9B4, #932528)",
-              "linear-gradient(225deg, #932528, #2a453b, #8CA9B4)",
-              "linear-gradient(315deg, #8CA9B4, #932528, #2a453b)",
+              "linear-gradient(45deg, #8CA9B4, #345acbff, #2a453b)",
+              "linear-gradient(135deg, #2a453b, #8CA9B4, #345acbff)",
+              "linear-gradient(225deg, #345acbff, #2a453b, #8CA9B4)",
+              "linear-gradient(315deg, #8CA9B4, #345acbff, #2a453b)",
             ]
           }}
           transition={{
