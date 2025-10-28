@@ -71,7 +71,7 @@ const Board = () => {
 
   const partners = [
     { name: "GoFundMe", image: "/GOFUNDME.PNG" },
-    { name: "compasssionlogo", image: "/compasssionlogo.PNG" },
+    
     
   ];
 
