@@ -63,7 +63,7 @@ const Board = () => {
     {
       id: 5,
       name: "Edith Oulo",
-      role: "EDITH.jpg",
+      role: "Deputy Director",
       image: "/EDITH.jpg",
       bio: "Director Edith Oulo ensures the smooth, locally-led operation of AVCS in Kenya. With deep roots in Kenyan education and administration, she upholds our commitment to community ownership, cultural relevance, and excellence in every aspect of school life."
     }
