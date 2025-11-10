@@ -243,6 +243,14 @@ export default function Footer() {
                 <a href="https://www.youtube.com/shorts/iRdsUJB1-2s" className="social-link" target="_blank" rel="noopener noreferrer">
                   <i className="fab fa-youtube"></i>
                 </a>
+                
+                <a  href="https://www.tiktok.com/@anointed_school?_t=ZT-90f3SOiUtiw&_r=1"  className="social-link"  target="_blank"   rel="noopener noreferrer"
+>                <i className="fab fa-tiktok"></i>
+</a>
+
+
+
+
               </div>
             </div>
           </motion.div>
@@ -333,33 +341,54 @@ export default function Footer() {
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
       
       {/* Custom styles for social links */}
-      <style jsx>{`
-        .social-link {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          background-color: rgba(255, 255, 255, 0.1);
-          color: #fff;
-          transition: all 0.3s ease;
-        }
-        
-        .social-link:hover {
-          background-color: #8CA9B4;
-          transform: translateY(-2px);
-        }
-        
-        @keyframes pulse {
-          0%, 100% { opacity: 0.1; }
-          50% { opacity: 0.2; }
-        }
-        
-        .animate-pulse {
-          animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-      `}</style>
+     <style jsx>{`
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+
+  .social-link:hover {
+    background-color: #8CA9B4;
+    transform: translateY(-2px);
+  }
+
+  /* Brand hover colors */
+  .social-link:hover .fa-facebook-f {
+    color: #1877F2; /* Facebook blue */
+  }
+  .social-link:hover .fa-twitter {
+    color: #1DA1F2; /* Twitter blue */
+  }
+  .social-link:hover .fa-instagram {
+    color: #E1306C; /* Instagram pink */
+  }
+  .social-link:hover .fa-linkedin-in {
+    color: #0A66C2; /* LinkedIn blue */
+  }
+  .social-link:hover .fa-youtube {
+    color: #FF0000; /* YouTube red */
+  }
+  .social-link:hover .fa-tiktok {
+    color: #000000; /* TikTok black */
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.2; }
+  }
+
+  .animate-pulse {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+`}</style>
+
     </motion.footer>
   );
 }
