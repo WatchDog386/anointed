@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-// ✅ Correct Lucide icons — all verified to exist
+
 import { 
   GraduationCap, 
   Utensils, 
@@ -14,7 +14,7 @@ import {
 const Board = () => {
   const navigate = useNavigate();
 
-  // EXACT same animation variants as Stories.jsx
+  
   const fadeIn = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
@@ -25,7 +25,7 @@ const Board = () => {
     visible: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } },
   };
 
-  // Unsplash placeholder images — replace later with your own
+  
   const getUnsplashImage = (keyword, id) => {
     const keywords = keyword.toLowerCase().replace(/\s+/g, '+').replace(/&/g, 'and');
     return `https://source.unsplash.com/600x700/?african,${keywords},professional&sig=${id}`;
@@ -63,7 +63,7 @@ const Board = () => {
     {
       id: 5,
       name: "Edith Oulo",
-      role: "EDITH.jpg",
+      role: "Deputy Director",
       image: "/EDITH.jpg",
       bio: "Director Edith Oulo ensures the smooth, locally-led operation of AVCS in Kenya. With deep roots in Kenyan education and administration, she upholds our commitment to community ownership, cultural relevance, and excellence in every aspect of school life."
     }
@@ -71,7 +71,7 @@ const Board = () => {
 
   const partners = [
     { name: "GoFundMe", image: "/GOFUNDME.PNG" },
-    { name: "compasssionlogo", image: "/compasssionlogo.PNG" },
+    
     
   ];
 
