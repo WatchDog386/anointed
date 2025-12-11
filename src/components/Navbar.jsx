@@ -262,10 +262,10 @@ export default function Navbar() {
                 
                 {/* Message */}
                 <div className="flex items-center gap-2">
-                  <span className="font-poppins text-white text-sm font-semibold">
+                  <span className="font-poppins text-[#800000] text-sm font-semibold">
                     Season's Greetings:
                   </span>
-                  <span className="font-montserrat text-white text-sm">
+                  <span className="font-montserrat text-[#800000] text-sm">
                     Merry Christmas & Happy New Year from AVCS!
                   </span>
                 </div>
