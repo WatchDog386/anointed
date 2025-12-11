@@ -274,7 +274,7 @@ export default function Navbar() {
                 <div className="h-4 w-px bg-white/30 mx-2"></div>
                 
                 {/* School Name */}
-                <span className="font-script text-white text-base hidden md:block">
+                <span className="font-script text-[#800000] text-base hidden md:block">
                   Anointed Vessels Christian School
                 </span>
               </div>
@@ -284,7 +284,7 @@ export default function Navbar() {
                 {/* View Details Button */}
                 <NavLink
                   to="/about"
-                  className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 text-white text-xs font-poppins font-medium transition-all duration-200 hover:scale-105"
+                  className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 text-[#800000] text-xs font-poppins font-medium transition-all duration-200 hover:scale-105"
                   onClick={() => setShowBanner(false)}
                 >
                   View Details
