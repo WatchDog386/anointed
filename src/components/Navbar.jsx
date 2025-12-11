@@ -244,7 +244,7 @@ export default function Navbar() {
             className="fixed top-0 left-0 right-0 z-[1000] h-[50px]"
             style={{
               background: 'linear-gradient(90deg, #4FC3F7 0%, #E0F7FF 100%)',
-              color: '#800000',
+              textcolor: '#800000',
               boxShadow: '0 2px 20px rgba(0, 0, 0, 0.3)',
               borderBottom: '2px solid rgba(255, 255, 255, 0.1)'
             }}
