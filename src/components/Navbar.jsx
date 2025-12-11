@@ -243,7 +243,7 @@ export default function Navbar() {
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className="fixed top-0 left-0 right-0 z-[1000] h-[50px]"
             style={{
-              background: 'linear-gradient(90deg, #0a3d2c 0%, #1a5c3e 30%, #c41e3a 70%, #b91c1c 100%)',
+              background: 'linear-gradient(90deg, #4FC3F7 0%, #E0F7FF 100%)',
               boxShadow: '0 2px 20px rgba(0, 0, 0, 0.3)',
               borderBottom: '2px solid rgba(255, 255, 255, 0.1)'
             }}
