@@ -1,41 +1,15 @@
 // src/components/Navbar.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useClickOutside } from "../hooks/useClickOutside";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState(null);
-  const [showBanner, setShowBanner] = useState(false);
-  const [bannerMinimized, setBannerMinimized] = useState(false);
   const location = useLocation();
   const navRef = useRef(null);
-
-  // Initialize banner on mount
-  useEffect(() => {
-    // Check if banner was minimized before
-    const wasMinimized = localStorage.getItem('bannerMinimized');
-    if (!wasMinimized) {
-      // Show banner after 1 second on initial load
-      const timeout = setTimeout(() => {
-        setShowBanner(true);
-      }, 1000);
-      return () => clearTimeout(timeout);
-    }
-  }, []);
-
-  // Set up timer to show banner every 5 minutes (only if not minimized)
-  useEffect(() => {
-    if (!bannerMinimized) return;
-
-    const interval = setInterval(() => {
-      setShowBanner(true);
-    }, 5 * 60 * 1000); // 5 minutes
-
-    return () => clearInterval(interval);
-  }, [bannerMinimized]);
 
   // Close mobile menu on route change & scroll to top
   useEffect(() => {
@@ -48,21 +22,6 @@ export default function Navbar() {
     setIsOpen(false);
     setOpenSubmenu(null);
   });
-
-  const handleMinimizeBanner = () => {
-    setBannerMinimized(true);
-    setShowBanner(false);
-    localStorage.setItem('bannerMinimized', 'true');
-  };
-
-  const toggleBanner = () => {
-    if (showBanner) {
-      handleMinimizeBanner();
-    } else {
-      setShowBanner(true);
-      setBannerMinimized(false);
-    }
-  };
 
   const menuItems = [
     { label: "Home", route: "/", id: "home" },
@@ -211,127 +170,11 @@ export default function Navbar() {
         }
         .font-montserrat { font-family: 'Montserrat', sans-serif; }
         .font-poppins { font-family: 'Poppins', sans-serif; }
-        
-        @keyframes slideDown {
-          from { transform: translateY(-100%); }
-          to { transform: translateY(0); }
-        }
-        
-        @keyframes slideUp {
-          from { transform: translateY(0); }
-          to { transform: translateY(-100%); }
-        }
-        
-        @keyframes gentlePulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
-        }
-        
-        @keyframes subtleFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-2px); }
-        }
       `}</style>
 
-      {/* Compact Banner Notification */}
-      <AnimatePresence>
-        {showBanner && (
-          <motion.div
-            initial={{ y: -60, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -60, opacity: 0 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed top-0 left-0 right-0 z-[1000] h-[50px]"
-            style={{
-              background: 'linear-gradient(90deg, #4FC3F7 0%, #E0F7FF 100%)',
-              textcolor: '#800000',
-              boxShadow: '0 2px 20px rgba(0, 0, 0, 0.3)',
-              borderBottom: '2px solid rgba(255, 255, 255, 0.1)'
-            }}
-          >
-            <div className="h-full px-4 flex items-center justify-between">
-              {/* Banner Content */}
-              <div className="flex items-center gap-3">
-                {/* Decorative Icon */}
-                <div className="relative w-8 h-8">
-                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center shadow-lg">
-                    <span className="text-white font-bold text-sm">★</span>
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                </div>
-                
-                {/* Message */}
-                <div className="flex items-center gap-2">
-                  <span className="font-poppins text-[#800000] text-sm font-semibold">
-                    Season's Greetings:
-                  </span>
-                  <span className="font-montserrat text-[#800000] text-sm">
-                    Merry Christmas & Happy New Year from AVCS!
-                  </span>
-                </div>
-                
-                {/* Decorative Separator */}
-                <div className="h-4 w-px bg-white/30 mx-2"></div>
-                
-                {/* School Name */}
-                <span className="font-script text-[#800000] text-base hidden md:block">
-                  Anointed Vessels Christian School
-                </span>
-              </div>
-              
-              {/* Control Buttons */}
-              <div className="flex items-center gap-2">
-                {/* View Details Button */}
-                <NavLink
-                  to="/about"
-                  className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 text-[#800000] text-xs font-poppins font-medium transition-all duration-200 hover:scale-105"
-                  onClick={() => setShowBanner(false)}
-                >
-                  View Details
-                </NavLink>
-                
-                {/* Minimize/Expand Button */}
-                <button
-                  onClick={toggleBanner}
-                  className="p-1.5 hover:bg-white/20 rounded-full transition-all duration-200 group"
-                  aria-label={showBanner ? "Minimize banner" : "Expand banner"}
-                >
-                  <ChevronUp className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Floating Control Arrow (when banner is minimized) */}
-      {!showBanner && (
-        <motion.div
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="fixed top-0 left-1/2 transform -translate-x-1/2 z-[999] mt-2"
-        >
-          <button
-            onClick={toggleBanner}
-            className="group bg-gradient-to-r from-green-600 to-red-600 hover:from-green-700 hover:to-red-700 text-white p-2.5 rounded-full shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-0.5 flex items-center justify-center"
-            aria-label="Show holiday notification"
-          >
-            <div className="relative">
-              <ChevronDown className="w-5 h-5 transform transition-transform group-hover:scale-110" />
-              <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
-            </div>
-            <span className="ml-2 font-poppins text-xs font-medium hidden sm:block">
-              Holiday Greetings
-            </span>
-          </button>
-        </motion.div>
-      )}
-
-      {/* Main Navigation - Adjust margin based on banner visibility */}
       <nav
         ref={navRef}
-        className={`fixed ${showBanner ? 'top-[50px]' : 'top-0'} left-0 w-full z-[998] font-montserrat transition-all duration-300`}
+        className="fixed top-0 left-0 w-full z-[999] font-montserrat"
         style={{
           background: 'linear-gradient(135deg, #000000 0%, #BB0000 50%, #006600 100%)',
           backdropFilter: 'blur(12px)',
